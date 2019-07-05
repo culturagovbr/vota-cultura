@@ -2,8 +2,6 @@
 
 namespace App\Modules\Conta\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class AuthController extends \App\Http\Controllers\Controller
 {
     public function __construct()
@@ -13,7 +11,7 @@ class AuthController extends \App\Http\Controllers\Controller
 
     public function login() : \Illuminate\Http\JsonResponse
     {
-        $credentials = request(['email', 'password']);
+        $credentials = request(['no_email', 'ds_senha']);
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
