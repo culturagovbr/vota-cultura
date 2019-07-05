@@ -11,7 +11,6 @@ class Usuario extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $table = 'tb_usuario';
-
     protected $primaryKey = 'co_usuario';
 
     protected $fillable = [
@@ -31,6 +30,8 @@ class Usuario extends Authenticatable implements JWTSubject
     protected $casts = [
     ];
 
+    public $timestamps = false;
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -38,8 +39,21 @@ class Usuario extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims(): array
     {
-        return [
 
+        /**
+         * @todo colocar aqui consulta para tabela de perfis
+         * carregando os perfis que o usuário pode ter acesso.
+         */
+
+        $dadosPayload = [
+            'cpf' => $this->no_cpf,
+            'email' => $this->no_email,
+            'dt_nascimento' => $this->dt_nascimento,
+            'dt_cadastro' => $this->dt_cadastro,
+            'dt_ultima_atualizacao' => $this->dt_ultima_atualizacao,
+            'st_ativo' => $this->st_ativo,
         ];
+
+        return $dadosPayload;
     }
 }
