@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
+
 Route::get('/conta', function (Request $request) {
-    // return $request->conta();
+    return $request->conta();
 })->middleware('auth:api');
