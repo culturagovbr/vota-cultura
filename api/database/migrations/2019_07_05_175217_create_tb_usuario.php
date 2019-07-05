@@ -26,6 +26,7 @@ class CreateTbUsuario extends Migration
             #@todo está como date deve ser datetime
             $table->datetime('dt_cadastro')->default($dataEhorarioAtual);
             $table->datetime('dt_ultima_atualizacao')->default($dataEhorarioAtual);
+            $table->boolean('st_ativo')->default(false);
 
         });
     }
