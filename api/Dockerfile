@@ -2,9 +2,8 @@ FROM php:7.3-fpm
 
 WORKDIR "/application"
 
-RUN apt-get update --fix-missing
-
-RUN apt-get install -y apt-utils \
+RUN apt-get update --fix-missing \
+    && apt-get install -y apt-utils \
     && apt-get install -y libfreetype6-dev \
     && apt-get install -y libjpeg62-turbo-dev \
     && apt-get install -y libcurl4-gnutls-dev \

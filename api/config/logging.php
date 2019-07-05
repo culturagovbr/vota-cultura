@@ -48,9 +48,17 @@ return [
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => 'debug',
-            'days' => 14,
+            'path'   => storage_path(
+                function_exists('posix_getpwuid') 
+                && function_exists('posix_geteuid')
+                    ? 'logs/laravel'
+                        . '-' . php_sapi_name()
+                        . '-' . posix_getpwuid(posix_geteuid())['name'] 
+                        . '.log'
+                    : 'logs/laravel.log'),
+            'level'  => 'debug',
+            'days'   => 15,
+            'permission' => 0664,
         ],
 
         'slack' => [
