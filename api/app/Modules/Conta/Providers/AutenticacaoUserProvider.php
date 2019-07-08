@@ -7,7 +7,7 @@ use Caffeinated\Modules\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
-class AutenticacaoServiceProvider implements UserProvider
+class AutenticacaoUserProvider implements UserProvider
 {
 
     private $autenticado = false;
