@@ -1,6 +1,7 @@
 import * as usuarioService from '@/service/usuario';
 import * as types from './types';
 
+/* eslint-disable import/prefer-default-export */
 export const autenticarUsuario = async ({ commit }, params) => {
   usuarioService.login(params)
     .then((response) => {
@@ -12,6 +13,6 @@ export const autenticarUsuario = async ({ commit }, params) => {
         { root: true },
       );
     }).catch((error) => {
-      throw new TypeError('autenticarUsuarioautenticarUsuario', 'autenticarUsuario', 10);
+      throw new TypeError(error, 'autenticarUsuario', 10);
     });
 };

@@ -1,20 +1,30 @@
 <template>
-  <v-card :color="cardColor" :dark="computeCardDark">
+  <v-card
+    :color="cardColor"
+    :dark="computeCardDark"
+  >
     <v-card-title>
       <div class="layout row ma-0">
-        <div class="subheading">{{ title }}</div>
-        <v-spacer></v-spacer>
-        <div class="caption"><v-icon>trending_up</v-icon> {{ subTitle }}</div>
+        <div class="subheading">
+          {{ title }}
+        </div>
+        <v-spacer />
+        <div class="caption">
+          <v-icon>trending_up</v-icon> {{ subTitle }}
+        </div>
       </div>
     </v-card-title>
     <v-responsive class="white--text">
-      <e-chart :path-option="computeChartOption" height="308px" width="100%"> </e-chart>
+      <e-chart
+        :path-option="computeChartOption"
+        height="308px"
+        width="100%"
+      />
     </v-responsive>
   </v-card>
 </template>
 
 <script>
-import Material from 'vuetify/es5/util/colors';
 import EChart from '@/components/chart/echart';
 
 export default {
@@ -22,13 +32,22 @@ export default {
     EChart,
   },
   props: {
-    title: String,
+    title: {
+      type: String,
+      default: '',
+    },
     gradient: {
       type: Boolean,
       default: false,
     },
-    subTitle: String,
-    icon: String,
+    subTitle: {
+      type: String,
+      default: '',
+    },
+    icon: {
+      type: String,
+      default: '',
+    },
     cardColor: {
       type: String,
       default: 'white',
@@ -37,9 +56,18 @@ export default {
       type: String,
       default: 'success',
     },
-    type: String,
-    chartColor: Array,
-    data: Array,
+    type: {
+      type: String,
+      default: '',
+    },
+    chartColor: {
+      type: Array,
+      default: () => [],
+    },
+    data: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -61,6 +89,7 @@ export default {
       return this.cardColor !== 'white';
     },
     computeChartOption() {
+      /* eslint-disable vue/no-side-effects-in-computed-properties */
       switch (this.type) {
         case 'bar':
           this.defaultOption.push(['series[0].type', 'bar']);

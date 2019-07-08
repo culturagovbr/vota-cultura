@@ -1,12 +1,21 @@
 <template>
   <div id="social">
-    <v-container grid-list-xl fluid>
-      <v-layout row wrap>
+    <v-container
+      grid-list-xl
+      fluid
+    >
+      <v-layout
+        row
+        wrap
+      >
         <!-- mini chart -->
         <v-flex sm12>
           <h4>Mini Chart</h4>
         </v-flex>
-        <v-flex lg3 sm6>
+        <v-flex
+          lg3
+          sm6
+        >
           <mini-chart
             title="Monthly Sales"
             sub-title="10%"
@@ -14,10 +23,12 @@
             :data="dataset.monthVisit"
             :chart-color="color.blue.base"
             type="bar"
-          >
-          </mini-chart>
+          />
         </v-flex>
-        <v-flex lg3 sm6>
+        <v-flex
+          lg3
+          sm6
+        >
           <mini-chart
             title="Daily Visit"
             sub-title="20%"
@@ -25,19 +36,32 @@
             :data="dataset.monthVisit"
             :chart-color="color.green.base"
             type="area"
-          >
-          </mini-chart>
+          />
         </v-flex>
-        <v-flex lg3 sm6>
+        <v-flex
+          lg3
+          sm6
+        >
           <v-card>
             <v-card-text>
               <div class="layout row ma-0 align-center justify-space-between">
                 <div class="text-box">
-                  <div class="subheading pb-2">Bounce Rate</div>
-                  <span class="grey--text">-10% <v-icon small color="green">trending_down</v-icon> </span>
+                  <div class="subheading pb-2">
+                    Bounce Rate
+                  </div>
+                  <span class="grey--text">-10% <v-icon
+                    small
+                    color="green"
+                  >trending_down</v-icon> </span>
                 </div>
                 <div class="chart">
-                  <v-progress-circular :size="60" :width="5" :rotate="360" :value="10" color="success">
+                  <v-progress-circular
+                    :size="60"
+                    :width="5"
+                    :rotate="360"
+                    :value="10"
+                    color="success"
+                  >
                     10
                   </v-progress-circular>
                 </div>
@@ -45,7 +69,10 @@
             </v-card-text>
           </v-card>
         </v-flex>
-        <v-flex lg3 sm6>
+        <v-flex
+          lg3
+          sm6
+        >
           <mini-chart
             title="Sales Trend"
             sub-title="10%"
@@ -53,16 +80,22 @@
             :data="dataset.monthVisit"
             :chart-color="color.red.base"
             type="line"
-          >
-          </mini-chart>
+          />
         </v-flex>
       </v-layout>
       <!-- box chart -->
-      <v-layout row wrap>
+      <v-layout
+        row
+        wrap
+      >
         <v-flex sm12>
           <h4>Box Chart</h4>
         </v-flex>
-        <v-flex lg4 sm6 xs12>
+        <v-flex
+          lg4
+          sm6
+          xs12
+        >
           <box-chart
             title="Page views"
             sub-title="10%"
@@ -70,10 +103,13 @@
             :data="dataset.monthVisit"
             :chart-color="[color.blue.darken1]"
             type="area"
-          >
-          </box-chart>
+          />
         </v-flex>
-        <v-flex lg4 sm6 xs12>
+        <v-flex
+          lg4
+          sm6
+          xs12
+        >
           <box-chart
             title="Monthly Sales"
             sub-title="10%"
@@ -82,10 +118,13 @@
             :data="dataset.monthVisit"
             :chart-color="[color.pink.lighten2]"
             type="bar"
-          >
-          </box-chart>
+          />
         </v-flex>
-        <v-flex lg4 sm6 xs12>
+        <v-flex
+          lg4
+          sm6
+          xs12
+        >
           <box-chart
             card-color="indigo"
             title="Page views"
@@ -94,22 +133,34 @@
             :data="dataset.monthVisit"
             :chart-color="[color.shades.white]"
             type="line"
-          >
-          </box-chart>
+          />
         </v-flex>
       </v-layout>
       <!-- complex chart -->
-      <v-layout row wrap>
+      <v-layout
+        row
+        wrap
+      >
         <v-flex sm12>
           <h4>Complex Chart</h4>
         </v-flex>
-        <v-flex lg4 sm12>
-          <v-card dark color="green">
+        <v-flex
+          lg4
+          sm12
+        >
+          <v-card
+            dark
+            color="green"
+          >
             <v-card-title>
               <div class="layout row ma-0">
-                <div class="subheading">Today</div>
-                <v-spacer></v-spacer>
-                <div class="caption"><v-icon>trending_up</v-icon> 20%</div>
+                <div class="subheading">
+                  Today
+                </div>
+                <v-spacer />
+                <div class="caption">
+                  <v-icon>trending_up</v-icon> 20%
+                </div>
               </div>
             </v-card-title>
             <v-responsive class="white--text">
@@ -131,18 +182,27 @@
                 ]"
                 height="200px"
                 width="100%"
-              >
-              </e-chart>
+              />
             </v-responsive>
             <v-card-text class="white">
               <div class="layout row align-center ma-0">
                 <div class="grey--text">
-                  <div class="caption">MAXIMUM BOUNCE</div>
-                  <div class="subheading mt-2">2500</div>
+                  <div class="caption">
+                    MAXIMUM BOUNCE
+                  </div>
+                  <div class="subheading mt-2">
+                    2500
+                  </div>
                 </div>
-                <v-spacer></v-spacer>
+                <v-spacer />
                 <div class="">
-                  <v-progress-circular :size="100" :width="15" :rotate="360" :value="10" color="blue">
+                  <v-progress-circular
+                    :size="100"
+                    :width="15"
+                    :rotate="360"
+                    :value="10"
+                    color="blue"
+                  >
                     10
                   </v-progress-circular>
                 </div>
@@ -150,13 +210,24 @@
             </v-card-text>
           </v-card>
         </v-flex>
-        <v-flex lg4 sm12>
-          <v-card class="elevation-0 box-shadow" dark color="pink">
+        <v-flex
+          lg4
+          sm12
+        >
+          <v-card
+            class="elevation-0 box-shadow"
+            dark
+            color="pink"
+          >
             <v-card-title>
               <div class="layout row ma-0">
-                <div class="subheading">Today</div>
-                <v-spacer></v-spacer>
-                <div class="caption"><v-icon>trending_up</v-icon> 20%</div>
+                <div class="subheading">
+                  Today
+                </div>
+                <v-spacer />
+                <div class="caption">
+                  <v-icon>trending_up</v-icon> 20%
+                </div>
               </div>
             </v-card-title>
             <v-responsive class="white--text">
@@ -172,18 +243,27 @@
                 ]"
                 height="200px"
                 width="100%"
-              >
-              </e-chart>
+              />
             </v-responsive>
             <v-card-text class="white">
               <div class="layout row align-center ma-0">
                 <div class="grey--text">
-                  <div class="caption">MAXIMUM BOUNCE</div>
-                  <div class="subheading mt-2">2500</div>
+                  <div class="caption">
+                    MAXIMUM BOUNCE
+                  </div>
+                  <div class="subheading mt-2">
+                    2500
+                  </div>
                 </div>
-                <v-spacer></v-spacer>
+                <v-spacer />
                 <div class="">
-                  <v-progress-circular :size="100" :width="15" :rotate="360" :value="10" color="blue">
+                  <v-progress-circular
+                    :size="100"
+                    :width="15"
+                    :rotate="360"
+                    :value="10"
+                    color="blue"
+                  >
                     10
                   </v-progress-circular>
                 </div>
@@ -191,13 +271,23 @@
             </v-card-text>
           </v-card>
         </v-flex>
-        <v-flex lg4 sm12>
-          <v-card color="blue darken-1" dark>
+        <v-flex
+          lg4
+          sm12
+        >
+          <v-card
+            color="blue darken-1"
+            dark
+          >
             <v-card-title>
               <div class="layout row ma-0">
-                <div class="subheading">Today</div>
-                <v-spacer></v-spacer>
-                <div class="caption"><v-icon>trending_up</v-icon> 20%</div>
+                <div class="subheading">
+                  Today
+                </div>
+                <v-spacer />
+                <div class="caption">
+                  <v-icon>trending_up</v-icon> 20%
+                </div>
               </div>
             </v-card-title>
             <v-responsive>
@@ -216,18 +306,27 @@
                 ]"
                 height="200px"
                 width="100%"
-              >
-              </e-chart>
+              />
             </v-responsive>
             <v-card-text class="white">
               <div class="layout row align-center ma-0">
                 <div class="grey--text">
-                  <div class="caption">MAXIMUM BOUNCE</div>
-                  <div class="subheading mt-2">2500</div>
+                  <div class="caption">
+                    MAXIMUM BOUNCE
+                  </div>
+                  <div class="subheading mt-2">
+                    2500
+                  </div>
                 </div>
-                <v-spacer></v-spacer>
+                <v-spacer />
                 <div class="">
-                  <v-progress-circular :size="100" :width="15" :rotate="360" :value="10" color="blue">
+                  <v-progress-circular
+                    :size="100"
+                    :width="15"
+                    :rotate="360"
+                    :value="10"
+                    color="blue"
+                  >
                     10
                   </v-progress-circular>
                 </div>
@@ -235,7 +334,11 @@
             </v-card-text>
           </v-card>
         </v-flex>
-        <v-flex lg6 sm12 xs12>
+        <v-flex
+          lg6
+          sm12
+          xs12
+        >
           <v-widget title="Analysis - Donut">
             <div slot="widget-content">
               <e-chart
@@ -262,12 +365,15 @@
                 ]"
                 height="350px"
                 width="100%"
-              >
-              </e-chart>
+              />
             </div>
           </v-widget>
         </v-flex>
-        <v-flex lg6 sm12 xs12>
+        <v-flex
+          lg6
+          sm12
+          xs12
+        >
           <v-widget title="Analysis - Pie">
             <div slot="widget-content">
               <e-chart
@@ -292,21 +398,35 @@
                 ]"
                 height="350px"
                 width="100%"
-              >
-              </e-chart>
+              />
             </div>
           </v-widget>
         </v-flex>
-        <v-flex lg12 sm12>
-          <v-tabs v-model="selectedTab" @change="handleTabChange">
-            <v-tab ripple href="#tab-1">
+        <v-flex
+          lg12
+          sm12
+        >
+          <v-tabs
+            v-model="selectedTab"
+            @change="handleTabChange"
+          >
+            <v-tab
+              ripple
+              href="#tab-1"
+            >
               Sales
             </v-tab>
-            <v-tab ripple href="#tab-2">
+            <v-tab
+              ripple
+              href="#tab-2"
+            >
               Visit
             </v-tab>
             <v-tabs-items v-model="selectedTab">
-              <v-tab-item value="tab-1" class="d-block">
+              <v-tab-item
+                value="tab-1"
+                class="d-block"
+              >
                 <v-card>
                   <e-chart
                     :path-option="[
@@ -317,18 +437,18 @@
                     ]"
                     height="350px"
                     width="100%"
-                  >
-                  </e-chart>
+                  />
                 </v-card>
               </v-tab-item>
               <v-tab-item value="tab-2">
                 <v-card>
                   <e-chart
-                    :path-option="[['dataset.source', dataset.monthVisit], ['series[0].type', 'line']]"
+                    :path-option="
+                      [['dataset.source', dataset.monthVisit], ['series[0].type', 'line']]
+                    "
                     height="350px"
                     width="100%"
-                  >
-                  </e-chart>
+                  />
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
@@ -370,12 +490,9 @@ export default {
       color: Material,
     };
   },
-  created() {
-    console.log(this.$refs.chart);
-  },
   methods: {
-    handleTabChange(val, e) {
-      // make sure the chart resized while parent from hidden to show
+    handleTabChange() {
+      // val, e - make sure the chart resized while parent from hidden to show
       window.dispatchEvent(new Event('resize'));
     },
   },

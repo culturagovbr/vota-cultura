@@ -1,57 +1,104 @@
 <template>
-    <v-toolbar color="primary" fixed dark app clipped-left flat>
-      <div class="toolbar-logo theme--dark primary darken-1">
-        <img :src="require('../assets/logo.svg')" alt="Logo do Sistema" class="ml-3 mt-2"/>
-        <v-toolbar-title class="ml-0 pl-3 mt-2">
-          <span>SLI</span>
-        </v-toolbar-title>
-        <v-btn class="button-drawer" color="primary darken-1" icon @click="handleDrawerToggle">
-          <v-icon v-html="drawer ? 'chevron_right' : 'chevron_left'"></v-icon>
+  <v-toolbar
+    color="primary"
+    fixed
+    dark
+    app
+    clipped-left
+    flat
+  >
+    <div class="toolbar-logo theme--dark primary darken-1">
+      <img
+        :src="require('../assets/logo.svg')"
+        alt="Logo do Sistema"
+        class="ml-3 mt-2"
+      >
+      <v-toolbar-title class="ml-0 pl-3 mt-2">
+        <span>SLI</span>
+      </v-toolbar-title>
+      <v-btn
+        class="button-drawer"
+        color="primary darken-1"
+        icon
+        @click="handleDrawerToggle"
+      >
+        <v-icon v-text="drawer ? 'chevron_right' : 'chevron_left'" />
+      </v-btn>
+    </div>
+    <v-spacer />
+    <v-toolbar-items>
+      <v-btn
+        icon
+        @click="handleFullScreen()"
+      >
+        <v-icon>fullscreen</v-icon>
+      </v-btn>
+      <v-menu
+        offset-y
+        origin="center center"
+        class="elelvation-1"
+        :nudge-bottom="14"
+        transition="scale-transition"
+      >
+        <v-btn
+          slot="activator"
+          icon
+          flat
+        >
+          <v-badge
+            color="red"
+            overlap
+          >
+            <span slot="badge">3</span>
+            <v-icon medium>
+              notifications
+            </v-icon>
+          </v-badge>
         </v-btn>
-      </div>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn icon @click="handleFullScreen()">
-          <v-icon>fullscreen</v-icon>
-        </v-btn>
-        <v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
-          <v-btn icon flat slot="activator">
-            <v-badge color="red" overlap>
-              <span slot="badge">3</span>
-              <v-icon medium>notifications</v-icon>
-            </v-badge>
-          </v-btn>
-          <notification-list></notification-list>
-        </v-menu>
-        <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
-          <v-btn icon large flat slot="activator">
-            <v-avatar size="30px">
-              <img src="/static/avatar/avatar_mds.png" alt="Michael Wang" />
-            </v-avatar>
-          </v-btn>
-          <v-list class="pa-0">
-            <v-list-tile
-              v-for="(item, index) in items"
-              :to="!item.href ? { name: item.name } : null"
-              :href="item.href"
-              @click="item.click"
-              ripple="ripple"
-              :disabled="item.disabled"
-              :target="item.target"
-              rel="noopener"
-              :key="index"
+        <notification-list />
+      </v-menu>
+      <v-menu
+        offset-y
+        origin="center center"
+        :nudge-bottom="10"
+        transition="scale-transition"
+      >
+        <v-btn
+          slot="activator"
+          icon
+          large
+          flat
+        >
+          <v-avatar size="30px">
+            <img
+              src="/static/avatar/avatar_mds.png"
+              alt="Michael Wang"
             >
-              <v-list-tile-action v-if="item.icon">
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-      </v-toolbar-items>
-    </v-toolbar>
+          </v-avatar>
+        </v-btn>
+        <v-list class="pa-0">
+          <v-list-tile
+            v-for="(item, index) in items"
+            :key="index"
+            :to="!item.href ? { name: item.name } : null"
+            :href="item.href"
+            ripple="ripple"
+            :disabled="item.disabled"
+            :target="item.target"
+            rel="noopener"
+            @click="item.click"
+          >
+            <v-list-tile-action v-if="item.icon">
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 <script>
 import NotificationList from '@/components/widgets/list/NotificationList';
@@ -86,9 +133,6 @@ export default {
         },
       ],
     };
-  },
-  mounted() {
-    console.log(this.$vuetify.breakpoint);
   },
   computed: {
     toolbarColor() {

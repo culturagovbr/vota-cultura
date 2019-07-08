@@ -2,7 +2,9 @@
   <v-card class="elevation-1 pa-3 login-card">
     <v-card-text>
       <div class="layout column align-center">
-        <h2 class="flex my-1 primary--text">Novo cadastro</h2>
+        <h2 class="flex my-1 primary--text">
+          Novo cadastro
+        </h2>
       </div>
       <v-form>
         <v-text-field
@@ -13,25 +15,39 @@
           autocomplete="username"
         >
           v-model="model.username"
-        ></v-text-field>
+          >
+        </v-text-field>
         <v-text-field
+          id="password"
+          v-model="model.password"
           append-icon="lock"
           name="password"
           label="Senha"
-          id="password"
           autocomplete="current-password"
           type="password"
-          v-model="model.password"
-        ></v-text-field>
+        />
         <v-layout justify-end>
           <a>Recuperar Senha</a>
         </v-layout>
       </v-form>
     </v-card-text>
     <div class="login-btn">
-      <v-btn block color="primary" :loading="loading" @click="cadastrar">Cadastrar</v-btn>
-      <v-spacer></v-spacer>
-      <v-btn block color="default" :to="{ name: 'login' }">Voltar</v-btn>
+      <v-btn
+        block
+        color="primary"
+        :loading="loading"
+        @click="cadastrar"
+      >
+        Cadastrar
+      </v-btn>
+      <v-spacer />
+      <v-btn
+        block
+        color="default"
+        :to="{ name: 'login' }"
+      >
+        Voltar
+      </v-btn>
     </div>
   </v-card>
 </template>

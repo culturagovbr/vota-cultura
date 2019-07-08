@@ -5,11 +5,21 @@
         <div class="layout row ma-0">
           <div class="sm6 xs6 flex">
             <div class="layout column ma-0 justify-center align-center">
-              <v-icon size="56px" :color="color">{{ icon }}</v-icon>
+              <v-icon
+                size="56px"
+                :color="color"
+              >
+                {{ icon }}
+              </v-icon>
             </div>
           </div>
-          <div class="sm6 xs6 flex text-sm-center py-3 white--text" :class="color">
-            <div class="headline">{{ title }}</div>
+          <div
+            class="sm6 xs6 flex text-sm-center py-3 white--text"
+            :class="color"
+          >
+            <div class="headline">
+              {{ title }}
+            </div>
             <span class="caption">{{ subTitle }}</span>
           </div>
         </div>
@@ -21,10 +31,22 @@
 <script>
 export default {
   props: {
-    icon: String,
-    title: String,
-    subTitle: String,
-    color: String,
+    icon: {
+      type: String,
+      default: '',
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    subTitle: {
+      type: String,
+      default: '',
+    },
+    color: {
+      type: String,
+      default: '',
+    },
   },
 };
 </script>

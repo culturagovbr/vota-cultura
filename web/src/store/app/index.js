@@ -1,9 +1,9 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from 'vuetify/es5/util/colors';
 
 const state = {
   mode: 'light',
   themeColor: process.env.VUE_APP_THEME_DEFAULT,
-  snackbar:  {
+  snackbar: {
     show: false,
     text: '',
     color: 'success',
@@ -12,21 +12,19 @@ const state = {
 };
 
 const getters = {
-  getThemeColor: state => {
-    return colors[state.themeColor].base
-  },
+  getThemeColor: state => colors[state.themeColor].base,
   snackbar: state => state.snackbar,
   mode: state => state.mode,
-} ;
+};
 
 const actions = {
   setSnackbar({ commit }, params) {
     commit('setSnackBar', params);
 
-    setTimeout((state) => {
+    setTimeout(() => {
       commit('setSnackBar', {
         show: false,
-      })
+      });
     }, state.snackbar.timeout, state);
   },
   setMensagemErro({ commit, state }, message) {
@@ -36,12 +34,11 @@ const actions = {
       text: message,
     });
 
-    setTimeout((state) => {
+    setTimeout(() => {
       commit('setSnackBar', {
         show: false,
-      })
+      });
     }, state.snackbar.timeout, state);
-
   },
   setMensagemSucesso({ commit }, message) {
     commit('setSnackBar', {
@@ -61,7 +58,7 @@ const actions = {
 
 const mutations = {
   setThemeColor(state, payload) {
-    state.themeColor = payload
+    state.themeColor = payload;
   },
   setSnackBar(state, payload) {
     state.snackbar = Object.assign({}, state.snackbar, payload);
@@ -74,4 +71,4 @@ export default {
   getters,
   actions,
   mutations,
-}
+};

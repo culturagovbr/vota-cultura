@@ -1,21 +1,34 @@
 <template>
   <v-card>
-    <v-toolbar color="teal" dark>
-      <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar
+      color="teal"
+      dark
+    >
+      <v-toolbar-side-icon />
       <v-toolbar-title>Topics</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-btn icon>
         <v-icon>more_vert</v-icon>
       </v-btn>
     </v-toolbar>
     <v-list>
-      <v-list-group v-model="item.active" v-for="item in items" :key="item.title" :prepend-icon="item.action" no-action>
+      <v-list-group
+        v-for="item in items"
+        :key="item.title"
+        v-model="item.active"
+        :prepend-icon="item.action"
+        no-action
+      >
         <v-list-tile slot="activator">
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-for="subItem in item.items" :key="subItem.title" href="#">
+        <v-list-tile
+          v-for="subItem in item.items"
+          :key="subItem.title"
+          href="#"
+        >
           <v-list-tile-content>
             <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
           </v-list-tile-content>

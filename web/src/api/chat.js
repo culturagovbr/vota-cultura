@@ -446,6 +446,7 @@ const Messages = [
 // Add user to map
 Messages.map((item) => {
   const tmp = User().find(x => x.uuid === item.userId);
+  /* eslint-disable no-param-reassign */
   item.user = {
     uuid: tmp.uuid,
     name: tmp.name,
@@ -456,6 +457,7 @@ Messages.map((item) => {
 
 // add messages to group
 Groups.map((item) => {
+  /* eslint-disable no-param-reassign */
   item.messages = Messages.filter(x => x.chatId === item.uuid);
   item.user = User().find(x => x.uuid === item.created_by);
   return item;

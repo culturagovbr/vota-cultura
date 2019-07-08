@@ -12,22 +12,35 @@
             &nbsp; Add Folder
           </v-btn>
         </v-btn-toggle>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn-toggle v-model="view">
-          <v-btn flat value="list">
+          <v-btn
+            flat
+            value="list"
+          >
             <v-icon>view_headline</v-icon>
           </v-btn>
-          <v-btn flat value="grid">
+          <v-btn
+            flat
+            value="grid"
+          >
             <v-icon>view_list</v-icon>
           </v-btn>
         </v-btn-toggle>
       </v-toolbar>
-      <v-divider></v-divider>
+      <v-divider />
     </div>
     <div class="layout row">
       <div class="media-aside media-menu">
-        <v-list dense class="transparent">
-          <v-list-tile v-for="(item, index) in mediaMenu" :key="index" :to="item.to">
+        <v-list
+          dense
+          class="transparent"
+        >
+          <v-list-tile
+            v-for="(item, index) in mediaMenu"
+            :key="index"
+            :to="item.to"
+          >
             <v-list-tile-action v-if="item.icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
@@ -38,10 +51,10 @@
         </v-list>
       </div>
       <div class="media-content flex transparent">
-        <router-view name="MediaList"></router-view>
+        <router-view name="MediaList" />
       </div>
       <div class="media-aside media-detail">
-        <router-view name="MediaDetail"></router-view>
+        <router-view name="MediaDetail" />
       </div>
     </div>
   </div>

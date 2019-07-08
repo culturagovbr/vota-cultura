@@ -9,7 +9,8 @@ export default [
     avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
     title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
     subtitle:
-      "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.",
+      "<span class='text--primary'>to Alex, Scott, Jennifer</span> "
+      + "&mdash; Wish I could come, but I'm out of town this weekend.",
   },
   { divider: true, inset: true },
   {

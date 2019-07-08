@@ -1,7 +1,5 @@
 <template>
-  <div id="pageDashboard">
-
-  </div>
+  <div id="pageDashboard" />
 </template>
 
 <script>

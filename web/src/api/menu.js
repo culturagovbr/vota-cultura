@@ -79,6 +79,7 @@ Menu.forEach((item) => {
     item.items.sort((x, y) => {
       const textA = x.title.toUpperCase();
       const textB = y.title.toUpperCase();
+      /* eslint-disable */
       return textA < textB ? -1 : textA > textB ? 1 : 0;
     });
   }

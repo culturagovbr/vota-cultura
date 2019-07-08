@@ -3,13 +3,22 @@
     <v-card-text>
       <div class="layout row ma-0 align-center justify-space-between">
         <div class="text-box">
-          <div class="subheading pb-2">{{ title }}</div>
-          <span class="grey--text"
-            >{{ subTitle }} <v-icon small :color="iconColor">{{ icon }}</v-icon></span
-          >
+          <div class="subheading pb-2">
+            {{ title }}
+          </div>
+          <span
+            class="grey--text"
+          >{{ subTitle }} <v-icon
+            small
+            :color="iconColor"
+          >{{ icon }}</v-icon></span>
         </div>
         <div class="chart">
-          <e-chart :path-option="computeChartOption" height="68px" width="100%"> </e-chart>
+          <e-chart
+            :path-option="computeChartOption"
+            height="68px"
+            width="100%"
+          />
         </div>
       </div>
     </v-card-text>
@@ -63,6 +72,11 @@ export default {
       ],
     };
   },
+  computed: {
+    computeChartOption() {
+      return this.defaultOption;
+    },
+  },
 
   watch: {
     type: {
@@ -81,11 +95,6 @@ export default {
         }
         return this.defaultOption;
       },
-    },
-  },
-  computed: {
-    computeChartOption() {
-      return this.defaultOption;
     },
   },
 };

@@ -1,19 +1,40 @@
 <template>
   <v-card class="post-card">
-    <v-toolbar color="transparent" flat dense card>
-      <v-toolbar-title class="subheading ft-200">Recent Posts</v-toolbar-title>
-      <v-spacer></v-spacer>
+    <v-toolbar
+      color="transparent"
+      flat
+      dense
+      card
+    >
+      <v-toolbar-title class="subheading ft-200">
+        Recent Posts
+      </v-toolbar-title>
+      <v-spacer />
       <v-btn icon>
-        <v-icon class="text--secondary">more_vert</v-icon>
+        <v-icon class="text--secondary">
+          more_vert
+        </v-icon>
       </v-btn>
     </v-toolbar>
-    <v-divider></v-divider>
+    <v-divider />
     <v-card-text class="pa-0">
       <ul class="post--list flex-list vertical">
-        <li class="post--item" v-for="(item, key) in items" :key="key">
-          <a href="#" class=" post--link pa-4 layout row ma-0 text--primary">
+        <li
+          v-for="(item, key) in items"
+          :key="key"
+          class="post--item"
+        >
+          <a
+            href="#"
+            class=" post--link pa-4 layout row ma-0 text--primary"
+          >
             <div class="post--media">
-              <img :src="item.featuredImage" alt="" height="100" class="image-scale" />
+              <img
+                :src="item.featuredImage"
+                alt=""
+                height="100"
+                class="image-scale"
+              >
             </div>
             <div class="post--content ml-3">
               <h3 class="title post--title">
@@ -28,15 +49,24 @@
                   <time class="px-2">{{ item.createdAt }}</time>
                 </div>
                 <div class="social">
-                  <a @click="handleThumb" class="grey--text text--darken-1">
+                  <a
+                    class="grey--text text--darken-1"
+                    @click="handleThumb"
+                  >
                     <v-icon small>thumb_up</v-icon>
                     <small>100+</small>
                   </a>
-                  <a @click="handleComment" class="grey--text text--darken-1 mx-3">
+                  <a
+                    class="grey--text text--darken-1 mx-3"
+                    @click="handleComment"
+                  >
                     <v-icon small>mode_comment</v-icon>
                     <small>12+</small>
                   </a>
-                  <a @click="handleFavorite" class="grey--text text--darken-1">
+                  <a
+                    class="grey--text text--darken-1"
+                    @click="handleFavorite"
+                  >
                     <v-icon small>favorite</v-icon>
                     <small>50+</small>
                   </a>
@@ -53,7 +83,7 @@
 <script>
 export default {
   props: {
-    items: { type: [Array, Object] },
+    items: { type: [Array, Object], default: () => {} },
   },
 
   methods: {

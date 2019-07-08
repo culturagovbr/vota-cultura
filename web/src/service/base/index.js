@@ -16,7 +16,6 @@ const tratarErro = (erro) => {
   eventHub.$emit('eventoErro', msgErro);
 };
 
-const self = this;
 instance.interceptors.request.use((config) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const conf = config;
@@ -31,10 +30,7 @@ instance.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-instance.interceptors.response.use(response =>
-  // Do something with response data
-  response,
-(error) => {
+instance.interceptors.response.use(response => response, (error) => {
   tratarErro(error);
   return Promise.reject(error);
 });

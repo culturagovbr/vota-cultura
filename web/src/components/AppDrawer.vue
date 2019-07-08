@@ -1,14 +1,20 @@
 <template>
   <v-navigation-drawer
+    v-model="showDrawer"
     class="app--drawer"
     :mini-variant.sync="mini"
     app
     clipped
-    v-model="showDrawer"
     :width="drawWidth"
   >
-    <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
-      <v-list dense expand>
+    <vue-perfect-scrollbar
+      class="drawer-menu--scroll"
+      :settings="scrollSettings"
+    >
+      <v-list
+        dense
+        expand
+      >
         <template v-for="item in menus">
           <!--group with subitems-->
           <v-list-group
@@ -18,15 +24,26 @@
             :prepend-icon="item.icon"
             no-action="no-action"
           >
-            <v-list-tile slot="activator" ripple="ripple">
+            <v-list-tile
+              slot="activator"
+              ripple="ripple"
+            >
               <v-list-tile-content>
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <template v-for="subItem in item.items">
               <!--sub group-->
-              <v-list-group v-if="subItem.items" :key="subItem.name" :group="subItem.group" sub-group="sub-group">
-                <v-list-tile slot="activator" ripple="ripple">
+              <v-list-group
+                v-if="subItem.items"
+                :key="subItem.name"
+                :group="subItem.group"
+                sub-group="sub-group"
+              >
+                <v-list-tile
+                  slot="activator"
+                  ripple="ripple"
+                >
                   <v-list-tile-content>
                     <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
                   </v-list-tile-content>
@@ -59,23 +76,33 @@
                   </v-list-tile-title>
                 </v-list-tile-content>
                 <v-list-tile-action v-if="subItem.action">
-                  <v-icon :class="[subItem.actionClass || 'success--text']">{{ subItem.action }}</v-icon>
+                  <v-icon :class="[subItem.actionClass || 'success--text']">
+                    {{ subItem.action }}
+                  </v-icon>
                 </v-list-tile-action>
               </v-list-tile>
             </template>
           </v-list-group>
-          <v-subheader v-else-if="item.header" :key="item.name">{{ item.header }}</v-subheader>
-          <v-divider v-else-if="item.divider" :key="item.name"></v-divider>
+          <v-subheader
+            v-else-if="item.header"
+            :key="item.name"
+          >
+            {{ item.header }}
+          </v-subheader>
+          <v-divider
+            v-else-if="item.divider"
+            :key="item.name"
+          />
           <!--top-level link-->
           <v-list-tile
             v-else
+            :key="item.name"
             :to="!item.href ? { name: item.name } : null"
             :href="item.href"
             ripple="ripple"
             :disabled="item.disabled"
             :target="item.target"
             rel="noopener"
-            :key="item.name"
           >
             <v-list-tile-action v-if="item.icon">
               <v-icon>{{ item.icon }}</v-icon>
@@ -84,7 +111,9 @@
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action v-if="item.subAction">
-              <v-icon class="success--text">{{ item.subAction }}</v-icon>
+              <v-icon class="success--text">
+                {{ item.subAction }}
+              </v-icon>
             </v-list-tile-action>
           </v-list-tile>
         </template>
@@ -133,13 +162,14 @@ export default {
 
   methods: {
     genChildTarget(item, subItem) {
-      if (subItem.href) return;
-      if (subItem.component) {
-        return {
-          name: subItem.component,
-        };
+      if (subItem.href) {
+        return {};
       }
-      return { name: `${item.group}/${subItem.name}` };
+      let child = { name: `${item.group}/${subItem.name}` };
+      if (subItem.component) {
+        child = { name: subItem.component };
+      }
+      return child;
     },
   },
 };

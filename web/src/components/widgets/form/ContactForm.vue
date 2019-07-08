@@ -2,15 +2,17 @@
   <v-card ref="form">
     <v-card-text>
       <v-text-field
+        ref="name"
+        v-model="name"
         label="Full Name"
         placeholder="John Doe"
-        v-model="name"
         required
-        ref="name"
         :rules="[() => !!name || 'This field is required']"
         :error-messages="errorMessages"
-      ></v-text-field>
+      />
       <v-text-field
+        ref="address"
+        v-model="address"
         label="Address Line"
         placeholder="Snowy Rock Pl"
         :rules="[
@@ -18,59 +20,73 @@
           () => (!!address && address.length <= 25) || 'Address must be less than 25 characters',
           addressCheck
         ]"
-        v-model="address"
-        ref="address"
         counter="25"
         required
-      ></v-text-field>
+      />
       <v-text-field
+        ref="city"
+        v-model="city"
         label="City"
         placeholder="El Paso"
         :rules="[() => !!city || 'This field is required', addressCheck]"
-        v-model="city"
-        ref="city"
         required
-      ></v-text-field>
+      />
       <v-text-field
-        label="State/Province/Region"
+        ref="state"
         v-model="state"
+        label="State/Province/Region"
         :rules="[() => !!state || 'This field is required']"
         required
-        ref="state"
         placeholder="TX"
-      ></v-text-field>
+      />
       <v-text-field
+        ref="zip"
+        v-model="zip"
         label="ZIP / Postal Code"
         required
         :rules="[() => !!zip || 'This field is required']"
-        v-model="zip"
-        ref="zip"
         placeholder="79938"
-      ></v-text-field>
+      />
       <v-select
+        ref="country"
+        v-model="country"
         autocomplete
         label="Country"
         placeholder="Select..."
         :rules="[() => !!country || 'This field is required']"
         :items="countries"
-        v-model="country"
-        ref="country"
         required
-      ></v-select>
+      />
     </v-card-text>
-    <v-divider class="mt-5"></v-divider>
+    <v-divider class="mt-5" />
     <v-card-actions>
-      <v-btn flat>Cancel</v-btn>
-      <v-spacer></v-spacer>
+      <v-btn flat>
+        Cancel
+      </v-btn>
+      <v-spacer />
       <v-slide-x-reverse-transition>
-        <v-tooltip left v-if="formHasErrors">
-          <v-btn icon @click="resetForm" slot="activator" class="my-0">
+        <v-tooltip
+          v-if="formHasErrors"
+          left
+        >
+          <v-btn
+            slot="activator"
+            icon
+            class="my-0"
+            @click="resetForm"
+          >
             <v-icon>refresh</v-icon>
           </v-btn>
           <span>Refresh form</span>
         </v-tooltip>
       </v-slide-x-reverse-transition>
-      <v-btn color="primary" flat @click="submit">Submit</v-btn>
+      <v-btn
+        color="primary"
+        flat
+        @click="submit"
+      >
+        Submit
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>

@@ -1,29 +1,52 @@
 <template>
   <v-card>
-    <v-toolbar card dense color="transparent">
+    <v-toolbar
+      card
+      dense
+      color="transparent"
+    >
       <v-toolbar-title><h4>Order</h4></v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-btn icon>
         <v-icon>more_vert</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-divider></v-divider>
+    <v-divider />
     <v-card-text class="pa-0">
       <template>
-        <v-data-table :headers="headers" :items="items" hide-actions class="elevation-0 table-striped">
-          <template slot="items" slot-scope="props">
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          hide-actions
+          class="elevation-0 table-striped"
+        >
+          <template
+            slot="items"
+            slot-scope="props"
+          >
             <td>{{ props.item.id }}</td>
-            <td class="text-xs-left">{{ props.item.product }}</td>
-            <td class="text-xs-left">{{ props.item.price }}</td>
             <td class="text-xs-left">
-              <v-chip label small :color="getColorByStatus(props.item.status)" text-color="white">{{
-                props.item.status
-              }}</v-chip>
+              {{ props.item.product }}
+            </td>
+            <td class="text-xs-left">
+              {{ props.item.price }}
+            </td>
+            <td class="text-xs-left">
+              <v-chip
+                label
+                small
+                :color="getColorByStatus(props.item.status)"
+                text-color="white"
+              >
+                {{
+                  props.item.status
+                }}
+              </v-chip>
             </td>
           </template>
         </v-data-table>
       </template>
-      <v-divider></v-divider>
+      <v-divider />
     </v-card-text>
   </v-card>
 </template>

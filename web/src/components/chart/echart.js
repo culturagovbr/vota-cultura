@@ -3,32 +3,20 @@
  * Michael Wang
  */
 import colors from 'vuetify/es5/util/colors';
+/* eslint-disable import/no-extraneous-dependencies */
 import _object from 'lodash/object';
 
 const ECharts = window.echarts || undefined;
-if (ECharts === undefined) {
-  console.error('ECharts is not defined');
-}
 // set color palette
 const colorPalette = [];
 Object.entries(colors).forEach((item) => {
   if (item[1].base) {
     colorPalette.push(item[1].base);
   }
-})
-// default
-// const colorPalette = ['#d87c7c', '#919e8b', '#d7ab82', '#6e7074', '#61a0a8', '#efa18d', '#787464', '#cc7e63', '#724e58', '#4b565b'];
-// ECharts.registerTheme('material', {
-//   color: colorPalette,
-//   graph: {
-//     color: colorPalette
-//   }
-//   textStyle: {
-
-//   }
-// });
-;(function () {
+  /* eslint-disable */
+})(function () {
   const throttle = function (type, name, obj) {
+    /* eslint-disable no-param-reassign */
     obj = obj || window;
     let running = false;
     const func = function () {
@@ -43,7 +31,7 @@ Object.entries(colors).forEach((item) => {
     };
     obj.addEventListener(type, func);
   };
-  /* init - you can init any event */
+    /* init - you can init any event */
   throttle('resize', 'optimizedResize');
 }());
 export default {
@@ -192,17 +180,17 @@ export default {
   },
   methods: {
     init() {
-      const { widthChangeDelay } = this;
       // set
       if (this.pathOption) {
         this.pathOption.forEach((p) => {
+          /* eslint-disable no-underscore-dangle */
           _object.set(this.$data._defaultOption, p[0], p[1]);
         });
       }
       this.chartInstance = ECharts.init(this.$refs.canvas, 'material');
       this.chartInstance.setOption(_object.merge(this.option, this.$data._defaultOption));
-      window.addEventListener('optimizedResize', (e) => {
-        setTimeout((_) => {
+      window.addEventListener('optimizedResize', () => {
+        setTimeout(() => {
           this.chartInstance.resize();
         }, this.widthChangeDelay);
       });

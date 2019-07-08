@@ -1,42 +1,93 @@
 <template>
   <div id="page-statistic">
-    <v-container grid-list-xl fluid>
-      <v-layout row wrap>
+    <v-container
+      grid-list-xl
+      fluid
+    >
+      <v-layout
+        row
+        wrap
+      >
         <v-flex sm12>
           <h4>Social</h4>
         </v-flex>
         <!-- mini statistic start -->
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-facebook" title="100+" sub-title="Likes" color="indigo"> </mini-statistic>
+        <v-flex
+          lg3
+          sm6
+          xs12
+        >
+          <mini-statistic
+            icon="fa fa-facebook"
+            title="100+"
+            sub-title="Likes"
+            color="indigo"
+          />
         </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-google" title="150+" sub-title="Connections" color="red"> </mini-statistic>
+        <v-flex
+          lg3
+          sm6
+          xs12
+        >
+          <mini-statistic
+            icon="fa fa-google"
+            title="150+"
+            sub-title="Connections"
+            color="red"
+          />
         </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-twitter" title="200+" sub-title="Followers" color="light-blue"> </mini-statistic>
+        <v-flex
+          lg3
+          sm6
+          xs12
+        >
+          <mini-statistic
+            icon="fa fa-twitter"
+            title="200+"
+            sub-title="Followers"
+            color="light-blue"
+          />
         </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-instagram" title="50+" sub-title="Shots" color="purple"> </mini-statistic>
+        <v-flex
+          lg3
+          sm6
+          xs12
+        >
+          <mini-statistic
+            icon="fa fa-instagram"
+            title="50+"
+            sub-title="Shots"
+            color="purple"
+          />
         </v-flex>
         <!-- linear statistic  end -->
         <v-flex sm12>
           <h4>Linear Trending</h4>
         </v-flex>
-        <v-flex lg4 sm12 v-for="(item, index) in trending" :key="'trending' + index">
+        <v-flex
+          v-for="(item, index) in trending"
+          :key="'trending' + index"
+          lg4
+          sm12
+        >
           <linear-statistic
             :title="item.subheading"
             :sub-title="item.caption"
             :icon="item.icon.label"
             :color="item.icon.color"
             :value="item.linear.value"
-          >
-          </linear-statistic>
+          />
         </v-flex>
         <!-- circle statistic  end -->
         <v-flex sm12>
           <h4>Circle Trending</h4>
         </v-flex>
-        <v-flex lg4 sm12 v-for="(item, index) in trending2" :key="'c-trending' + index">
+        <v-flex
+          v-for="(item, index) in trending2"
+          :key="'c-trending' + index"
+          lg4
+          sm12
+        >
           <circle-statistic
             :title="item.subheading"
             :sub-title="item.headline"
@@ -44,8 +95,7 @@
             :icon="item.icon.label"
             :color="item.linear.color"
             :value="item.linear.value"
-          >
-          </circle-statistic>
+          />
         </v-flex>
       </v-layout>
     </v-container>

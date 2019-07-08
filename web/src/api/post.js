@@ -2,7 +2,9 @@ const posts = [
   {
     title: 'A sample post with image',
     desc:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make text of the printing and typesetting industry scrambled a type specimen book text of the dummy text of the printing printing and typesetting industry scrambled dummy text of the printing.',
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make '
+      + 'text of the printing and typesetting industry scrambled a type specimen book text of the dummy'
+      + ' text of the printing printing and typesetting industry scrambled dummy text of the printing.',
     featuredImage: '/static/discover_word/thumb/ds_1.jpg',
     author: 'Jessie Wang',
     createdAt: new Date().toLocaleDateString(),
@@ -10,7 +12,9 @@ const posts = [
   {
     title: 'A sample post with image',
     desc:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make text of the printing and typesetting industry scrambled a type specimen book text of the dummy text of the printing printing and typesetting industry scrambled dummy text of the printing.',
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make '
+      + 'text of the printing and typesetting industry scrambled a type specimen book text of the dummy '
+      + 'text of the printing printing and typesetting industry scrambled dummy text of the printing.',
     featuredImage: '/static/discover_word/thumb/ds_2.jpg',
     author: 'Li Love',
     createdAt: new Date().toLocaleDateString(),
@@ -18,7 +22,9 @@ const posts = [
   {
     title: 'A sample post with image',
     desc:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make text of the printing and typesetting industry scrambled a type specimen book text of the dummy text of the printing printing and typesetting industry scrambled dummy text of the printing.',
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make '
+      + 'text of the printing and typesetting industry scrambled a type specimen book text of the dummy '
+      + 'text of the printing printing and typesetting industry scrambled dummy text of the printing.',
     featuredImage: '/static/discover_word/thumb/ds_3.jpg',
     author: 'Jim Wang',
     createdAt: new Date().toLocaleDateString(),
@@ -26,7 +32,9 @@ const posts = [
   {
     title: 'A sample post with image',
     desc:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make text of the printing and typesetting industry scrambled a type specimen book text of the dummy text of the printing printing and typesetting industry scrambled dummy text of the printing.',
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make '
+      + 'text of the printing and typesetting industry scrambled a type specimen book text of the dummy '
+      + 'text of the printing printing and typesetting industry scrambled dummy text of the printing.',
     featuredImage: '/static/discover_word/thumb/ds_4.jpg',
     author: 'John Doe',
     createdAt: new Date().toLocaleDateString(),
@@ -35,4 +43,5 @@ const posts = [
 
 const getPost = limit => (limit ? posts.slice(0, limit) : posts);
 
+/* eslint-disable import/prefer-default-export */
 export { getPost };

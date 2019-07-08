@@ -2,15 +2,28 @@
   <v-card>
     <v-card-title>
       <div class="layout row ma-0 justify-space-between pb-1">
-        <div class="subheading">{{ title }}</div>
+        <div class="subheading">
+          {{ title }}
+        </div>
         <div class="icon">
-          <v-icon mini :color="color">{{ icon }}</v-icon>
+          <v-icon
+            mini
+            :color="color"
+          >
+            {{ icon }}
+          </v-icon>
         </div>
       </div>
     </v-card-title>
     <v-card-text class="pt-2">
-      <h3 class="headline">{{ subTitle }}</h3>
-      <v-progress-linear :value="value" height="5" :color="color"></v-progress-linear>
+      <h3 class="headline">
+        {{ subTitle }}
+      </h3>
+      <v-progress-linear
+        :value="value"
+        height="5"
+        :color="color"
+      />
       <span class="caption">{{ caption }}</span>
     </v-card-text>
   </v-card>
@@ -19,11 +32,26 @@
 <script>
 export default {
   props: {
-    icon: String,
-    title: String,
-    subTitle: String,
-    value: Number,
-    color: String,
+    icon: {
+      type: String,
+      default: '',
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    subTitle: {
+      type: String,
+      default: '',
+    },
+    value: {
+      type: Number,
+      default: 0,
+    },
+    color: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     caption() {

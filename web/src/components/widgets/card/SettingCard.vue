@@ -1,10 +1,16 @@
 <template>
   <v-card>
-    <v-toolbar color="teal" dark>
-      <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar
+      color="teal"
+      dark
+    >
+      <v-toolbar-side-icon />
       <v-toolbar-title>Settings</v-toolbar-title>
     </v-toolbar>
-    <v-list two-line subheader>
+    <v-list
+      two-line
+      subheader
+    >
       <v-subheader>General</v-subheader>
       <v-list-tile avatar>
         <v-list-tile-content>
@@ -19,12 +25,15 @@
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
-    <v-divider></v-divider>
-    <v-list two-line subheader>
+    <v-divider />
+    <v-list
+      two-line
+      subheader
+    >
       <v-subheader>Hangout notifications</v-subheader>
       <v-list-tile avatar>
         <v-list-tile-action>
-          <v-checkbox v-model="notifications"></v-checkbox>
+          <v-checkbox v-model="notifications" />
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Notifications</v-list-tile-title>
@@ -33,7 +42,7 @@
       </v-list-tile>
       <v-list-tile avatar>
         <v-list-tile-action>
-          <v-checkbox v-model="sound"></v-checkbox>
+          <v-checkbox v-model="sound" />
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Sound</v-list-tile-title>
@@ -42,7 +51,7 @@
       </v-list-tile>
       <v-list-tile avatar>
         <v-list-tile-action>
-          <v-checkbox v-model="video"></v-checkbox>
+          <v-checkbox v-model="video" />
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Video sounds</v-list-tile-title>
@@ -51,7 +60,7 @@
       </v-list-tile>
       <v-list-tile avatar>
         <v-list-tile-action>
-          <v-checkbox v-model="invites"></v-checkbox>
+          <v-checkbox v-model="invites" />
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Invites</v-list-tile-title>
