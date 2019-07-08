@@ -1,0 +1,102 @@
+version: '3.5'
+services:
+  database-service:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sli -d sli || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    image: postgres:10
+    container_name: sli-database
+    environment:
+      - POSTGRES_PASSWORD=senhasli
+      - POSTGRES_USER=sli
+      - POSTGRES_DB=sli
+      - POSTGRES_DB_TEST=sli-test
+    ports:
+      - "5433:5432"
+    expose:
+      - "5432"
+    volumes:
+      - ./database/docker-data/postgres:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
+    networks:
+      - sli_network
+  #
+  #  webapp-service:
+  #    #    build: ./webapp
+  #    image: mds/sli-webapp:1.0.2
+  #    container_name: sli-webapp
+  #    healthcheck:
+  #      test: ["CMD", "curl", "-sS", "http://localhost:8080"]
+  #      #      test: ["CMD-SHELL", "node /home/node/app/healthcheck.js"]
+  #      interval: 20s
+  #      timeout: 5s
+  #      retries: 3
+  #    volumes:
+  #      - ./webapp:/home/node/app
+  #    command:
+  #      sh -c 'npm i && npm run serve'
+  #    ports:
+  #      - "8088:8080"
+  #    environment:
+  #      - NODE_CONFIG_ENV=development
+  #      - NODE_ENV=development
+  #      #- NODE_CONFIG_ENV=production
+  #      #- NODE_ENV=production
+  #      - VUE_APP_API_HOST=localhost
+  #      - VUE_APP_API_PORT=88
+  #      - VUE_WEBAPP_HOST=localhost
+  #      - VUE_WEBAPP_PORT=8088
+  #      - VUE_APP_WEBSOCKET_HOST=localhost
+  #      - VUE_APP_WEBSOCKET_PORT=8001
+  #      - VUE_APP_JWT_SECRET=SDfsdfQWEFwefWEfEtWERQWasdQWEs
+  #    links:
+  #      - api-service:sli-api
+  #    networks:
+  #      - sli_network
+
+  api-service:
+    container_name: sli-api
+    build: ./api
+    image: mds/sli-php-fpm:1.2.1
+    working_dir: /application
+    volumes:
+      - ./api:/application
+      #- ./api/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+    environment:
+      - APP_ENV=local
+    depends_on:
+      - database-service
+    links:
+      - database-service
+      # CONTAINER:ALIAS
+    restart: on-failure
+    networks:
+      - sli_network
+
+  webserver-service:
+    build:
+      context: ./api
+      dockerfile: WebserverDockerfile
+      args:
+        EXPOSE_PORT: 80
+    image: mds/sli-webserver-nginx:1.0.0
+    container_name: sli-webserver
+    working_dir: /application
+    volumes:
+      - ./api:/application
+      - ./api/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "88:80"
+    depends_on:
+      - api-service
+    networks:
+      - sli_network
+
+# docker network create sli_network
+
+networks:
+  sli_network:
+    name: sli_network
+    driver: bridge
