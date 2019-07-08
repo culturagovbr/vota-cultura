@@ -13,6 +13,7 @@ class UsuarioPerfil extends Model
     protected $fillable = [
         'co_usuario',
         'co_perfil',
+        'st_perfil_atual',
     ];
 
     public $timestamps = false;
