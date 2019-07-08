@@ -11,7 +11,9 @@ node_modules
 release
 /dist
 package-lock.json
-front/package-lock.json
+webapp/package-lock.json
+composer.lock
+api/composer.lock
 
 # Editor directories and files
 .idea

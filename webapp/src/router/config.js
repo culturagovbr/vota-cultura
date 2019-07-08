@@ -23,7 +23,6 @@ export const publicRoute = [
       },
     ],
   },
-
   {
     path: '/404',
     name: '404',
