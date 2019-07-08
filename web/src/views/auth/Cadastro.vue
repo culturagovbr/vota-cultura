@@ -60,11 +60,10 @@ export default {
     appTitle: process.env.VUE_APP_TITLE,
     loading: false,
     model: {
-      username: '012.345.678.90',
-      password: 'password',
+      username: '12345678901',
+      password: '123456',
     },
   }),
-
   methods: {
     ...mapActions({
       autenticarUsuario: 'usuario/autenticarUsuario',

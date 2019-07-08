@@ -8,16 +8,16 @@
       </div>
       <v-form>
         <v-text-field
-          v-model="model.username"
+          v-model="model.no_cpf"
           append-icon="person"
           name="login"
           label="CPF"
           type="text"
-          autocomplete="username"
+          autocomplete="no_cpf"
         />
         <v-text-field
           id="password"
-          v-model="model.password"
+          v-model="model.ds_senha"
           append-icon="lock"
           name="password"
           label="Senha"
@@ -58,8 +58,8 @@ export default {
     appTitle: process.env.VUE_APP_TITLE,
     loading: false,
     model: {
-      username: '012.345.678.90',
-      password: 'password',
+      no_cpf: '12345678901',
+      ds_senha: '123456',
     },
   }),
 
@@ -71,12 +71,11 @@ export default {
       this.loading = true;
       // handle login
 
-      this.autenticarUsuario(this.model).finally(() => {
+      this.autenticarUsuario(this.model).then((response) => {
+        this.$router.push('/');
+      }).finally(() => {
         this.loading = false;
       });
-      // setTimeout(() => {
-      //   this.$router.push('/dashboard');
-      // }, 1000);
     },
   },
 };

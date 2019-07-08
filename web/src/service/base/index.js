@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { obterInformacoesJWT } from '../helpers/jwt';
 import { eventHub } from '@/event';
 
 const instance = axios.create({
@@ -9,27 +10,33 @@ const tratarErro = (erro) => {
   let msgErro = 'Desculpe, houve um erro ao executar a operação';
 
   if (typeof erro === 'object') {
-    const erroObjeto = JSON.parse(JSON.stringify(erro));
-    msgErro = erroObjeto.message;
+    msgErro = erro;
+    if (Object.keys(JSON.parse(JSON.stringify(erro))) > 0) {
+      msgErro = JSON.parse(JSON.stringify(erro)).message;
+    }
   }
-
   eventHub.$emit('eventoErro', msgErro);
 };
 
+const isEmpty = string => (!string || string.length === 0);
+
+// request
 instance.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const userToken = localStorage.getItem('user_token');
   const conf = config;
 
-  if (user) {
-    conf.headers.Authorization = `Bearer ${user.token}`;
-  }
+  const tokenValida = !isEmpty(obterInformacoesJWT(userToken));
 
+  if (tokenValida) {
+    conf.headers.Authorization = `Bearer ${userToken}`;
+  }
   return conf;
 }, (error) => {
   tratarErro(error);
   return Promise.reject(error);
 });
 
+// response
 instance.interceptors.response.use(response => response, (error) => {
   tratarErro(error);
   return Promise.reject(error);
@@ -44,7 +51,6 @@ const buildData = (params) => {
 
   return bodyFormData;
 };
-
 
 export const getRequest = (path, params = '') => instance.get(path, params);
 
