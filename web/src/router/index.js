@@ -8,7 +8,7 @@ const routes = publicRoute.concat(protectedRoute);
 
 Vue.use(Router);
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   linkActiveClass: 'active',
   routes,
 });

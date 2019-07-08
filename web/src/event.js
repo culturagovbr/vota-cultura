@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 export default [
   {
     name: 'APP_LOGIN_SUCCESS',
@@ -52,3 +54,5 @@ export default [
     },
   },
 ];
+
+export const eventHub = new Vue();

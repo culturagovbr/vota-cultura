@@ -9,8 +9,9 @@
     <v-navigation-drawer class="setting-drawer" temporary right v-model="rightDrawer" hide-overlay fixed>
       <theme-settings></theme-settings>
     </v-navigation-drawer>
+
     <!-- global snackbar -->
-    <v-snackbar :timeout="3000" bottom right :color="snackbar.color" v-model="snackbar.show">
+    <v-snackbar :timeout="snackbar.timeout" bottom right :color="snackbar.color" :value="snackbar.show">
       {{ snackbar.text }}
       <v-btn dark flat @click.native="snackbar.show = false" icon>
         <v-icon>close</v-icon>
@@ -20,8 +21,10 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import ThemeSettings from '@/components/ThemeSettings';
-import AppEvents from './event';
+import { eventHub } from './event';
+
 
 export default {
   components: {
@@ -30,17 +33,23 @@ export default {
   data() {
     return {
       rightDrawer: false,
-      snackbar: {
-        show: false,
-        text: '',
-        color: '',
-      },
     };
   },
   created() {
-    // add app events
+    const self = this;
+    eventHub.$on('eventoErro', (payload) => {
+      self.notificarErro(payload);
+    });
+  },
+  computed: {
+    ...mapGetters({
+      snackbar: 'app/snackbar',
+    }),
   },
   methods: {
+    ...mapActions({
+      notificarErro: 'app/setMensagemErro',
+    }),
     openThemeSettings() {
       this.$vuetify.goTo(0);
       this.rightDrawer = !this.rightDrawer;

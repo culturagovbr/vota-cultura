@@ -15,6 +15,12 @@ export const publicRoute = [
         meta: { title: 'Login' },
         component: () => import(/* webpackChunkName: "login" */ '@/views/auth/Login.vue'),
       },
+      {
+        path: 'cadastro',
+        name: 'cadastro',
+        meta: { title: 'Cadastrar-se' },
+        component: () => import(/* webpackChunkName: "login" */ '@/views/auth/Cadastro.vue'),
+      },
     ],
   },
 

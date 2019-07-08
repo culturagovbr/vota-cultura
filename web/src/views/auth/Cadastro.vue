@@ -2,7 +2,7 @@
   <v-card class="elevation-1 pa-3 login-card">
     <v-card-text>
       <div class="layout column align-center">
-        <h1 class="flex my-4 primary--text">{{ appTitle }}</h1>
+        <h2 class="flex my-1 primary--text">Novo cadastro</h2>
       </div>
       <v-form>
         <v-text-field
@@ -11,6 +11,7 @@
           label="CPF"
           type="text"
           autocomplete="username"
+        >
           v-model="model.username"
         ></v-text-field>
         <v-text-field
@@ -18,8 +19,8 @@
           name="password"
           label="Senha"
           id="password"
-          type="password"
           autocomplete="current-password"
+          type="password"
           v-model="model.password"
         ></v-text-field>
         <v-layout justify-end>
@@ -28,9 +29,9 @@
       </v-form>
     </v-card-text>
     <div class="login-btn">
-      <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+      <v-btn block color="primary" :loading="loading" @click="cadastrar">Cadastrar</v-btn>
       <v-spacer></v-spacer>
-      <v-btn block color="default" :to="{ name: 'cadastro' }">Cadastrar-se</v-btn>
+      <v-btn block color="default" :to="{ name: 'login' }">Voltar</v-btn>
     </div>
   </v-card>
 </template>
@@ -52,16 +53,13 @@ export default {
     ...mapActions({
       autenticarUsuario: 'usuario/autenticarUsuario',
     }),
-    login() {
+    cadastrar() {
       this.loading = true;
       // handle login
-
-      this.autenticarUsuario(this.model).finally(() => {
-        this.loading = false;
-      });
-      // setTimeout(() => {
-      //   this.$router.push('/dashboard');
-      // }, 1000);
+      // this.autenticarUsuario(this.model);
+      setTimeout(() => {
+        this.$router.push('/dashboard');
+      }, 1000);
     },
   },
 };

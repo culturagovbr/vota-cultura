@@ -1,6 +1,6 @@
 {
-  "name": "front",
-  "short_name": "front",
+  "name": "SLI - Sistema das Leis de Incentivo",
+  "short_name": "SLI",
   "icons": [
     {
       "src": "./img/icons/android-icon-36x36.png",

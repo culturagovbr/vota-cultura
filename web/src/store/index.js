@@ -1,17 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import app from './modules/app';
-import getters from './getters';
+import app from './app/index';
+import usuario from './usuario/index';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     app,
+    usuario,
   },
-  state: {},
-  mutations: {},
-  actions: {},
-  getters,
+  getters: {
+    route: state => state.route,
+  },
+  strict: process.env.NODE_ENV !== 'production',
 });
