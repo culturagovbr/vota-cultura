@@ -22,39 +22,40 @@ services:
       - ./database/schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
     networks:
       - sli_network
-  #
-  #  webapp-service:
-  #    #    build: ./webapp
-  #    image: mds/sli-webapp:1.0.2
-  #    container_name: sli-webapp
-  #    healthcheck:
-  #      test: ["CMD", "curl", "-sS", "http://localhost:8080"]
-  #      #      test: ["CMD-SHELL", "node /home/node/app/healthcheck.js"]
-  #      interval: 20s
-  #      timeout: 5s
-  #      retries: 3
-  #    volumes:
-  #      - ./webapp:/home/node/app
-  #    command:
-  #      sh -c 'npm i && npm run serve'
-  #    ports:
-  #      - "8088:8080"
-  #    environment:
-  #      - NODE_CONFIG_ENV=development
-  #      - NODE_ENV=development
-  #      #- NODE_CONFIG_ENV=production
-  #      #- NODE_ENV=production
-  #      - VUE_APP_API_HOST=localhost
-  #      - VUE_APP_API_PORT=88
-  #      - VUE_WEBAPP_HOST=localhost
-  #      - VUE_WEBAPP_PORT=8088
-  #      - VUE_APP_WEBSOCKET_HOST=localhost
-  #      - VUE_APP_WEBSOCKET_PORT=8001
-  #      - VUE_APP_JWT_SECRET=SDfsdfQWEFwefWEfEtWERQWasdQWEs
-  #    links:
-  #      - api-service:sli-api
-  #    networks:
-  #      - sli_network
+  webapp-service:
+    #    build: ./webapp
+    image: node:10
+    container_name: sli-web
+    user: "node"
+    working_dir: /home/node/app
+    #    healthcheck:
+    #      test: ["CMD", "curl", "-sS", "http://localhost:8080"]
+    #      #      test: ["CMD-SHELL", "node /home/node/app/healthcheck.js"]
+    #      interval: 20s
+    #      timeout: 5s
+    #      retries: 3
+    volumes:
+    - ./web:/home/node/app
+    command:
+      sh -c 'npm i && npm run serve'
+    ports:
+    - "8080:8080"
+    environment:
+    - NODE_ENV=development
+    #      - NODE_CONFIG_ENV=development
+    #- NODE_CONFIG_ENV=production
+    #- NODE_ENV=production
+    #      - VUE_APP_API_HOST=localhost
+    #      - VUE_APP_API_PORT=88
+    #      - VUE_WEBAPP_HOST=localhost
+    #      - VUE_WEBAPP_PORT=8088
+    #      - VUE_APP_WEBSOCKET_HOST=localhost
+    #      - VUE_APP_WEBSOCKET_PORT=8001
+    #      - VUE_APP_JWT_SECRET=SDfsdfQWEFwefWEfEtWERQWasdQWEs
+    #    links:
+    #      - api-service:sli-api
+    networks:
+    - sli_network
 
   api-service:
     container_name: sli-api
