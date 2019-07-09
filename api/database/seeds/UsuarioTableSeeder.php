@@ -11,7 +11,7 @@ class UsuarioTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Modules\Conta\Model\Usuario::class, 1)->create([
+        \App\Modules\Conta\Model\Usuario::firstOrCreate([
             'no_cpf' => '12345678901',
             'no_email' => 'teste@teste.teste',
             'ds_senha' => password_hash('123456', PASSWORD_DEFAULT),

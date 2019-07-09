@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Conta\Providers;
+namespace App\Modules\Agente\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected $namespace = 'App\Modules\Conta\Http\Controllers';
+    protected $namespace = 'App\Modules\Agente\Http\Controllers';
 
     public function boot()
     {
@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace'  => $this->namespace,
             'prefix'     => 'api',
         ], function ($router) {
-            require module_path('conta', 'Routes/api.php', 'app');
+            require module_path('agente', 'Routes/api.php', 'app');
         });
     }
 }
