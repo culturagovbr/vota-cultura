@@ -33,6 +33,9 @@ class CreateTbUsuario extends Migration
 
     public function down()
     {
-        Schema::drop('tb_usuario');
+//        Schema::drop('tb_usuario');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        \App\Modules\Conta\Model\Usuario::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

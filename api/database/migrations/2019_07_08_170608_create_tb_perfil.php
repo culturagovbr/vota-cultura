@@ -36,8 +36,9 @@ class CreateTbPerfil extends Migration
      */
     public function down()
     {
-        Schema::table('tb_perfil', function (Blueprint $table) {
-            //
-        });
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        \App\Modules\Conta\Model\Perfil::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+//        Schema::drop('tb_perfil');
     }
 }

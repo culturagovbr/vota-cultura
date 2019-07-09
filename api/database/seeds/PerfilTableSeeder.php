@@ -11,15 +11,10 @@ class PerfilTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Modules\Conta\Model\Perfil::class, 1)->create([
+        \App\Modules\Conta\Model\Perfil::firstOrCreate([
             'no_perfil' => 'usuario',
             'ds_perfil' => 'Perfil padrão para todos os usuários do sistema',
             'st_ativo' => true,
         ]);
-//        factory(\App\Modules\Conta\Model\Perfil::class, 1)->create([
-//            'no_perfil' => 'proponente',
-//            'ds_perfil' => 'Perfil de proponente',
-//            'st_ativo' => true,
-//        ]);
     }
 }
