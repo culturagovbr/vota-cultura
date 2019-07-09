@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Conta\Providers;
+namespace App\Modules\Foo\Providers;
 
 use Caffeinated\Modules\Support\ServiceProvider;
 
