@@ -30,7 +30,6 @@
 
     <!-- global snackbar -->
     <v-snackbar
-      :timeout="snackbar.timeout"
       bottom
       right
       :color="snackbar.color"
@@ -51,7 +50,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import ThemeSettings from '@/components/ThemeSettings';
+import ThemeSettings from '@/core/components/ThemeSettings';
 import { eventHub } from './event';
 
 

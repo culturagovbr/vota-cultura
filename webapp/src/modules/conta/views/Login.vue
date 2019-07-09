@@ -1,0 +1,101 @@
+<template>
+  <v-card class="elevation-1 pa-3 login-card">
+    <v-card-text>
+      <div class="layout column align-center">
+        <h1 class="flex my-4 primary--text">
+          {{ appTitle }}
+        </h1>
+      </div>
+      <v-form
+        ref="form"
+        v-model="valid"
+        lazy-validation
+      >
+        <v-text-field
+          v-model="model.no_cpf"
+          append-icon="person"
+          name="login"
+          label="CPF"
+          mask="###.###.###-##"
+          validate-on-blur
+          type="text"
+          :rules="[rules.required, rules.validarCPF]"
+          autocomplete="no_cpf"
+        />
+        <v-text-field
+          id="password"
+          v-model="model.ds_senha"
+          :append-icon="mostrarSenha ? 'visibility' : 'visibility_off'"
+          :type="mostrarSenha ? 'text' : 'password'"
+          label="Senha"
+          name="password"
+          autocomplete="current-password"
+          @click:append="mostrarSenha = !mostrarSenha"
+        />
+        <v-layout justify-end>
+          <a href="">Esqueceu a senha?</a>
+        </v-layout>
+      </v-form>
+    </v-card-text>
+    <div class="login-btn">
+      <v-btn
+        :disabled="!valid"
+        block
+        color="primary"
+        :loading="loading"
+        @click="login"
+      >
+        Entrar
+      </v-btn>
+      <v-spacer />
+      <v-btn
+        block
+        color="default"
+        :to="{ name: 'cadastro' }"
+      >
+        Cadastrar-se
+      </v-btn>
+    </div>
+  </v-card>
+</template>
+
+<script>
+import { mapActions } from 'vuex';
+import Validate from '@/modules/shared/util/validate';
+
+export default {
+  data: () => ({
+    appTitle: process.env.VUE_APP_TITLE,
+    loading: false,
+    mostrarSenha: false,
+    valid: true,
+    model: {
+      no_cpf: '01234567890',
+      ds_senha: '123456',
+    },
+    rules: {
+      required: value => !!value || 'Este campo é obrigatório',
+      validarCPF: value => Validate.isCpfValido(value) || 'CPF inválido',
+      min: v => v.length >= 8 || 'Mínimo 8 caracteres',
+      emailMatch: () => ('The email and password you entered don\'t match'),
+    },
+  }),
+  methods: {
+    ...mapActions({
+      autenticarUsuario: 'conta/autenticarUsuario',
+    }),
+    login() {
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+      this.loading = true;
+      this.autenticarUsuario(this.model).then(() => {
+        this.$router.push('/');
+      }).finally(() => {
+        this.loading = false;
+      });
+    },
+  },
+};
+</script>
+<style scoped lang="css"></style>
