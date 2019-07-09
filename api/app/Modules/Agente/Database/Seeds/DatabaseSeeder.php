@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Modules\Agente\Database\Seeds;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,8 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(UsuarioTableSeeder::class);
-         $this->call(PerfilTableSeeder::class);
-         $this->call(UsuarioPerfilTableSeeder::class);
+         $this->call(AgenteTableSeeder::class);
     }
 }
