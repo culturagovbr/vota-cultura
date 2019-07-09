@@ -1,0 +1,6 @@
+{
+    "name": "Foo",
+    "slug": "foo",
+    "version": "1.0",
+    "description": "Modulo utilizado como template para geração de novos."
+}
