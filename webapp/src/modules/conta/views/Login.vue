@@ -70,14 +70,12 @@ export default {
     mostrarSenha: false,
     valid: true,
     model: {
-      no_cpf: '01234567890',
-      ds_senha: '123456',
+      no_cpf: '',
+      ds_senha: '',
     },
     rules: {
       required: value => !!value || 'Este campo é obrigatório',
       validarCPF: value => Validate.isCpfValido(value) || 'CPF inválido',
-      min: v => v.length >= 8 || 'Mínimo 8 caracteres',
-      emailMatch: () => ('The email and password you entered don\'t match'),
     },
   }),
   methods: {
@@ -98,4 +96,3 @@ export default {
   },
 };
 </script>
-<style scoped lang="css"></style>

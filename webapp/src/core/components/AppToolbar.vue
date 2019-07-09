@@ -14,7 +14,7 @@
         class="ml-3 mt-2"
       >
       <v-toolbar-title class="ml-0 pl-3 mt-2">
-        <span>SLI</span>
+        <span>{{ appTitle }}</span>
       </v-toolbar-title>
       <v-btn
         class="button-drawer"
@@ -98,19 +98,26 @@
         </v-list>
       </v-menu>
     </v-toolbar-items>
+    <dialog-confirmacao />
+    <dialog-progresso />
   </v-toolbar>
 </template>
 <script>
 import NotificationList from '@/core/components/widgets/list/NotificationList';
 import Util from '../util';
+import DialogConfirmacao from '../../modules/shared/components/DialogConfirmacao';
+import DialogProgresso from '../../modules/shared/components/DialogProgresso';
 
 export default {
   name: 'AppToolbar',
   components: {
+    DialogProgresso,
+    DialogConfirmacao,
     NotificationList,
   },
   data() {
     return {
+      appTitle: process.env.VUE_APP_TITLE,
       drawer: false,
       items: [
         {
@@ -148,6 +155,7 @@ export default {
       Util.toggleFullScreen();
     },
     handleLogut() {
+      this.$emit('handle-logout-click');
       // handle logout
       this.$router.push('/conta/login');
     },
