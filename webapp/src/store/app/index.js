@@ -46,6 +46,12 @@ const actions = {
       color: 'success',
       text: message,
     });
+
+    setTimeout(() => {
+      commit('setSnackBar', {
+        show: false,
+      });
+    }, state.snackbar.timeout, state);
   },
   setMensagemInfo({ commit }, message) {
     commit('setSnackBar', {

@@ -2,29 +2,27 @@
   <v-card class="elevation-1 pa-3 login-card">
     <v-card-text>
       <div class="layout column align-center">
-        <h2 class="flex my-1 primary--text">
-          Novo cadastro
-        </h2>
+        <h1 class="flex my-4 primary--text">
+          {{ appTitle }}
+        </h1>
       </div>
       <v-form>
         <v-text-field
+          v-model="model.no_cpf"
           append-icon="person"
           name="login"
           label="CPF"
           type="text"
-          autocomplete="username"
-        >
-          v-model="model.username"
-          >
-        </v-text-field>
+          autocomplete="no_cpf"
+        />
         <v-text-field
           id="password"
-          v-model="model.password"
+          v-model="model.ds_senha"
           append-icon="lock"
           name="password"
           label="Senha"
-          autocomplete="current-password"
           type="password"
+          autocomplete="current-password"
         />
         <v-layout justify-end>
           <a>Recuperar Senha</a>
@@ -36,17 +34,17 @@
         block
         color="primary"
         :loading="loading"
-        @click="cadastrar"
+        @click="login"
       >
-        Cadastrar
+        Login
       </v-btn>
       <v-spacer />
       <v-btn
         block
         color="default"
-        :to="{ name: 'login' }"
+        :to="{ name: 'cadastro' }"
       >
-        Voltar
+        Cadastrar-se
       </v-btn>
     </div>
   </v-card>
@@ -60,8 +58,8 @@ export default {
     appTitle: process.env.VUE_APP_TITLE,
     loading: false,
     model: {
-      username: '012.345.678.90',
-      password: 'password',
+      no_cpf: '12345678901',
+      ds_senha: '123456',
     },
   }),
 
@@ -69,13 +67,15 @@ export default {
     ...mapActions({
       autenticarUsuario: 'usuario/autenticarUsuario',
     }),
-    cadastrar() {
+    login() {
       this.loading = true;
       // handle login
-      // this.autenticarUsuario(this.model);
-      setTimeout(() => {
-        this.$router.push('/dashboard');
-      }, 1000);
+
+      this.autenticarUsuario(this.model).then((response) => {
+        this.$router.push('/');
+      }).finally(() => {
+        this.loading = false;
+      });
     },
   },
 };

@@ -2,27 +2,29 @@
   <v-card class="elevation-1 pa-3 login-card">
     <v-card-text>
       <div class="layout column align-center">
-        <h1 class="flex my-4 primary--text">
-          {{ appTitle }}
-        </h1>
+        <h2 class="flex my-1 primary--text">
+          Novo cadastro
+        </h2>
       </div>
       <v-form>
         <v-text-field
-          v-model="model.username"
           append-icon="person"
           name="login"
           label="CPF"
           type="text"
           autocomplete="username"
-        />
+        >
+          v-model="model.username"
+          >
+        </v-text-field>
         <v-text-field
           id="password"
           v-model="model.password"
           append-icon="lock"
           name="password"
           label="Senha"
-          type="password"
           autocomplete="current-password"
+          type="password"
         />
         <v-layout justify-end>
           <a>Recuperar Senha</a>
@@ -34,17 +36,17 @@
         block
         color="primary"
         :loading="loading"
-        @click="login"
+        @click="cadastrar"
       >
-        Login
+        Cadastrar
       </v-btn>
       <v-spacer />
       <v-btn
         block
         color="default"
-        :to="{ name: 'cadastro' }"
+        :to="{ name: 'login' }"
       >
-        Cadastrar-se
+        Voltar
       </v-btn>
     </div>
   </v-card>
@@ -58,25 +60,21 @@ export default {
     appTitle: process.env.VUE_APP_TITLE,
     loading: false,
     model: {
-      username: '012.345.678.90',
-      password: 'password',
+      username: '12345678901',
+      password: '123456',
     },
   }),
-
   methods: {
     ...mapActions({
       autenticarUsuario: 'usuario/autenticarUsuario',
     }),
-    login() {
+    cadastrar() {
       this.loading = true;
       // handle login
-
-      this.autenticarUsuario(this.model).finally(() => {
-        this.loading = false;
-      });
-      // setTimeout(() => {
-      //   this.$router.push('/dashboard');
-      // }, 1000);
+      // this.autenticarUsuario(this.model);
+      setTimeout(() => {
+        this.$router.push('/dashboard');
+      }, 1000);
     },
   },
 };
