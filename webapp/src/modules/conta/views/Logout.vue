@@ -18,7 +18,7 @@
             outline
             block
             color="primary"
-            to="/auth/login"
+            to="/conta/login"
           >
             Fazer login novamente
           </v-btn>

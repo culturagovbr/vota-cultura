@@ -43,6 +43,7 @@
     </v-card-text>
     <div class="login-btn">
       <v-btn
+        type="submit"
         :disabled="!valid"
         block
         color="primary"
