@@ -35,7 +35,7 @@ services:
     #      timeout: 5s
     #      retries: 3
     volumes:
-    - ./web:/home/node/app
+    - ./webapp:/home/node/app
     command:
       sh -c 'npm i && npm run serve'
     ports:
