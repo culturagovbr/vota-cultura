@@ -2,40 +2,84 @@
   <v-card class="elevation-1 pa-3 login-card">
     <v-card-text>
       <div class="layout column align-center">
-        <h1 class="flex my-4 primary--text">
-          {{ appTitle }}
-        </h1>
+        <h2 class="flex my-2 primary--text">
+          Cadastro
+        </h2>
       </div>
       <v-form
         ref="form"
         v-model="valid"
         lazy-validation
+        autocomplete="off"
       >
         <v-text-field
           v-model="model.no_cpf"
-          append-icon="person"
+          prepend-icon="account_circle"
           name="login"
           label="CPF"
           mask="###.###.###-##"
           validate-on-blur
           type="text"
           :rules="[rules.required, rules.validarCPF]"
-          autocomplete="no_cpf"
+        />
+        <v-text-field
+          v-model="model.no_nome"
+          prepend-icon="person"
+          name="nome"
+          label="Nome completo"
+          validate-on-blur
+          type="text"
+          :rules="[rules.required]"
+        />
+        <v-text-field
+          v-model="model.dt_nascimento"
+          prepend-icon="date_range"
+          name="nome"
+          label="Data Nascimento"
+          validate-on-blur
+          type="text"
+          :rules="[rules.required]"
+        />
+        <v-text-field
+          v-model="model.no_email"
+          prepend-icon="mail_outline"
+          name="no_email"
+          label="E-mail"
+          validate-on-blur
+          type="text"
+          :rules="[rules.required]"
+        />
+        <v-text-field
+          v-model="model.confirm_email"
+          prepend-icon="mail_outline"
+          name="confirmacao_email"
+          label="Confirmar e-mail"
+          validate-on-blur
+          type="text"
+          :rules="[rules.required]"
         />
         <v-text-field
           id="password"
           v-model="model.ds_senha"
+          prepend-icon="vpn_key"
           :append-icon="mostrarSenha ? 'visibility' : 'visibility_off'"
           :type="mostrarSenha ? 'text' : 'password'"
           label="Senha"
           name="password"
-          autocomplete="current-password"
           @click:append="mostrarSenha = !mostrarSenha"
         />
-        <v-layout justify-end>
-          <a href="">Esqueceu a senha?</a>
-        </v-layout>
+        <v-text-field
+          id="confirm_password"
+          v-model="model.confirma_senha"
+          prepend-icon="vpn_key"
+          :append-icon="mostrarSenha ? 'visibility' : 'visibility_off'"
+          :type="mostrarSenha ? 'text' : 'password'"
+          label="Confirmar senha"
+          name="confirm_password"
+          @click:append="mostrarSenha = !mostrarSenha"
+        />
       </v-form>
+      <span class="grey--text">Todos os campos são obrigatórios </span>
     </v-card-text>
     <div class="login-btn">
       <v-btn
@@ -45,15 +89,15 @@
         :loading="loading"
         @click="login"
       >
-        Entrar
+        Cadastrar
       </v-btn>
       <v-spacer />
       <v-btn
         block
         color="default"
-        :to="{ name: 'cadastro' }"
+        :to="{ name: 'login' }"
       >
-        Cadastrar-se
+        Voltar
       </v-btn>
     </div>
   </v-card>
