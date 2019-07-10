@@ -18,8 +18,6 @@ class AutenticacaoServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->registerPolicies();
-
         \Auth::provider('autenticacao', function () {
             return new AutenticacaoUserProvider();
         });
