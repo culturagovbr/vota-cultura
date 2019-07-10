@@ -15,10 +15,22 @@ export default [
         component: () => import(/* webpackChunkName: "login" */ '@/modules/conta/views/Login.vue'),
       },
       {
+        path: 'logout',
+        name: 'logout',
+        meta: { title: 'Sair do sistema', public: true },
+        component: () => import(/* webpackChunkName: "login" */ '@/modules/conta/views/Logout.vue'),
+      },
+      {
         path: 'cadastro',
         name: 'cadastro',
         meta: { title: 'Cadastrar-se', public: true },
         component: () => import(/* webpackChunkName: "login" */ '@/modules/conta/views/Cadastro.vue'),
+      },
+      {
+        path: 'cadastro2',
+        name: 'cadastro2',
+        meta: { title: 'Cadastrar-se', public: true },
+        component: () => import(/* webpackChunkName: "login" */ '@/modules/conta/views/CadastroPassos.vue'),
       },
       {
         path: 'recuperar-senha',
