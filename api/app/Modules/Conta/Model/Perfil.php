@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Perfil extends Model
 {
+    const CO_PERFIL_PADRAO = 1;
 
     protected $table = 'tb_perfil';
     protected $primaryKey = 'co_perfil';

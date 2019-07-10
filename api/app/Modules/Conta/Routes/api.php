@@ -17,6 +17,9 @@ Route::group([
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout');
         Route::post('refresh', 'AuthController@refresh');
+//        Route::post('ativar-usuario', 'AtivacaoController@post');
         Route::get('me', 'AuthController@me');
     });
+    Route::resource('ativacao', 'AtivacaoController',
+        ['only' => ['update']]);
 });
