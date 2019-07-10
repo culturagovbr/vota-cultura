@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Modules\Conta\Database\Seeds;
+
 use Illuminate\Database\Seeder;
 
 class UsuarioTableSeeder extends Seeder
@@ -12,7 +14,7 @@ class UsuarioTableSeeder extends Seeder
     public function run()
     {
         \App\Modules\Conta\Model\Usuario::firstOrCreate([
-            'no_cpf' => '12345678901',
+            'no_cpf' => '01234567890',
             'no_email' => 'teste@teste.teste',
             'ds_senha' => password_hash('123456', PASSWORD_DEFAULT),
             'dt_nascimento' => '2019-01-01',

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Modules\Conta\Database\Seeds;
+
 use Illuminate\Database\Seeder;
 
 class UsuarioPerfilTableSeeder extends Seeder
@@ -11,8 +13,8 @@ class UsuarioPerfilTableSeeder extends Seeder
      */
     public function run()
     {
-        $usuario = \App\Modules\Conta\Model\Usuario::where('no_cpf', '12345678901')->first();
-        $perfil = \App\Modules\Conta\Model\Perfil::where('no_perfil', 'usuario')->first();
+        $usuario = \App\Modules\Conta\Model\Usuario::where('no_cpf', '01234567890')->first();
+        $perfil = \App\Modules\Conta\Model\Foo::where('no_perfil', 'usuario')->first();
 
         if($usuario && $perfil) {
             \App\Modules\Conta\Model\UsuarioPerfil::firstOrCreate([
