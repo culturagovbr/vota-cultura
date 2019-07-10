@@ -28,12 +28,15 @@
           :append-icon="mostrarSenha ? 'visibility' : 'visibility_off'"
           :type="mostrarSenha ? 'text' : 'password'"
           label="Senha"
+          :rules="[rules.required]"
           name="password"
           autocomplete="current-password"
           @click:append="mostrarSenha = !mostrarSenha"
         />
         <v-layout justify-end>
-          <a href="">Esqueceu a senha?</a>
+          <router-link to="recuperar-senha">
+            Esqueceu a senha?
+          </router-link>
         </v-layout>
       </v-form>
     </v-card-text>

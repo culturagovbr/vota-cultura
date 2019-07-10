@@ -15,7 +15,12 @@
             md4
             lg4
           >
-            <router-view :key="$route.path" />
+            <v-slide-y-reverse-transition
+              leave-absolute
+              hide-on-leave
+            >
+              <router-view :key="$route.path" />
+            </v-slide-y-reverse-transition>
           </v-flex>
         </v-layout>
       </v-container>
