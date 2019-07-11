@@ -20,7 +20,6 @@ class UsuarioPerfilTableSeeder extends Seeder
             \App\Modules\Conta\Model\UsuarioPerfil::firstOrCreate([
                 'co_usuario' => $usuario->co_usuario,
                 'co_perfil' => $perfil->co_perfil,
-                'st_perfil_atual' => true,
             ]);
         }
     }

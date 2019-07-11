@@ -3,3 +3,5 @@ import * as service from '../../shared/service/base/index';
 export const login = usuario => service.postRequest('/conta/auth/login', usuario);
 
 export const recuperarSenha = usuario => service.postRequest('/auth/recuperar-senha', usuario);
+
+export const ativarUsuario = ativacao => service.putRequest('/conta/ativacao', ativacao, {});
