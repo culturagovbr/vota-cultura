@@ -2,6 +2,17 @@
 
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Info(
+ *     description="Swagger para API da aplicação. ",
+ *     version="1.0.0",
+ *     title="Swagger API",
+ *     termsOfService="http://xxxxx.xx/termos/",
+ *     @OA\Contact(
+ *         email="xxxxxx@xxxxx.xx"
+ *     ),
+ * )
+ */
 Route::group([
     'prefix' => 'conta'
 ], function ($router) {
@@ -10,6 +21,14 @@ Route::group([
             'rota padrao'
         ];
     });
+
+    /**
+     * @OA\Tag(
+     *     name="Autenticacao",
+     *     description="Endpoint de Autenticacao da aplicação",
+     * )
+     */
+
     Route::group([
         'middleware' => 'api',
         'prefix' => 'auth'
