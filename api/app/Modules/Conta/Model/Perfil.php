@@ -16,6 +16,19 @@ class Perfil extends Model
         'st_ativo',
     ];
 
+    protected $hidden = [
+        'pivot'
+    ];
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Conta\Model\Usuario::class,
+            'rl_usuario_perfil',
+            'co_perfil',
+            'co_usuario'
+        )->as('rl_usuario_perfil');
+    }
 
     protected $casts = [];
 

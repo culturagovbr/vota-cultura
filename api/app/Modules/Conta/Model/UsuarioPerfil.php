@@ -2,9 +2,9 @@
 
 namespace App\Modules\Conta\Model;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UsuarioPerfil extends Model
+class UsuarioPerfil extends Pivot
 {
 
     protected $table = 'rl_usuario_perfil';
