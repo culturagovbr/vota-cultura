@@ -15,22 +15,32 @@ class Usuario extends Authenticatable implements JWTSubject
 
     protected $fillable = [
         'no_cpf',
+        'no_nome',
         'no_email',
         'dt_nascimento',
         'dt_cadastro',
         'dt_ultima_atualizacao',
         'st_ativo',
+        'perfis',
     ];
 
     protected $hidden = [
         'ds_senha',
         'ds_codigo_ativacao',
-    ];
-
-    protected $casts = [
+        'pivot'
     ];
 
     public $timestamps = false;
+
+    public function perfis()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Conta\Model\Perfil::class,
+            'rl_usuario_perfil',
+            'co_usuario',
+            'co_perfil'
+        );
+    }
 
     public function getJWTIdentifier()
     {
@@ -39,11 +49,10 @@ class Usuario extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims(): array
     {
-
-        /**
-         * @todo colocar aqui consulta para tabela de perfis
-         * carregando os perfis que o usuário pode ter acesso.
-         */
+        $perfis = [];
+        if(!is_null($this->perfis)) {
+            $perfis = $this->perfis->toArray();
+        }
 
         $dadosPayload = [
             'cpf' => $this->no_cpf,
@@ -52,6 +61,8 @@ class Usuario extends Authenticatable implements JWTSubject
             'dt_cadastro' => $this->dt_cadastro,
             'dt_ultima_atualizacao' => $this->dt_ultima_atualizacao,
             'st_ativo' => $this->st_ativo,
+            'no_nome' => $this->no_nome,
+            'perfis' => $perfis
         ];
 
         return $dadosPayload;
