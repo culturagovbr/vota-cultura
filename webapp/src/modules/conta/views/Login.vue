@@ -10,6 +10,7 @@
         ref="form"
         v-model="valid"
         lazy-validation
+        @submit.prevent="login"
       >
         <v-text-field
           v-model="model.no_cpf"
@@ -28,34 +29,38 @@
           :append-icon="mostrarSenha ? 'visibility' : 'visibility_off'"
           :type="mostrarSenha ? 'text' : 'password'"
           label="Senha"
+          :rules="[rules.required]"
           name="password"
           autocomplete="current-password"
           @click:append="mostrarSenha = !mostrarSenha"
         />
         <v-layout justify-end>
-          <a href="">Esqueceu a senha?</a>
+          <router-link to="recuperar-senha">
+            Esqueceu a senha?
+          </router-link>
         </v-layout>
+        <div class="login-btn">
+          <v-btn
+            type="submit"
+            color="primary"
+            block
+            :disabled="!valid"
+            :loading="loading"
+            @click="login"
+          >
+            Entrar
+          </v-btn>
+          <v-spacer />
+          <v-btn
+            block
+            color="default"
+            :to="{ name: 'cadastro' }"
+          >
+            Cadastrar-se
+          </v-btn>
+        </div>
       </v-form>
     </v-card-text>
-    <div class="login-btn">
-      <v-btn
-        :disabled="!valid"
-        block
-        color="primary"
-        :loading="loading"
-        @click="login"
-      >
-        Entrar
-      </v-btn>
-      <v-spacer />
-      <v-btn
-        block
-        color="default"
-        :to="{ name: 'cadastro' }"
-      >
-        Cadastrar-se
-      </v-btn>
-    </div>
   </v-card>
 </template>
 
@@ -83,9 +88,9 @@ export default {
       autenticarUsuario: 'conta/autenticarUsuario',
     }),
     login() {
-      if (!this.$refs.form.validate()) {
-        return;
-      }
+      // if (!this.$refs.form.validate()) {
+      //   return;
+      // }
       this.loading = true;
       this.autenticarUsuario(this.model).then(() => {
         this.$router.push('/');
