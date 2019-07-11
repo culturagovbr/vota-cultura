@@ -53,10 +53,10 @@ instance.interceptors.request.use((config) => {
     conf.headers.Authorization = `Bearer ${userToken}`;
   }
   return conf;
-}, (error) => {
-  tratarErro(error);
-  return Promise.reject(error);
-});
+}, error => Promise.reject(error));
+// tratarErro(error);
+//   return Promise.reject(error);
+// });
 
 // response
 instance.interceptors.response.use(response => response, (error) => {
@@ -78,6 +78,6 @@ export const getRequest = (path, params = '') => instance.get(path, params);
 
 export const postRequest = (path, payload) => instance.post(path, buildData(payload));
 
-export const putRequest = (path, payload, id) => instance.put(`${path}/${id}`, buildData(payload));
+export const putRequest = (path, id, payload) => instance.put(`${path}/${id}`, id, buildData(payload));
 
 export const deleteRequest = (path, id) => instance.delete(`${path}/${id}`);
