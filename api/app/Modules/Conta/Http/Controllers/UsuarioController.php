@@ -6,7 +6,7 @@ namespace App\Modules\Conta\Http\Controllers;
 use App\Modules\Conta\Services\Usuario as UsuarioService;
 use App\Http\Controllers\Controller;
 
-class AtivacaoController extends Controller
+class UsuarioController extends Controller
 {
 
     private $usuarioService;
@@ -16,9 +16,9 @@ class AtivacaoController extends Controller
         $this->usuarioService = $usuarioService;
     }
 
-    public function update($codigo_ativacao) : \Illuminate\Http\JsonResponse
+    public function show($co_usuario) : \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->usuarioService->ativarUsuarioPorCodigoAtivacao($codigo_ativacao));
+        return $this->sendResponse($this->usuarioService->find($co_usuario));
     }
 
 }
