@@ -1,20 +1,37 @@
-# laravel-hmvc-scaffold
+# API
 
-## Technologies
+## Sobre
 
-## How to use
+A API da aplicação disponibiliza rotas que são documentadas e geradas à partir do SWAGGER.
 
-### Create new module
+Os end-points disponíveis podem ser acessados à partir da rota abaixo
+```http request
+{server-api}:{api-port}/api/documentation
+```
+
+## Como utilizar
+
+### Criar um novo módulo
 
  ```console
  php artisan make:module Conta
  ```
+ 
+ ou duplicar o diretório `Foo` que está localizado dentro de `Modules`.
+ 
+### Atualizar documentação gerada pelo Swagger
 
-## License
+ ```console
+ php artisan l5-swagger:generate
+ ```
+ 
+### Atualizar mapeamento de classes
 
-This repository is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-## Reference
+ ```console
+ composer dumpautoload
+ ```
+ 
+## Referencias
 
 - [Laravel Modules](https://caffeinatedpackages.com/guide/packages/modules.html#installationn)
 - [Laravel website](https://laravel.com)
