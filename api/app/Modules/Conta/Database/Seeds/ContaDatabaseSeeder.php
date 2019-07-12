@@ -13,8 +13,7 @@ class ContaDatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(UsuarioTableSeeder::class);
          $this->call(PerfilTableSeeder::class);
-         $this->call(UsuarioPerfilTableSeeder::class);
+         $this->call(UsuarioTableSeeder::class);
     }
 }
