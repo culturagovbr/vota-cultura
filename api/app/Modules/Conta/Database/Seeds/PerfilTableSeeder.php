@@ -13,7 +13,7 @@ class PerfilTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Modules\Conta\Model\Foo::firstOrCreate([
+        \App\Modules\Conta\Model\Perfil::firstOrCreate([
             'no_perfil' => 'usuario',
             'ds_perfil' => 'Perfil padrão para todos os usuários do sistema',
             'st_ativo' => true,
