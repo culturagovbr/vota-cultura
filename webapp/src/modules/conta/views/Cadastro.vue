@@ -95,7 +95,7 @@
       <v-btn
         block
         color="default"
-        :to="{ name: 'login' }"
+        :to="{ name: 'conta-autenticar' }"
       >
         Voltar
       </v-btn>

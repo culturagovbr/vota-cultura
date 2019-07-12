@@ -28,8 +28,8 @@ router.beforeEach((to, from, next) => {
   const tokenValida = !isEmpty(obterInformacoesJWT(userToken));
 
   try {
-    if (!userToken && authRequired && to.path !== '/conta/login') {
-      return next('/conta/login');
+    if (!userToken && authRequired && to.path !== '/conta/autenticar') {
+      return next('/conta/autenticar');
     }
 
     if (userToken && authRequired && !tokenValida) {
@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
     return next();
   } catch (Exception) {
     store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
-    return next('/conta/login');
+    return next('/conta/autenticar');
   }
 });
 

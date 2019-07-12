@@ -5,7 +5,7 @@ export default [
     path: '/conta',
     component: AuthLayout,
     meta: { title: 'Login' },
-    redirect: '/conta/login',
+    redirect: '/conta/autenticar',
     hidden: true,
     children: [
       {
