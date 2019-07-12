@@ -6,7 +6,6 @@ use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Model\Perfil;
 use App\Services\IService;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
-use App\Modules\Conta\Model\UsuarioPerfil as UsuarioPerfilModel;
 use Illuminate\Database\QueryException;
 use DB;
 
@@ -28,15 +27,12 @@ class Usuario implements IService
                 throw new ValidacaoCustomizadaException('Usuario não encontrado', 422);
             }
             DB::beginTransaction();
-                $usuario->st_ativo = true;
-                $usuario->save();
-
-                $usuarioPerfil = new UsuarioPerfilModel();
-                $usuarioPerfil->co_usuario = $usuario->co_usuario;
-                $usuarioPerfil->co_perfil = Perfil::CO_PERFIL_PADRAO;
-                $usuarioPerfil->save();
+            $usuario->st_ativo = true;
+            $usuario->save();
+            $usuario->perfis()->attach(Perfil::CO_PERFIL_PADRAO);
             DB::commit();
-            $usuario->perfil = $usuarioPerfil;
+            $usuario->perfis = $usuario->perfis()->get();
+
             return $usuario;
 
         } catch (QueryException $queryException) {
