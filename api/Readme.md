@@ -19,6 +19,12 @@ Os end-points disponíveis podem ser acessados à partir da rota abaixo
  
  ou duplicar o diretório `Foo` que está localizado dentro de `Modules`.
  
+### Descobrir novos módulos
+
+ ```console
+ php artisan package:discover --ansi
+ ```
+ 
 ### Atualizar documentação gerada pelo Swagger
 
  ```console
