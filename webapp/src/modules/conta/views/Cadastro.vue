@@ -13,7 +13,7 @@
         autocomplete="off"
       >
         <v-text-field
-          v-model="model.no_cpf"
+          v-model="usuario.no_cpf"
           prepend-icon="account_circle"
           name="login"
           label="CPF"
@@ -23,7 +23,7 @@
           :rules="[rules.required, rules.validarCPF]"
         />
         <v-text-field
-          v-model="model.no_nome"
+          v-model="usuario.no_nome"
           prepend-icon="person"
           name="nome"
           label="Nome completo"
@@ -31,52 +31,76 @@
           type="text"
           :rules="[rules.required]"
         />
+        <template activator="{ on }">
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            lazy
+            transition="scale-transition"
+            :close-on-content-click="false"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                      v-model="dt_nascimento_convertida"
+                      mask="NN/NN/NNNN"
+                      label="Data de Nascimento"
+                      :rules="[rules.required]"
+                      prepend-icon="event"
+                      v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              locale="pt-BR"
+              v-model="date"
+              scrollable>
+              <v-spacer></v-spacer>
+              <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+              <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+            </v-date-picker>
+          </v-menu>
+        </template>
         <v-text-field
-          v-model="model.dt_nascimento"
-          prepend-icon="date_range"
-          name="nome"
-          label="Data Nascimento"
-          validate-on-blur
-          type="text"
-          :rules="[rules.required]"
-        />
-        <v-text-field
-          v-model="model.no_email"
+          v-model="usuario.no_email"
           prepend-icon="mail_outline"
           name="no_email"
           label="E-mail"
           validate-on-blur
           type="text"
-          :rules="[rules.required]"
+          :rules="[rules.required, rules.emailValido]"
         />
         <v-text-field
-          v-model="model.confirm_email"
+          v-model="usuario.confirma_email"
           prepend-icon="mail_outline"
           name="confirmacao_email"
           label="Confirmar e-mail"
           validate-on-blur
           type="text"
-          :rules="[rules.required]"
+          :rules="[rules.required, rules.emailValido, rules.confirmaEmail(usuario.confirma_email, usuario.no_email)]"
         />
         <v-text-field
           id="password"
-          v-model="model.ds_senha"
+          v-model="usuario.ds_senha"
           prepend-icon="vpn_key"
           :append-icon="mostrarSenha ? 'visibility' : 'visibility_off'"
           :type="mostrarSenha ? 'text' : 'password'"
           label="Senha"
           name="password"
           @click:append="mostrarSenha = !mostrarSenha"
+          :rules="[rules.required, rules.minCaracter, rules.senhaValida]"
         />
         <v-text-field
           id="confirm_password"
-          v-model="model.confirma_senha"
+          v-model="usuario.confirma_senha"
           prepend-icon="vpn_key"
           :append-icon="mostrarSenha ? 'visibility' : 'visibility_off'"
           :type="mostrarSenha ? 'text' : 'password'"
           label="Confirmar senha"
           name="confirm_password"
           @click:append="mostrarSenha = !mostrarSenha"
+          :rules="[rules.required, rules.confirmaSenha(usuario.confirma_senha, usuario.ds_senha)]"
         />
       </v-form>
       <span class="grey--text">Todos os campos são obrigatórios </span>
@@ -113,29 +137,51 @@ export default {
     loading: false,
     mostrarSenha: false,
     valid: true,
-    model: {
+    menu: false,
+    date:'',
+    dt_nascimento_convertida:'',
+    usuario: {
       no_cpf: '',
+      no_usuario: '',
+      no_email: '',
       ds_senha: '',
     },
     rules: {
       required: value => !!value || 'Este campo é obrigatório',
       validarCPF: value => Validate.isCpfValido(value) || 'CPF inválido',
+      emailValido: value => Validate.isEmailValido(value) || 'E-mail inválido',
+      confirmaEmail: (confirma_email, no_email) => confirma_email === no_email || 'O E-mail não confere',
+      minCaracter: (value) => value.length >= 8 || 'Mínimo 8 caracteres',
+      senhaValida: value => Validate.isSenhaValida(value) || 'Mínimo uma letra maiúscula, uma minúscula e um número',
+      confirmaSenha: (confirma_senha, ds_senha) => confirma_senha === ds_senha || 'A senha não confere',
     },
   }),
+  watch: {
+    date () {
+        this.usuario.dt_nascimento = this.date;
+        this.dt_nascimento_convertida = this.formatDate(this.date);
+    }
+  },
   methods: {
     ...mapActions({
-      autenticarUsuario: 'conta/autenticarUsuario',
+      cadastrarUsuario: 'conta/cadastrarUsuario',
     }),
+    formatDate (date) {
+      if (!date) return null;
+      const [year, month, day] = date.split('-');
+      return `${day}/${month}/${year}`;
+    },
     login() {
       if (!this.$refs.form.validate()) {
         return;
       }
       this.loading = true;
-      this.autenticarUsuario(this.model).then(() => {
-        this.$router.push('/');
-      }).finally(() => {
-        this.loading = false;
-      });
+      console.log(this.usuario);
+      // this.cadastrarUsuario(this.usuario).then(() => {
+      //   this.$router.push('/');
+      // }).finally(() => {
+      //   this.loading = false;
+      // });
     },
   },
 };

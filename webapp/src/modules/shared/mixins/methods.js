@@ -5,5 +5,8 @@ export default {
     isCpfValido(strCPF) {
       Validate.isCpfValido(strCPF);
     },
+    isEmailValido(strEmail) {
+      Validate.isEmailValido(strEmail);
+    },
   },
 };
