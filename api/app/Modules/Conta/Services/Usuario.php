@@ -9,9 +9,11 @@ use App\Modules\Conta\Model\Usuario as UsuarioModel;
 use Illuminate\Database\QueryException;
 use DB;
 
-
 class Usuario implements IService
 {
+    /**
+     * @var UsuarioModel $model
+     */
     private $model;
 
     public function __construct(UsuarioModel $model)
@@ -42,8 +44,41 @@ class Usuario implements IService
 
     }
 
-    public function find($co_usuario)
+    private function gerarCodigoAtivacao($email)
+    {
+        return sha1(mt_rand(1, 999) . time() . $email);
+    }
+
+    public function cadastrar()
+    {
+        try {
+
+            $usuario = $this->model->where(['no_cpf' => $this->model->no_cpf])->first();
+            if ($usuario) {
+                throw new ValidacaoCustomizadaException('Usuario já cadastradro.', 422);
+            }
+
+            DB::beginTransaction();
+            $this->model->st_ativo = false;
+            $this->model->ds_codigo_ativacao = $this->gerarCodigoAtivacao($this->model->no_email);
+
+            // enviar e-mail
+
+            $this->model->save();
+            DB::commit();
+        } catch (QueryException $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
+    }
+
+    public function obterUm($co_usuario)
     {
         return $this->model->find($co_usuario);
+    }
+
+    public function obterTodos()
+    {
+        return $this->model->get();
     }
 }
