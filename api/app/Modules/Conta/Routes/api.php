@@ -12,6 +12,21 @@ use Illuminate\Http\Request;
  *         email="xxxxxx@xxxxx.xx"
  *     ),
  * )
+ *
+ * @OA\Tag(
+ *     name="Autenticacao",
+ *     description="Endpoint de Autenticacao da aplicação",
+ * )
+ *
+ * @OA\Tag(
+ *     name="Ativacao",
+ *     description="Endpoint de Usuário",
+ * )
+ *
+ * @OA\Tag(
+ *     name="Usuario",
+ *     description="Endpoint de Usuário",
+ * )
  */
 Route::group([
     'prefix' => 'conta'
@@ -21,13 +36,6 @@ Route::group([
             'rota padrao'
         ];
     });
-
-    /**
-     * @OA\Tag(
-     *     name="Autenticacao",
-     *     description="Endpoint de Autenticacao da aplicação",
-     * )
-     */
 
     Route::group([
         'middleware' => 'api',
