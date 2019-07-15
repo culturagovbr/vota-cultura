@@ -33,12 +33,6 @@ export default [
         component: () => import(/* webpackChunkName: "cadastro-ativacao-usuario" */ '@/modules/conta/views/CadastroAtivacaoUsuario.vue'),
       },
       {
-        path: 'cadastro2',
-        name: 'cadastro2',
-        meta: { title: 'Cadastrar-se', public: true },
-        component: () => import(/* webpackChunkName: "login" */ '@/modules/conta/views/CadastroPassos.vue'),
-      },
-      {
         path: 'recuperar-senha',
         name: 'conta-recuperar-senha',
         meta: { title: 'Recuperar Senha', public: true },
