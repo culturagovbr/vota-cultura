@@ -98,6 +98,7 @@ CREATE TABLE tb_usuario (
 	ds_senha             varchar(255)  NOT NULL ,
 	dt_nascimento        date  NOT NULL ,
 	ds_codigo_ativacao   varchar(255)   ,
+	ds_codigo_alteracao   varchar(255)   ,
 	dt_cadastro          date  NOT NULL ,
 	dt_ultima_atualizacao date DEFAULT current_date  ,
 	st_ativo             bool DEFAULT true NOT NULL ,
