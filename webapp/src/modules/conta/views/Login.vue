@@ -54,7 +54,7 @@
           <v-btn
             block
             color="default"
-            :to="{ name: 'cadastro' }"
+            :to="{ name: 'conta-cadastrar' }"
           >
             Cadastrar-se
           </v-btn>

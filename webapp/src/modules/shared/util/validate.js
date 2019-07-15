@@ -15,7 +15,19 @@ const isCpfValido = (strCPF) => {
   return true;
 };
 
+const isEmailValido = (strEmail) => {
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
+  return regex.test(strEmail);
+};
+
+const isSenhaValida = (strSenha) => {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  return regex.test(strSenha);
+};
+
 
 export default {
   isCpfValido,
+  isEmailValido,
+  isSenhaValida,
 };

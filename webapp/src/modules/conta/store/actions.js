@@ -25,3 +25,6 @@ export const autenticarUsuario = async ({ dispatch }, usuario) => usuarioService
 
 // eslint-disable-next-line no-empty-pattern
 export const ativarUsuario = async ({}, ativacao) => usuarioService.ativarUsuario(ativacao);
+
+// eslint-disable-next-line no-empty-pattern
+export const cadastrarUsuario = async ({}, usuario) => usuarioService.cadastrarUsuario(usuario);

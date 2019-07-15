@@ -157,7 +157,7 @@ export default {
     handleLogut() {
       this.$emit('handle-logout-click');
       // handle logout
-      this.$router.push('/conta/logout');
+      this.$router.push('/conta/sair');
     },
     handleSetting() {
 
