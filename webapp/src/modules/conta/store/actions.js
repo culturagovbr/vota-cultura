@@ -28,3 +28,7 @@ export const ativarUsuario = async ({}, ativacao) => usuarioService.ativarUsuari
 
 // eslint-disable-next-line no-empty-pattern
 export const cadastrarUsuario = async ({}, usuario) => usuarioService.cadastrarUsuario(usuario);
+
+export const recuperarSenha = async ({}, usuario) => usuarioService.recuperarSenha(usuario);
+
+export const alterarSenha = async (codigoAtivacao, usuario) => usuarioService.alterarSenha(codigoAtivacao, usuario);

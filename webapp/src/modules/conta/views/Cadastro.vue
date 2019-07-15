@@ -1,21 +1,14 @@
 <template>
   <v-card class="elevation-1 pa-3 login-card">
-    <v-card-title>
-      <div class="layout column align-center">
-        <h2 class="flex my-2 primary--text">
-          {{currentTitle}}
-        </h2>
-      </div>
-    </v-card-title>
     <v-window v-model="step">
       <v-window-item :value="1">
+        <v-card-title>
+          <div class="layout column align-center">
+            <h2 class="flex my-2 primary--text">{{$route.meta.title}}</h2>
+          </div>
+        </v-card-title>
         <v-card-text>
-          <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
-            autocomplete="off"
-          >
+          <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
             <v-text-field
               v-model="usuario.no_cpf"
               prepend-icon="account_circle"
@@ -48,18 +41,15 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                          v-model="usuario.dt_nascimento"
-                          mask="##/##/####"
-                          label="Data de Nascimento"
-                          :rules="[rules.required]"
-                          prepend-icon="event"
-                          v-on="on"
+                    v-model="usuario.dt_nascimento"
+                    mask="##/##/####"
+                    label="Data de Nascimento"
+                    :rules="[rules.required]"
+                    prepend-icon="event"
+                    v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker
-                  locale="pt-BR"
-                  v-model="date"
-                  scrollable>
+                <v-date-picker locale="pt-BR" v-model="date" scrollable>
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
                   <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -107,48 +97,34 @@
               :rules="[rules.required, rules.confirmaSenha(usuario.confirma_senha, usuario.ds_senha)]"
             />
           </v-form>
-          <span class="grey--text">Todos os campos são obrigatórios </span>
+          <span class="grey--text">Todos os campos são obrigatórios</span>
         </v-card-text>
         <!-- <v-card-actions> -->
-            <div class="login-btn">
-            <v-btn
-              :disabled="!valid"
-              block
-              color="primary"
-              :loading="loading"
-              @click="login"
-            >
-              Cadastrar
-            </v-btn>
-            <v-spacer />
-            <v-btn
-              block
-              color="default"
-              :to="{ name: 'conta-autenticar' }"
-            >
-              Voltar
-            </v-btn>
-          </div>
+        <div class="login-btn">
+          <v-btn
+            :disabled="!valid"
+            block
+            color="primary"
+            :loading="loading"
+            @click="login"
+          >Cadastrar</v-btn>
+          <v-spacer />
+          <v-btn block color="default" :to="{ name: 'conta-autenticar' }">Voltar</v-btn>
+        </div>
         <!-- </v-card-actions> -->
       </v-window-item>
       <v-window-item :value="2">
         <v-card-text>
           <div class="text-xs-center">
             <v-icon size="80px" color="primary">check_circle</v-icon>
-            <h3 class="title font-weight-light mb-2">
-              Cadastro realizado com sucesso
-            </h3>
-            <span class="caption grey--text">Um e-mail foi enviado para "{{usuario.no_email}}" com link para ativação da sua conta.</span>
+            <h3 class="title font-weight-light mb-2">Cadastro realizado com sucesso</h3>
+            <span
+              class="caption grey--text"
+            >Um e-mail foi enviado para "{{usuario.no_email}}" com link para ativação da sua conta.</span>
           </div>
         </v-card-text>
         <!-- <v-card-actions> -->
-          <v-btn
-              block
-              color="primary"
-              :to="{ name: 'conta-autenticar' }"
-            >
-              Login
-          </v-btn>
+        <v-btn block color="primary" :to="{ name: 'conta-autenticar' }">Login</v-btn>
         <!-- </v-card-actions> -->
       </v-window-item>
     </v-window>
@@ -156,8 +132,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import Validate from '@/modules/shared/util/validate';
+import { mapActions } from "vuex";
+import Validate from "@/modules/shared/util/validate";
 
 export default {
   data: () => ({
@@ -165,46 +141,42 @@ export default {
     mostrarSenha: false,
     valid: true,
     menu: false,
-    date:'',
+    date: "",
     step: 2,
     usuario: {
-      no_cpf: '',
-      no_nome: '',
-      dt_nascimento: '',
-      no_email: '',
-      ds_senha: '',
+      no_cpf: "",
+      no_nome: "",
+      dt_nascimento: "",
+      no_email: "",
+      ds_senha: ""
     },
     rules: {
-      required: value => !!value || 'Este campo é obrigatório',
-      validarCPF: value => Validate.isCpfValido(value) || 'CPF inválido',
-      emailValido: value => Validate.isEmailValido(value) || 'E-mail inválido',
-      confirmaEmail: (confirma_email, no_email) => confirma_email === no_email || 'O E-mail não confere',
-      minCaracter: (value) => value.length >= 8 || 'Mínimo 8 caracteres',
-      senhaValida: value => Validate.isSenhaValida(value) || 'Mínimo uma letra maiúscula, uma minúscula e um número',
-      confirmaSenha: (confirma_senha, ds_senha) => confirma_senha === ds_senha || 'A senha não confere',
-    },
+      required: value => !!value || "Este campo é obrigatório",
+      validarCPF: value => Validate.isCpfValido(value) || "CPF inválido",
+      emailValido: value => Validate.isEmailValido(value) || "E-mail inválido",
+      confirmaEmail: (confirma_email, no_email) =>
+        confirma_email === no_email || "O E-mail não confere",
+      minCaracter: value => value.length >= 8 || "Mínimo 8 caracteres",
+      senhaValida: value =>
+        Validate.isSenhaValida(value) ||
+        "Mínimo uma letra maiúscula, uma minúscula e um número",
+      confirmaSenha: (confirma_senha, ds_senha) =>
+        confirma_senha === ds_senha || "A senha não confere"
+    }
   }),
   watch: {
-    date () {
-        this.usuario.dt_nascimento = this.formatDate(this.date);
+    date() {
+      this.usuario.dt_nascimento = this.formatDate(this.date);
     }
-  },
-  computed : {
-    currentTitle() {
-      switch (this.step) {
-        case 1: return 'Cadastro';
-        default: return 'Confirmar e-mail';
-      }
-    },
   },
   methods: {
     ...mapActions({
-      cadastrarUsuario: 'conta/cadastrarUsuario',
-      mensagemErro: 'app/setMensagemErro'
+      cadastrarUsuario: "conta/cadastrarUsuario",
+      mensagemErro: "app/setMensagemErro"
     }),
-    formatDate (date) {
+    formatDate(date) {
       if (!date) return null;
-      const [year, month, day] = date.split('-');
+      const [year, month, day] = date.split("-");
       return `${day}/${month}/${year}`;
     },
     login() {
@@ -212,14 +184,16 @@ export default {
         return;
       }
       this.loading = true;
-      this.cadastrarUsuario(this.usuario).then(() => {
-        this.loading = false;
-        this.step = 2;
-      }).catch((error) => {
-        this.loading = false;
-        this.mensagemErro(error.response.data.message);
-      });
-    },
-  },
+      this.cadastrarUsuario(this.usuario)
+        .then(() => {
+          this.loading = false;
+          this.step = 2;
+        })
+        .catch(error => {
+          this.loading = false;
+          this.mensagemErro(error.response.data.message);
+        });
+    }
+  }
 };
 </script>

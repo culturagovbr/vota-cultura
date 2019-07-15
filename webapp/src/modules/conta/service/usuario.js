@@ -7,3 +7,5 @@ export const recuperarSenha = usuario => service.postRequest('/auth/recuperar-se
 export const ativarUsuario = ativacao => service.putRequest('/conta/ativacao', ativacao, {});
 
 export const cadastrarUsuario = usuario => service.postRequest('/conta/usuario', usuario);
+
+export const alterarSenha = (codigoAlteracao, usuario) => service.putRequest('/conta/alterar-senha', codigoAlteracao, usuario);
