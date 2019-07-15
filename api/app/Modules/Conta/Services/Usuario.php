@@ -9,6 +9,7 @@ use App\Modules\Conta\Model\Usuario as UsuarioModel;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use DB;
+use Illuminate\Http\Response;
 
 class Usuario implements IService
 {
@@ -58,7 +59,10 @@ class Usuario implements IService
                 'no_cpf' => $dados['no_cpf']
             ])->first();
             if ($usuario) {
-                throw new ValidacaoCustomizadaException('Usuario já cadastradro.', 422);
+                throw new ValidacaoCustomizadaException(
+                    'Usuario já cadastrado.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
             }
             DB::beginTransaction();
             $this->model->no_cpf = $dados['no_cpf'];

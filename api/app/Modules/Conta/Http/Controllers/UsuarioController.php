@@ -91,6 +91,43 @@ use Illuminate\Http\Response;
  *     ),
  * )
  * )
+ *
+ *  * @OA\Get(
+ *     path="/api/conta/usuario/{co_usuario}",
+ *     tags={"Usuario"},
+ *     summary="Obtém as informações de um usuário específico",
+ *     operationId="obterInformacoesUsuario",
+ *     @OA\Parameter(
+ *         name="co_usuario",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer",
+ *             format="int32",
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=405,
+ *         description="Parametros inválidos"
+ *     ),
+ *     deprecated=false,
+ *     security={
+ *         {"bearerAuth": {}}
+ *     },
+ *     @OA\Response(
+ *         response=200,
+ *         description="Operação Realizada com Sucesso",
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Dados inválidos"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="É necessário estar autenticado para ter acesso a essa funcionalidade."
+ *     ),
+ * )
+ * )
  */
 
 class UsuarioController extends Controller
@@ -108,17 +145,20 @@ class UsuarioController extends Controller
         return $this->sendResponse($this->usuarioService->obterTodos());
     }
 
-    public function show($co_usuario) : \Illuminate\Http\JsonResponse
+    public function show(\App\Modules\Conta\Model\Usuario $usuario) : \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->usuarioService->obterUm($co_usuario));
+        return $this->sendResponse(
+            $usuario->toArray(),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_OK
+        );
     }
 
     public function store(Request $request) : \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->usuarioService->cadastrar(
-            $request->all()),
+        return $this->sendResponse($this->usuarioService->cadastrar($request->all()),
             "Operação Realizada com Sucesso",
-            Response::HTTP_OK
+            Response::HTTP_CREATED
         );
     }
 
