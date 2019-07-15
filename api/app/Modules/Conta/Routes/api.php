@@ -27,6 +27,7 @@ use Illuminate\Http\Request;
  *     name="Usuario",
  *     description="Endpoint de Usuário",
  * )
+ *
  */
 Route::group([
     'prefix' => 'conta'
@@ -47,13 +48,12 @@ Route::group([
         Route::get('me', 'AuthController@me');
     });
 
-    Route::resource('ativacao', 'AtivacaoController',
+    Route::apiResource('ativacao', 'AtivacaoController',
         ['only' => ['update']]);
 
 
-    Route::resource('usuario', 'UsuarioController',[
+    Route::apiResource('usuario', 'UsuarioController',[
         'middleware' => 'auth:api',
-        'except' => ['create', 'edit']
     ]);
 
 });
