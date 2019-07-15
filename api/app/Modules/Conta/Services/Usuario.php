@@ -6,6 +6,7 @@ use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Model\Perfil;
 use App\Services\IService;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use DB;
 
@@ -49,24 +50,34 @@ class Usuario implements IService
         return sha1(mt_rand(1, 999) . time() . $email);
     }
 
-    public function cadastrar()
+    public function cadastrar(array $dados)
     {
         try {
 
-            $usuario = $this->model->where(['no_cpf' => $this->model->no_cpf])->first();
+            $usuario = $this->model->where([
+                'no_cpf' => $dados['no_cpf']
+            ])->first();
             if ($usuario) {
                 throw new ValidacaoCustomizadaException('Usuario já cadastradro.', 422);
             }
-
             DB::beginTransaction();
+            $this->model->no_cpf = $dados['no_cpf'];
+            $this->model->no_email = $dados['no_email'];
+            $this->model->no_nome = $dados['no_nome'];
+            $this->model->dt_nascimento = $dados['dt_nascimento'];
+            $this->model->ds_codigo_ativacao = $this->gerarCodigoAtivacao($dados['no_email']);
+            $horarioAtual = Carbon::now();
+            $this->model->dt_cadastro = $horarioAtual->toDateTimeString();
+            $this->model->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
             $this->model->st_ativo = false;
-            $this->model->ds_codigo_ativacao = $this->gerarCodigoAtivacao($this->model->no_email);
+            $this->model->ds_senha = password_hash($dados['dt_nascimento'], PASSWORD_DEFAULT);
 
             // enviar e-mail
 
             $this->model->save();
             DB::commit();
-        } catch (QueryException $queryException) {
+            return $this->model;
+        } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;
         }

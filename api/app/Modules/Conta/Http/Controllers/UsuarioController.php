@@ -4,6 +4,8 @@ namespace App\Modules\Conta\Http\Controllers;
 
 use App\Modules\Conta\Services\Usuario as UsuarioService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * UsuarioController
@@ -29,15 +31,17 @@ use App\Http\Controllers\Controller;
  *                 @OA\Property(
  *                     property="no_cpf",
  *                     description="Número de CPF do usuário",
+ *                     example="00000000000",
  *                     @OA\Schema(
  *                          type="string",
  *                          maximum=11,
- *                          minimum=11
+ *                          minimum=11,
  *                     ),
  *                 ),
  *                 @OA\Property(
  *                     property="no_email",
  *                     description="E-mail do usuário",
+ *                     example="usuario@mail.com",
  *                     @OA\Schema(
  *                          type="string",
  *                          maximum=6,
@@ -47,6 +51,7 @@ use App\Http\Controllers\Controller;
  *                 @OA\Property(
  *                     property="ds_senha",
  *                     description="Senha do usuário",
+ *                     example="00000000000",
  *                     @OA\Schema(
  *                          type="string",
  *                          maximum=1,
@@ -57,10 +62,12 @@ use App\Http\Controllers\Controller;
  *                     property="dt_nascimento",
  *                     description="Data de nascimento do usuário",
  *                     type="date",
+ *                     example="2019-06-30",
  *                 ),
  *                 @OA\Property(
  *                     property="no_nome",
- *                     description="Senha do usuário",
+ *                     description="Nome do usuário",
+ *                     example="Usuário de teste",
  *                     @OA\Schema(
  *                          type="string",
  *                          maximum=1,
@@ -106,9 +113,13 @@ class UsuarioController extends Controller
         return $this->sendResponse($this->usuarioService->obterUm($co_usuario));
     }
 
-    public function store() : \Illuminate\Http\JsonResponse
+    public function store(Request $request) : \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->usuarioService->cadastrar());
+        return $this->sendResponse($this->usuarioService->cadastrar(
+            $request->all()),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_OK
+        );
     }
 
     public function update($codigo_ativacao) : \Illuminate\Http\JsonResponse

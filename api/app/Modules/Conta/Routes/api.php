@@ -52,8 +52,6 @@ Route::group([
         ['only' => ['update']]);
 
 
-    Route::apiResource('usuario', 'UsuarioController',[
-        'middleware' => 'auth:api',
-    ]);
+    Route::apiResource('usuario', 'UsuarioController');
 
 });
