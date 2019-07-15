@@ -128,6 +128,34 @@ use Illuminate\Http\Response;
  *     ),
  * )
  * )
+ *
+ *  @OA\Get(
+ *     path="/api/conta/usuario",
+ *     tags={"Usuario"},
+ *     summary="Obtém as informações de todos os usuários",
+ *     operationId="obterInformacoesUsuarios",
+ *     @OA\Response(
+ *         response=405,
+ *         description="Parametros inválidos"
+ *     ),
+ *     deprecated=false,
+ *     security={
+ *         {"bearerAuth": {}}
+ *     },
+ *     @OA\Response(
+ *         response=200,
+ *         description="Operação Realizada com Sucesso",
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Dados inválidos"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="É necessário estar autenticado para ter acesso a essa funcionalidade."
+ *     ),
+ * )
+ * )
  */
 
 class UsuarioController extends Controller
@@ -142,7 +170,11 @@ class UsuarioController extends Controller
 
     public function index() : \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->usuarioService->obterTodos());
+        return $this->sendResponse(
+            $this->usuarioService->obterTodos(),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_OK
+        );
     }
 
     public function show(\App\Modules\Conta\Model\Usuario $usuario) : \Illuminate\Http\JsonResponse
