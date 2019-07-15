@@ -44,7 +44,7 @@
           >
             <template v-slot:activator="{ on }">
               <v-text-field
-                      v-model="dt_nascimento_convertida"
+                      v-model="usuario.dt_nascimento"
                       mask="NN/NN/NNNN"
                       label="Data de Nascimento"
                       :rules="[rules.required]"
@@ -139,10 +139,10 @@ export default {
     valid: true,
     menu: false,
     date:'',
-    dt_nascimento_convertida:'',
     usuario: {
       no_cpf: '',
-      no_usuario: '',
+      no_nome: '',
+      dt_nascimento: '',
       no_email: '',
       ds_senha: '',
     },
@@ -158,8 +158,7 @@ export default {
   }),
   watch: {
     date () {
-        this.usuario.dt_nascimento = this.date;
-        this.dt_nascimento_convertida = this.formatDate(this.date);
+        this.usuario.dt_nascimento = this.formatDate(this.date);
     }
   },
   methods: {
