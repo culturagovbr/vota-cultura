@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use DB;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 class Usuario implements IService
 {
@@ -95,5 +96,23 @@ class Usuario implements IService
     public function obterTodos()
     {
         return $this->model->get();
+    }
+
+    public function atualizar(Request $request, UsuarioModel $usuario)
+    {
+        if ($request->user()->co_usuario !== $usuario->co_usuario) {
+            return response()->json(
+                ['error' => 'Operação não permitida.'],
+                Response::HTTP_UNAUTHORIZED
+            );
+        }
+
+        $usuario->update($request->only([
+            'ds_senha',
+            'dt_nascimento',
+            'no_nome',
+        ]));
+
+        return $usuario->toArray();
     }
 }
