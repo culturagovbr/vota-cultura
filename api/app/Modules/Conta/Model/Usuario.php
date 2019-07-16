@@ -13,6 +13,12 @@ class Usuario extends Authenticatable implements JWTSubject
     protected $table = 'tb_usuario';
     protected $primaryKey = 'co_usuario';
 
+    protected $dates = [
+        'dt_nascimento',
+        'dt_cadastro',
+        'dt_ultima_atualizacao',
+    ];
+
     protected $fillable = [
         'no_cpf',
         'no_nome',
