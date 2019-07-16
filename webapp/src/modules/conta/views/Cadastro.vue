@@ -28,7 +28,7 @@
               type="text"
               :rules="[rules.required]"
             />
-            <template activator="{ on }">
+            <template>
               <v-menu
                 ref="menu"
                 v-model="menu"
@@ -41,19 +41,16 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="usuario.dt_nascimento"
-                    mask="##/##/####"
+                    v-model="dataFormatada"
                     label="Data de Nascimento"
-                    :rules="[rules.required]"
                     prepend-icon="event"
+                    readonly
+                    validate-on-blur
+                    :rules="[rules.required]"
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker locale="pt-BR" v-model="date" scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                </v-date-picker>
+                <v-date-picker v-model="date" @input="menu = false"></v-date-picker>
               </v-menu>
             </template>
             <v-text-field
@@ -120,7 +117,7 @@
             <h3 class="title font-weight-light mb-2">Cadastro realizado com sucesso</h3>
             <span
               class="caption grey--text"
-            >Um e-mail foi enviado para "{{usuario.no_email}}" com link para ativação da sua conta.</span>
+            >Um link para ativação da sua conta foi enviado para o e-mail {{usuario.no_email}}.</span>
           </div>
         </v-card-text>
         <!-- <v-card-actions> -->
@@ -141,8 +138,9 @@ export default {
     mostrarSenha: false,
     valid: true,
     menu: false,
-    date: "",
-    step: 2,
+    date: '',
+    dataFormatada: '',
+    step: 1,
     usuario: {
       no_cpf: "",
       no_nome: "",
@@ -166,7 +164,8 @@ export default {
   }),
   watch: {
     date() {
-      this.usuario.dt_nascimento = this.formatDate(this.date);
+      this.dataFormatada = this.formatDate(this.date);
+      this.usuario.dt_nascimento = this.date;
     }
   },
   methods: {
