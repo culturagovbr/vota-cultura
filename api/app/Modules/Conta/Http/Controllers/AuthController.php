@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @license Apache 2.0
- */
-
 namespace App\Modules\Conta\Http\Controllers;
 
 /**
