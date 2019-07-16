@@ -5,7 +5,7 @@
     , seu cadastro foi realizado com sucesso!
 </p>
 <p>
-    Clique aqui para ativar o seu cadastro {{ $linkAtivacao }}.
+    Clique <a href="{{ $linkAtivacao }}">aqui</a> para ativar o seu cadastro.
 </p>
 <p>
     <b>CPF:</b> {{$usuario->no_cpf}}
