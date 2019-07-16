@@ -5,7 +5,7 @@ export default [
     path: '/conta',
     component: AuthLayout,
     meta: { title: 'Login' },
-    redirect: '/conta/login',
+    redirect: '/conta/autenticar',
     hidden: true,
     children: [
       {
@@ -31,12 +31,6 @@ export default [
         name: 'conta-ativar-usuario',
         meta: { title: 'Ativar usuário', public: true },
         component: () => import(/* webpackChunkName: "cadastro-ativacao-usuario" */ '@/modules/conta/views/CadastroAtivacaoUsuario.vue'),
-      },
-      {
-        path: 'cadastro2',
-        name: 'cadastro2',
-        meta: { title: 'Cadastrar-se', public: true },
-        component: () => import(/* webpackChunkName: "login" */ '@/modules/conta/views/CadastroPassos.vue'),
       },
       {
         path: 'recuperar-senha',
