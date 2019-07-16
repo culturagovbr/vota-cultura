@@ -100,19 +100,57 @@ class Usuario implements IService
 
     public function atualizar(Request $request, UsuarioModel $usuario)
     {
-        if ($request->user()->co_usuario !== $usuario->co_usuario) {
-            return response()->json(
-                ['error' => 'Operação não permitida.'],
-                Response::HTTP_UNAUTHORIZED
-            );
+        try {
+            if ($request->user()->co_usuario !== $usuario->co_usuario) {
+                return response()->json(
+                    ['error' => 'Operação não permitida.'],
+                    Response::HTTP_UNAUTHORIZED
+                );
+            }
+            DB::beginTransaction();
+
+            $horarioAtual = Carbon::now();
+            $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
+            $usuario->update($request->only([
+                'ds_senha',
+                'dt_nascimento',
+                'no_nome',
+            ]));
+
+            // enviar e-mail
+
+            DB::commit();
+            return $usuario->toArray();
+        } catch (\Exception $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
+    }
+
+    public function remover(Request $request, UsuarioModel $usuario)
+    {
+        try {
+            if ($request->user()->co_usuario !== $usuario->co_usuario) {
+                return response()->json(
+                    ['error' => 'Operação não permitida.'],
+                    Response::HTTP_UNAUTHORIZED
+                );
+            }
+            DB::beginTransaction();
+
+            $horarioAtual = Carbon::now();
+            $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
+            $usuario->update(['st_ativo' => false]);
+
+            ## $usuario->delete();
+
+            // enviar e-mail
+
+            DB::commit();
+        } catch (\Exception $queryException) {
+            DB::rollBack();
+            throw $queryException;
         }
 
-        $usuario->update($request->only([
-            'ds_senha',
-            'dt_nascimento',
-            'no_nome',
-        ]));
-
-        return $usuario->toArray();
     }
 }

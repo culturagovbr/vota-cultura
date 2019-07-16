@@ -216,6 +216,44 @@ use App\Modules\Conta\Model\Usuario as UsuarioModel;
  *         description="User not found"
  *     ),
  * )
+ *
+ *  @OA\Delete(
+ *          path="/api/conta/usuario/{co_usuario}",
+ *          tags={"Usuario"},
+ *          summary="Remove um usuário específico.",
+ *          operationId="removerUsuario",
+ *          @OA\Parameter(
+ *              name="co_usuario",
+ *              in="path",
+ *              description="Identificador do Usuário.",
+ *              required=true,
+ *              @OA\Schema(
+ *                  type="integer",
+ *                  format="int32",
+ *              )
+ *          ),
+ *          @OA\Response(
+ *              response=405,
+ *              description="Parametros inválidos"
+ *          ),
+ *          deprecated=false,
+ *          security={
+ *              {"bearerAuth": {}}
+ *          },
+ *          @OA\Response(
+ *              response=200,
+ *              description="Operação Realizada com Sucesso",
+ *          ),
+ *          @OA\Response(
+ *              response=400,
+ *              description="Dados inválidos"
+ *          ),
+ *          @OA\Response(
+ *              response=401,
+ *              description="É necessário estar autenticado para ter acesso a essa funcionalidade."
+ *          ),
+ *      )
+ * )
  */
 
 class UsuarioController extends Controller
@@ -267,5 +305,12 @@ class UsuarioController extends Controller
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
+    }
+
+    public function destroy(UsuarioModel $usuario)
+    {
+        $this->usuarioService->remover($usuario);
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
