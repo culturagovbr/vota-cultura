@@ -3,6 +3,7 @@
 namespace App\Modules\Conta\Services;
 
 use App\Exceptions\ValidacaoCustomizadaException;
+use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil;
 use App\Services\IService;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
@@ -11,6 +12,7 @@ use Illuminate\Database\QueryException;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class Usuario implements IService
 {
@@ -55,29 +57,35 @@ class Usuario implements IService
     public function cadastrar(array $dados)
     {
         try {
-
             $usuario = $this->model->where([
                 'no_cpf' => $dados['no_cpf']
             ])->first();
+
             if ($usuario) {
                 throw new ValidacaoCustomizadaException(
                     'Usuario já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
+
             DB::beginTransaction();
             $this->model->no_cpf = $dados['no_cpf'];
             $this->model->no_email = $dados['no_email'];
             $this->model->no_nome = $dados['no_nome'];
             $this->model->dt_nascimento = $dados['dt_nascimento'];
-            $this->model->ds_codigo_ativacao = $this->gerarCodigoAtivacao($dados['no_email']);
+            $this->model->ds_codigo_ativacao = $this->gerarCodigoAtivacao(
+                $dados['no_email']
+            );
             $horarioAtual = Carbon::now();
             $this->model->dt_cadastro = $horarioAtual->toDateTimeString();
             $this->model->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
             $this->model->st_ativo = false;
-            $this->model->ds_senha = password_hash($dados['dt_nascimento'], PASSWORD_DEFAULT);
+            $this->model->ds_senha = password_hash(
+                $dados['ds_senha'],
+                PASSWORD_DEFAULT
+            );
 
-            // enviar e-mail
+            Mail::to($this->model->no_email)->send(new CadastroComSucesso($this->model));
 
             $this->model->save();
             DB::commit();

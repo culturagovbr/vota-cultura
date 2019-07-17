@@ -4,8 +4,8 @@
         "name": "Agente",
         "slug": "agente",
         "version": "1.0",
-        "description": "Modulo Agente.",
-        "id": 2356372769,
+        "description": "Modulo utilizado como template para gera\u00e7\u00e3o de novos.",
+        "id": 1631723071,
         "enabled": true,
         "order": 9001
     },
