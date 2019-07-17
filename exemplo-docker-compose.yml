@@ -35,13 +35,13 @@ services:
     #      timeout: 5s
     #      retries: 3
     volumes:
-    - ./webapp:/home/node/app
+      - ./webapp:/home/node/app
     command:
       sh -c 'npm i && npm run serve'
     ports:
-    - "8080:8080"
+      - "8080:8080"
     environment:
-    - NODE_ENV=development
+      - NODE_ENV=development
     #      - NODE_CONFIG_ENV=development
     #- NODE_CONFIG_ENV=production
     #- NODE_ENV=production
@@ -55,7 +55,7 @@ services:
     #    links:
     #      - api-service:sli-api
     networks:
-    - sli_network
+      - sli_network
 
   api-service:
     container_name: sli-api
@@ -90,6 +90,19 @@ services:
       - ./api/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "88:80"
+    depends_on:
+      - api-service
+    networks:
+      - sli_network
+
+  webapp-webserver-service:
+    image: nginx:1.17-alpine
+    container_name: sli-webapp-webserver
+    working_dir: /usr/share/nginx/html
+    volumes:
+      - ./webapp/dist:/usr/share/nginx/html
+    ports:
+      - "80:80"
     depends_on:
       - api-service
     networks:
