@@ -37,6 +37,7 @@ Para reunir todos os módulos acima, foi criada uma stack Docker da aplicação,
 - api-service - Porta 9000
 - webserver-service - Porta 88
 - database-service - Porta 5432
+- webapp-webserver-service - Porta 80
 
 ## Como inicializar a Stack
 
@@ -47,12 +48,19 @@ WebServer(NGINX) e WebApp(NodeJS).
 docker-compose up
 ```
 
+#### Publicando Frontend
+
+Para disponibilizar o frontend da aplicação, execute o passos a seguir:
+- Dentro do diretório `webapp`  executar o comando `npm run build` 
+- O diretório `dist` será criado contendo o código-fonte da camada de apresentação de forma reduzida.
+- O serviço `webapp-webserver-service` compartilhará o diretório `webapp/dist` do host com o diretório 
+`/usr/share/nginx/html` do container.
+- A aplicação estará disponível por padrão na porta **80** através da publicação de portas compartilhadas(publish) 
+que foi definido através do comando **ports**.
+
 ## Funcionalidades 
   
 - [x] Manter Usuário
 - [x] Manter Perfil
-- [x] Manter Responsáveis
-- [ ] Manter Cadastro de Proposta 
-- [ ] Manter  
 
 ## Autenticação
