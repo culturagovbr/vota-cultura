@@ -31,4 +31,4 @@ export const cadastrarUsuario = async ({}, usuario) => usuarioService.cadastrarU
 
 export const recuperarSenha = async ({}, usuario) => usuarioService.recuperarSenha(usuario);
 
-export const alterarSenha = async (codigoAtivacao, usuario) => usuarioService.alterarSenha(codigoAtivacao, usuario);
+export const alterarSenha = async (state, { codigoAlteracao, usuario }) => usuarioService.alterarSenha(codigoAlteracao, usuario);

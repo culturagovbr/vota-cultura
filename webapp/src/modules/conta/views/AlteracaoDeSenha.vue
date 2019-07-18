@@ -42,7 +42,7 @@
         block
         color="primary"
         :loading="loading"
-        @click="login"
+        @click="alterar"
       >
         Alterar senha
       </v-btn>
@@ -77,14 +77,16 @@ export default {
   methods: {
     ...mapActions({
       alterarSenha: 'conta/alterarSenha',
-      mensagemErro: "app/setMensagemErro"
+      mensagemErro: "app/setMensagemErro",
+      mensagemSucesso: "app/setMensagemSucesso"
     }),
-    login() {
+    alterar() {
       if (!this.$refs.form.validate()) {
         return;
       }
       this.loading = true;
-      this.alterarSenha(this.$route.params.ds_codigo_ativacao, this.usuario).then(() => {
+      this.alterarSenha({ codigoAlteracao: this.$route.params.ds_codigo_alteracao, usuario : this.usuario}).then(() => {
+        this.mensagemSucesso("Senha alterada com sucesso");
         this.$router.push('/');
       }).catch((error) => {
         this.loading = false;

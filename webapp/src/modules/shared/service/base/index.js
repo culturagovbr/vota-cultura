@@ -65,6 +65,7 @@ instance.interceptors.response.use(response => response, (error) => {
 });
 
 const buildData = (params) => {
+  // console.log(Object.keys(params));
   const bodyFormData = new FormData();
 
   Object.keys(params).forEach((key) => {
@@ -78,6 +79,6 @@ export const getRequest = (path, params = '') => instance.get(path, params);
 
 export const postRequest = (path, payload) => instance.post(path, buildData(payload));
 
-export const putRequest = (path, id, payload) => instance.put(`${path}/${id}`, id, buildData(payload));
+export const putRequest = (path, id, payload) => instance.put(`${path}/${id}`, payload);
 
 export const deleteRequest = (path, id) => instance.delete(`${path}/${id}`);
