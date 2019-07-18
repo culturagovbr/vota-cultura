@@ -147,7 +147,7 @@ class AuthController extends \App\Http\Controllers\Controller
         $credentials = request()->only(['no_cpf', 'ds_senha']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Sem autorização.'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -162,7 +162,7 @@ class AuthController extends \App\Http\Controllers\Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Logout realizado com sucesso']);
     }
 
     public function refresh(): \Illuminate\Http\JsonResponse
