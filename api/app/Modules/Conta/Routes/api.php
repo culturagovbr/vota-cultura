@@ -54,4 +54,7 @@ Route::group([
 
     Route::apiResource('usuario', 'UsuarioController');
 
+    Route::apiResource('recuperacao/senha', 'RecuperacaoSenhaController',
+        ['only' => ['store','update']]);
+
 });

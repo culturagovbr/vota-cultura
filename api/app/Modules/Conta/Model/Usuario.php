@@ -73,4 +73,13 @@ class Usuario extends Authenticatable implements JWTSubject
 
         return $dadosPayload;
     }
+
+    public function setSenha($ds_senha)
+    {
+        $this->ds_senha = password_hash(
+            $ds_senha,
+            PASSWORD_DEFAULT
+        );
+        return $this;
+    }
 }

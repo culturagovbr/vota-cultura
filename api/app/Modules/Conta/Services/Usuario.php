@@ -5,7 +5,7 @@ namespace App\Modules\Conta\Services;
 use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil;
-use App\Services\IService;
+use App\Services\AbstractService;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -14,22 +14,17 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class Usuario implements IService
+class Usuario extends AbstractService
 {
-    /**
-     * @var UsuarioModel $model
-     */
-    private $model;
-
     public function __construct(UsuarioModel $model)
     {
-        $this->model = $model;
+        parent::__construct($model);
     }
 
     public function ativarUsuarioPorCodigoAtivacao($codigo_ativacao)
     {
         try {
-            $usuario = $this->model->where(['ds_codigo_ativacao' => $codigo_ativacao, 'st_ativo' => false])->first();
+            $usuario = $this->getModel()->where(['ds_codigo_ativacao' => $codigo_ativacao, 'st_ativo' => false])->first();
             if (!$usuario) {
                 throw new ValidacaoCustomizadaException('Usuario não encontrado', 422);
             }
@@ -54,10 +49,15 @@ class Usuario implements IService
         return sha1(mt_rand(1, 999) . time() . $email);
     }
 
+    public function gerarCodigoAlteracao($cpf, $dataNascimento, $email)
+    {
+        return sha1(mt_rand(1, 999) . time() . $cpf . $dataNascimento . $email);
+    }
+
     public function cadastrar(array $dados)
     {
         try {
-            $usuario = $this->model->where([
+            $usuario = $this->getModel()->where([
                 'no_cpf' => $dados['no_cpf']
             ])->first();
 
@@ -69,27 +69,24 @@ class Usuario implements IService
             }
 
             DB::beginTransaction();
-            $this->model->no_cpf = $dados['no_cpf'];
-            $this->model->no_email = $dados['no_email'];
-            $this->model->no_nome = $dados['no_nome'];
-            $this->model->dt_nascimento = $dados['dt_nascimento'];
-            $this->model->ds_codigo_ativacao = $this->gerarCodigoAtivacao(
+            $this->getModel()->no_cpf = $dados['no_cpf'];
+            $this->getModel()->no_email = $dados['no_email'];
+            $this->getModel()->no_nome = $dados['no_nome'];
+            $this->getModel()->dt_nascimento = $dados['dt_nascimento'];
+            $this->getModel()->ds_codigo_ativacao = $this->gerarCodigoAtivacao(
                 $dados['no_email']
             );
             $horarioAtual = Carbon::now();
-            $this->model->dt_cadastro = $horarioAtual->toDateTimeString();
-            $this->model->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
-            $this->model->st_ativo = false;
-            $this->model->ds_senha = password_hash(
-                $dados['ds_senha'],
-                PASSWORD_DEFAULT
-            );
+            $this->getModel()->dt_cadastro = $horarioAtual->toDateTimeString();
+            $this->getModel()->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
+            $this->getModel()->st_ativo = false;
+            $this->getModel()->setSenha($dados['ds_senha']);
 
-            Mail::to($this->model->no_email)->send(new CadastroComSucesso($this->model));
+            $this->getModel()->save();
 
-            $this->model->save();
+            Mail::to($this->getModel()->no_email)->send(new CadastroComSucesso($this->getModel()));
             DB::commit();
-            return $this->model;
+            return $this->getModel();
         } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;
@@ -98,12 +95,12 @@ class Usuario implements IService
 
     public function obterUm($co_usuario)
     {
-        return $this->model->find($co_usuario);
+        return $this->getModel()->find($co_usuario);
     }
 
     public function obterTodos()
     {
-        return $this->model->get();
+        return $this->getModel()->get();
     }
 
     public function atualizar(Request $request, UsuarioModel $usuario)
