@@ -2,7 +2,7 @@ import * as service from '../../shared/service/base/index';
 /* eslint-disable import/prefer-default-export */
 export const login = usuario => service.postRequest('/conta/auth/login', usuario);
 
-export const logout = () => service.postRequest('/conta/auth/logout');
+export const logout = usuario => service.getRequest('/conta/auth/logout', usuario);
 
 export const recuperarSenha = usuario => service.postRequest('/conta/recuperacao/senha', usuario);
 

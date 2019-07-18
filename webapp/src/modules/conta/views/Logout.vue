@@ -39,13 +39,13 @@ export default {
     loading: true,
   }),
   created() {
-    this.logout();
+    this.acionarLogout();
   },
   methods: {
     ...mapActions({
       logout: 'conta/logout',
     }),
-    logout() {
+    acionarLogout() {
       this.loading = true;
       setTimeout(() => {
         this.loading = false;

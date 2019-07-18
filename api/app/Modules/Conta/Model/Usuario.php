@@ -63,9 +63,9 @@ class Usuario extends Authenticatable implements JWTSubject
         $dadosPayload = [
             'cpf' => $this->no_cpf,
             'email' => $this->no_email,
-            'dt_nascimento' => $this->dt_nascimento,
-            'dt_cadastro' => $this->dt_cadastro,
-            'dt_ultima_atualizacao' => $this->dt_ultima_atualizacao,
+            'dt_nascimento' => $this->dt_nascimento->format('Y-m-d'),
+            'dt_cadastro' => $this->dt_cadastro->format('Y-m-d H:i:s'),
+            'dt_ultima_atualizacao' => $this->dt_ultima_atualizacao->format('Y-m-d H:i:s'),
             'st_ativo' => $this->st_ativo,
             'no_nome' => $this->no_nome,
             'perfis' => $perfis
