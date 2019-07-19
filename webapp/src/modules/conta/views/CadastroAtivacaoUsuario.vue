@@ -1,15 +1,18 @@
 <template>
-  <v-card class="elevation-1 pa-3 login-card" :color="type">
-    <v-card-title primary-title>
-      <div>
-        <h3 class="headline mb-0">
-          <v-icon v-if="!loading">{{icon}}</v-icon>{{message}}
-        </h3>
+  <v-card class="elevation-1 pa-3 login-card">
+    <!-- <v-card-title>
+      <div class="layout column align-center">
+        <h2 class="flex my-2 primary--text">{{$route.meta.title}}</h2>
       </div>
-    </v-card-title>
+    </v-card-title> -->
     <v-card-text>
       <card-carregando v-if="loading"></card-carregando>
+      <div class="text-xs-center" v-if="!loading">
+        <v-icon size="80px" color="primary">{{icon}}</v-icon>
+        <h3 class="title font-weight-light mb-2">{{message}}</h3>
+      </div>
     </v-card-text>
+    <v-btn block color="primary" :to="{ name: 'conta-autenticar' }">Login</v-btn>
   </v-card>
 </template>
 
@@ -30,13 +33,11 @@ export default {
   },
   created () {
     this.ativarUsuario(this.$route.params.ds_codigo_ativacao).then(() => {
-      this.type = 'success';
-      this.icon = 'thumb_up';
+      this.icon = 'check_circle';
       this.loading = false;
       this.message = 'Usuário ativado com sucesso';
     }).catch( error => {
-      this.type = 'error';
-      this.icon = 'thumb_down';
+      this.icon = 'error';
       this.loading = false;
       this.message = error.response.data.message;
     });
