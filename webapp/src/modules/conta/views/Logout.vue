@@ -37,27 +37,19 @@ export default {
   data: () => ({
     appTitle: process.env.VUE_APP_TITLE,
     loading: true,
-    model: {
-      username: '',
-      password: '',
-    },
   }),
   created() {
-    this.logout();
+    this.acionarLogout();
   },
   methods: {
     ...mapActions({
-      finalizarSessaoUsuario: 'usuario/finalizarSessaoUsuario',
+      logout: 'conta/logout',
     }),
-    logout() {
+    acionarLogout() {
       this.loading = true;
-      // handle login
-
-      // this.finalizarSessaoUsuario(this.model).finally(() => {
-      //   this.loading = false;
-      // });
       setTimeout(() => {
         this.loading = false;
+        this.logout();
       }, 2000);
     },
   },

@@ -69,24 +69,27 @@ class Usuario extends AbstractService
             }
 
             DB::beginTransaction();
-            $this->getModel()->no_cpf = $dados['no_cpf'];
-            $this->getModel()->no_email = $dados['no_email'];
-            $this->getModel()->no_nome = $dados['no_nome'];
-            $this->getModel()->dt_nascimento = $dados['dt_nascimento'];
-            $this->getModel()->ds_codigo_ativacao = $this->gerarCodigoAtivacao(
+            $usuario = $this->getModel();
+            $usuario->no_cpf = $dados['no_cpf'];
+            $usuario->no_email = $dados['no_email'];
+            $usuario->no_nome = $dados['no_nome'];
+            $usuario->dt_nascimento = $dados['dt_nascimento'];
+            $usuario->ds_codigo_ativacao = $this->gerarCodigoAtivacao(
                 $dados['no_email']
             );
             $horarioAtual = Carbon::now();
-            $this->getModel()->dt_cadastro = $horarioAtual->toDateTimeString();
-            $this->getModel()->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
-            $this->getModel()->st_ativo = false;
-            $this->getModel()->setSenha($dados['ds_senha']);
+            $usuario->dt_cadastro = $horarioAtual->toDateTimeString();
+            $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
+            $usuario->st_ativo = false;
+            $usuario->setSenha($dados['ds_senha']);
 
-            $this->getModel()->save();
+            $usuario->save();
 
-            Mail::to($this->getModel()->no_email)->send(new CadastroComSucesso($this->getModel()));
+            Mail::to($usuario->no_email)->send(
+                new CadastroComSucesso($usuario)
+            );
             DB::commit();
-            return $this->getModel();
+            return $usuario;
         } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;
@@ -116,13 +119,10 @@ class Usuario extends AbstractService
 
             $horarioAtual = Carbon::now();
             $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
-            $usuario->update($request->only([
-                'ds_senha',
-                'dt_nascimento',
-                'no_nome',
-            ]));
-
-            // enviar e-mail
+            $usuario->setSenha($request->post('ds_senha'));
+            $usuario->dt_nascimento = $request->post('dt_nascimento');
+            $usuario->no_nome = $request->post('no_nome');
+            $usuario->save();
 
             DB::commit();
             return $usuario->toArray();
@@ -145,11 +145,10 @@ class Usuario extends AbstractService
 
             $horarioAtual = Carbon::now();
             $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
-            $usuario->update(['st_ativo' => false]);
+            $usuario->st_ativo = false;
+            $usuario->save();
 
             ## $usuario->delete();
-
-            // enviar e-mail
 
             DB::commit();
         } catch (\Exception $queryException) {
