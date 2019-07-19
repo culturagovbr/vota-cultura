@@ -33,9 +33,10 @@
                 <template v-slot:activator="{ on }">
                   <v-text-field
                     v-model="dataFormatada"
+                    mask="##/##/####"
+                    return-masked-value
                     label="Data de Nascimento"
                     prepend-icon="event"
-                    readonly
                     :rules="[rules.required]"
                     v-on="on"
                   ></v-text-field>
@@ -114,7 +115,6 @@ export default {
   watch: {
     date() {
       this.dataFormatada = this.formatDate(this.date);
-      this.usuario.dt_nascimento = this.date;
     }
   },
   methods: {
@@ -132,6 +132,9 @@ export default {
         return;
       }
       this.loading = true;
+      const [dia, mes, ano] = this.dataFormatada.split("/");
+      this.usuario.dt_nascimento = `${ano}-${mes}-${dia}`;
+
       this.recuperarSenha(this.usuario)
         .then(() => {
           this.step = 2;
