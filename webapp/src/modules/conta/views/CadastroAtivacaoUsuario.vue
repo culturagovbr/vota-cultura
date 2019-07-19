@@ -1,10 +1,5 @@
 <template>
   <v-card class="elevation-1 pa-3 login-card">
-    <!-- <v-card-title>
-      <div class="layout column align-center">
-        <h2 class="flex my-2 primary--text">{{$route.meta.title}}</h2>
-      </div>
-    </v-card-title> -->
     <v-card-text>
       <card-carregando v-if="loading"></card-carregando>
       <div class="text-xs-center" v-if="!loading">
