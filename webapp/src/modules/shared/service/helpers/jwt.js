@@ -13,6 +13,7 @@ export function obterInformacoesJWT(token) {
     }
     return finalToken != null ? jsonwebtoken.verify(finalToken, process.env.VUE_APP_JWT_SECRET) : '';
   } catch (Exception) {
+    console.log(Exception);
     return '';
     // throw Exception;
   }

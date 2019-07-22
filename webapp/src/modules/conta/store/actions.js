@@ -33,10 +33,8 @@ export const recuperarSenha = async ({}, usuario) => usuarioService.recuperarSen
 
 export const alterarSenha = async (state, { codigoAlteracao, usuario }) => usuarioService.alterarSenha(codigoAlteracao, usuario);
 
-export const logout = async () => {
-console.log(111111);
-  return usuarioService.logout({}).then(() => {
-console.log(12323123);
-    localStorage.removeItem('user_token');
-  });
-};
+export const usuarioAlterarSenha = async (state, { coUsuario, usuario }) => usuarioService.usuarioAlterarSenha(coUsuario, usuario);
+
+export const logout = async () => usuarioService.logout({}).then(() => {
+  localStorage.removeItem('user_token');
+});

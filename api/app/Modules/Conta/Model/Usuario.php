@@ -61,14 +61,18 @@ class Usuario extends Authenticatable implements JWTSubject
         }
 
         $dadosPayload = [
-            'cpf' => $this->no_cpf,
-            'email' => $this->no_email,
-            'dt_nascimento' => $this->dt_nascimento->format('Y-m-d'),
-            'dt_cadastro' => $this->dt_cadastro->format('Y-m-d H:i:s'),
-            'dt_ultima_atualizacao' => $this->dt_ultima_atualizacao->format('Y-m-d H:i:s'),
-            'st_ativo' => $this->st_ativo,
-            'no_nome' => $this->no_nome,
-            'perfis' => $perfis
+            'user' => [
+                'co_usuario' => $this->co_usuario,
+                'no_nome' => $this->no_nome,
+                'no_cpf' => $this->no_cpf,
+                'no_email' => $this->no_email,
+                'dt_nascimento' => $this->dt_nascimento->format('Y-m-d'),
+                'dt_cadastro' => $this->dt_cadastro->format('Y-m-d H:i:s'),
+                'dt_ultima_atualizacao' => $this->dt_ultima_atualizacao->format('Y-m-d H:i:s'),
+                'st_ativo' => $this->st_ativo,
+                'perfis' => $perfis,
+            ]
+
         ];
 
         return $dadosPayload;
@@ -81,5 +85,10 @@ class Usuario extends Authenticatable implements JWTSubject
             PASSWORD_DEFAULT
         );
         return $this;
+    }
+
+    public function validarSenha($ds_senha)
+    {
+        return password_verify($ds_senha, $this->ds_senha);
     }
 }

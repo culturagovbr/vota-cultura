@@ -1,4 +1,5 @@
-import { AuthLayout } from '@/core/components/layouts';
+import { AuthLayout , DefaultLayout } from '@/core/components/layouts';
+
 
 export default [
   {
@@ -43,6 +44,19 @@ export default [
         name: 'conta-alterar-senha',
         meta: { title: 'Alterar Senha', public: true },
         component: () => import(/* webpackChunkName: "recuperar-senha" */ '@/modules/conta/views/AlteracaoDeSenha.vue'),
+      },
+    ],
+  },
+  {
+    path: '/conta/usuario',
+    component: DefaultLayout,
+    hidden: true,
+    children: [
+      {
+        path: 'alterar-senha',
+        name: 'conta-usuario-alterar-senha',
+        meta: { title: 'Alterar Senha', public: true },
+        component: () => import(/* webpackChunkName: "recuperar-senha" */ '@/modules/conta/views/usuario/AlteracaoDeSenha.vue'),
       },
     ],
   },

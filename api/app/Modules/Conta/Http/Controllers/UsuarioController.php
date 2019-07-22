@@ -297,11 +297,10 @@ class UsuarioController extends Controller
         );
     }
 
-
-    public function update(Request $request, UsuarioModel $usuario)
+    public function update(Request $request, $co_usuario)
     {
         return $this->sendResponse(
-            $this->usuarioService->atualizar($request, $usuario),
+            $this->usuarioService->atualizar($request, $co_usuario),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
@@ -312,5 +311,17 @@ class UsuarioController extends Controller
         $this->usuarioService->remover($usuario);
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @todo Criar no swagger
+     */
+    public function alterarSenha(Request $request, $co_usuario)
+    {
+        return $this->sendResponse(
+            $this->usuarioService->alterarSenha($request, $co_usuario),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_OK
+        );
     }
 }
