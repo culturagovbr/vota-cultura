@@ -1,4 +1,4 @@
-# Sistemas de Leis de Incentivo (SLI)
+# Vota Cultura
 
 ## Sobre
 
@@ -57,10 +57,3 @@ Para disponibilizar o frontend da aplicação, execute o passos a seguir:
 `/usr/share/nginx/html` do container.
 - A aplicação estará disponível por padrão na porta **80** através da publicação de portas compartilhadas(publish) 
 que foi definido através do comando **ports**.
-
-## Funcionalidades 
-  
-- [x] Manter Usuário
-- [x] Manter Perfil
-
-## Autenticação
