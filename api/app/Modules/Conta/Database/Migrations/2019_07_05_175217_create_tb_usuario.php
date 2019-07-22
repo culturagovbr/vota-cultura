@@ -17,12 +17,9 @@ class CreateTbUsuario extends Migration
                 true,
                 true
             );
-            #@todo está como text
-            $table->string('no_cpf', 11)->unique();
-            $table->string('no_nome', 255)->nullable(false);
-            $table->string('no_email', 255)->unique();
+            $table->string('no_pessoa', 255)->nullable(false);
+            $table->string('ds_email', 255)->unique();
             $table->string('ds_senha', 255);
-            $table->date('dt_nascimento');
             $table->string('ds_codigo_ativacao', 255);
             $carbon = Carbon\Carbon::now();
             $dataEhorarioAtual = $carbon->toDateTimeString();

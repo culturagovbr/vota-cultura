@@ -40,7 +40,7 @@ use App\Modules\Conta\Model\Usuario as UsuarioModel;
  *                          ),
  *                      ),
  *                      @OA\Property(
- *                          property="no_email",
+ *                          property="ds_email",
  *                          description="E-mail do usuário",
  *                          example="usuario@mail.com",
  *                          @OA\Schema(

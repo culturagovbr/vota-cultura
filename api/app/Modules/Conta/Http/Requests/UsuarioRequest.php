@@ -10,10 +10,8 @@ class UsuarioRequest extends FormRequest
     public function rules()
     {
         return [
-            'no_cpf' => 'required|string',
-            'no_email' => 'required|string',
+            'ds_email' => 'required|string',
             'ds_senha' => 'required|string',
-            'dt_nascimento' => 'required|date',
         ];
     }
 

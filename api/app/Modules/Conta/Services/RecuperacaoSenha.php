@@ -27,7 +27,7 @@ class RecuperacaoSenha implements IService
         try {
             $usuario = $this->usuarioService->getModel()->where(['no_cpf' => $dados['no_cpf'],
                     'dt_nascimento' => $dados['dt_nascimento'],
-                    'no_email' => $dados['no_email'],
+                    'ds_email' => $dados['ds_email'],
                     'st_ativo' => true]
             )->first();
             if (!$usuario) {
@@ -44,12 +44,12 @@ class RecuperacaoSenha implements IService
                 $this->usuarioService->gerarCodigoAlteracao(
                     $usuario->no_cpf,
                     $usuario->dt_nascimento,
-                    $usuario->no_email
+                    $usuario->ds_email
                 );
             $usuario->save();
 
 
-            Mail::to($usuario->no_email)->send(new RecuperacaoSenhaMail($usuario));
+            Mail::to($usuario->ds_email)->send(new RecuperacaoSenhaMail($usuario));
 
             DB::commit();
             return $usuario->toArray();
@@ -64,7 +64,6 @@ class RecuperacaoSenha implements IService
     public function alterarSenha($codigo_alteracao, array $dados)
     {
         try {
-//            print_r($dados);exit;
             $usuario = $this->usuarioService->getModel()->where(['ds_codigo_alteracao' => $codigo_alteracao, 'st_ativo' => true])->first();
             if (!$usuario) {
                 throw new ValidacaoCustomizadaException(

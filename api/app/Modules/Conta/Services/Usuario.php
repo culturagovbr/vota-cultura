@@ -71,11 +71,11 @@ class Usuario extends AbstractService
             DB::beginTransaction();
             $usuario = $this->getModel();
             $usuario->no_cpf = $dados['no_cpf'];
-            $usuario->no_email = $dados['no_email'];
+            $usuario->ds_email = $dados['ds_email'];
             $usuario->no_nome = $dados['no_nome'];
             $usuario->dt_nascimento = $dados['dt_nascimento'];
             $usuario->ds_codigo_ativacao = $this->gerarCodigoAtivacao(
-                $dados['no_email']
+                $dados['ds_email']
             );
             $horarioAtual = Carbon::now();
             $usuario->dt_cadastro = $horarioAtual->toDateTimeString();
@@ -85,7 +85,7 @@ class Usuario extends AbstractService
 
             $usuario->save();
 
-            Mail::to($usuario->no_email)->send(
+            Mail::to($usuario->ds_email)->send(
                 new CadastroComSucesso($usuario)
             );
             DB::commit();

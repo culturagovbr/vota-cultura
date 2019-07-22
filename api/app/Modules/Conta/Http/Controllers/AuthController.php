@@ -144,7 +144,7 @@ class AuthController extends \App\Http\Controllers\Controller
 
     public function login(): \Illuminate\Http\JsonResponse
     {
-        $credentials = request()->only(['no_cpf', 'ds_senha']);
+        $credentials = request()->only(['ds_email', 'ds_senha']);
 
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Sem autorização.'], 401);
