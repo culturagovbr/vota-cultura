@@ -22,7 +22,7 @@
         height="auto"
         class="white pa-3 app--footer"
       >
-        <span class="caption">SLI {{ new Date().getFullYear() }}</span>
+        <span class="caption">Vota Cultura {{ new Date().getFullYear() }}</span>
         <v-spacer />
         <span class="caption mr-1"> Ministério da Cidadania </span>
       </v-footer>
