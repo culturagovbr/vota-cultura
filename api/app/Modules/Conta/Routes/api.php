@@ -53,6 +53,7 @@ Route::group([
 
 
     Route::apiResource('usuario', 'UsuarioController');
+    Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
 
     Route::apiResource('recuperacao/senha', 'RecuperacaoSenhaController',
         ['only' => ['store','update']]);

@@ -106,9 +106,17 @@ class Usuario extends AbstractService
         return $this->getModel()->get();
     }
 
-    public function atualizar(Request $request, UsuarioModel $usuario)
+    public function atualizar(Request $request, int $co_usuario)
     {
         try {
+            $usuario = $this->getModel()->find($co_usuario);
+            if (!$usuario) {
+                throw new ValidacaoCustomizadaException(
+                    'Usuário não encontrado.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
             if ($request->user()->co_usuario !== $usuario->co_usuario) {
                 return response()->json(
                     ['error' => 'Operação não permitida.'],
@@ -156,5 +164,34 @@ class Usuario extends AbstractService
             throw $queryException;
         }
 
+    }
+
+    public function alterarSenha(Request $request, int $co_usuario)
+    {
+        try {
+            DB::beginTransaction();
+            $dados = $request->all();
+            if (!$dados || !isset($dados['ds_senha_atual'])) {
+                throw new ValidacaoCustomizadaException(
+                    'Senha não informada.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+            $usuario = $this->getModel()->find($co_usuario);
+
+            if (!$usuario || !$usuario->validarSenha($dados['ds_senha_atual'])) {
+                throw new ValidacaoCustomizadaException(
+                    'Dados inválidos.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            $usuario->setSenha($dados['ds_senha']);
+            $usuario->save();
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
     }
 }

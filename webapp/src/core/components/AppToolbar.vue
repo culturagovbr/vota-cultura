@@ -121,16 +121,9 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'account_circle',
-          href: '#',
-          title: 'Perfil',
-          click: this.handleProfile,
-        },
-        {
-          icon: 'settings',
-          href: '#',
-          title: 'Settings',
-          click: this.handleSetting,
+          icon: 'lock',
+          name: 'conta-usuario-alterar-senha',
+          title: 'Alterar Senha',
         },
         {
           icon: 'fullscreen_exit',
