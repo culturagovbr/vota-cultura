@@ -3,19 +3,19 @@ const Menu = [
     title: 'Início',
     group: 'apps',
     icon: 'home',
-    to: 'inicio',
+    name: 'Inicio',
   },
   { header: 'Inscreva-se' },
   {
     title: 'Organização ou Entidade Cultural',
     group: 'apps',
-    name: 'Organização ou Entidade Cultural',
+    name: 'Organizacao',
     icon: 'color_lens',
   },
   {
     title: 'Conselhos de Cultura',
     group: 'apps',
-    name: 'Conselho de Cultura',
+    name: 'Conselho',
     icon: 'group',
   },
   {

@@ -35,14 +35,6 @@ export default [
         },
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/inscricao/views/Eleitor.vue'),
       },
-      {
-        path: 'revisao-eleitor',
-        name: 'RevisaoEleitor',
-        meta: {
-          title: 'Inscrição Eleitor', group: 'apps', icon: 'dashboard',
-        },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/inscricao/views/RevisaoEleitor.vue'),
-      },
     ],
   },
 ];
