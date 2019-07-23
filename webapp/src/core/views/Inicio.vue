@@ -81,7 +81,9 @@
                 <div class="text-xs-center">
                   <v-btn
                       color="green darken-4"
-                      dark>
+                      to="/inscricao/organizacao"
+                      dark
+                  >
                     <v-icon>
                       call_made
                     </v-icon>
@@ -108,6 +110,7 @@
                 <div class="text-xs-center">
                   <v-btn
                       color="green darken-4"
+                      to="/inscricao/conselho"
                       dark>
                     <v-icon>
                       call_made
@@ -134,6 +137,7 @@
                   <div class="text-xs-center">
                     <v-btn
                         color="green darken-4"
+                        to="/inscricao/eleitor"
                         dark>
                       <v-icon>
                         call_made

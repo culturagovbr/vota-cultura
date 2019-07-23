@@ -566,11 +566,11 @@
                         xs12
                         sm7
                         style="
-                                                border-style: solid;
-                                                border-color: gray;
-                                                border-width: 1px;
-                                                border-radius: 4px;
-                                                padding-top: 1px;"
+                          border-style: solid;
+                          border-color: gray;
+                          border-width: 1px;
+                          border-radius: 4px;
+                          padding-top: 1px;"
                       >
                         <input type="file">
                       </v-flex>
@@ -631,6 +631,7 @@
               </v-form>
               <v-btn
                 color="primary"
+                to="/inscricao/revisao-organizacao"
               >
                 Próximo
               </v-btn>

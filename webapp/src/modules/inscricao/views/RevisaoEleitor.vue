@@ -107,6 +107,11 @@
               >
                 <v-flex offset-xs4>
                   <v-btn
+                    to="/inscricao/eleitor"
+                  >
+                    Cancelar
+                  </v-btn>
+                  <v-btn
                     color="primary"
                   >
                     Confirmar

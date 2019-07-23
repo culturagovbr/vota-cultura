@@ -16,8 +16,6 @@
             >
               <v-container fluid grid-list-xl>
 
-                <h2>Dados do Eleitor</h2>
-
                 <v-layout wrap align-center>
                   <v-flex xs12 sm4>
                     <v-text-field
@@ -125,7 +123,6 @@
                   </v-flex>
                 </v-layout>
 
-                <h2>Anexo</h2>
 
                 <v-layout wrap align-center>
                   <v-flex xs12 sm3>
@@ -136,14 +133,14 @@
                     ></v-select>
                   </v-flex>
                   <v-flex
-                          xs12
-                          sm7
-                          style="
-                                                border-style: solid;
-                                                border-color: gray;
-                                                border-width: 1px;
-                                                border-radius: 4px;
-                                                padding-top: 1px;"
+                    xs12
+                    sm7
+                    style="
+                      border-style: solid;
+                      border-color: gray;
+                      border-width: 1px;
+                      border-radius: 4px;
+                      padding-top: 1px;"
                   >
                     <input type="file">
                   </v-flex>
@@ -180,18 +177,17 @@
                   </v-flex>
                 </v-layout>
 
-                <v-btn color="error"
-                       @click="reset">
+                <v-btn
+                  @click="reset">
                   Cancelar
                 </v-btn>
 
                 <v-btn :disabled="!valid"
-                       color="success"
-                       @click="validate">
+                       color="primary"
+                       to="/inscricao/revisao-eleitor">
                   Enviar
                 </v-btn>
               </v-container>
-
             </v-form>
           </v-flex>
         </v-layout>

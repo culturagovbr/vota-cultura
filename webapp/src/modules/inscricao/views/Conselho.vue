@@ -450,7 +450,7 @@
               <v-btn
                 :disabled="false"
                 color="primary"
-                @click="validate('form_anexo')"
+                to="/inscricao/revisao-conselho"
               >
                 Enviar
               </v-btn>
