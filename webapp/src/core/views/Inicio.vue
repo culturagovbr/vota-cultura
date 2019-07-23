@@ -9,14 +9,6 @@
                 class="white--text">
           <h1 class="white--text font-weight-bold display-3 text-xs-center">Eleições 2019</h1>
           <div class="subheading mb-1 text-xs-center">Conselho Nacional de Política Cultural</div>
-          <!--<v-btn class="green darken-4 mt-5 white&#45;&#45;text"-->
-          <!--dark-->
-          <!--large-->
-          <!--@click="ativar_inscricao = true"-->
-          <!--v-if="ativar_inscricao === false"-->
-          <!--&gt;-->
-          <!--Inscreva-se-->
-          <!--</v-btn>-->
           <v-slide-y-transition>
             <v-container grid-list-md
                          text-xs-center
@@ -126,7 +118,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
-                    <v-icon x-large class="text--lighten-2">how_to_vote</v-icon>
+                    <v-icon x-large class="text--lighten-2">thumbs_up_down</v-icon>
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-xs-center">Eleitor</div>
