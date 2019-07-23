@@ -1,13 +1,11 @@
 <template>
   <v-toolbar
-    color="primary"
-    fixed
+    color="green darken-3"
     dark
     app
     clipped-left
-    flat
   >
-    <div class="toolbar-logo theme--dark primary darken-1">
+    <div class="toolbar-logo theme--dark green darken-4">
       <img
         :src="require('@/core/assets/logo.svg')"
         alt="Logo do Sistema"
@@ -18,7 +16,7 @@
       </v-toolbar-title>
       <v-btn
         class="button-drawer"
-        color="primary darken-1"
+        color="green darken-4"
         icon
         @click="handleDrawerToggle"
       >
@@ -33,77 +31,12 @@
       >
         <v-icon>fullscreen</v-icon>
       </v-btn>
-      <v-menu
-        offset-y
-        origin="center center"
-        class="elelvation-1"
-        :nudge-bottom="14"
-        transition="scale-transition"
-      >
-        <v-btn
-          slot="activator"
-          icon
-          flat
-        >
-          <v-badge
-            color="red"
-            overlap
-          >
-            <span slot="badge">3</span>
-            <v-icon medium>
-              notifications
-            </v-icon>
-          </v-badge>
-        </v-btn>
-        <notification-list />
-      </v-menu>
-      <v-menu
-        offset-y
-        origin="center center"
-        :nudge-bottom="10"
-        transition="scale-transition"
-      >
-        <v-btn
-          slot="activator"
-          icon
-          large
-          flat
-        >
-          <v-avatar size="30px">
-            <img
-              src="/static/avatar/avatar_mds.png"
-              alt="Michael Wang"
-            >
-          </v-avatar>
-        </v-btn>
-        <v-list class="pa-0">
-          <v-list-tile
-            v-for="(item, index) in items"
-            :key="index"
-            :to="!item.href ? { name: item.name } : null"
-            :href="item.href"
-            ripple="ripple"
-            :disabled="item.disabled"
-            :target="item.target"
-            rel="noopener"
-            @click="item.click"
-          >
-            <v-list-tile-action v-if="item.icon">
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
     </v-toolbar-items>
     <dialog-confirmacao />
     <dialog-progresso />
   </v-toolbar>
 </template>
 <script>
-import NotificationList from '@/core/components/widgets/list/NotificationList';
 import Util from '../util';
 import DialogConfirmacao from '../../modules/shared/components/DialogConfirmacao';
 import DialogProgresso from '../../modules/shared/components/DialogProgresso';
@@ -113,7 +46,6 @@ export default {
   components: {
     DialogProgresso,
     DialogConfirmacao,
-    NotificationList,
   },
   data() {
     return {
@@ -129,15 +61,12 @@ export default {
           icon: 'fullscreen_exit',
           href: '#',
           title: 'Logout',
-          click: this.handleLogut,
+          click: this.handleLogout,
         },
       ],
     };
   },
   computed: {
-    toolbarColor() {
-      return this.$vuetify.options.extra.mainNav;
-    },
   },
   methods: {
     handleDrawerToggle() {
@@ -147,21 +76,11 @@ export default {
     handleFullScreen() {
       Util.toggleFullScreen();
     },
-    handleLogut() {
+    handleLogout() {
       this.$emit('handle-logout-click');
       this.$router.push('/conta/sair');
-    },
-    handleSetting() {
-
-    },
-    handleProfile() {
-
     },
   },
 };
 </script>
 
-<style lang="stylus" scoped>
-
-
-</style>

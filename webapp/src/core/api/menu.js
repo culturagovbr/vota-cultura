@@ -1,77 +1,29 @@
 const Menu = [
-  { header: 'Apps' },
   {
-    title: 'Home',
+    title: 'Início',
     group: 'apps',
     icon: 'home',
-    name: 'Dashboard',
+    to: 'inicio',
+  },
+  { header: 'Inscreva-se' },
+  {
+    title: 'Organização ou Entidade Cultural',
+    group: 'apps',
+    name: 'Organização ou Entidade Cultural',
+    icon: 'color_lens',
   },
   {
-    title: 'Proponente',
+    title: 'Conselhos de Cultura',
     group: 'apps',
-    icon: 'person',
-    target: '_blank',
-    name: 'Proponente',
+    name: 'Conselho de Cultura',
+    icon: 'group',
   },
   {
-    title: 'Proposta',
+    title: 'Eleitor',
     group: 'apps',
-    name: 'Proposta',
-    target: '_blank',
-    icon: 'description',
+    name: 'Eleitor',
+    icon: 'thumbs_up_down',
   },
-  // {
-  //   title: 'Media',
-  //   group: 'apps',
-  //   name: 'Media',
-  //   icon: 'perm_media',
-  // },
-  // {
-  //   title: 'Widgets',
-  //   group: 'widgets',
-  //   component: 'widgets',
-  //   icon: 'widgets',
-  //   items: [
-  //     { name: 'social', title: 'Social', component: 'SocialWidget' },
-  //     {
-  //       name: 'statistic',
-  //       title: 'Statistic',
-  //       badge: 'new',
-  //       component: 'StatisticWidget',
-  //     },
-  //     { name: 'chart', title: 'Chart', component: 'ChartWidget' },
-  //     { name: 'list', title: 'List', component: 'ListWidget' },
-  //   ],
-  // },
-  // { header: 'CMS' },
-  // {
-  //   title: 'List & Query',
-  //   group: 'layout',
-  //   icon: 'view_compact',
-  //   items: [{ name: 'Table', title: 'Basic Table', component: 'ListTable' }],
-  // },
-  // {
-  //   title: 'Forms & Controls',
-  //   group: 'forms',
-  //   component: 'forms',
-  //   icon: 'edit',
-  //   items: [
-  //     { name: 'basic', title: 'General', component: 'components/basic-forms' },
-  //   ]
-  // },
-  // { divider: true },
-  // { header: 'Extras' },
-  // {
-  //   title: 'Pages',
-  //   group: 'extra',
-  //   icon: 'list',
-  //   items: [
-  //     { name: 'Login', title: 'Login', component: 'Login' },
-  //     { name: '404', title: '404', component: 'NotFound' },
-  //     { name: '403', title: '403', component: 'AccessDenied' },
-  //     { name: '500', title: '500', component: 'ServerError' },
-  //   ]
-  // },
 ];
 // reorder menu
 Menu.forEach((item) => {

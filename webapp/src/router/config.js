@@ -6,32 +6,16 @@ export default [
   {
     path: '/',
     component: DefaultLayout,
-    meta: { title: 'Home', group: 'apps', icon: '' },
-    redirect: '/dashboard',
+    meta: { title: 'Início', group: 'apps', icon: '' },
+    redirect: '/inicio',
     children: [
       {
-        path: '/dashboard',
+        path: '/inicio',
         name: 'Dashboard',
         meta: {
-          title: 'Home', group: 'apps', icon: 'dashboard',
+          title: 'Início', group: 'apps', icon: 'dashboard',
         },
-        component: () => import(/* webpackChunkName: "dashboard" */ '@/core/views/Dashboard.vue'),
-      },
-    ],
-  },
-
-  // list
-  {
-    path: '/cms',
-    component: DefaultLayout,
-    redirect: '/cms/table',
-    meta: { title: 'CMS', icon: 'view_compact', group: 'cms' },
-    children: [
-      {
-        path: '/cms/table',
-        name: 'ListTable',
-        meta: { title: 'CMS Table' },
-        component: () => import(/* webpackChunkName: "table" */ '@/core/views/list/Table.vue'),
+        component: () => import(/* webpackChunkName: "inicio" */ '@/core/views/Inicio.vue'),
       },
     ],
   },

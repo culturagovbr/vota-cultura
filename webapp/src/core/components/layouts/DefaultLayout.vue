@@ -9,7 +9,7 @@
     />
     <app-toolbar
       class="app--toolbar"
-      @side-icon-click="handleDrawerVisiable"
+      @side-icon-click="handleDrawerVisible"
     />
     <v-content>
       <!-- Page Header -->
@@ -48,12 +48,12 @@ export default {
 
   data() {
     return {
-      showDrawer: true,
+      showDrawer: false,
     };
   },
   created() {},
   methods: {
-    handleDrawerVisiable() {
+    handleDrawerVisible() {
       this.showDrawer = !this.showDrawer;
     },
   },

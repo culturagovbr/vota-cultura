@@ -27,6 +27,7 @@ router.beforeEach((to, from, next) => {
   const userToken = localStorage.getItem('user_token');
   const tokenValida = !isEmpty(obterInformacoesJWT(userToken));
 
+  return next();
   try {
     if (!userToken && authRequired && to.path !== '/conta/autenticar') {
       return next('/conta/autenticar');
