@@ -11,7 +11,7 @@ export default new Vuex.Store({
   modules: {
     app,
     conta,
-    inscricao
+    inscricao,
   },
   getters: {
     route: state => state.route,

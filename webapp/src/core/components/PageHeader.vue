@@ -1,14 +1,7 @@
 <template>
   <v-layout
     row
-    class="align-center layout app--page-header"
-  >
-    <div v-if="this.$route.path != '/inicio'" class="page-header-left">
-      <h3 class="pr-3">
-        {{ $route.meta.title || '' }}
-      </h3>
-    </div>
-
+    class="align-center layout app--page-header">
     <v-spacer />
   </v-layout>
 </template>

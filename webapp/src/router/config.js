@@ -22,13 +22,13 @@ export default [
   },
   ...RoutersInscricao,
   {
-    path: '/',
+    path: '/inscricao',
     component: DefaultLayout,
     meta: { title: 'Eleitor', group: 'apps', icon: '' },
-    redirect: '/inscricao',
+    redirect: '/inscricao/eleitor',
     children: [
       {
-        path: '/inscricao/eleitor',
+        path: 'eleitor',
         name: 'Eleitor',
         meta: {
           title: 'Inscrição Eleitor', group: 'apps', icon: 'dashboard',
@@ -36,7 +36,7 @@ export default [
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/inscricao/views/Eleitor.vue'),
       },
       {
-        path: '/inscricao/revisao-eleitor',
+        path: 'revisao-eleitor',
         name: 'RevisaoEleitor',
         meta: {
           title: 'Inscrição Eleitor', group: 'apps', icon: 'dashboard',
