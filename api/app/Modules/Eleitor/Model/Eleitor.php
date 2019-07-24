@@ -9,6 +9,11 @@ class Eleitor extends Model
     protected $table = 'tb_eleitor';
     protected $primaryKey = 'co_eleitor';
 
+    protected $dates = [
+        'dt_nascimento',
+    ];
+
+
     protected $fillable = [
         'nu_cpf',
         'no_eleitor',
