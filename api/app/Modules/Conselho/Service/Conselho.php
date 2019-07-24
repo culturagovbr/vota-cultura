@@ -65,11 +65,7 @@ class Conselho extends AbstractService
 
             DB::beginTransaction();
             $conselho = $this->getModel();
-            $conselho->no_orgao_gestor = $dados['no_orgao_gestor'];
-            $conselho->ds_email = $dados['ds_email'];
-            $conselho->nu_telefone = $dados['nu_telefone'];
-            $conselho->nu_cnpj = $dados['nu_cnpj'];
-            $conselho->tp_governamental = $dados['tp_governamental'];
+            $conselho->fill($dados);
             $conselho->co_endereco = $dados['co_endereco'];
             $conselho->co_representante = $dados['co_representante'];
             $conselho->co_usuario = $dados['co_usuario'];
