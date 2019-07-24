@@ -1,4 +1,14 @@
 {
+    "Conselho": {
+        "basename": "Conselho",
+        "name": "Conselho",
+        "slug": "conselho",
+        "version": "1.0",
+        "description": "Modulo de conselho",
+        "id": 4146599963,
+        "enabled": true,
+        "order": 9001
+    },
     "Conta": {
         "basename": "Conta",
         "name": "Conta",
@@ -9,6 +19,26 @@
         "enabled": true,
         "order": 9001
     },
+    "Eleitor": {
+        "basename": "Eleitor",
+        "name": "Eleitor",
+        "slug": "eleitor",
+        "version": "1.0",
+        "description": "Modulo de eleitor para vota\u00e7\u00e3o",
+        "id": 599692381,
+        "enabled": true,
+        "order": 9001
+    },
+    "Endereco": {
+        "basename": "Endereco",
+        "name": "Endereco",
+        "slug": "endereco",
+        "version": "1.0",
+        "description": "This is the description for the Endereco module.",
+        "id": 4175484430,
+        "enabled": true,
+        "order": 9001
+    },
     "Foo": {
         "basename": "Foo",
         "name": "Foo",
@@ -16,6 +46,16 @@
         "version": "1.0",
         "description": "Modulo utilizado como template para gera\u00e7\u00e3o de novos.",
         "id": 2356372769,
+        "enabled": true,
+        "order": 9001
+    },
+    "Organizacao": {
+        "basename": "Organizacao",
+        "name": "Organizacao",
+        "slug": "organizacao",
+        "version": "1.0",
+        "description": "Modulo de organiza\u00e7\u00f5es ou entidades",
+        "id": 1369741451,
         "enabled": true,
         "order": 9001
     }
