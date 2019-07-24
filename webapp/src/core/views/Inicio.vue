@@ -1,0 +1,243 @@
+<template>
+  <div>
+    <section>
+      <v-parallax src="https://live.staticflickr.com/638/22469726173_ebad8cb534_k.jpg" height="600">
+        <v-layout
+                column
+                align-center
+                justify-center
+                class="white--text">
+          <h1 class="white--text font-weight-bold display-3 text-xs-center">Eleições 2019</h1>
+          <div class="subheading mb-1 text-xs-center">Conselho Nacional de Política Cultural</div>
+          <v-slide-y-transition>
+            <v-container grid-list-md
+                         text-xs-center
+                         v-show="ativar_inscricao === true">
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-btn class="yellow mt-2"
+                         large
+                         to="/inscricao-conselho"
+                  >
+                    Conselho Cultural
+                  </v-btn>
+                </v-flex>
+                <v-flex xs12>
+                  <v-btn class="yellow mt-2"
+                         to="/formulario-tres"
+                         large>
+                    Organização / Entidade Cultural
+                  </v-btn>
+                </v-flex>
+                <v-flex xs12>
+                  <v-btn class="yellow mt-2"
+                         to="/formulario-dois"
+                         large>
+                    Eleitor
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-slide-y-transition>
+        </v-layout>
+      </v-parallax>
+    </section>
+
+    <section>
+      <v-layout column
+                wrap
+                class="my-5"
+                align-center>
+        <v-flex xs12 sm4 class="my-3">
+          <div class="text-xs-center">
+            <h2 class="headline">Inscreva-se</h2>
+            <span class="subheading">
+                              Cras facilisis mi vitae nunc
+                              </span>
+          </div>
+        </v-flex>
+        <v-flex xs12>
+          <v-container grid-list-xl>
+            <v-layout row wrap align-center>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <v-icon x-large class="text--lighten-2">color_lens</v-icon>
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline text-xs-center">
+                      Organizações e Entidades Culturais
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
+                    ornare.
+                    Pellentesque habitant morbi tristique senectus et netus et malesuada
+                    fames ac turpis egestas.
+                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
+                    Suspendisse potenti.
+                  </v-card-text>
+                </v-card>
+                <div class="text-xs-center">
+                  <v-btn
+                      color="green darken-4"
+                      to="/inscricao/organizacao"
+                      dark
+                  >
+                    <v-icon>
+                      call_made
+                    </v-icon>
+                  </v-btn>
+                </div>
+              </v-flex>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <v-icon x-large class="text--lighten-2">group</v-icon>
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline">Conselhos de Cultura Estaduais e Distrital</div>
+                  </v-card-title>
+                  <v-card-text>
+                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
+                    ornare.
+                    Pellentesque habitant morbi tristique senectus et netus et malesuada
+                    fames ac turpis egestas.
+                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
+                    Suspendisse potenti.
+                  </v-card-text>
+                </v-card>
+                <div class="text-xs-center">
+                  <v-btn
+                      color="green darken-4"
+                      to="/inscricao/conselho"
+                      dark>
+                    <v-icon>
+                      call_made
+                    </v-icon>
+                  </v-btn>
+                </div>
+              </v-flex>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <v-icon x-large class="text--lighten-2">thumbs_up_down</v-icon>
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline text-xs-center">Eleitor</div>
+                  </v-card-title>
+                  <v-card-text>
+                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
+                    ornare.
+                    Pellentesque habitant morbi tristique senectus et netus et malesuada
+                    fames ac turpis egestas.
+                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
+                    Suspendisse potenti.
+                  </v-card-text>
+                  <div class="text-xs-center">
+                    <v-btn
+                        color="green darken-4"
+                        to="/inscricao/eleitor"
+                        dark>
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </v-layout>
+    </section>
+
+    <section>
+      <v-parallax src="http://live.staticflickr.com/7659/16882869738_88aee08242_h.jpg" height="380">
+        <v-layout column align-center justify-center>
+          <div class="headline white--text mb-3 text-xs-center">Leia o Edital na integra</div>
+          <em>Se informe sobre a chamada publica para composição do conselho nacional de política
+            cultural</em>
+          <v-btn
+                  class="green darken-4 mt-5 white--text"
+                  dark
+                  large
+                  href="/pre-made-themes"
+          >
+            Ver Edital
+          </v-btn>
+        </v-layout>
+      </v-parallax>
+    </section>
+
+    <section>
+      <v-container grid-list-xl>
+        <v-layout row wrap justify-center class="my-5">
+          <v-flex xs12 sm4>
+            <v-card class="elevation-0 transparent">
+              <v-card-title primary-title class="layout justify-center">
+                <div class="headline">O que é Conselho Nacional de Política Cultural?</div>
+              </v-card-title>
+              <v-card-text>
+                O CNPC é um órgão colegiado integrante da estrutura do Ministério da Cultura.
+                Esse órgão tem como finalidade propor a formulação de políticas públicas,
+                promovendo a articulação e o debate dos diferentes níveis d governo e sociedade
+                civil organizada, para o desenvolvimento e fomento das atividades culturais no
+                território nacional.
+              </v-card-text>
+            </v-card>
+          </v-flex>
+          <v-flex xs12 sm4 offset-sm1>
+            <v-card class="elevation-0 transparent">
+              <v-card-title primary-title class="layout justify-center">
+                <div class="headline">Fale Conosco</div>
+              </v-card-title>
+              <v-card-text>
+                Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+              </v-card-text>
+              <v-list class="transparent">
+                <v-list-tile>
+                  <v-list-tile-action>
+                    <v-icon class="text--lighten-2">phone</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-content>
+                    <v-list-tile-title>777-867-5309</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                  <v-list-tile-action>
+                    <v-icon class="text--lighten-2">place</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      SCS Q.09 Lote C Torre X 11º ANDAR
+                      CEP: 70.108-200 Brasília/DF
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                  <v-list-tile-action>
+                    <v-icon class="text--lighten-2">email</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-content>
+                    <v-list-tile-title>suporte@cidadania.com</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </section>
+  </div>
+</template>
+
+<script>
+  export default {
+      data() {
+          return {
+              ativar_inscricao: false
+          }
+      }
+  };
+</script>

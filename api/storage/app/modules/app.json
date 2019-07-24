@@ -1,0 +1,22 @@
+{
+    "Conta": {
+        "basename": "Conta",
+        "name": "Conta",
+        "slug": "conta",
+        "version": "1.0",
+        "description": "Modulo de Conta",
+        "id": 1213863619,
+        "enabled": true,
+        "order": 9001
+    },
+    "Foo": {
+        "basename": "Foo",
+        "name": "Foo",
+        "slug": "foo",
+        "version": "1.0",
+        "description": "Modulo utilizado como template para gera\u00e7\u00e3o de novos.",
+        "id": 2356372769,
+        "enabled": true,
+        "order": 9001
+    }
+}
