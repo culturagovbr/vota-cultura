@@ -63,7 +63,7 @@ class Organizacao extends Model
 
     public function representante()
     {
-        return $this->hasOne(
+        return $this->belongsTo(
             \App\Modules\Representacao\Model\Representante::class,
             'co_representante',
             'co_representante'
