@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/endereco', function (Request $request) {
-    // return $request->endereco();
+Route::get('/localizacao', function (Request $request) {
+    // return $request->organizacao();
 })->middleware('auth:api');

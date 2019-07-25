@@ -11,8 +11,8 @@
 |
 */
 
-Route::group(['prefix' => 'conselho'], function () {
+Route::group(['prefix' => 'localizacao'], function () {
     Route::get('/', function () {
-        dd('This is the Conselho module index page. Build something great!');
+        dd('This is the Localizacao module index page. Build something great!');
     });
 });
