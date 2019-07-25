@@ -7,7 +7,6 @@ use App\Modules\Conta\Mail\Organizacao\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil;
 use App\Services\AbstractService;
 use App\Modules\Conta\Model\Organizacao as OrganizacaoModel;
-use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use DB;
 use Illuminate\Http\Response;
