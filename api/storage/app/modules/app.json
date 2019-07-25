@@ -1,14 +1,4 @@
 {
-    "Avaliacao": {
-        "basename": "Avaliacao",
-        "name": "Avaliacao",
-        "slug": "avaliacao",
-        "version": "1.0",
-        "description": "This is the description for the Avaliacao module.",
-        "id": 1763395362,
-        "enabled": true,
-        "order": 9001
-    },
     "Conselho": {
         "basename": "Conselho",
         "name": "Conselho",
@@ -39,16 +29,6 @@
         "enabled": true,
         "order": 9001
     },
-    "Endereco": {
-        "basename": "Endereco",
-        "name": "Endereco",
-        "slug": "endereco",
-        "version": "1.0",
-        "description": "This is the description for the Endereco module.",
-        "id": 4175484430,
-        "enabled": true,
-        "order": 9001
-    },
     "Foo": {
         "basename": "Foo",
         "name": "Foo",
@@ -56,6 +36,16 @@
         "version": "1.0",
         "description": "Modulo utilizado como template para gera\u00e7\u00e3o de novos.",
         "id": 2356372769,
+        "enabled": true,
+        "order": 9001
+    },
+    "Localizacao": {
+        "basename": "Localizacao",
+        "name": "Localizacao",
+        "slug": "localizacao",
+        "version": "1.0",
+        "description": "This is the description for the Localizacao module.",
+        "id": 3496326391,
         "enabled": true,
         "order": 9001
     },
@@ -76,6 +66,16 @@
         "version": "1.0",
         "description": "This is the description for the Representacao module.",
         "id": 3529132492,
+        "enabled": true,
+        "order": 9001
+    },
+    "Upload": {
+        "basename": "Upload",
+        "name": "Upload",
+        "slug": "upload",
+        "version": "1.0",
+        "description": "M\u00f3dulo direcionado a Upload de arquivos",
+        "id": 398321183,
         "enabled": true,
         "order": 9001
     }
