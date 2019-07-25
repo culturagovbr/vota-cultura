@@ -1,4 +1,14 @@
 {
+    "Avaliacao": {
+        "basename": "Avaliacao",
+        "name": "Avaliacao",
+        "slug": "avaliacao",
+        "version": "1.0",
+        "description": "This is the description for the Avaliacao module.",
+        "id": 1763395362,
+        "enabled": true,
+        "order": 9001
+    },
     "Conselho": {
         "basename": "Conselho",
         "name": "Conselho",
@@ -56,6 +66,16 @@
         "version": "1.0",
         "description": "Modulo de organiza\u00e7\u00f5es ou entidades",
         "id": 1369741451,
+        "enabled": true,
+        "order": 9001
+    },
+    "Representacao": {
+        "basename": "Representacao",
+        "name": "Representacao",
+        "slug": "representacao",
+        "version": "1.0",
+        "description": "This is the description for the Representacao module.",
+        "id": 3529132492,
         "enabled": true,
         "order": 9001
     }
