@@ -24,28 +24,50 @@ class Organizacao extends Model
 
     public $timestamps = false;
 
-    public function segmento(){
-        $this->hasOne(\App\Modules\Avaliacao\Model\Segmento::class, 'co_segmento', $this->getKey());
+    public function criterios ()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Organizacao\Model\Criterio::class,
+            'rl_organizacao_criterio',
+            'co_criterio',
+            'co_organizacao'
+        )->as('rl_organizacao_criterio');
     }
 
-    public function usuario(){
-        $this->hasOne(\App\Modules\Conta\Model\Usuario::class,
+    public function segmento()
+    {
+        return $this->belongsTo(
+            \App\Modules\Organizacao\Model\Segmento::class,
+            'co_segmento',
+            'co_segmento'
+        );
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(
+            \App\Modules\Conta\Model\Usuario::class,
             'co_usuario',
-            'co_usuario');
+            'co_usuario'
+        );
     }
 
-    public function endereco(){
-        $this->hasOne(
-            \App\Modules\Endereco\Model\Endereco::class,
+    public function endereco()
+    {
+        return $this->belongsTo(
+            \App\Modules\Localizacao\Model\Endereco::class,
             'co_endereco',
-            'co_endereco');
+            'co_endereco'
+        );
     }
 
-    public function representante(){
-        $this->hasOne(
+    public function representante()
+    {
+        return $this->hasOne(
             \App\Modules\Representacao\Model\Representante::class,
             'co_representante',
-            'co_representante');
+            'co_representante'
+        );
     }
 
 }

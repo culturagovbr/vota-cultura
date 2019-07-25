@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Avaliacao\Model;
+namespace App\Modules\Organizacao\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,5 +15,14 @@ class Segmento extends Model
     ];
 
     public $timestamps = false;
+
+    public function organizacoes()
+    {
+        return $this->hasMany(
+            \App\Modules\Organizacao\Model\Organizacao::class,
+            'co_segmento',
+            'co_segmento'
+        );
+    }
 
 }

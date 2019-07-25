@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Avaliacao\Model;
+namespace App\Modules\Organizacao\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,5 +18,15 @@ class Criterio extends Model
     ];
 
     public $timestamps = false;
+
+    public function organizacoes ()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Organizacao\Model\Organizacao::class,
+            'rl_organizacao_criterio',
+            'co_organizacao',
+            'co_criterio'
+        )->as('rl_organizacao_criterio');
+    }
 
 }

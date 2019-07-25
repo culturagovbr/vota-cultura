@@ -45,6 +45,15 @@ class Usuario extends Authenticatable implements JWTSubject
         );
     }
 
+    public function organizacoes()
+    {
+        return $this->hasMany(
+            \App\Modules\Organizacao\Model\Organizacao::class,
+            'co_usuario',
+            'co_usuario'
+        );
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
