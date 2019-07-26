@@ -64,6 +64,21 @@
               >
                 <v-flex>
                   <v-text-field
+                    v-model="eleitor.nascimento"
+                    disabled
+                    label="Data de Nascimento"
+                    append-icon="event"
+                    mask="##/##/####"
+                  />
+                </v-flex>
+              </v-layout>
+
+              <v-layout
+                wrap
+                align-center
+              >
+                <v-flex>
+                  <v-text-field
                     v-model="eleitor.email"
                     disabled
                     label="E-mail"
@@ -138,6 +153,7 @@ export default {
       emailConfirmacao: 'pedro.oliveira@basis.com',
       nacionalidade: 'Brasileiro',
       uf: 'GO',
+      nascimento: '12/12/1990',
     },
   }),
 

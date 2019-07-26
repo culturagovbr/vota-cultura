@@ -4,7 +4,7 @@ namespace App\Modules\Conta\Services;
 
 use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Mail\Usuario\RecuperacaoSenha as RecuperacaoSenhaMail;
-use App\Services\IService;
+use App\Core\Services\IService;
 use App\Modules\Conta\Services\Usuario as UsuarioService;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;

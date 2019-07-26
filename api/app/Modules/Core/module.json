@@ -1,0 +1,6 @@
+{
+    "name": "Core",
+    "slug": "core",
+    "version": "1.0",
+    "description": "Itens compartilhados entre todos os módulos"
+}
