@@ -2,14 +2,13 @@
 
 namespace App\Modules\Core\Http\Controllers;
 
-
 use App\Http\Controllers\Controller;
 use App\Core\Services\IServiceApiResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AbstractController extends Controller
+abstract class AApiResourceController extends Controller implements IApiResourceController
 {
     protected $service;
 
@@ -53,9 +52,9 @@ class AbstractController extends Controller
         );
     }
 
-    public function destroy(Model $model)
+    public function destroy(Request $request, $identificador)
     {
-        $this->service->remover($model);
+        $this->service->remover($request, $identificador);
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
