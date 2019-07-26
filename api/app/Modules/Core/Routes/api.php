@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/foo', function (Request $request) {
-
-    return $request->conta();
-});
+Route::get('/core', function (Request $request) {
+    // return $request->core();
+})->middleware('auth:api');
