@@ -48,46 +48,4 @@ class Conselho extends AbstractService
             throw $queryException;
         }
     }
-
-
-    public function atualizar(Request $request, int $identificador): ?ConselhoModel
-    {
-        try {
-            $model = $this->getModel()->find($identificador);
-            if (!$model) {
-                throw new \Exception(
-                    'Dadis não encontrados.',
-                    Response::HTTP_NOT_ACCEPTABLE
-                );
-            }
-            DB::beginTransaction();
-            $model->fill($request->all());
-            $model->save();
-            DB::commit();
-            return $model->toArray();
-        } catch (\Exception $queryException) {
-            DB::rollBack();
-            throw $queryException;
-        }
-    }
-
-    public function remover(Request $request, int $identificador)
-    {
-        try {
-            $model = $this->getModel()->find($identificador);
-            if (!$model) {
-                throw new ValidacaoCustomizadaException(
-                    'Dados não localizados.',
-                    Response::HTTP_NOT_ACCEPTABLE
-                );
-            }
-
-            DB::beginTransaction();
-            $model->delete();
-            DB::commit();
-        } catch (\Exception $queryException) {
-            DB::rollBack();
-            throw $queryException;
-        }
-    }
 }
