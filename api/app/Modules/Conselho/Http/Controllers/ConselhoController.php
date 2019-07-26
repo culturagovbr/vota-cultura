@@ -3,13 +3,12 @@
 namespace App\Modules\Conselho\Http\Controllers;
 
 use App\Modules\Conselho\Services\Conselho as ConselhoService;
-use App\Http\Controllers\Controller;
+use App\Modules\Core\Http\Controllers\AbstractController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use Illuminate\Http\JsonResponse;
 
-class ConselhoController extends Controller
+class ConselhoController extends AbstractController
 {
     private $conselhoService;
 

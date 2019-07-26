@@ -4,7 +4,7 @@ namespace App\Modules\Core\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use App\Services\IServiceApiResource;
+use App\Core\Services\IServiceApiResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

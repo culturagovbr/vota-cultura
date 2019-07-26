@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Modules\Representacao\Services;
-use App\Services\AbstractService;
-
+use App\Core\Services\AbstractService;
+use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 
 class Representante extends AbstractService
 {
@@ -23,7 +23,7 @@ class Representante extends AbstractService
             ])->first();
 
             if ($representante) {
-                throw new ValidacaoCustomizadaException(
+                throw new \Exception(
                     'Representante já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );

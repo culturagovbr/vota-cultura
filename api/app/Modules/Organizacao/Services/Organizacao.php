@@ -5,7 +5,7 @@ namespace App\Modules\Conta\Services;
 use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Mail\Organizacao\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil;
-use App\Services\AbstractService;
+use App\Core\Services\AbstractService;
 use App\Modules\Conta\Model\Organizacao as OrganizacaoModel;
 use Illuminate\Database\QueryException;
 use DB;

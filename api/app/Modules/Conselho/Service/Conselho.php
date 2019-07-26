@@ -5,7 +5,7 @@ namespace App\Modules\Conselho\Services;
 use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conselho\Mail\Conselho\CadastroComSucesso;
 use App\Modules\Conselho\Model\Perfil;
-use App\Services\AbstractService;
+use App\Core\Services\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -64,15 +64,7 @@ class Conselho extends AbstractService
             }
 
             DB::beginTransaction();
-            $conselho = $this->getModel();
-            $conselho->fill($dados);
-            $conselho->co_endereco = $dados['co_endereco'];
-            $conselho->co_representante = $dados['co_representante'];
-            $conselho->co_usuario = $dados['co_usuario'];
-            $conselho->ds_sitio_eletronico = $dados['ds_sitio_eletronico'];
-
-            $conselho->save();
-
+            $conselho = ConselhoModel::create($dados);
             Mail::to($conselho->ds_email)->send(
                 new CadastroComSucesso($conselho)
             );

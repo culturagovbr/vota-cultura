@@ -19,6 +19,16 @@
         "enabled": true,
         "order": 9001
     },
+    "Core": {
+        "basename": "Core",
+        "name": "Core",
+        "slug": "core",
+        "version": "1.0",
+        "description": "Itens compartilhados entre todos os m\u00f3dulos",
+        "id": 1804436815,
+        "enabled": true,
+        "order": 9001
+    },
     "Eleitor": {
         "basename": "Eleitor",
         "name": "Eleitor",
