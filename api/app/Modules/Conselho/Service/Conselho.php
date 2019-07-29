@@ -2,14 +2,10 @@
 
 namespace App\Modules\Conselho\Services;
 
-use App\Exceptions\ValidacaoCustomizadaException;
 use App\Core\Services\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
-use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class Conselho extends AbstractService
 {
