@@ -24,23 +24,29 @@ class Conselho extends Model
 
     public $timestamps = false;
 
-    public function endereco(){
+    public function endereco()
+    {
         return $this->hasOne(
-            \App\Modules\Endereco\Model\Endereco::class,
+            \App\Modules\Localizacao\Model\Endereco::class,
             'co_endereco',
-            'co_endereco');
+            'co_endereco'
+        );
     }
 
-    public function representante(){
+    public function representante()
+    {
         return $this->hasOne(
             \App\Modules\Representacao\Model\Representante::class,
             'co_representante',
-            'co_representante');
+            'co_representante'
+        );
     }
 
-    public function usuario(){
+    public function usuario()
+    {
         return $this->hasOne(\App\Modules\Conta\Model\Usuario::class,
             'co_usuario',
-            'co_usuario');
+            'co_usuario'
+        );
     }
 }

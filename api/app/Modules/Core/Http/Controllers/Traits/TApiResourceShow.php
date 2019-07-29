@@ -2,6 +2,8 @@
 
 namespace App\Modules\Core\Http\Controllers\Traits;
 
+use Illuminate\Http\Response;
+
 trait TApiResourceShow
 {
     public function show(Model $model): \Illuminate\Http\JsonResponse
