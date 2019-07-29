@@ -25,21 +25,21 @@ class Conselho extends Model
     public $timestamps = false;
 
     public function endereco(){
-        $this->hasOne(
+        return $this->hasOne(
             \App\Modules\Endereco\Model\Endereco::class,
             'co_endereco',
             'co_endereco');
     }
 
     public function representante(){
-        $this->hasOne(
+        return $this->hasOne(
             \App\Modules\Representacao\Model\Representante::class,
             'co_representante',
             'co_representante');
     }
 
     public function usuario(){
-        $this->hasOne(\App\Modules\Conta\Model\Usuario::class,
+        return $this->hasOne(\App\Modules\Conta\Model\Usuario::class,
             'co_usuario',
             'co_usuario');
     }

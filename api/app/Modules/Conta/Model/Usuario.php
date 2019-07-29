@@ -14,15 +14,15 @@ class Usuario extends Authenticatable implements JWTSubject
     protected $primaryKey = 'co_usuario';
 
     protected $dates = [
-        'dt_cadastro',
-        'dt_ultima_atualizacao',
+        'dh_cadastro',
+        'dh_ultima_atualizacao',
     ];
 
     protected $fillable = [
-        'no_nome',
+        'no_pessoa',
         'ds_email',
-        'dt_cadastro',
-        'dt_ultima_atualizacao',
+        'dh_cadastro',
+        'dh_ultima_atualizacao',
         'st_ativo',
         'perfis',
     ];
@@ -69,10 +69,10 @@ class Usuario extends Authenticatable implements JWTSubject
         $dadosPayload = [
             'user' => [
                 'co_usuario' => $this->co_usuario,
-                'no_nome' => $this->no_nome,
+                'no_pessoa' => $this->no_pessoa,
                 'ds_email' => $this->ds_email,
-                'dt_cadastro' => $this->dt_cadastro->format('Y-m-d H:i:s'),
-                'dt_ultima_atualizacao' => $this->dt_ultima_atualizacao->format('Y-m-d H:i:s'),
+                'dh_cadastro' => $this->dh_cadastro->format('Y-m-d H:i:s'),
+                'dh_ultima_atualizacao' => $this->dh_ultima_atualizacao->format('Y-m-d H:i:s'),
                 'st_ativo' => $this->st_ativo,
                 'perfis' => $perfis,
             ]

@@ -24,7 +24,7 @@ class CreateTbUsuario extends Migration
             $carbon = Carbon\Carbon::now();
             $dataEhorarioAtual = $carbon->toDateTimeString();
             #@todo está como date deve ser datetime
-            $table->datetime('dt_cadastro')->default($dataEhorarioAtual);
+            $table->datetime('dh_cadastro')->default($dataEhorarioAtual);
             $table->datetime('dt_ultima_atualizacao')->default($dataEhorarioAtual);
             $table->boolean('st_ativo')->default(false);
 

@@ -18,7 +18,7 @@ class UsuarioTableSeeder extends Seeder
         $usuario = Usuario::where([
             'no_nome' => 'Testando haha',
             'ds_email' => 'teste@teste.teste',
-            'dt_cadastro' => '2019-01-01',
+            'dh_cadastro' => '2019-01-01',
             'st_ativo' => true,
         ])->first();
 
@@ -27,7 +27,7 @@ class UsuarioTableSeeder extends Seeder
                 'no_nome' => 'Testando haha',
                 'ds_email' => 'teste@teste.teste',
                 'ds_senha' => password_hash('123456', PASSWORD_DEFAULT),
-                'dt_cadastro' => '2019-01-01',
+                'dh_cadastro' => '2019-01-01',
                 'st_ativo' => true,
             ]);
 

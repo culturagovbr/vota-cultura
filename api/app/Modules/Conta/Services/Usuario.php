@@ -78,8 +78,8 @@ class Usuario extends AbstractService
                 $dados['ds_email']
             );
             $horarioAtual = Carbon::now();
-            $usuario->dt_cadastro = $horarioAtual->toDateTimeString();
-            $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
+            $usuario->dh_cadastro = $horarioAtual->toDateTimeString();
+            $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
             $usuario->st_ativo = false;
             $usuario->setSenha($dados['ds_senha']);
 
