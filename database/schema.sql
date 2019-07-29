@@ -1,4 +1,4 @@
-CREATE TABLE tb_arquivo ( 
+CREATE TABLE tb_arquivo (
 	co_arquivo           SERIAL,
 	no_arquivo           varchar(50)  NOT NULL ,
 	ds_localizacao       varchar(255)  NOT NULL ,
@@ -14,7 +14,7 @@ COMMENT ON COLUMN tb_arquivo.ds_localizacao IS 'path do arquivo no sistema de ar
 
 COMMENT ON COLUMN tb_arquivo.dh_insercao IS 'data da inserção do arquivo';
 
-CREATE TABLE tb_criterio ( 
+CREATE TABLE tb_criterio (
 	co_criterio          SERIAL,
 	tp_criterio          varchar(30)  NOT NULL ,
 	ds_criterio          varchar(100)  NOT NULL ,
@@ -36,7 +36,7 @@ COMMENT ON COLUMN tb_criterio.qt_pontuacao IS 'pontuação referente ao detalham
 
 COMMENT ON COLUMN tb_criterio.qt_peso IS 'peso da pontuação';
 
-CREATE TABLE tb_cronograma ( 
+CREATE TABLE tb_cronograma (
 	co_cronograma        SERIAL,
 	tp_cronograma        varchar(60)  NOT NULL ,
 	dh_inicio            date  NOT NULL ,
@@ -52,7 +52,7 @@ COMMENT ON COLUMN tb_cronograma.dh_inicio IS 'data de inicío do evento cadastra
 
 COMMENT ON COLUMN tb_cronograma.dh_fim IS 'data de fim do evento cadastrado';
 
-CREATE TABLE tb_perfil ( 
+CREATE TABLE tb_perfil (
 	co_perfil            SERIAL,
 	no_perfil            varchar(255)  NOT NULL ,
 	ds_perfil            varchar(255)  NOT NULL ,
@@ -68,14 +68,14 @@ COMMENT ON COLUMN tb_perfil.ds_perfil IS 'descrição do perfil';
 
 COMMENT ON COLUMN tb_perfil.st_ativo IS 'opções:\n\nTrue - Ativo\nFalse - Inativo';
 
-CREATE TABLE tb_representante ( 
+CREATE TABLE tb_representante (
 	co_representante     SERIAL,
-	ds_email             varchar(11)  NOT NULL ,
+	ds_email             varchar(255)  NOT NULL ,
 	no_pessoa            varchar(100)  NOT NULL ,
 	nu_rg                varchar(9)  NOT NULL ,
 	nu_cpf               varchar(11)  NOT NULL ,
 	CONSTRAINT pk_tb_representante_co_representante PRIMARY KEY ( co_representante ),
-	CONSTRAINT uk_01_representante_cpf UNIQUE ( nu_cpf ) 
+	CONSTRAINT uk_01_representante_cpf UNIQUE ( nu_cpf )
  );
 
 COMMENT ON COLUMN tb_representante.co_representante IS 'chave primária da tabela';
@@ -88,7 +88,7 @@ COMMENT ON COLUMN tb_representante.nu_rg IS 'número do RG do representante';
 
 COMMENT ON COLUMN tb_representante.nu_cpf IS 'número de cpf do representante';
 
-CREATE TABLE tb_segmento ( 
+CREATE TABLE tb_segmento (
 	co_segmento          SERIAL,
 	no_descricao         integer  NOT NULL ,
 	st_ativo             bool  NOT NULL ,
@@ -101,7 +101,7 @@ COMMENT ON COLUMN tb_segmento.no_descricao IS 'descrição do tipo de segmento\n
 
 COMMENT ON COLUMN tb_segmento.st_ativo IS 'campo de habilitação/desabilitação do tipo de segmento';
 
-CREATE TABLE tb_tipo_voto ( 
+CREATE TABLE tb_tipo_voto (
 	co_tipo_voto         SERIAL,
 	ds_detalhamento      varchar(100)  NOT NULL ,
 	st_ativo             bool  NOT NULL ,
@@ -114,7 +114,7 @@ COMMENT ON COLUMN tb_tipo_voto.ds_detalhamento IS 'descrição do tipo de voto q
 
 COMMENT ON COLUMN tb_tipo_voto.st_ativo IS 'campo de habilitação/desabilitação do tipo de voto';
 
-CREATE TABLE tb_uf ( 
+CREATE TABLE tb_uf (
 	co_ibge              integer  NOT NULL ,
 	sg_uf                char(2)  NOT NULL ,
 	no_uf                varchar(50)  NOT NULL ,
@@ -127,9 +127,9 @@ COMMENT ON COLUMN tb_uf.sg_uf IS 'sigla da unidade federativa';
 
 COMMENT ON COLUMN tb_uf.no_uf IS 'nome da unidade federativa';
 
-CREATE TABLE tb_usuario ( 
+CREATE TABLE tb_usuario (
 	co_usuario           SERIAL,
-	no_pessoa            varchar(100)  NOT NULL ,
+	no_nome            varchar(255)  NOT NULL ,
 	st_ativo             bool  NOT NULL ,
 	ds_email             varchar(50)  NOT NULL ,
 	ds_senha             varchar(255)  NOT NULL ,
@@ -142,7 +142,7 @@ CREATE TABLE tb_usuario (
 
 COMMENT ON COLUMN tb_usuario.co_usuario IS 'chave primária da tabela';
 
-COMMENT ON COLUMN tb_usuario.no_pessoa IS 'nome do usuario';
+COMMENT ON COLUMN tb_usuario.no_nome IS 'nome do usuario';
 
 COMMENT ON COLUMN tb_usuario.st_ativo IS 'situação do usuario\n\nTrue = Ativo\nFalse = Inativo';
 
@@ -158,7 +158,7 @@ COMMENT ON COLUMN tb_usuario.ds_codigo_ativacao IS 'código para ativação do c
 
 COMMENT ON COLUMN tb_usuario.co_perfil IS 'perfil do usuario';
 
-CREATE TABLE tb_versionamento ( 
+CREATE TABLE tb_versionamento (
 	co_versionamento     SERIAL,
 	dt_versao            date  NOT NULL ,
 	co_versao            char(20)  NOT NULL ,
@@ -167,14 +167,14 @@ CREATE TABLE tb_versionamento (
 	CONSTRAINT pk_tb_versionamento_co_versionamento PRIMARY KEY ( co_versionamento )
  );
 
-CREATE TABLE tb_voto ( 
+CREATE TABLE tb_voto (
 	co_voto              SERIAL,
 	dh_voto              date DEFAULT current_date NOT NULL ,
 	co_tipo_voto         integer  NOT NULL ,
 	co_usuario           integer  NOT NULL ,
 	CONSTRAINT pk_voto_covoto PRIMARY KEY ( co_voto ),
 	CONSTRAINT fk_voto_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )  ,
-	CONSTRAINT fk_voto_tipovoto FOREIGN KEY ( co_tipo_voto ) REFERENCES tb_tipo_voto( co_tipo_voto )  
+	CONSTRAINT fk_voto_tipovoto FOREIGN KEY ( co_tipo_voto ) REFERENCES tb_tipo_voto( co_tipo_voto )
  );
 
 COMMENT ON COLUMN tb_voto.co_voto IS 'chave primária da tabela';
@@ -185,7 +185,7 @@ COMMENT ON COLUMN tb_voto.co_tipo_voto IS 'chave estrangeira para o tipo de vota
 
 COMMENT ON COLUMN tb_voto.co_usuario IS 'chave estrangeira com o usuario que votou';
 
-CREATE TABLE rl_representante_arquivo ( 
+CREATE TABLE rl_representante_arquivo (
 	co_representante_arquivo SERIAL,
 	co_representante     integer  NOT NULL ,
 	co_arquivo           integer  NOT NULL ,
@@ -193,7 +193,7 @@ CREATE TABLE rl_representante_arquivo (
 	tb_inscricao         char(1)  NOT NULL ,
 	CONSTRAINT pk_representante_arquivo_corepresentantearquivo PRIMARY KEY ( co_representante_arquivo ),
 	CONSTRAINT fk_representantearquivo_representante FOREIGN KEY ( co_representante ) REFERENCES tb_representante( co_representante )  ,
-	CONSTRAINT fk_representantearquivo_arquivo FOREIGN KEY ( co_arquivo ) REFERENCES tb_arquivo( co_arquivo )  
+	CONSTRAINT fk_representantearquivo_arquivo FOREIGN KEY ( co_arquivo ) REFERENCES tb_arquivo( co_arquivo )
  );
 
 CREATE INDEX unq_rl_representante_arquivo_fk_representante ON rl_representante_arquivo ( co_representante );
@@ -206,14 +206,14 @@ COMMENT ON COLUMN rl_representante_arquivo.tp_arquivo IS 'opcoes:\n\ndeclaracao_
 
 COMMENT ON COLUMN rl_representante_arquivo.tb_inscricao IS '1 - Organização\n2 - Conselho';
 
-CREATE TABLE rl_usuario_perfil ( 
+CREATE TABLE rl_usuario_perfil (
 	co_usuario_perfil    SERIAL,
 	co_usuario           integer  NOT NULL ,
 	co_perfil            integer  NOT NULL ,
 	CONSTRAINT pk_usuarioperfil_cousuarioperfil PRIMARY KEY ( co_usuario_perfil ),
 	CONSTRAINT unq_rl_usuario_perfil_co_usuario UNIQUE ( co_usuario ) ,
 	CONSTRAINT fk_usuarioperfil_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )  ,
-	CONSTRAINT fk_usuarioperfil_perfil FOREIGN KEY ( co_perfil ) REFERENCES tb_perfil( co_perfil )  
+	CONSTRAINT fk_usuarioperfil_perfil FOREIGN KEY ( co_perfil ) REFERENCES tb_perfil( co_perfil )
  );
 
 COMMENT ON TABLE rl_usuario_perfil IS 'tabela de relacionamento entre usuario e perfil';
@@ -228,13 +228,13 @@ COMMENT ON CONSTRAINT fk_usuarioperfil_usuario ON rl_usuario_perfil IS 'relacion
 
 COMMENT ON CONSTRAINT fk_usuarioperfil_perfil ON rl_usuario_perfil IS 'chave estrangeira para tabela perfil';
 
-CREATE TABLE tb_municipio ( 
+CREATE TABLE tb_municipio (
 	co_municipio         SERIAL,
 	co_ibge              integer  NOT NULL ,
 	no_municipio         varchar(50)  NOT NULL ,
 	co_uf                integer  NOT NULL ,
 	CONSTRAINT pk_municipio_comunicipio PRIMARY KEY ( co_municipio ),
-	CONSTRAINT fk_municipio_uf FOREIGN KEY ( co_uf ) REFERENCES tb_uf( co_ibge )  
+	CONSTRAINT fk_municipio_uf FOREIGN KEY ( co_uf ) REFERENCES tb_uf( co_ibge )
  );
 
 COMMENT ON COLUMN tb_municipio.co_municipio IS 'chave primaria da tabela';
@@ -245,14 +245,14 @@ COMMENT ON COLUMN tb_municipio.no_municipio IS 'nome do município';
 
 COMMENT ON COLUMN tb_municipio.co_uf IS 'chave estrangeira para tabela de uf';
 
-CREATE TABLE tb_endereco ( 
+CREATE TABLE tb_endereco (
 	co_endereco          SERIAL,
 	ds_complemento       varchar(255)  NOT NULL ,
 	nu_cep               varchar(8)  NOT NULL ,
 	ds_logradouro        varchar(255)  NOT NULL ,
 	co_municipio         integer  NOT NULL ,
 	CONSTRAINT pk_endereco_coendereco PRIMARY KEY ( co_endereco ),
-	CONSTRAINT fk_endereco_municipio FOREIGN KEY ( co_municipio ) REFERENCES tb_municipio( co_municipio )  
+	CONSTRAINT fk_endereco_municipio FOREIGN KEY ( co_municipio ) REFERENCES tb_municipio( co_municipio )
  );
 
 COMMENT ON COLUMN tb_endereco.co_endereco IS 'chave primária da tabela';
@@ -265,7 +265,7 @@ COMMENT ON COLUMN tb_endereco.ds_logradouro IS 'descrição do logradouro';
 
 COMMENT ON COLUMN tb_endereco.co_municipio IS 'chave estrangeira para tabela que possui dados do ibge';
 
-CREATE TABLE tb_organizacao ( 
+CREATE TABLE tb_organizacao (
 	co_organizacao       SERIAL,
 	nu_cnpj              varchar(14)  NOT NULL ,
 	no_organizacao       varchar(100)  NOT NULL ,
@@ -281,7 +281,7 @@ CREATE TABLE tb_organizacao (
 	CONSTRAINT fk_organizacao_segmento FOREIGN KEY ( co_segmento ) REFERENCES tb_segmento( co_segmento )  ,
 	CONSTRAINT fk_organizacao_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )  ,
 	CONSTRAINT fk_organizacao_endereco FOREIGN KEY ( co_endereco ) REFERENCES tb_endereco( co_endereco )  ,
-	CONSTRAINT fk_organizacao_representante FOREIGN KEY ( co_representante ) REFERENCES tb_representante( co_representante )  
+	CONSTRAINT fk_organizacao_representante FOREIGN KEY ( co_representante ) REFERENCES tb_representante( co_representante )
  );
 
 COMMENT ON COLUMN tb_organizacao.co_organizacao IS 'chave primária da tabela';
@@ -306,13 +306,13 @@ COMMENT ON COLUMN tb_organizacao.ds_sitio_eletronico IS 'Descrição do sítio e
 
 COMMENT ON COLUMN tb_organizacao.st_inscricao IS 'Situação da inscrição da organização';
 
-CREATE TABLE rl_organizacao_criterio ( 
+CREATE TABLE rl_organizacao_criterio (
 	co_organizacao_criterio SERIAL,
 	co_criterio          integer  NOT NULL ,
 	co_organizacao       integer  NOT NULL ,
 	CONSTRAINT orgao_criterio_coorganizacaociterio PRIMARY KEY ( co_organizacao_criterio ),
 	CONSTRAINT fk_criterio_organizacao FOREIGN KEY ( co_criterio ) REFERENCES tb_criterio( co_criterio )  ,
-	CONSTRAINT fk_organizacao_criterio FOREIGN KEY ( co_organizacao ) REFERENCES tb_organizacao( co_organizacao )  
+	CONSTRAINT fk_organizacao_criterio FOREIGN KEY ( co_organizacao ) REFERENCES tb_organizacao( co_organizacao )
  );
 
 CREATE INDEX unq_rl_organizacao_criterio_fk_criterio ON rl_organizacao_criterio ( co_criterio );
@@ -323,7 +323,7 @@ COMMENT ON COLUMN rl_organizacao_criterio.co_criterio IS 'chave estrangeira liga
 
 COMMENT ON COLUMN rl_organizacao_criterio.co_organizacao IS 'chave estrangeira ligando a uma organização';
 
-CREATE TABLE tb_conselho ( 
+CREATE TABLE tb_conselho (
 	co_conselho          SERIAL,
 	no_orgao_gestor      varchar(150)  NOT NULL ,
 	ds_email             varchar(50)  NOT NULL ,
@@ -338,7 +338,7 @@ CREATE TABLE tb_conselho (
 	CONSTRAINT pk_conselho_coconselho PRIMARY KEY ( co_conselho ),
 	CONSTRAINT fk_conselho_endereco FOREIGN KEY ( co_endereco ) REFERENCES tb_endereco( co_endereco )  ,
 	CONSTRAINT fk_conselho_representante FOREIGN KEY ( co_representante ) REFERENCES tb_representante( co_representante )  ,
-	CONSTRAINT fk_conselho_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )  
+	CONSTRAINT fk_conselho_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )
  );
 
 COMMENT ON COLUMN tb_conselho.co_conselho IS 'chave primária da tabela';
@@ -363,7 +363,7 @@ COMMENT ON COLUMN tb_conselho.ds_sitio_eletronico IS 'endereço eletrônico do c
 
 COMMENT ON COLUMN tb_conselho.st_inscricao IS 'situação em que se encontra a inscrição';
 
-CREATE TABLE tb_eleitor ( 
+CREATE TABLE tb_eleitor (
 	co_eleitor           SERIAL,
 	nu_cpf               varchar(11)  NOT NULL ,
 	no_eleitor           varchar(255)  NOT NULL ,
@@ -374,7 +374,7 @@ CREATE TABLE tb_eleitor (
 	co_usuario           integer  NOT NULL ,
 	CONSTRAINT pk_eleitor_codeleitor PRIMARY KEY ( co_eleitor ),
 	CONSTRAINT fk_eleitor_tb_endereco FOREIGN KEY ( co_endereco ) REFERENCES tb_endereco( co_endereco )  ,
-	CONSTRAINT fk_eleitor_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )  
+	CONSTRAINT fk_eleitor_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )
  );
 
 COMMENT ON COLUMN tb_eleitor.co_eleitor IS 'chave primária da tabela';
