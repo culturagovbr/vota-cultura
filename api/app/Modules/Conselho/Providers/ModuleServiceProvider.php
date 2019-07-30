@@ -6,11 +6,6 @@ use Caffeinated\Modules\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the module services.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->loadTranslationsFrom(module_path('conselho', 'Resources/Lang', 'app'), 'conselho');
@@ -20,11 +15,6 @@ class ModuleServiceProvider extends ServiceProvider
         $this->loadFactoriesFrom(module_path('conselho', 'Database/Factories', 'app'));
     }
 
-    /**
-     * Register the module services.
-     *
-     * @return void
-     */
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);

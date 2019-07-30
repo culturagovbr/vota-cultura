@@ -3,14 +3,11 @@
 namespace App\Modules\Representacao\Providers;
 
 use Caffeinated\Modules\Support\ServiceProvider;
+use App\Modules\Representacao\Services\Representante as RepresentanteService;
+use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 
 class ModuleServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the module services.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->loadTranslationsFrom(module_path('representacao', 'Resources/Lang', 'app'), 'representacao');
@@ -20,13 +17,13 @@ class ModuleServiceProvider extends ServiceProvider
         $this->loadFactoriesFrom(module_path('representacao', 'Database/Factories', 'app'));
     }
 
-    /**
-     * Register the module services.
-     *
-     * @return void
-     */
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(RepresentanteService::class, function($app) {
+            return new RepresentanteService(
+                $app->make(RepresentanteModel::class)
+            );
+        });
     }
 }

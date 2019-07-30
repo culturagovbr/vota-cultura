@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Modules\Representacao\Services;
+
 use App\Core\Services\AbstractService;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
 class Representante extends AbstractService
 {
@@ -11,7 +14,7 @@ class Representante extends AbstractService
         parent::__construct($model);
     }
 
-    public function cadastrar(array $dados)
+    public function cadastrar(array $dados): ?Model
     {
         try {
             $representante = $this->getModel()->where([
@@ -19,7 +22,9 @@ class Representante extends AbstractService
             ])->orWhere([
                 'no_organizacao' => $dados['no_orgao_gestor']
             ])->orWhere([
-                'nu_cnpj' => $dados['nu_cnpj']
+                'nu_rg' => $dados['nu_rg']
+            ])->orWhere([
+                'nu_cpf' => $dados['nu_cpf']
             ])->first();
 
             if ($representante) {
@@ -29,13 +34,7 @@ class Representante extends AbstractService
                 );
             }
 
-            DB::beginTransaction();
-            $representante = $this->getModel();
-            $representante->fill($dados);
-            $representante->save();
-
-            DB::commit();
-            return $representante;
+            return parent::cadastrar($dados);
         } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;

@@ -57,7 +57,7 @@ abstract class AbstractService implements IService
         try {
             $model = $this->getModel()->find($identificador);
             if (!$model) {
-                throw new ValidacaoCustomizadaException(
+                throw new \HttpException(
                     'Dados não localizados.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -66,6 +66,20 @@ abstract class AbstractService implements IService
             DB::beginTransaction();
             $model->delete();
             DB::commit();
+        } catch (\Exception $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
+    }
+
+    public function cadastrar(array $dados): ?Model
+    {
+        try {
+            DB::beginTransaction();
+            $model = $this->getModel()->fill($dados);
+            $model->save();
+            DB::commit();
+            return $model;
         } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;
