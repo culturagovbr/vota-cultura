@@ -7,12 +7,6 @@ use App\Modules\Conta\Model\Usuario;
 
 class UsuarioTableSeeder extends Seeder
 {
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $usuario = Usuario::where([
@@ -22,13 +16,15 @@ class UsuarioTableSeeder extends Seeder
             'st_ativo' => true,
         ])->first();
 
-        if(!$usuario) {
+        if (!$usuario) {
             Usuario::Create([
-                'no_nome' => 'Testando haha',
-                'ds_email' => 'teste@teste.teste',
-                'ds_senha' => password_hash('123456', PASSWORD_DEFAULT),
-                'dh_cadastro' => '2019-01-01',
                 'st_ativo' => true,
+                'ds_email' => 'viniciusfesil@gmail.com',
+                'ds_senha' => password_hash('123456', PASSWORD_DEFAULT),
+                'dh_cadastro' => '2019-07-29',
+                'dh_ultima_atualizacao' => '2019-07-29',
+                'ds_codigo_ativacao' => 'asdasdQEQWeqwrqwgt23tqwe',
+                'co_perfil' => 1
             ]);
 
         }
