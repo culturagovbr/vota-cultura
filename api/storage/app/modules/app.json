@@ -39,13 +39,13 @@
         "enabled": true,
         "order": 9001
     },
-    "Localizacao": {
-        "basename": "Localizacao",
-        "name": "Localizacao",
-        "slug": "localizacao",
+    "Localidade": {
+        "basename": "Localidade",
+        "name": "Localidade",
+        "slug": "localidade",
         "version": "1.0",
-        "description": "This is the description for the Localizacao module.",
-        "id": 3496326391,
+        "description": "This is the description for the Localidade module.",
+        "id": 4062315230,
         "enabled": true,
         "order": 9001
     },

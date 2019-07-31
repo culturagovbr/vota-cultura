@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Modules\Localizacao\Service;
+namespace App\Modules\Localidade\Service;
 
 use App\Core\Service\AbstractService;
-use App\Modules\Localizacao\Model\Endereco as EnderecoModel;
-use DB;
-use Illuminate\Database\Eloquent\Model;
+use App\Modules\Localidade\Model\Endereco as EnderecoModel;
 
 class Endereco extends AbstractService
 {

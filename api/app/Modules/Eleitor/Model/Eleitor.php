@@ -30,7 +30,7 @@ class Eleitor extends Model
     public function uf()
     {
         return $this->hasOne(
-            \App\Modules\Localizacao\Model\Uf::class,
+            \App\Modules\Localidade\Model\Uf::class,
             'co_ibge',
             'co_ibge'
         );

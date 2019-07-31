@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Localizacao\Model;
+namespace App\Modules\Localidade\Model;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -27,7 +27,7 @@ class Conselho extends Model
     public function endereco()
     {
         return $this->hasOne(
-            \App\Modules\Localizacao\Model\Endereco::class,
+            \App\Modules\Localidade\Model\Endereco::class,
             'co_endereco',
             'co_endereco'
         );

@@ -4,7 +4,7 @@ namespace App\Modules\Conselho\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
-use App\Modules\Localizacao\Service\Endereco;
+use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Representacao\Service\Representante;
 use DB;
 use Illuminate\Database\Eloquent\Model;

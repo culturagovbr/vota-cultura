@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Localizacao\Database\Seeds;
+namespace App\Modules\Localidade\Database\Seeds;
 
-use App\Modules\Localizacao\Model\Endereco;
+use App\Modules\Localidade\Model\Endereco;
 use Illuminate\Database\Seeder;
 
 class EnderecoSeeder extends Seeder

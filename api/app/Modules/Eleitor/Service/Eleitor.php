@@ -3,7 +3,7 @@
 namespace App\Modules\Eleitor\Service;
 
 use App\Core\Service\AbstractService;
-use App\Modules\Localizacao\Service\Endereco;
+use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
 use App\Modules\Representacao\Service\Representante;
 use Illuminate\Database\Eloquent\Model;
