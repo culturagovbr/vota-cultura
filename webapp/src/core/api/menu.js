@@ -25,7 +25,7 @@ const Menu = [
     icon: 'thumbs_up_down',
   },
 ];
-// reorder menu
+
 Menu.forEach((item) => {
   if (item.items) {
     item.items.sort((x, y) => {
