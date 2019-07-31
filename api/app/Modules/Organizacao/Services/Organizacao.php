@@ -6,6 +6,7 @@ use App\Core\Services\AbstractService;
 use App\Modules\Localizacao\Services\Endereco;
 use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Representacao\Services\Representante;
+use App\Modules\Segmento\Services\Segmento;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Illuminate\Http\Response;
@@ -47,7 +48,7 @@ class Organizacao extends AbstractService
             $endereco = $serviceEndereco->cadastrar($dados);
 
             if (!$endereco) {
-                throw new \HttpException('Não foi possível cadastrar o representante.');
+                throw new \HttpException('Não foi possível cadastrar o endereço.');
             }
             $dados['co_endereco'] = $endereco->co_endereco;
 

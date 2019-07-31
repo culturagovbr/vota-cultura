@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Segmento\Services;
+namespace App\Modules\Organizacao\Services;
 
 use App\Core\Services\AbstractService;
 use App\Modules\Organizacao\Model\Segmento as SegmentoModel;

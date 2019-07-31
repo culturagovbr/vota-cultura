@@ -3,6 +3,8 @@
 namespace App\Modules\Conselho\Providers;
 
 use Caffeinated\Modules\Support\ServiceProvider;
+use App\Modules\Organizacao\Services\Conselho as ConselhoService;
+use App\Modules\Representacao\Model\Conselho as ConselhoModel;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -18,5 +20,10 @@ class ModuleServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(ConselhoService::class, function ($app) {
+            return new ConselhoService(
+                $app->make(ConselhoModel::class)
+            );
+        });
     }
 }

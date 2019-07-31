@@ -6,4 +6,5 @@ Route::group([
     'prefix' => 'organizacao'
 ], function ($router) {
     Route::apiResource('/', 'OrganizacaoController');
+    Route::apiResource('criterio', 'CriterioController');
 });
