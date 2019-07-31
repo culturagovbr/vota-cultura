@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Conta\Services;
+namespace App\Modules\Conta\Service;
 
 use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Mail\Usuario\RecuperacaoSenha as RecuperacaoSenhaMail;
-use App\Core\Services\IService;
-use App\Modules\Conta\Services\Usuario as UsuarioService;
+use App\Core\Service\IService;
+use App\Modules\Conta\Service\Usuario as UsuarioService;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use DB;

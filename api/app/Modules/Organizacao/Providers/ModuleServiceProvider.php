@@ -4,13 +4,13 @@ namespace App\Modules\Organizacao\Providers;
 
 use Caffeinated\Modules\Support\ServiceProvider;
 
-use App\Modules\Organizacao\Services\Criterio as CriterioService;
-use App\Modules\Organizacao\Services\Organizacao as OrganizacaoService;
-use App\Modules\Organizacao\Services\Segmento as SegmentoService;
+use App\Modules\Organizacao\Service\Criterio as CriterioService;
+use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
+use App\Modules\Organizacao\Service\Segmento as SegmentoService;
 
-use App\Modules\Representacao\Model\Criterio as CriterioModel;
-use App\Modules\Representacao\Model\Organizacao as OrganizacaoModel;
-use App\Modules\Representacao\Model\Segmento as SegmentoModel;
+use App\Modules\Organizacao\Model\Criterio as CriterioModel;
+use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
+use App\Modules\Organizacao\Model\Segmento as SegmentoModel;
 
 class ModuleServiceProvider extends ServiceProvider
 {

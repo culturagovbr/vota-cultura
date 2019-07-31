@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Conta\Services;
+namespace App\Modules\Conta\Service;
 
 use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil;
-use App\Core\Services\AbstractService;
+use App\Core\Service\AbstractService;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;

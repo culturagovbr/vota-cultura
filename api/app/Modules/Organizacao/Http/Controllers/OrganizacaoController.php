@@ -2,7 +2,8 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
-use App\Modules\Organizacao\Services\Organizacao as OrganizacaoService;
+use App\Modules\Core\Http\Controllers\Traits\TApiResourceIndex;
+use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
@@ -10,10 +11,13 @@ use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
 class OrganizacaoController extends AApiResourceController
 {
     use TApiResourceUpdate,
-        TApiResourceDestroy;
+        TApiResourceDestroy,
+        TApiResourceIndex;
 
     public function __construct(OrganizacaoService $service)
     {
         parent::__construct($service);
     }
+
+
 }

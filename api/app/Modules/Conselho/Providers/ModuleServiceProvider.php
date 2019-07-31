@@ -3,7 +3,7 @@
 namespace App\Modules\Conselho\Providers;
 
 use Caffeinated\Modules\Support\ServiceProvider;
-use App\Modules\Organizacao\Services\Conselho as ConselhoService;
+use App\Modules\Organizacao\Service\Conselho as ConselhoService;
 use App\Modules\Representacao\Model\Conselho as ConselhoModel;
 
 class ModuleServiceProvider extends ServiceProvider

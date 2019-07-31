@@ -2,7 +2,7 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
-use App\Modules\Organizacao\Services\Criterio as CriterioService;
+use App\Modules\Organizacao\Service\Criterio as CriterioService;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 
 class CriterioController extends AApiResourceController

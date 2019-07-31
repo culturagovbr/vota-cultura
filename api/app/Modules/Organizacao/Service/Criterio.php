@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Organizacao\Services;
+namespace App\Modules\Organizacao\Service;
 
-use App\Core\Services\AbstractService;
+use App\Core\Service\AbstractService;
 use App\Modules\Organizacao\Model\Criterio as CriterioModel;
 use DB;
 

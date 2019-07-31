@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Organizacao\Services;
+namespace App\Modules\Organizacao\Service;
 
-use App\Core\Services\AbstractService;
+use App\Core\Service\AbstractService;
 use App\Modules\Organizacao\Model\Segmento as SegmentoModel;
 use DB;
 
@@ -12,4 +12,6 @@ class Segmento extends AbstractService
     {
         parent::__construct($model);
     }
+
+
 }

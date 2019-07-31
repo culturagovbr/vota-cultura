@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Localizacao\Services;
+namespace App\Modules\Localizacao\Service;
 
-use App\Core\Services\AbstractService;
+use App\Core\Service\AbstractService;
 use App\Modules\Localizacao\Model\Endereco as EnderecoModel;
 use DB;
 use Illuminate\Database\Eloquent\Model;

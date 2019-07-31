@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Eleitor\Services;
+namespace App\Modules\Eleitor\Service;
 
-use App\Core\Services\AbstractService;
-use App\Modules\Localizacao\Services\Endereco;
+use App\Core\Service\AbstractService;
+use App\Modules\Localizacao\Service\Endereco;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
-use App\Modules\Representacao\Services\Representante;
+use App\Modules\Representacao\Service\Representante;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Illuminate\Http\Response;

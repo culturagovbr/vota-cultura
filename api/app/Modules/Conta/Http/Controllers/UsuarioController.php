@@ -2,7 +2,7 @@
 
 namespace App\Modules\Conta\Http\Controllers;
 
-use App\Modules\Conta\Services\Usuario as UsuarioService;
+use App\Modules\Conta\Service\Usuario as UsuarioService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

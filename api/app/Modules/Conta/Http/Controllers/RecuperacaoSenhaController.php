@@ -2,7 +2,7 @@
 
 namespace App\Modules\Conta\Http\Controllers;
 
-use App\Modules\Conta\Services\RecuperacaoSenha as RecuperacaoSenhaService;
+use App\Modules\Conta\Service\RecuperacaoSenha as RecuperacaoSenhaService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

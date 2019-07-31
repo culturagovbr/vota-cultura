@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Conselho\Services;
+namespace App\Modules\Conselho\Service;
 
-use App\Core\Services\AbstractService;
+use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
-use App\Modules\Localizacao\Services\Endereco;
-use App\Modules\Representacao\Services\Representante;
+use App\Modules\Localizacao\Service\Endereco;
+use App\Modules\Representacao\Service\Representante;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;

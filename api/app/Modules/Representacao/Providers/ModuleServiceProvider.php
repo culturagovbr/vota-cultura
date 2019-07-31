@@ -3,7 +3,7 @@
 namespace App\Modules\Representacao\Providers;
 
 use Caffeinated\Modules\Support\ServiceProvider;
-use App\Modules\Representacao\Services\Representante as RepresentanteService;
+use App\Modules\Representacao\Service\Representante as RepresentanteService;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 
 class ModuleServiceProvider extends ServiceProvider

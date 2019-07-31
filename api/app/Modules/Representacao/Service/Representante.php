@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Representacao\Services;
+namespace App\Modules\Representacao\Service;
 
-use App\Core\Services\AbstractService;
+use App\Core\Service\AbstractService;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;

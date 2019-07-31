@@ -22,6 +22,7 @@ services:
       - ./database/schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
       - ./database/carga_ufs.sql:/docker-entrypoint-initdb.d/1.carga_ufs.sql
       - ./database/carga_municipios.sql:/docker-entrypoint-initdb.d/2.carga_municipios.sql
+      - ./database/carga_criterios.sql:/docker-entrypoint-initdb.d/3.carga_criterios.sql
     networks:
       - votacultura_network
   webapp-service:
