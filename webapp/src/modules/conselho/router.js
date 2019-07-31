@@ -9,7 +9,8 @@ export default [
       group: 'apps',
       icon: ''
     },
-    redirect: '/conselho',
+    name: 'Conselho',
+    redirect: '/conselho/inscricao',
     children: [
       {
         path: '/conselho/inscricao',

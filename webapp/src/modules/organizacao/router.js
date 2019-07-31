@@ -3,13 +3,14 @@ import {AuthLayout, DefaultLayout} from '@/core/components/layouts';
 export default [
   {
     path: '/organizacao',
+    name: 'Organizacao',
     component: DefaultLayout,
     meta: {
       title: 'Organizacao',
       group: 'apps',
       icon: ''
     },
-    redirect: '/organizacao',
+    redirect: '/organizacao/inscricao',
     children: [
       {
         path: '/organizacao/inscricao',
