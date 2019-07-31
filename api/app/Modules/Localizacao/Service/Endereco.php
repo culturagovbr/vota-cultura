@@ -13,17 +13,4 @@ class Endereco extends AbstractService
     {
         parent::__construct($model);
     }
-
-    public function cadastrar(array $dados): ?Model
-    {
-        try {
-            DB::beginTransaction();
-            $endereco = EnderecoModel::create($dados);
-            DB::commit();
-            return $endereco;
-        } catch (\Exception $queryException) {
-            DB::rollBack();
-            throw $queryException;
-        }
-    }
 }

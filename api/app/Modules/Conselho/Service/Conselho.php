@@ -29,7 +29,7 @@ class Conselho extends AbstractService
             ])->first();
 
             if ($conselho) {
-                throw new \Exception(
+                throw new \HttpException(
                     'Conselho já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -37,19 +37,26 @@ class Conselho extends AbstractService
 
             $serviceRepresentante = app()->make(Representante::class);
             $representante = $serviceRepresentante->cadastrar($dados);
-            if(!$representante) {
+
+            if (!$representante) {
                 throw new \HttpException('Não foi possível cadastrar o representante.');
             }
-            $dados['co_representante'] = $representante->co_representante;
 
+            $dados['co_representante'] = $representante->co_representante;
             $serviceEndereco = app()->make(Endereco::class);
             $endereco = $serviceEndereco->cadastrar($dados);
-            if(!$endereco) {
+
+            if (!$endereco) {
                 throw new \HttpException('Não foi possível cadastrar o representante.');
             }
-            $dados['co_endereco'] = $representante->co_endereco;
 
-            return parent::cadastrar($dados);
+            $dados['co_endereco'] = $representante->co_endereco;
+            $conselho = parent::cadastrar($dados);
+
+//            Mail::to($organizacao->ds_email)->send(
+//                new CadastroComSucesso($organizacao)
+//            );
+            return $conselho;
         } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;
