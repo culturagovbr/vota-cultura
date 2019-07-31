@@ -147,7 +147,8 @@
                   </v-flex>
                   <v-flex sm4>
                     <v-select
-                      :items="['DF','GO']"
+                      v-model="eleitor.co_ibge"
+                      :items="listaUF"
                       label="*Unidade da Federação"
                       append-icon="place"
                       :rules="[rules.required]"
@@ -159,8 +160,7 @@
                 <v-layout>
                   <v-flex sm3>
                     <div
-                      class="title text-xs-center text-md-center text-lg-center text-sm-center"
-                    >
+                      class="title text-xs-center text-md-center text-lg-center text-sm-center">
                       Anexo CPF
                     </div>
                   </v-flex>
@@ -238,6 +238,7 @@
           co_municipio: '',
         }
       },
+      listaUF: ['DF','GO'],
       email: '',
       emailConfirmation: '',
       rules: {
