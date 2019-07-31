@@ -8,7 +8,11 @@ export default [
   {
     path: '/',
     component: DefaultLayout,
-    meta: { title: 'Início', group: 'apps', icon: '' },
+    meta: {
+      title: 'Início',
+      group: 'apps',
+      icon: ''
+    },
     redirect: '/inicio',
     children: [
       {

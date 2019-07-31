@@ -33,8 +33,15 @@ class Eleitor extends AbstractService
                 );
             }
 
+            if(!isset($dados['endereco']) || count($dados['endereco']) < 1) {
+                throw new \HttpException(
+                    'Endereço não informado.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
             $serviceEndereco = app()->make(Endereco::class);
-            $endereco = $serviceEndereco->cadastrar($dados);
+            $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
             if (!$endereco) {
                 throw new \HttpException('Não foi possível cadastrar o representante.');
@@ -46,6 +53,7 @@ class Eleitor extends AbstractService
 //            Mail::to($eleitor->ds_email)->send(
 //                new CadastroComSucesso($eleitor)
 //            );
+
             return $eleitor;
         } catch (\Exception $queryException) {
             DB::rollBack();

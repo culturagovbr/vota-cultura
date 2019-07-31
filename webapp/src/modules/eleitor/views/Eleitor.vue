@@ -28,6 +28,7 @@
                   <v-flex sm4>
                     <v-text-field
                       label="*CPF"
+                      v-model="eleitor.nu_cpf"
                       append-icon="account_circle"
                       :rules="[rules.required, rules.cpfMin]"
                       mask="###.###.###-##"
@@ -37,6 +38,7 @@
                   <v-flex sm6>
                     <v-text-field
                       label="*Nome completo"
+                      v-model="eleitor.nu_cpf"
                       append-icon="perm_identity"
                       :rules="[rules.required]"
                       required
@@ -45,6 +47,7 @@
                   <v-flex sm2>
                     <v-text-field
                       label="*RG"
+                      v-model="eleitor.nu_rg"
                       append-icon="account_circle"
                       :rules="[rules.required]"
                       mask="##.###.###-#"
@@ -59,7 +62,7 @@
                 >
                   <v-flex sm6>
                     <v-text-field
-                      v-model="email"
+                      v-model="eleitor.ds_email"
                       label="*E-mail"
                       append-icon="mail"
                       placeholder="email@exemplo.com"
@@ -69,7 +72,7 @@
                   </v-flex>
                   <v-flex sm6>
                     <v-text-field
-                      v-model="emailConfirmation"
+                      v-model="eleitor.ds_email_confirmacao"
                       label="*Confirmar e-mail"
                       append-icon="mail"
                       placeholder="email@exemplo.com"
@@ -106,11 +109,11 @@
                           />
                         </template>
                         <v-date-picker
-                          v-model="date"
+                          v-model="eleitor.dt_nascimento"
                           locale="pt-BR"
                           scrollable
                         >
-                          <v-spacer />
+                          <v-spacer/>
                           <v-btn
                             flat
                             color="primary"
@@ -131,7 +134,11 @@
                   </v-flex>
                   <v-flex sm4>
                     <v-select
-                      :items="['Brasileiro','Outros']"
+                      v-model="eleitor.st_estrangeiro"
+                      :items="[{ st_estrangeiro: 1 , nome: 'Brasileiro'},
+                      { st_estrangeiro: 2 , nome: 'Outros'}]"
+                      item-value="st_estrangeiro"
+                      item-text="nome"
                       label="*Nacionalidade"
                       append-icon="place"
                       :rules="[rules.required]"
@@ -161,7 +168,7 @@
 
                 <v-layout>
                   <v-flex sm3>
-                    <file v-model="anexoCpf" />
+                    <file v-model="anexoCpf"/>
                   </v-flex>
                 </v-layout>
 
@@ -188,68 +195,94 @@
 </template>
 
 <script>
-import File from '@/core/components/upload/File';
+  import {mapActions} from 'vuex';
+  import File from '@/core/components/upload/File';
 
-export default {
-  name: 'Eleitor',
-  components: { File },
-  data: () => ({
-    anexoCpf: '',
-    valid: false,
-    date: '',
-    dateFormatted: '',
-    menu: false,
-    headers: [
-      {
-        text: 'Tipo',
-        align: 'center',
-        sortable: false,
+  export default {
+    name: 'Eleitor',
+    components: {File},
+    data: () => ({
+      anexoCpf: '',
+      valid: false,
+      date: '',
+      dateFormatted: '',
+      menu: false,
+      headers: [
+        {
+          text: 'Tipo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          text: 'Arquivo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          sortable: false,
+        },
+      ],
+      eleitor: {
+        nu_cpf: '',
+        no_eleitor: '',
+        nu_rg: '',
+        dt_nascimento: '',
+        st_estrangeiro: '',
+        co_endereco: '',
+        ds_email: '',
+        ds_email_confirmacao: '',
+        endereco: {
+          ds_complemento: '',
+          nu_cep: '',
+          ds_logradouro: '',
+          co_municipio: '',
+        }
       },
-      {
-        text: 'Arquivo',
-        align: 'center',
-        sortable: false,
+      email: '',
+      emailConfirmation: '',
+      rules: {
+        required: v => !!v || 'Campo não preenchido',
+        phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
+        cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
+        email: (v) => {
+          // eslint-disable-next-line
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(v) || 'E-mail invalido';
+        },
+        emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
       },
-      {
-        sortable: false,
+    }),
+    watch: {
+      date() {
+        this.dateFormatted = this.formatDate(this.date);
       },
-    ],
-    email: '',
-    emailConfirmation: '',
-    rules: {
-      required: v => !!v || 'Campo não preenchido',
-      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-      email: (v) => {
-        // eslint-disable-next-line
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'E-mail invalido';
+      email(v) {
+        console.log(v);
       },
-      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
     },
-  }),
-  watch: {
-    date() {
-      this.dateFormatted = this.formatDate(this.date);
+    methods: {
+      ...mapActions({
+         cadastrarEleitor: "eleitor/cadastrarEleitor",
+      }),
+      validate() {
+        if (this.$refs.form.validate()) {
+          this.cadastrar();
+        }
+      },
+      reset() {
+        this.$refs.form.reset();
+      },
+      cadastrar() {
+        this.cadastrarEleitor(this.eleitor)
+          .then((data) => {
+          })
+          .catch(error => {
+            this.mensagemErro(error.response.data.message);
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      },
     },
-    email(v) {
-      console.log(v);
-    },
-  },
-  methods: {
-    validate() {
-      if (this.$refs.form.validate()) {
-        console.log('talkei');
-      }
-    },
-    formatDate(date) {
-      if (!date) return null;
-      const [year, month, day] = date.split('-');
-      return `${day}/${month}/${year}`;
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-  },
-};
+  };
 </script>

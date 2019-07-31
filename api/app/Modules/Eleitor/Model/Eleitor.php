@@ -16,6 +16,7 @@ class Eleitor extends Model
 
     protected $fillable = [
         'nu_cpf',
+        'ds_email',
         'no_eleitor',
         'nu_rg',
         'dt_nascimento',

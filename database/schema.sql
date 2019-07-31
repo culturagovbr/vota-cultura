@@ -371,7 +371,8 @@ CREATE TABLE tb_eleitor (
 	dt_nascimento        date  NOT NULL ,
 	st_estrangeiro       bool DEFAULT false NOT NULL ,
 	co_endereco          integer  NOT NULL ,
-	co_usuario           integer  NOT NULL ,
+	co_usuario           integer ,
+	ds_email             varchar(255)  NOT NULL ,
 	CONSTRAINT pk_eleitor_codeleitor PRIMARY KEY ( co_eleitor ),
 	CONSTRAINT fk_eleitor_tb_endereco FOREIGN KEY ( co_endereco ) REFERENCES tb_endereco( co_endereco )  ,
 	CONSTRAINT fk_eleitor_usuario FOREIGN KEY ( co_usuario ) REFERENCES tb_usuario( co_usuario )
@@ -392,3 +393,5 @@ COMMENT ON COLUMN tb_eleitor.st_estrangeiro IS 'Situação se o eleitor é estra
 COMMENT ON COLUMN tb_eleitor.co_endereco IS 'chave estrangeira com os dados de endereço do eleitor';
 
 COMMENT ON COLUMN tb_eleitor.co_usuario IS 'chave estrangeira com o usuario para login do inscrito para eleitor';
+
+COMMENT ON COLUMN tb_eleitor.ds_email IS 'email do eleitor';
