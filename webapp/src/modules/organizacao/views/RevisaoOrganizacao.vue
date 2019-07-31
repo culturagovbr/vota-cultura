@@ -315,17 +315,12 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
 
               <v-layout
                 wrap
-                align-center
-              >
+                align-center>
                 <v-flex offset-xs4>
-                  <v-btn
-                    to="/inscricao/eleitor"
-                  >
+                  <v-btn to="/organizacao/inscricao">
                     Cancelar
                   </v-btn>
-                  <v-btn
-                    color="primary"
-                  >
+                  <v-btn color="primary">
                     Confirmar
                   </v-btn>
                 </v-flex>

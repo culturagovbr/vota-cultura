@@ -18,7 +18,7 @@
               Organização ou Entidade Cultural
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               editable
@@ -28,7 +28,7 @@
               Responsável
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               editable
@@ -38,7 +38,7 @@
               Segmento
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               editable
@@ -48,7 +48,7 @@
               Declaração de enquadramento
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               editable
@@ -629,10 +629,7 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn
-                color="primary"
-                to="/inscricao/revisao-organizacao"
-              >
+              <v-btn color="primary" to="/organizacao/revisao-organizacao">
                 Próximo
               </v-btn>
               <v-btn flat>
@@ -648,67 +645,67 @@
 
 <script>
 
-export default {
-  data: () => ({
-    valid: false,
-    date: '',
-    e1: 1,
-    emailOrganization: '',
-    emailOrganizationConfirmation: '',
-    dateFormatted: '',
-    menu: false,
-    headers: [
-      {
-        text: 'Tipo',
-        align: 'center',
-        sortable: false,
-      },
-      {
-        text: 'Arquivo',
-        align: 'center',
-        sortable: false,
-      },
-      {
-        sortable: false,
-      },
-    ],
-    rules: {
-      required: v => !!v || 'Campo não preenchido',
-      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-      cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
-      email: (v) => {
-        // eslint-disable-next-line
+  export default {
+    data: () => ({
+      valid: false,
+      date: '',
+      e1: 1,
+      emailOrganization: '',
+      emailOrganizationConfirmation: '',
+      dateFormatted: '',
+      menu: false,
+      headers: [
+        {
+          text: 'Tipo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          text: 'Arquivo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          sortable: false,
+        },
+      ],
+      rules: {
+        required: v => !!v || 'Campo não preenchido',
+        phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
+        cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
+        email: (v) => {
+          // eslint-disable-next-line
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'E-mail invalido';
-      },
-      url: (v) => {
-        // eslint-disable-next-line
+          return pattern.test(v) || 'E-mail invalido';
+        },
+        url: (v) => {
+          // eslint-disable-next-line
           const pattern = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
-        if (v) return pattern.test(v) || 'Sítio invalido';
-        return true;
+          if (v) return pattern.test(v) || 'Sítio invalido';
+          return true;
+        },
+        emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
       },
-      emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
+    }),
+    watch: {
+      date() {
+        this.dateFormatted = this.formatDate(this.date);
+      },
     },
-  }),
-  watch: {
-    date() {
-      this.dateFormatted = this.formatDate(this.date);
+    methods: {
+      validate() {
+        if (this.$refs.form.validate()) {
+          console.log('talkei');
+        }
+      },
+      formatDate(date) {
+        if (!date) return null;
+        const [year, month, day] = date.split('-');
+        return `${day}/${month}/${year}`;
+      },
+      reset() {
+        this.$refs.form.reset();
+      },
     },
-  },
-  methods: {
-    validate() {
-      if (this.$refs.form.validate()) {
-        console.log('talkei');
-      }
-    },
-    formatDate(date) {
-      if (!date) return null;
-      const [year, month, day] = date.split('-');
-      return `${day}/${month}/${year}`;
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-  },
-};
+  };
 </script>

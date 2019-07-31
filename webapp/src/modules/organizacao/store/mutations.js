@@ -1,11 +1,11 @@
 import * as types from './types';
 
 export const state = {
-  usuario: {},
+  organizacao: {},
 };
 
 export const mutations = {
-  [types.SET_USUARIO](state, dados) {
-    state.usuario = dados;
+  [types.DEFINIR_USUARIO](state, dados) {
+    state.organizacao = dados;
   },
 };
