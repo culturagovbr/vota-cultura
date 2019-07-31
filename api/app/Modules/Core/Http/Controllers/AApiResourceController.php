@@ -14,8 +14,13 @@ abstract class AApiResourceController extends Controller implements IApiResource
         TApiResourceIndex,
         TApiResourceStore;
 
+    /**
+     * @var IServiceApiResource
+     */
+    protected $service;
+
     public function __construct(IServiceApiResource $service)
     {
-        parent::__construct($service);
+        $this->service = $service;
     }
 }

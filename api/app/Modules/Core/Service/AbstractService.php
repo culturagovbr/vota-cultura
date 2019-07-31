@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-abstract class AbstractService implements IService
+abstract class AbstractService implements IServiceApiResource
 {
     protected $model;
 
@@ -30,7 +30,7 @@ abstract class AbstractService implements IService
         return $this->getModel()->get();
     }
 
-    public function atualizar(Request $request, int $identificador)
+    public function atualizar(Request $request, int $identificador) : ?Model
     {
         try {
             $model = $this->getModel()->find($identificador);

@@ -4,7 +4,8 @@ namespace App\Core\Service;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
+
 
 interface IServiceApiResource extends IService
 {
