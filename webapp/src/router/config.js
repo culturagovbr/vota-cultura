@@ -1,6 +1,7 @@
 import { DefaultLayout } from '@/core/components/layouts';
 import RoutersConta from '@/modules/conta/router';
-import RoutersInscricao from '@/modules/inscricao/router';
+import RoutersOrganizacao from '@/modules/organizacao/router';
+import RoutersConselho from '@/modules/conselho/router';
 
 export default [
   ...RoutersConta,
@@ -20,21 +21,6 @@ export default [
       },
     ],
   },
-  ...RoutersInscricao,
-  {
-    path: '/inscricao',
-    component: DefaultLayout,
-    meta: { title: 'Eleitor', group: 'apps', icon: '' },
-    redirect: '/inscricao/eleitor',
-    children: [
-      {
-        path: 'eleitor',
-        name: 'Eleitor',
-        meta: {
-          title: 'Inscrição Eleitor', group: 'apps', icon: 'dashboard',
-        },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/inscricao/views/Eleitor.vue'),
-      },
-    ],
-  },
+  ...RoutersOrganizacao,
+  ...RoutersConselho,
 ];
