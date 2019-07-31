@@ -49,7 +49,7 @@ class Organizacao extends AbstractService
             if (!$endereco) {
                 throw new \HttpException('Não foi possível cadastrar o representante.');
             }
-            $dados['co_endereco'] = $representante->co_endereco;
+            $dados['co_endereco'] = $endereco->co_endereco;
 
             $organizacao = parent::cadastrar($dados);
 

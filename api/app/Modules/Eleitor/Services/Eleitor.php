@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Modules\Conselho\Services;
+namespace App\Modules\Eleitor\Services;
 
 use App\Core\Services\AbstractService;
-use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use App\Modules\Localizacao\Services\Endereco;
+use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
 use App\Modules\Representacao\Services\Representante;
-use DB;
 use Illuminate\Database\Eloquent\Model;
+use DB;
 use Illuminate\Http\Response;
 
-class Conselho extends AbstractService
+class Eleitor extends AbstractService
 {
-    public function __construct(ConselhoModel $model)
+    public function __construct(EleitorModel $model)
     {
         parent::__construct($model);
     }
@@ -20,46 +20,37 @@ class Conselho extends AbstractService
     public function cadastrar(array $dados): ?Model
     {
         try {
-            $conselho = $this->getModel()->where([
-                'ds_email' => $dados['ds_email']
-            ])->orWhere([
-                'no_orgao_gestor' => $dados['no_orgao_gestor']
+            $eleitor = $this->getModel()->where([
+                'no_eleitor' => $dados['no_orgao_gestor']
             ])->orWhere([
                 'nu_cnpj' => $dados['nu_cnpj']
             ])->first();
 
-            if ($conselho) {
+            if ($eleitor) {
                 throw new \HttpException(
-                    'Conselho já cadastrado.',
+                    'Eleitor já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
 
-            $serviceRepresentante = app()->make(Representante::class);
-            $representante = $serviceRepresentante->cadastrar($dados);
-
-            if (!$representante) {
-                throw new \HttpException('Não foi possível cadastrar o representante.');
-            }
-
-            $dados['co_representante'] = $representante->co_representante;
             $serviceEndereco = app()->make(Endereco::class);
             $endereco = $serviceEndereco->cadastrar($dados);
 
             if (!$endereco) {
                 throw new \HttpException('Não foi possível cadastrar o representante.');
             }
-
             $dados['co_endereco'] = $endereco->co_endereco;
-            $conselho = parent::cadastrar($dados);
 
-//            Mail::to($organizacao->ds_email)->send(
-//                new CadastroComSucesso($organizacao)
+            $eleitor = parent::cadastrar($dados);
+
+//            Mail::to($eleitor->ds_email)->send(
+//                new CadastroComSucesso($eleitor)
 //            );
-            return $conselho;
+            return $eleitor;
         } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;
         }
     }
+
 }
