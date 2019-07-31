@@ -4,7 +4,6 @@ import RoutersOrganizacao from '@/modules/organizacao/router';
 import RoutersConselho from '@/modules/conselho/router';
 
 export default [
-  ...RoutersConta,
   {
     path: '/',
     component: DefaultLayout,
@@ -21,6 +20,7 @@ export default [
       },
     ],
   },
+  ...RoutersConta,
   ...RoutersOrganizacao,
   ...RoutersConselho,
 ];
