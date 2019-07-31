@@ -21,10 +21,18 @@ class Eleitor extends Model
         'nu_rg',
         'dt_nascimento',
         'st_estrangeiro',
-        'co_endereco',
+        'co_ibge',
         'co_usuario',
     ];
 
     public $timestamps = false;
 
+    public function uf()
+    {
+        return $this->hasOne(
+            \App\Modules\Localizacao\Model\Uf::class,
+            'co_ibge',
+            'co_ibge'
+        );
+    }
 }
