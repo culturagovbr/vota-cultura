@@ -12,6 +12,8 @@ class Arquivo extends Model
     protected $fillable = [
         'no_arquivo',
         'ds_localizacao',
+        'no_extensao',
+        'no_mime_type',
     ];
 
     protected $date = [
@@ -20,6 +22,9 @@ class Arquivo extends Model
 
     public $timestamps = false;
 
+    protected $stringCodificada;
+    protected $diretorioArmazenamento = '';
+
     public function representantes()
     {
         return $this->belongsToMany(
@@ -27,8 +32,7 @@ class Arquivo extends Model
             'rl_representante_arquivo',
             'co_representante',
             'co_arquivo'
-        )->as('rl_representante_arquivo')
-            ->withPivot(['tp_arquivo', 'tp_inscricao']);
+        )->as('rl_representante_arquivo')->withPivot(['tp_arquivo', 'tp_inscricao']);
     }
 
     public function eleitores()

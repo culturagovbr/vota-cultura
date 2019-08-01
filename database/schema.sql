@@ -3,8 +3,15 @@ CREATE TABLE tb_arquivo (
 	no_arquivo           varchar(50)  NOT NULL ,
 	ds_localizacao       varchar(255)  NOT NULL ,
 	dh_insercao          date DEFAULT current_date NOT NULL ,
+	no_extensao           varchar(50) ,
+	no_mime_type           varchar(50) ,
 	CONSTRAINT pk_arquivo_coarquivo PRIMARY KEY ( co_arquivo )
  );
+
+
+COMMENT ON COLUMN tb_arquivo.no_extensao IS 'Extensão do arquivo';
+
+COMMENT ON COLUMN tb_arquivo.no_mime_type IS 'MIME Type do arquivo';
 
 COMMENT ON COLUMN tb_arquivo.co_arquivo IS 'chave primária da tabela';
 
@@ -413,3 +420,5 @@ COMMENT ON COLUMN rl_eleitor_arquivo.co_eleitor IS 'chave estrangeira ligando a 
 COMMENT ON COLUMN rl_eleitor_arquivo.co_arquivo IS 'chave estrangeira ligando a um arquivo inserido';
 
 COMMENT ON COLUMN rl_eleitor_arquivo.tp_arquivo IS 'opcoes:\n\ndeclaracao_eleitor\ndocumento_identificacao\ndocumento_cpf\nato_normativo\nata_reuniao\ndeclaracao_ciencia';
+
+

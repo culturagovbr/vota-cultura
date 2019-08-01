@@ -36,7 +36,7 @@ abstract class AbstractService implements IServiceApiResource
             $model = $this->getModel()->find($identificador);
             if (!$model) {
                 throw new \Exception(
-                    'Dadis não encontrados.',
+                    'Dados não encontrados.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
