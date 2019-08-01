@@ -395,3 +395,21 @@ COMMENT ON COLUMN tb_eleitor.co_ibge IS 'chave estrangeira com os dados de UF';
 COMMENT ON COLUMN tb_eleitor.co_usuario IS 'chave estrangeira com o usuario para login do inscrito para eleitor';
 
 COMMENT ON COLUMN tb_eleitor.ds_email IS 'email do eleitor';
+
+CREATE TABLE rl_eleitor_arquivo (
+	co_eleitor_arquivo SERIAL,
+	co_eleitor     integer  NOT NULL ,
+	co_arquivo           integer  NOT NULL ,
+	tp_arquivo           varchar(60)  NOT NULL ,
+	CONSTRAINT pk_eleitor_arquivo_coeleitorarquivo PRIMARY KEY ( co_eleitor_arquivo ),
+	CONSTRAINT fk_eleitorarquivo_eleitor FOREIGN KEY ( co_eleitor ) REFERENCES tb_eleitor( co_eleitor )  ,
+	CONSTRAINT fk_eleitorarquivo_arquivo FOREIGN KEY ( co_arquivo ) REFERENCES tb_arquivo( co_arquivo )
+ );
+
+CREATE INDEX unq_rl_eleitor_arquivo_fk_eleitor ON rl_eleitor_arquivo ( co_eleitor );
+
+COMMENT ON COLUMN rl_eleitor_arquivo.co_eleitor IS 'chave estrangeira ligando a um eleitor, que inseriu um arquivo';
+
+COMMENT ON COLUMN rl_eleitor_arquivo.co_arquivo IS 'chave estrangeira ligando a um arquivo inserido';
+
+COMMENT ON COLUMN rl_eleitor_arquivo.tp_arquivo IS 'opcoes:\n\ndeclaracao_eleitor\ndocumento_identificacao\ndocumento_cpf\nato_normativo\nata_reuniao\ndeclaracao_ciencia';

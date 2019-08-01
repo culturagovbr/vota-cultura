@@ -28,11 +28,16 @@ class Arquivo extends Model
             'co_representante',
             'co_arquivo'
         )->as('rl_representante_arquivo')
-            ->withPivot(
-                [
-                    'tp_arquivo',
-                    'tp_inscricao'
-                ]
-            );
+            ->withPivot(['tp_arquivo', 'tp_inscricao']);
+    }
+
+    public function eleitores()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Eleitor\Model\Eleitor::class,
+            'rl_eleitor_arquivo',
+            'co_eleitor',
+            'co_arquivo'
+        )->as('rl_eleitor_arquivo')->withPivot(['tp_arquivo']);
     }
 }
