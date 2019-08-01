@@ -13,7 +13,6 @@ class Eleitor extends Model
         'dt_nascimento',
     ];
 
-
     protected $fillable = [
         'nu_cpf',
         'ds_email',
@@ -33,6 +32,16 @@ class Eleitor extends Model
             \App\Modules\Localidade\Model\Uf::class,
             'co_ibge',
             'co_ibge'
+        );
+    }
+
+    public function arquivos()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Upload\Model\Arquivo::class,
+            'rl_eleitor_arquivo',
+            'co_eleitor',
+            'co_arquivo'
         );
     }
 }
