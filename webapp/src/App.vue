@@ -73,10 +73,14 @@ export default {
     eventHub.$on('eventoErro', (payload) => {
       self.notificarErro(payload);
     });
+    eventHub.$on('eventoSucesso', (payload) => {
+      self.notificarSucesso(payload);
+    });
   },
   methods: {
     ...mapActions({
       notificarErro: 'app/setMensagemErro',
+      notificarSucesso: 'app/setMensagemSucesso',
     }),
     openThemeSettings() {
       this.$vuetify.goTo(0);
