@@ -198,7 +198,7 @@
                   color="primary"
                   @click="validate"
                 >
-                  Validate
+                  Salvar
                 </v-btn>
 
               </v-container>

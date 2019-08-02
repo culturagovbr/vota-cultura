@@ -136,7 +136,7 @@
                     dark
                     @click.stop="dialog = true"
                   >
-                    Enviar
+                    Confirmar
                   </v-btn>
                 </v-flex>
               </v-layout>
