@@ -21,9 +21,11 @@ class Eleitor extends AbstractService
     {
         try {
             $eleitor = $this->getModel()->where([
-                'no_eleitor' => $dados['no_orgao_gestor']
+                'nu_cpf' => $dados['nu_cpf']
             ])->orWhere([
-                'nu_cnpj' => $dados['nu_cnpj']
+                'nu_rg' => $dados['nu_rg']
+            ])->orWhere([
+                'ds_email' => $dados['ds_email']
             ])->first();
 
             if ($eleitor) {
@@ -32,21 +34,6 @@ class Eleitor extends AbstractService
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
-
-            if(!isset($dados['endereco']) || count($dados['endereco']) < 1) {
-                throw new \HttpException(
-                    'Endereço não informado.',
-                    Response::HTTP_NOT_ACCEPTABLE
-                );
-            }
-
-            $serviceEndereco = app()->make(Endereco::class);
-            $endereco = $serviceEndereco->cadastrar($dados['endereco']);
-
-            if (!$endereco) {
-                throw new \HttpException('Não foi possível cadastrar o representante.');
-            }
-            $dados['co_endereco'] = $endereco->co_endereco;
 
             $eleitor = parent::cadastrar($dados);
 

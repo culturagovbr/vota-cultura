@@ -31,17 +31,11 @@ use Illuminate\Http\Request;
  */
 Route::group([
     'prefix' => 'conta'
-], function ($router) {
-    Route::get('/', function (Request $request) {
-        return [
-            'rota padrao'
-        ];
-    });
-
+], function () {
     Route::group([
         'middleware' => 'api',
         'prefix' => 'auth'
-    ], function ($router) {
+    ], function () {
         Route::post('login', 'AuthController@login');
         Route::get('logout', 'AuthController@logout');
         Route::post('refresh', 'AuthController@refresh');
@@ -51,11 +45,7 @@ Route::group([
     Route::apiResource('ativacao', 'AtivacaoController',
         ['only' => ['update']]);
 
-
     Route::apiResource('usuario', 'UsuarioController');
     Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
-
-    Route::apiResource('recuperacao/senha', 'RecuperacaoSenhaController',
-        ['only' => ['store','update']]);
-
+    Route::apiResource('recuperacao/senha', 'RecuperacaoSenhaController', ['only' => ['store','update']]);
 });
