@@ -6,6 +6,7 @@ import conta from '@/modules/conta/store/';
 import conselho from '@/modules/conselho/store/';
 import eleitor from '@/modules/eleitor/store/';
 import organizacao from '@/modules/organizacao/store/';
+import localidade from '@/modules/localidade/store/';
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     conselho,
     eleitor,
     organizacao,
+    localidade,
   },
   getters: {
     route: state => state.route,
