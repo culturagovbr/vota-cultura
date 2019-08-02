@@ -53,7 +53,10 @@ class Eleitor extends AbstractService
                     $dadosArquivo['arquivoCodificado'],
                     'eleitor/' . $dadosArquivo['tp_arquivo']
                 );
-                $eleitor->uf()->attach($arquivoArmazenado->co_arquivo);
+                $eleitor->arquivos()->attach(
+                    $arquivoArmazenado->co_arquivo,
+                    ['tp_arquivo' => $dadosArquivo['tp_arquivo']]
+                );
             }
 
             return $eleitor;
