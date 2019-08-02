@@ -137,7 +137,7 @@
                     <v-select
                       v-model="eleitor.st_estrangeiro"
                       :items="[{ st_estrangeiro: '0' , nome: 'Brasileiro'},
-                               { st_estrangeiro: '1' , nome: 'Outros'}]"
+                               { st_estrangeiro: '1' , nome: 'Estrangeiro'}]"
                       item-value="st_estrangeiro"
                       item-text="nome"
                       label="*Nacionalidade"

@@ -3,12 +3,14 @@
 namespace App\Modules\Eleitor\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
 use App\Modules\Representacao\Service\Representante;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class Eleitor extends AbstractService
 {
@@ -37,9 +39,9 @@ class Eleitor extends AbstractService
 
             $eleitor = parent::cadastrar($dados);
 
-//            Mail::to($eleitor->ds_email)->send(
-//                new CadastroComSucesso($eleitor)
-//            );
+            Mail::to($eleitor->ds_email)->send(
+                new CadastroComSucesso($eleitor)
+            );
 
             return $eleitor;
         } catch (\Exception $queryException) {
