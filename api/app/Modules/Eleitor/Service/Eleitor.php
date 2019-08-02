@@ -7,6 +7,8 @@ use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
 use App\Modules\Representacao\Service\Representante;
+use App\Modules\Representacao\Service\Upload;
+use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Illuminate\Http\Response;
@@ -42,6 +44,17 @@ class Eleitor extends AbstractService
             Mail::to($eleitor->ds_email)->send(
                 new CadastroComSucesso($eleitor)
             );
+
+            foreach($dados['anexos'] as $dadosArquivo) {
+                $modeloArquivo = app()->make(Arquivo::class);
+                $modeloArquivo->fill($dadosArquivo);
+                $serviceUpload = new Upload($modeloArquivo);
+                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+                    $dadosArquivo['arquivoCodificado'],
+                    'eleitor/' . $dadosArquivo['tp_arquivo']
+                );
+                $eleitor->uf()->attach($arquivoArmazenado->co_arquivo);
+            }
 
             return $eleitor;
         } catch (\Exception $queryException) {
