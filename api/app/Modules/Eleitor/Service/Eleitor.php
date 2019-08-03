@@ -11,8 +11,10 @@ use App\Modules\Representacao\Service\Upload;
 use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Eleitor extends AbstractService
 {
@@ -33,17 +35,13 @@ class Eleitor extends AbstractService
             ])->first();
 
             if ($eleitor) {
-                throw new \HttpException(
-                    'Eleitor já cadastrado.',
-                    Response::HTTP_NOT_ACCEPTABLE
+                throw new HttpException(
+                    Response::HTTP_NOT_ACCEPTABLE,
+                    'Eleitor já cadastrado.'
                 );
             }
 
             $eleitor = parent::cadastrar($dados);
-
-            Mail::to($eleitor->ds_email)->send(
-                new CadastroComSucesso($eleitor)
-            );
 
             foreach($dados['anexos'] as $dadosArquivo) {
                 $modeloArquivo = app()->make(Arquivo::class);
@@ -59,10 +57,16 @@ class Eleitor extends AbstractService
                 );
             }
 
+//            throw new \Exception("lero");
+
+//            Mail::to($eleitor->ds_email)->send(
+//                new CadastroComSucesso($eleitor)
+//            );
+
             return $eleitor;
-        } catch (\Exception $queryException) {
+        } catch (\Exception $exception) {
             DB::rollBack();
-            throw $queryException;
+            throw $exception;
         }
     }
 

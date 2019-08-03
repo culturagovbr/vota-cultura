@@ -277,7 +277,7 @@
     },
     computed: {
       ...mapGetters({
-        estadosGetter: 'localidade/estadosGetter',
+        estadosGetter: 'localidade/estados',
       }),
     },
     methods: {
@@ -287,25 +287,26 @@
       }),
       validate() {
 
-        if (!(this.eleitor.anexos.documento_identificacao) || !(this.eleitor.anexos.cpf)) {
+        const validacaoDocumentoIdentificacao = !this.anexo_documento_identificacao && !this.anexo_documento_identificacao.getFileEncodeBase64String();
+        const validacaoCPF = !this.anexo_cpf && !this.anexo_cpf.getFileEncodeBase64String();
+        if (validacaoDocumentoIdentificacao || validacaoCPF) {
           this.$refs.form.validate();
           eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
         } else if (this.$refs.form.validate()) {
-
           this.eleitor.anexos.push({
             tp_arquivo: 'documento_cpf',
             no_extensao: this.anexo_cpf.fileExtension,
             no_mime_type: this.anexo_cpf.fileType,
-            filename: this.anexo_cpf.filename,
+            no_arquivo: this.anexo_cpf.filename,
             arquivoCodificado: this.anexo_cpf.getFileEncodeBase64String(),
           });
 
           this.eleitor.anexos.push({
             tp_arquivo: 'documento_identificacao',
-            no_extensao: this.anexo_cpf.fileExtension,
-            no_mime_type: this.anexo_cpf.fileType,
-            filename: this.anexo_cpf.filename,
-            arquivoCodificado: this.anexo_cpf.getFileEncodeBase64String(),
+            no_extensao: this.anexo_documento_identificacao.fileExtension,
+            no_mime_type: this.anexo_documento_identificacao.fileType,
+            no_arquivo: this.anexo_documento_identificacao.filename,
+            arquivoCodificado: this.anexo_documento_identificacao.getFileEncodeBase64String(),
           });
 
           this.confirmarEleitor(this.eleitor).then(() => {

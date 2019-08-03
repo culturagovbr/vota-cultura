@@ -4,6 +4,7 @@ namespace App\Modules\Representacao\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Upload\Model\Arquivo as ArquivoModel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class Upload extends AbstractService

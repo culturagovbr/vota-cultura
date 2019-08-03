@@ -5,14 +5,14 @@ import * as types from './types';
 
 // eslint-disable-next-line no-empty-pattern
 export const enviarDadosEleitor = async ({}, eleitor) => {
-  const dadosInscricao = eleitor;
-  dadosInscricao.anexoCpf = eleitor.anexos.cpf;
-  dadosInscricao.anexoDocumentoIdentificacao = eleitor.anexos.documento_identificacao;
-  delete dadosInscricao.anexos;
-  return eleitorService.enviarDadosEleitor(dadosInscricao);
+  // const dadosInscricao = eleitor;
+  // dadosInscricao.anexoCpf = eleitor.anexos.cpf;
+  // dadosInscricao.anexoDocumentoIdentificacao = eleitor.anexos.documento_identificacao;
+  // delete dadosInscricao.anexos;
+  return eleitorService.enviarDadosEleitor(eleitor);
 };
 
 
-export const confirmarEleitor = async ({ commit }, dadosInscricaoEleitor) => {
-  commit(types.DADOS_ELEITOR, dadosInscricaoEleitor);
+export const confirmarEleitor = async ({ commit }, eleitor) => {
+  commit(types.DEFINIR_ELEITOR, eleitor);
 };

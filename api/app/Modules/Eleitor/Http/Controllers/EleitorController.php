@@ -6,6 +6,7 @@ use App\Modules\Eleitor\Service\Eleitor as EleitorService;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
+use Illuminate\Http\Request;
 
 class EleitorController extends AApiResourceController
 {

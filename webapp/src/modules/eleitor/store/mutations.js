@@ -1,11 +1,11 @@
 import * as types from './types';
 
 export const state = {
-  dadosInscricaoEleitor: {},
+  eleitor: {},
 };
 
 export const mutations = {
-  [types.DADOS_ELEITOR](state, dadosInscricaoEleitor){
-    state.dadosInscricaoEleitor = dadosInscricaoEleitor;
+  [types.DEFINIR_ELEITOR](state, eleitor){
+    state.eleitor = eleitor;
   },
 };
