@@ -12,7 +12,7 @@
           <v-stepper-header>
             <v-stepper-step
               editable
-              :complete="e1 > 1"
+              :complete="true"
               step="1"
             >
               Dados do Conselho de Cultura
@@ -22,7 +22,7 @@
 
             <v-stepper-step
               editable
-              :complete="e1 > 2"
+              :complete="true"
               step="2"
             >
               Dados do Representante
@@ -32,7 +32,7 @@
 
             <v-stepper-step
               editable
-              :complete="e1 > 3"
+              :complete="true"
               step="3"
             >
               Anexos
@@ -96,7 +96,7 @@
                           v-model="conselho.no_orgao_gestor"
                           label="*Nome do órgão gestor de cultura"
                           append-icon="people"
-                          :rules="[rules.required, rules.cnpjMin]"
+                          :rules="[rules.required]"
                           required
                         />
                       </v-flex>
@@ -174,7 +174,7 @@
                           append-icon="my_location"
                           placeholder="99999-999"
                           mask="#####-###"
-                          :rules="[rules.required]"
+                          :rules="[rules.required, rules.cepMin]"
                           required
                         />
                       </v-flex>
@@ -234,16 +234,16 @@
                   </v-container>
                 </v-card>
               </v-form>
-
               <v-btn
-                :disabled="!valid_conselho"
-                color="success"
-                @click="validate('form_conselho')"
+              to="/inicio"
+              flat>
+                Cancelar
+              </v-btn>
+              <v-btn
+                color="primary"
+                @click="selecionarEtapa(2)"
               >
                 Próximo
-              </v-btn>
-              <v-btn flat>
-                Cancelar
               </v-btn>
             </v-stepper-content>
 
@@ -317,7 +317,7 @@
                           label="*RG"
                           append-icon="person"
                           placeholder="99.999.999-9"
-                          mask="##.###.###-#"
+                          mask="#########"
                           :rules="[rules.required]"
                           required
                         />
@@ -359,14 +359,15 @@
                 </v-card>
               </v-form>
               <v-btn
+              @click="selecionarEtapa(1)"
+              flat>
+                Anterior
+              </v-btn>
+              <v-btn
                 color="primary"
-                :disabled="!valid_representante"
-                @click="validate('form_representante')"
+                @click="selecionarEtapa(3)"
               >
                 Próximo
-              </v-btn>
-              <v-btn flat>
-                Cancelar
               </v-btn>
             </v-stepper-content>
 
@@ -406,16 +407,16 @@
 
                     <v-layout>
                       <v-flex sm3>
-                        <file v-model="conselho.anexos.ato_normativo_conselho" />
+                        <file v-model="anexo_ato_normativo_conselho" />
                       </v-flex>
                       <v-flex sm3>
-                        <file v-model="conselho.anexos.ata_ultima_reuniao_conselho" />
+                        <file v-model="anexo_ata_reuniao_conselho" />
                       </v-flex>
                       <v-flex sm3>
-                        <file v-model="conselho.anexos.documento_identificacao_responsavel" />
+                        <file v-model="anexo_documento_identificacao_responsavel" />
                       </v-flex>
                       <v-flex sm3>
-                        <file v-model="autorizacao_orgao_gestor" />
+                        <file v-model="anexo_declaracao_ciencia_orgao_gestor" />
                       </v-flex>
                     </v-layout>
                   </v-container>
@@ -481,13 +482,12 @@ export default {
         ds_email_confirmation: '',
       },
       ds_sitio_eletronico: '',
-      anexos: {
-        ato_normativo_conselho: '',
-        ata_ultima_reuniao_conselho: '',
-        documento_identificacao_responsavel: '',
-        autorizacao_orgao_gestor: '',
-      },
+      anexos:[],
     },
+    anexo_ata_reuniao_conselho: {},
+    anexo_ato_normativo_conselho: {},
+    anexo_documento_identificacao_responsavel: {},
+    anexo_declaracao_ciencia_orgao_gestor: {},
     steps: [
       {
         title: 'Dados do Conselho de Cultura',
@@ -518,14 +518,11 @@ export default {
         sortable: false,
       },
     ],
-    emailCouncil: '',
-    emailCouncilConfirmation: '',
-    emailRepresentative: '',
-    emailRepresentativeConfirmation: '',
     rules: {
       required: v => !!v || 'Campo não preenchido',
       phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
       cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
+      cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
       email: (v) => {
         // eslint-disable-next-line
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -559,18 +556,49 @@ export default {
       }
     },
     reset() {
-      // this.$refs.form_conselho.reset()
+      console.log(this.$refs.form_conselho)
     },
     apresentar() {
-      console.log(this.conselho);
+
+      this.conselho.anexos.push({
+        tp_arquivo: 'documento_identificacao',
+        no_extensao: this.anexo_ata_reuniao_conselho.fileExtension,
+        no_mime_type: this.anexo_ata_reuniao_conselho.fileType,
+        no_arquivo: this.anexo_ata_reuniao_conselho.filename,
+        arquivoCodificado: this.anexo_ata_reuniao_conselho.getFileEncodeBase64String(),
+      });
+      this.conselho.anexos.push({
+        tp_arquivo: 'documento_identificacao',
+        no_extensao: this.anexo_ato_normativo_conselho.fileExtension,
+        no_mime_type: this.anexo_ato_normativo_conselho.fileType,
+        no_arquivo: this.anexo_ato_normativo_conselho.filename,
+        arquivoCodificado: this.anexo_ato_normativo_conselho.getFileEncodeBase64String(),
+      });
+      this.conselho.anexos.push({
+        tp_arquivo: 'documento_identificacao',
+        no_extensao: this.anexo_documento_identificacao_responsavel.fileExtension,
+        no_mime_type: this.anexo_documento_identificacao_responsavel.fileType,
+        no_arquivo: this.anexo_documento_identificacao_responsavel.filename,
+        arquivoCodificado: this.anexo_documento_identificacao_responsavel.getFileEncodeBase64String(),
+      });
+      this.conselho.anexos.push({
+        tp_arquivo: 'documento_identificacao',
+        no_extensao: this.anexo_declaracao_ciencia_orgao_gestor.fileExtension,
+        no_mime_type: this.anexo_declaracao_ciencia_orgao_gestor.fileType,
+        no_arquivo: this.anexo_declaracao_ciencia_orgao_gestor.filename,
+        arquivoCodificado: this.anexo_declaracao_ciencia_orgao_gestor.getFileEncodeBase64String(),
+      });
     },
-    nextStep(n) {
+    saelecionarEtapa(n) {
       if (n === this.steps.length) {
         this.e1 = 1;
       } else {
         this.e1 = n + 1;
       }
     },
+    selecionarEtapa(etapa){
+      this.e1 = etapa;
+    }
   },
 };
 </script>
