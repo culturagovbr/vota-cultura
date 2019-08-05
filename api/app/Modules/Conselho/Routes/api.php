@@ -10,5 +10,5 @@ Route::group([
 //            'rota padrao'
 //        ];
 //    });
-    Route::apiResource('/', 'ConselhoController');
+    Route::apiResource('/', 'ConselhoApiResourceController');
 });

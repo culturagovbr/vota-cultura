@@ -75,7 +75,7 @@ const buildData = (params) => {
   return bodyFormData;
 };
 
-export const getRequest = (path, params = '') => instance.get(path, params);
+export const getRequest = (path, config = {}) => instance.get(path, config);
 
 export const postRequest = (path, payload) => instance.post(path, payload);
 

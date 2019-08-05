@@ -8,7 +8,7 @@ use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
 
-class OrganizacaoController extends AApiResourceController
+class OrganizacaoApiResourceController extends AApiResourceController
 {
     use TApiResourceUpdate,
         TApiResourceDestroy,

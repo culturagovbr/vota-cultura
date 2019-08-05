@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Http\Controllers\Traits;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 
 trait TApiResourceShow

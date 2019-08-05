@@ -8,6 +8,7 @@ use App\Modules\Conta\Model\Perfil;
 use App\Core\Service\AbstractService;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use DB;
 use Illuminate\Http\Response;
@@ -54,7 +55,7 @@ class Usuario extends AbstractService
         return sha1(mt_rand(1, 999) . time() . $cpf . $dataNascimento . $email);
     }
 
-    public function cadastrar(array $dados)
+    public function cadastrar(array $dados) : ?Model
     {
         try {
             $usuario = $this->getModel()->where([
@@ -96,17 +97,7 @@ class Usuario extends AbstractService
         }
     }
 
-    public function obterUm($co_usuario)
-    {
-        return $this->getModel()->find($co_usuario);
-    }
-
-    public function obterTodos()
-    {
-        return $this->getModel()->get();
-    }
-
-    public function atualizar(Request $request, int $co_usuario)
+    public function atualizar(Request $request, int $co_usuario) : ?Model
     {
         try {
             $usuario = $this->getModel()->find($co_usuario);
@@ -140,10 +131,10 @@ class Usuario extends AbstractService
         }
     }
 
-    public function remover(Request $request, UsuarioModel $usuario)
+    public function remover(Request $request, int $identificador)
     {
         try {
-            if ($request->user()->co_usuario !== $usuario->co_usuario) {
+            if ($request->user()->co_usuario !== $identificador) {
                 return response()->json(
                     ['error' => 'Operação não permitida.'],
                     Response::HTTP_UNAUTHORIZED
@@ -151,6 +142,7 @@ class Usuario extends AbstractService
             }
             DB::beginTransaction();
 
+            $usuario = $this->getModel()->find($identificador);
             $horarioAtual = Carbon::now();
             $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
             $usuario->st_ativo = false;

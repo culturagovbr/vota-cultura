@@ -10,3 +10,9 @@ export const obterEstados = async ({ commit }) => {
     commit(types.OBTER_ESTADOS, response.data);
   });
 };
+
+export const obterMunicipios = async ({ commit }, coIBGE) => {
+  localidadeService.obterMunicipios(coIBGE).then((response) => {
+    commit(types.OBTER_MUNICIPIOS, response.data);
+  });
+};

@@ -5,6 +5,6 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'organizacao'
 ], function ($router) {
-    Route::apiResource('/', 'OrganizacaoController');
-    Route::apiResource('criterio', 'CriterioController');
+    Route::apiResource('/', 'OrganizacaoApiResourceController');
+    Route::apiResource('criterio', 'CriterioApiResourceController');
 });

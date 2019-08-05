@@ -3,14 +3,11 @@
 namespace App\Modules\Localidade\Providers;
 
 use Caffeinated\Modules\Support\ServiceProvider;
+use App\Modules\Localidade\Service\Municipio as MunicipioService;
+use App\Modules\Localidade\Model\Municipio as MunicipioModel;
 
 class ModuleServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the module services.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->loadTranslationsFrom(module_path('localidade', 'Resources/Lang', 'app'), 'localidade');
@@ -20,13 +17,13 @@ class ModuleServiceProvider extends ServiceProvider
         $this->loadFactoriesFrom(module_path('localidade', 'Database/Factories', 'app'));
     }
 
-    /**
-     * Register the module services.
-     *
-     * @return void
-     */
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(MunicipioService::class, function ($app) {
+            return new MunicipioService(
+                $app->make(MunicipioModel::class)
+            );
+        });
     }
 }
