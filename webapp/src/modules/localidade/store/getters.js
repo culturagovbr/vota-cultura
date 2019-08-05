@@ -1,2 +1,2 @@
 /* eslint-disable import/prefer-default-export */
-export const estadosGetter = state => state.estadosGetter;
+export const estados = state => state.estados;

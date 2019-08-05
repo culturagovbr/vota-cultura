@@ -5,6 +5,7 @@ namespace App\Core\Service;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 abstract class AbstractService implements IServiceApiResource
 {
@@ -33,30 +34,29 @@ abstract class AbstractService implements IServiceApiResource
     public function atualizar(Request $request, int $identificador) : ?Model
     {
         try {
-            $model = $this->getModel()->find($identificador);
-            if (!$model) {
-                throw new \Exception(
+            $modelPesquisada = $this->getModel()->find($identificador);
+            if (!$modelPesquisada) {
+                throw new \HttpException(
                     'Dados não encontrados.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
             DB::beginTransaction();
-            $model->fill($request->all());
-            $model->save();
+            $modelPesquisada->fill($request->all());
+            $modelPesquisada->save();
             DB::commit();
-            return $model->toArray();
-        } catch (\Exception $queryException) {
+            return $modelPesquisada->toArray();
+        } catch (\HttpException $queryException) {
             DB::rollBack();
             throw $queryException;
         }
-//        throw new \Exception("Método não implementado");
     }
 
     public function remover(Request $request, int $identificador)
     {
         try {
-            $model = $this->getModel()->find($identificador);
-            if (!$model) {
+            $modelPesquisada = $this->getModel()->find($identificador);
+            if (!$modelPesquisada) {
                 throw new \HttpException(
                     'Dados não localizados.',
                     Response::HTTP_NOT_ACCEPTABLE
@@ -64,9 +64,9 @@ abstract class AbstractService implements IServiceApiResource
             }
 
             DB::beginTransaction();
-            $model->delete();
+            $modelPesquisada->delete();
             DB::commit();
-        } catch (\Exception $queryException) {
+        } catch (\HttpException $queryException) {
             DB::rollBack();
             throw $queryException;
         }
@@ -76,11 +76,11 @@ abstract class AbstractService implements IServiceApiResource
     {
         try {
             DB::beginTransaction();
-            $model = $this->getModel()->fill($dados);
-            $model->save();
+            $modelPesquisada = $this->getModel()->fill($dados);
+            $modelPesquisada->save();
             DB::commit();
-            return $model;
-        } catch (\Exception $queryException) {
+            return $modelPesquisada;
+        } catch (\HttpException $queryException) {
             DB::rollBack();
             throw $queryException;
         }

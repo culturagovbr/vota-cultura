@@ -14,9 +14,9 @@
       label-file-processing="Enviando"
       label-file-processing-complete="Enviado"
       label-file-processing-aborted="Envio cancelado"
-      @addfile="setBase64Value"
+      @addfile="setFileMetaData"
       label-file-processing-error="Erro durante o envio"
-      @removefile="fileBase64 = ''"
+      @removefile="self = {}"
       label-file-processing-revert-error="Erro ao reverter"
       label-file-remove-error="Erro ao remover"
       label-tap-to-cancel="Clique para cancelar"
@@ -64,8 +64,8 @@ export default {
   },
   props: {
     value: {
-      type: String,
-      default: '',
+      type: Object,
+      default: {},
     },
     acceptedFileTypes: {
       type: Array,
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       file: [],
-      fileBase64: '',
+      self: {},
     };
   },
   watch: {
@@ -105,9 +105,9 @@ export default {
       this.$refs.pond._pond.fileValidateTypeLabelExpectedTypesMap = defaultMap;
     },
     value(val) {
-      this.fileBase64 = val;
+      this.self = val;
     },
-    fileBase64(val) {
+    self(val) {
       this.$emit('input', val);
     },
   },
@@ -115,11 +115,12 @@ export default {
     setOptions(this.options);
   },
   methods: {
-    setBase64Value() {
+    setFileMetaData() {
       try {
-        this.fileBase64 = this.$refs.pond.getFile().getFileEncodeBase64String();
+        this.self = this.$refs.pond.getFile();
+//this.self = this.$refs.pond.getFile().getFileEncodeBase64String();
       } catch (Exception) {
-        this.fileBase64 = '';
+        this.self = {};
       }
     },
   },

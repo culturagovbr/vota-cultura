@@ -1,11 +1,11 @@
 import * as types from './types';
 
 export const state = {
-  estadosGetter: {},
+  estados: [],
 };
 
 export const mutations = {
   [types.OBTER_ESTADOS](state, dados) {
-    state.estadosGetter = dados.data;
+    state.estados = dados.data;
   },
 };

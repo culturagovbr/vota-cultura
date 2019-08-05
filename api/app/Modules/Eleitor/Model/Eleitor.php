@@ -44,4 +44,9 @@ class Eleitor extends Model
             'co_arquivo'
         );
     }
+
+    public function getNacionalidadeAttribute()
+    {
+        return ($this->st_estrangeiro === true) ? 'Estrangeiro' : 'Brasileiro';
+    }
 }

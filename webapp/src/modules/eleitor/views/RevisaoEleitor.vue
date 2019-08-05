@@ -15,14 +15,14 @@
             <v-toolbar-title>Confirmação dos dados</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container>
+            <v-container v-if="Object.keys(eleitorGetter).length > 0">
               <v-layout
                 wrap
                 align-center
               >
                 <v-flex>
                   <v-text-field
-                    v-model="eleitor.nu_cpf"
+                    v-model="eleitorGetter.nu_cpf"
                     disabled
                     label="CPF"
                     append-icon="account_circle"
@@ -36,7 +36,7 @@
               >
                 <v-flex>
                   <v-text-field
-                    v-model="eleitor.no_eleitor"
+                    v-model="eleitorGetter.no_eleitor"
                     disabled
                     label="Nome completo"
                     append-icon="perm_identity"
@@ -49,7 +49,7 @@
               >
                 <v-flex>
                   <v-text-field
-                    v-model="eleitor.nu_rg"
+                    v-model="eleitorGetter.nu_rg"
                     disabled
                     label="RG"
                     append-icon="account_circle"
@@ -64,7 +64,7 @@
               >
                 <v-flex>
                   <v-text-field
-                    v-model="eleitor.dt_nascimento"
+                    v-model="eleitorGetter.dt_nascimento"
                     disabled
                     label="Data de Nascimento"
                     append-icon="event"
@@ -79,7 +79,7 @@
               >
                 <v-flex>
                   <v-text-field
-                    v-model="eleitor.ds_email"
+                    v-model="eleitorGetter.ds_email"
                     disabled
                     label="E-mail"
                     append-icon="mail"
@@ -94,7 +94,7 @@
               >
                 <v-flex>
                   <v-select
-                    v-model="eleitor.st_estrangeiro"
+                    v-model="eleitorGetter.st_estrangeiro"
                     :items="[{ st_estrangeiro: '0' , nome: 'Brasileiro'},
                              { st_estrangeiro: '1' , nome: 'Outros'}]"
                     item-value="st_estrangeiro"
@@ -111,7 +111,7 @@
               >
                 <v-flex>
                   <v-select
-                    v-model="eleitor.co_ibge"
+                    v-model="eleitorGetter.co_ibge"
                     :items="listaUF"
                     label="Unidade da Federação"
                     append-icon="place"
@@ -127,16 +127,14 @@
               >
                 <v-flex offset-xs4>
                   <v-btn
-                    to="/eleitor/inscricao"
-                  >
+                    to="/eleitor/inscricao">
                     Cancelar
                   </v-btn>
                   <v-btn
                     color="primary"
                     dark
-                    @click.stop="dialog = true"
-                  >
-                    Enviar
+                    @click.stop="abrirDialogo">
+                    Confirmar
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -161,13 +159,13 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer />
+            <v-spacer/>
 
             <v-btn
               color="red darken-1"
               text
               flat
-              @click="dialog = false"
+              @click="fecharDialogo"
             >
               Não
             </v-btn>
@@ -176,8 +174,7 @@
               color="green darken-1"
               text
               flat
-              @click="dialog = false; salvar()"
-            >
+              @click="salvar">
               Sim
             </v-btn>
           </v-card-actions>
@@ -188,57 +185,76 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { eventHub } from '@/event';
+  import {mapActions, mapGetters} from 'vuex';
+  import {eventHub} from '@/event';
 
-export default {
-  name: 'RevisaoEleitor',
-  data: () => ({
-    dialog: false,
-    listaUF: [],
-    eleitor: {
-      nu_cpf: '',
-      no_eleitor: '',
-      nu_rg: '',
-      dt_nascimento: '',
-      st_estrangeiro: '',
-      co_endereco: '',
-      ds_email: '',
-      ds_email_confirmacao: '',
-      co_ibge: '',
-      anexos: {
-        cpf: '',
-        documento_identificacao: '',
+  export default {
+    name: 'RevisaoEleitor',
+    data: () => ({
+      dialog: false,
+      listaUF: [],
+      eleitor: {
+        nu_cpf: '',
+        no_eleitor: '',
+        nu_rg: '',
+        dt_nascimento: '',
+        st_estrangeiro: '',
+        co_endereco: '',
+        ds_email: '',
+        ds_email_confirmacao: '',
+        co_ibge: '',
+        anexos: {
+          cpf: '',
+          documento_identificacao: '',
+        },
+      },
+    }),
+    computed: {
+      ...mapGetters({
+        eleitorGetter: 'eleitor/eleitor',
+        estadosGetter: 'localidade/estados',
+      }),
+    },
+    watch: {
+      eleitorGetter(value) {
+        this.eleitor = value;
       },
     },
-  }),
-  computed: {
-    ...mapGetters({
-      dadosInscricaoEleitor: 'eleitor/dadosInscricaoEleitor',
-      estadosGetter: 'localidade/estadosGetter',
-    }),
-  },
-  methods: {
-    ...mapActions({
-      enviarDadosEleitor: 'eleitor/enviarDadosEleitor',
-    }),
-    salvar() {
-      this.enviarDadosEleitor(this.eleitor).then(() => {
-        eventHub.$emit('eventoSucesso', 'Enviado com sucesso! Um email será enviado com os dados da inscrição.');
-        this.$router.push('/');
-      }).catch(() => {
-        eventHub.$emit('eventoErro', 'Houve algum erro ao enviar a sua inscrição.');
-        this.$router.push('/');
-      });
+    methods: {
+      ...mapActions({
+        enviarDadosEleitor: 'eleitor/enviarDadosEleitor',
+      }),
+      salvar() {
+        this.enviarDadosEleitor(this.eleitorGetter).then(() => {
+          eventHub.$emit(
+            'eventoSucesso',
+            'Enviado com sucesso! Um email será enviado com os dados da inscrição.'
+          );
+          this.$router.push('/');
+        }).catch(() => {
+          eventHub.$emit(
+            'eventoErro',
+            'Houve algum erro ao enviar a sua inscrição.'
+          );
+          this.$router.push('/');
+        }).finally(() => {
+          this.fecharDialogo();
+        });
+      },
+      abrirDialogo() {
+        this.dialog = true;
+      },
+      fecharDialogo() {
+        this.dialog = false;
+      },
     },
-  },
-  mounted() {
-    if (!Object.entries(this.dadosInscricaoEleitor).length) {
-      this.$router.push('/eleitor/inscricao');
-    }
-    this.listaUF = this.estadosGetter;
-    this.eleitor = this.dadosInscricaoEleitor;
-  },
+    mounted() {
+      if (!Object.entries(this.eleitor).length) {
+        this.$router.push('/eleitor/inscricao');
+      }
+      this.listaUF = this.estadosGetter;
+      this.eleitor = this.eleitorGetter;
+    },
 
-};
+  };
 </script>

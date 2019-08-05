@@ -137,7 +137,7 @@
                     <v-select
                       v-model="eleitor.st_estrangeiro"
                       :items="[{ st_estrangeiro: '0' , nome: 'Brasileiro'},
-                               { st_estrangeiro: '1' , nome: 'Outros'}]"
+                               { st_estrangeiro: '1' , nome: 'Estrangeiro'}]"
                       item-value="st_estrangeiro"
                       item-text="nome"
                       label="*Nacionalidade"
@@ -169,9 +169,7 @@
                     </div>
                   </v-flex>
                   <v-flex sm3>
-                    <div
-                      class="title text-xs-center text-md-center text-lg-center text-sm-center"
-                    >
+                    <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
                       Documento de identificação*
                     </div>
                   </v-flex>
@@ -179,16 +177,14 @@
 
                 <v-layout>
                   <v-flex sm3>
-                    <file v-model="eleitor.anexos.cpf" />
+                    <file v-model="anexo_cpf" />
                   </v-flex>
                   <v-flex sm3>
-                    <file v-model="eleitor.anexos.documento_identificacao" />
+                    <file v-model="anexo_documento_identificacao" />
                   </v-flex>
                 </v-layout>
 
-                <v-btn
-                  to="/"
-                >
+                <v-btn to="/">
                   Cancelar
                 </v-btn>
 
@@ -198,9 +194,8 @@
                   color="primary"
                   @click="validate"
                 >
-                  Validate
+                  Salvar
                 </v-btn>
-
               </v-container>
             </v-form>
           </v-flex>
@@ -248,11 +243,10 @@ export default {
       ds_email: '',
       ds_email_confirmacao: '',
       co_ibge: '',
-      anexos: {
-        cpf: '',
-        documento_identificacao: '',
-      },
+      anexos: [],
     },
+    anexo_cpf: {},
+    anexo_documento_identificacao: {},
     listaUF: [],
     email: '',
     emailConfirmation: '',
@@ -283,7 +277,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      estadosGetter: 'localidade/estadosGetter',
+      estadosGetter: 'localidade/estados',
     }),
   },
   methods: {
@@ -292,10 +286,28 @@ export default {
       obterEstados: 'localidade/obterEstados',
     }),
     validate() {
-      if (!(this.eleitor.anexos.documento_identificacao) || !(this.eleitor.anexos.cpf)) {
+      const validacaoDocumentoIdentificacao = !this.anexo_documento_identificacao && !this.anexo_documento_identificacao.getFileEncodeBase64String();
+      const validacaoCPF = !this.anexo_cpf && !this.anexo_cpf.getFileEncodeBase64String();
+      if (validacaoDocumentoIdentificacao || validacaoCPF) {
         this.$refs.form.validate();
         eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
       } else if (this.$refs.form.validate()) {
+        this.eleitor.anexos.push({
+          tp_arquivo: 'documento_cpf',
+          no_extensao: this.anexo_cpf.fileExtension,
+          no_mime_type: this.anexo_cpf.fileType,
+          no_arquivo: this.anexo_cpf.filename,
+          arquivoCodificado: this.anexo_cpf.getFileEncodeBase64String(),
+        });
+
+        this.eleitor.anexos.push({
+          tp_arquivo: 'documento_identificacao',
+          no_extensao: this.anexo_documento_identificacao.fileExtension,
+          no_mime_type: this.anexo_documento_identificacao.fileType,
+          no_arquivo: this.anexo_documento_identificacao.filename,
+          arquivoCodificado: this.anexo_documento_identificacao.getFileEncodeBase64String(),
+        });
+
         this.confirmarEleitor(this.eleitor).then(() => {
           this.$router.push('/eleitor/revisao-eleitor');
         });
