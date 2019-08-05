@@ -238,8 +238,9 @@
                 Cancelar
               </v-btn>
               <v-btn
+                :disabled="!valid_conselho"
                 color="primary"
-                @click="selecionarEtapa(2)"
+                @click="validarIrProximaEtapa('form_conselho')"
               >
                 Próximo
               </v-btn>
@@ -357,13 +358,14 @@
               </v-form>
               <v-btn
                 flat
-                @click="selecionarEtapa(1)"
+                @click="voltarEtapaAnterior"
               >
                 Anterior
               </v-btn>
               <v-btn
+                :disabled="!valid_representante"
                 color="primary"
-                @click="selecionarEtapa(3)"
+                @click="validarIrProximaEtapa('form_representante')"
               >
                 Próximo
               </v-btn>
@@ -490,7 +492,6 @@ export default {
       {
         title: 'Dados do Conselho de Cultura',
         id: 1,
-
       },
       {
         title: 'Dados do Representante',
@@ -530,7 +531,8 @@ export default {
       url: (v) => {
         // eslint-disable-next-line
           const pattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-        return pattern.test(v) || 'Sítio eletrônico invalido';
+        if (v) return pattern.test(v) || 'Sítio invalido';
+        return true;
       },
       emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
     },
@@ -552,7 +554,7 @@ export default {
     ...mapActions({
       obterEstados: 'localidade/obterEstados',
     }),
-    validate(formRef) {
+    validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {
         this.e1 = this.e1 + 1;
       }
@@ -586,16 +588,11 @@ export default {
         no_arquivo: this.anexo_declaracao_ciencia_orgao_gestor.filename,
         arquivoCodificado: this.anexo_declaracao_ciencia_orgao_gestor.getFileEncodeBase64String(),
       });
+      console.log(this.conselho);
     },
-    saelecionarEtapa(n) {
-      if (n === this.steps.length) {
-        this.e1 = 1;
-      } else {
-        this.e1 = n + 1;
-      }
-    },
-    selecionarEtapa(etapa) {
-      this.e1 = etapa;
+
+    voltarEtapaAnterior() {
+      this.e1 = this.e1 - 1;
     },
   },
 };
