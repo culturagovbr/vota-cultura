@@ -11,8 +11,7 @@
         <v-stepper v-model="e1">
           <v-stepper-header>
             <v-stepper-step
-              editable
-              :complete="true"
+              :complete="e1 > 1"
               step="1"
             >
               Dados do Conselho de Cultura
@@ -21,8 +20,7 @@
             <v-divider />
 
             <v-stepper-step
-              editable
-              :complete="true"
+              :complete="e1 > 2"
               step="2"
             >
               Dados do Representante
@@ -31,8 +29,7 @@
             <v-divider />
 
             <v-stepper-step
-              editable
-              :complete="true"
+              :complete="e1 > 3"
               step="3"
             >
               Anexos
@@ -235,8 +232,9 @@
                 </v-card>
               </v-form>
               <v-btn
-              to="/inicio"
-              flat>
+                to="/inicio"
+                flat
+              >
                 Cancelar
               </v-btn>
               <v-btn
@@ -304,7 +302,7 @@
                           append-icon="person"
                           placeholder="999.999.999.99"
                           mask="###.###.###.##"
-                          :rules="[rules.required]"
+                          :rules="[rules.required, rules.cpfMin]"
                           required
                         />
                       </v-flex>
@@ -316,7 +314,6 @@
                           v-model="conselho.representante.nu_rg"
                           label="*RG"
                           append-icon="person"
-                          placeholder="99.999.999-9"
                           mask="#########"
                           :rules="[rules.required]"
                           required
@@ -359,8 +356,9 @@
                 </v-card>
               </v-form>
               <v-btn
-              @click="selecionarEtapa(1)"
-              flat>
+                flat
+                @click="selecionarEtapa(1)"
+              >
                 Anterior
               </v-btn>
               <v-btn
@@ -448,8 +446,8 @@
 </template>
 
 <script>
-import File from '@/core/components/upload/File';
 import { mapActions, mapGetters } from 'vuex';
+import File from '@/core/components/upload/File';
 
 
 export default {
@@ -482,7 +480,7 @@ export default {
         ds_email_confirmation: '',
       },
       ds_sitio_eletronico: '',
-      anexos:[],
+      anexos: [],
     },
     anexo_ata_reuniao_conselho: {},
     anexo_ato_normativo_conselho: {},
@@ -522,6 +520,7 @@ export default {
       required: v => !!v || 'Campo não preenchido',
       phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
       cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
+      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
       cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
       email: (v) => {
         // eslint-disable-next-line
@@ -541,9 +540,12 @@ export default {
       this.listaUF = this.estadosGetter;
     },
   },
+  mounted() {
+    this.obterEstados();
+  },
   computed: {
     ...mapGetters({
-      estadosGetter: 'localidade/estadosGetter',
+      estadosGetter: 'localidade/estados',
     }),
   },
   methods: {
@@ -555,11 +557,7 @@ export default {
         this.e1 = this.e1 + 1;
       }
     },
-    reset() {
-      console.log(this.$refs.form_conselho)
-    },
     apresentar() {
-
       this.conselho.anexos.push({
         tp_arquivo: 'documento_identificacao',
         no_extensao: this.anexo_ata_reuniao_conselho.fileExtension,
@@ -596,9 +594,9 @@ export default {
         this.e1 = n + 1;
       }
     },
-    selecionarEtapa(etapa){
+    selecionarEtapa(etapa) {
       this.e1 = etapa;
-    }
+    },
   },
 };
 </script>
