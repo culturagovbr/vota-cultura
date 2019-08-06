@@ -97,14 +97,17 @@ COMMENT ON COLUMN tb_representante.nu_cpf IS 'número de cpf do representante';
 
 CREATE TABLE tb_segmento (
 	co_segmento          SERIAL,
-	no_descricao         integer  NOT NULL ,
+	tp_segmento          varchar(100)  NOT NULL ,
+	ds_detalhamento      varchar(255)  NOT NULL ,
 	st_ativo             bool  NOT NULL ,
 	CONSTRAINT pk_segmento_codsegmento PRIMARY KEY ( co_segmento )
  );
 
 COMMENT ON COLUMN tb_segmento.co_segmento IS 'chave primária da tabela';
 
-COMMENT ON COLUMN tb_segmento.no_descricao IS 'descrição do tipo de segmento\n(ex: Culturas dos povos indígenas)';
+COMMENT ON COLUMN tb_segmento.tp_segmento IS 'slug do tipo de segmento';
+
+COMMENT ON COLUMN tb_segmento.ds_detalhamento IS 'descrição do tipo de segmento\n(ex: Culturas dos povos indígenas)';
 
 COMMENT ON COLUMN tb_segmento.st_ativo IS 'campo de habilitação/desabilitação do tipo de segmento';
 

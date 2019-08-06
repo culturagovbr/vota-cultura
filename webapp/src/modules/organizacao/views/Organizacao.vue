@@ -5,54 +5,52 @@
         dark
         color="primary"
       >
+        <v-btn @click="mostrar">
+          clique aq
+        </v-btn>
         <v-toolbar-title>Inscrição - Organização ou Entidade Cultural</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
-        <v-stepper v-model="e1">
+        <v-stepper v-model="etapaFormulario">
           <v-stepper-header>
             <v-stepper-step
-              editable
-              :complete="e1 > 1"
+              :complete="etapaFormulario > 1"
               step="1"
             >
               Organização ou Entidade Cultural
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
-              editable
-              :complete="e1 > 2"
+              :complete="etapaFormulario > 2"
               step="2"
             >
               Responsável
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
-              editable
-              :complete="e1 > 3"
+              :complete="etapaFormulario > 3"
               step="3"
             >
               Segmento
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
-              editable
-              :complete="e1 > 4"
+              :complete="etapaFormulario > 4"
               step="4"
             >
               Declaração de enquadramento
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
-              editable
-              :complete="e1 > 5"
+              :complete="etapaFormulario > 5"
               step="5"
             >
               Anexo
@@ -63,6 +61,7 @@
             <v-stepper-content step="1">
               <v-form
                 ref="form_dados_entidade"
+                v-model="valid_dados_entidade"
                 lazy-validation
               >
                 <v-card flat>
@@ -79,6 +78,7 @@
                         sm5
                       >
                         <v-text-field
+                          v-model="organizacao.nu_cnpj"
                           label="*CNPJ"
                           append-icon="people"
                           placeholder="99.999.999/9999-99"
@@ -92,6 +92,7 @@
                         sm5
                       >
                         <v-text-field
+                          v-model="organizacao.no_organizacao"
                           label="*Nome da Organização/Entidade"
                           append-icon="perm_identity"
                           :rules="[rules.required]"
@@ -104,6 +105,7 @@
                         sm2
                       >
                         <v-text-field
+                          v-model="organizacao.nu_telefone"
                           label="*Telefone"
                           append-icon="phone"
                           placeholder="(99) 99999-9999"
@@ -123,7 +125,7 @@
                         sm4
                       >
                         <v-text-field
-                          v-model="emailOrganization"
+                          v-model="organizacao.ds_email"
                           data-vv-name="email"
                           label="*E-mail"
                           append-icon="mail"
@@ -137,11 +139,11 @@
                         sm4
                       >
                         <v-text-field
-                          v-model="emailOrganizationConfirmation"
+                          v-model="organizacao.ds_email_confirmacao"
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
-                          :rules="[rules.required, rules.email, rules.emailMatch(emailOrganization, emailOrganizationConfirmation)]"
+                          :rules="[rules.required, rules.email, rules.emailMatch(organizacao.ds_email, organizacao.ds_email_confirmacao)]"
                           required
                         />
                       </v-flex>
@@ -150,6 +152,7 @@
                         sm4
                       >
                         <v-text-field
+                          v-model="organizacao.ds_sitio_eletronico"
                           label="Sítio eletrônico da Organização/Entidade"
                           append-icon="public"
                           :rules="[rules.url]"
@@ -166,6 +169,7 @@
                         sm3
                       >
                         <v-text-field
+                          v-model="organizacao.endereco.nu_cep"
                           label="*CEP"
                           append-icon="my_location"
                           placeholder="99999-999"
@@ -179,6 +183,7 @@
                         sm6
                       >
                         <v-text-field
+                          v-model="organizacao.endereco.ds_logradouro"
                           label="*Logradouro"
                           append-icon="place"
                           :rules="[rules.required]"
@@ -190,6 +195,7 @@
                         sm3
                       >
                         <v-text-field
+                          v-model="organizacao.endereco.ds_complemento"
                           label="Complemento"
                         />
                       </v-flex>
@@ -204,9 +210,12 @@
                         sm3
                       >
                         <v-select
-                          :items="['DF','GO']"
-                          label="*Unidade da Federação da Sede"
+                          v-model="organizacao.co_ibge"
+                          :items="listaUF"
+                          label="*Unidade da Federação da sede"
                           append-icon="place"
+                          item-value="co_ibge"
+                          item-text="no_uf"
                           :rules="[rules.required]"
                           required
                         />
@@ -215,9 +224,15 @@
                         xs12
                         sm5
                       >
-                        <v-text-field
+                        <v-select
+                          v-model="organizacao.endereco.co_municipio"
+                          :items="listaMunicipios"
                           label="*Cidade"
                           append-icon="place"
+                          item-value="co_municipio"
+                          item-text="no_municipio"
+                          :rules="[rules.required]"
+                          :disabled="organizacao.co_ibge < 1 || organizacao.co_ibge == null"
                         />
                       </v-flex>
                     </v-layout>
@@ -225,18 +240,23 @@
                 </v-card>
               </v-form>
               <v-btn
+                to="/inicio"
+                flat
+              >
+                Cancelar
+              </v-btn>
+              <v-btn
                 color="primary"
+                @click="validarIrProximaEtapa('form_dados_entidade')"
               >
                 Próximo
-              </v-btn>
-              <v-btn flat>
-                Cancelar
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
               <v-form
-                ref=""
+                ref="form_representante"
+                v-model="valid_representante"
                 lazy-validation
               >
                 <v-card flat>
@@ -253,7 +273,8 @@
                         sm8
                       >
                         <v-text-field
-                          label="*Nome do Responsável"
+                          v-model="organizacao.representante.no_pessoa"
+                          label="*Nome do Representante"
                           append-icon="perm_identity"
                           :rules="[rules.required]"
                           required
@@ -264,7 +285,8 @@
                         sm4
                       >
                         <v-text-field
-                          label="*Celular do Responsável"
+                          v-model="organizacao.representante.nu_telefone"
+                          label="*Celular do representante"
                           append-icon="phone"
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
@@ -283,11 +305,12 @@
                         sm6
                       >
                         <v-text-field
+                          v-model="organizacao.representante.nu_cpf"
                           label="*CPF"
                           append-icon="person"
                           placeholder="999.999.999.99"
                           mask="###.###.###.##"
-                          :rules="[rules.required]"
+                          :rules="[rules.required, rules.cpfMin]"
                           required
                         />
                       </v-flex>
@@ -296,10 +319,10 @@
                         sm6
                       >
                         <v-text-field
+                          v-model="organizacao.representante.nu_rg"
                           label="*RG"
                           append-icon="person"
-                          placeholder="99.999.999-9"
-                          mask="##.###.###-#"
+                          mask="#########"
                           :rules="[rules.required]"
                           required
                         />
@@ -315,7 +338,8 @@
                         sm6
                       >
                         <v-text-field
-                          label="*E-mail do Responsável"
+                          v-model="organizacao.representante.ds_email"
+                          label="*E-mail do representante"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email]"
@@ -327,10 +351,11 @@
                         sm6
                       >
                         <v-text-field
+                          v-model="organizacao.representante.ds_email_confirmation"
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
-                          :rules="[rules.required, rules.email]"
+                          :rules="[rules.required, rules.email, rules.emailMatch(organizacao.representante.ds_email, organizacao.representante.ds_email_confirmation)]"
                           required
                         />
                       </v-flex>
@@ -339,18 +364,24 @@
                 </v-card>
               </v-form>
               <v-btn
+                flat
+                @click="voltarEtapaAnterior"
+              >
+                Anterior
+              </v-btn>
+              <v-btn
+                :disabled="!valid_representante"
                 color="primary"
+                @click="validarIrProximaEtapa('form_representante')"
               >
                 Próximo
-              </v-btn>
-              <v-btn flat>
-                Cancelar
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
               <v-form
-                ref=""
+                ref="form_segmento"
+                v-model="valid_segmento"
                 lazy-validation
               >
                 <v-card flat>
@@ -366,7 +397,9 @@
                         xs12
                         sm6
                       >
-                        <v-radio-group label="*Informe o segmento no qual pretende concorrer">
+                        <v-radio-group
+                          v-model="organizacao.co_segmento"
+                          label="*Informe o segmento no qual pretende concorrer">
                           <v-radio
                             label="Técnico-artístico"
                             value="radio-1"
@@ -393,18 +426,25 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn color="primary">
-                Próximo
+              <v-btn
+                flat
+                @click="voltarEtapaAnterior"
+              >
+                Anterior
               </v-btn>
-
-              <v-btn>
-                Cancelar
+              <v-btn
+                :disabled="!valid_segmento"
+                color="primary"
+                @click="validarIrProximaEtapa('form_segmento')"
+              >
+                Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="4">
               <v-form
-                ref=""
+                ref="form_criterio"
+                v-model="valid_criterio"
                 lazy-validation
               >
                 <v-card flat>
@@ -530,110 +570,63 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn color="primary">
-                Próximo
+              <v-btn
+                flat
+                @click="voltarEtapaAnterior"
+              >
+                Anterior
               </v-btn>
-              <v-btn flat>
-                Cancelar
+              <v-btn
+                :disabled="!valid_criterio"
+                color="primary"
+                @click="validarIrProximaEtapa('form_criterio')"
+              >
+                Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="5">
-              <v-form
-                ref=""
-                lazy-validation
-              >
+              <v-form lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
                     grid-list-xl
                   >
-                    <v-layout
-                      wrap
-                      align-center
-                    >
-                      <v-flex
-                        xs12
-                        sm3
-                      >
-                        <v-select
-                          :items="['CPF', 'CNPJ']"
-                          label="Tipo do Documento"
-                          required
-                        />
+                    <v-layout>
+                      <v-flex sm3>
+                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
+                          Documento de identificação do responsável*
+                        </div>
                       </v-flex>
-                      <v-flex
-                        xs12
-                        sm7
-                        style="
-                          border-style: solid;
-                          border-color: gray;
-                          border-width: 1px;
-                          border-radius: 4px;
-                          padding-top: 1px;"
-                      >
-                        <input type="file">
-                      </v-flex>
-                      <v-flex
-                        xs12
-                        sm2
-                      >
-                        <v-btn
-                          color="blue-grey"
-                          class="white--text"
-                        >
-                          Incluir
-                          <v-icon
-                            right
-                            dark
-                          >
-                            cloud_upload
-                          </v-icon>
-                        </v-btn>
+                      <v-flex sm3>
+                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
+                          Declaração do representante Legal*
+                        </div>
                       </v-flex>
                     </v-layout>
 
-                    <v-layout
-                      wrap
-                      align-center
-                    >
-                      <v-flex
-                        xs12
-                        sm12
-                      >
-                        <v-data-table
-                          :items="[{tipo: 'cpf', arquivo:'cpf_digitaliza.pdf'}]"
-                          class="elevation-1"
-                          :headers="headers"
-                          hide-actions
-                        >
-                          <template v-slot:items="props">
-                            <td class="text-md-center">
-                              {{ props.item.tipo }}
-                            </td>
-                            <td class="text-md-center">
-                              {{ props.item.arquivo }}
-                            </td>
-                            <td class="text-md-center">
-                              <v-icon
-                                small
-                                @click="console.log('apagado')"
-                              >
-                                delete
-                              </v-icon>
-                            </td>
-                          </template>
-                        </v-data-table>
+                    <v-layout>
+                      <v-flex sm3>
+                        <file v-model="documento_identificacao_responsavel" />
+                      </v-flex>
+                      <v-flex sm3>
+                        <file v-model="declaracao_representante_legal" />
                       </v-flex>
                     </v-layout>
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn color="primary" to="/organizacao/revisao-organizacao">
-                Próximo
+              <v-btn
+                flat
+                @click="voltarEtapaAnterior"
+              >
+                Anterior
               </v-btn>
-              <v-btn flat>
-                Cancelar
+              <v-btn
+                color="primary"
+                @click="mostrar"
+              >
+                Enviar
               </v-btn>
             </v-stepper-content>
           </v-stepper-items>
@@ -644,68 +637,125 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import File from '@/core/components/upload/File';
+import { eventHub } from '@/event';
 
-  export default {
-    data: () => ({
-      valid: false,
-      date: '',
-      e1: 1,
-      emailOrganization: '',
-      emailOrganizationConfirmation: '',
-      dateFormatted: '',
-      menu: false,
-      headers: [
-        {
-          text: 'Tipo',
-          align: 'center',
-          sortable: false,
-        },
-        {
-          text: 'Arquivo',
-          align: 'center',
-          sortable: false,
-        },
-        {
-          sortable: false,
-        },
-      ],
-      rules: {
-        required: v => !!v || 'Campo não preenchido',
-        phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-        cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
-        email: (v) => {
-          // eslint-disable-next-line
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(v) || 'E-mail invalido';
-        },
-        url: (v) => {
-          // eslint-disable-next-line
-          const pattern = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
-          if (v) return pattern.test(v) || 'Sítio invalido';
-          return true;
-        },
-        emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
+export default {
+  components: { File },
+  data: () => ({
+    valid_dados_entidade: false,
+    valid_segmento: false,
+    valid_criterio: false,
+    valid_representante: false,
+    etapaFormulario: 1,
+    listaUF: [],
+    listaSegmentos: [],
+    listaMunicipios: [],
+    organizacao: {
+      st_inscricao: 'e',
+      co_segmento: '',
+      no_organizacao: '',
+      ds_email: '',
+      ds_email_confirmacao: '',
+      nu_telefone: '',
+      nu_cnpj: '',
+      endereco: {
+        co_ibge: '',
+        ds_complemento: '',
+        nu_cep: '',
+        ds_logradouro: '',
+        co_municipio: '',
       },
+      representante: {
+        ds_email: '',
+        no_pessoa: '',
+        nu_rg: '',
+        nu_cpf: '',
+        nu_telefone: '',
+        ds_email_confirmation: '',
+      },
+      ds_sitio_eletronico: '',
+      anexos: [],
+    },
+    declaracao_representante_legal: {},
+    documento_identificacao_responsavel: {},
+    headers: [
+      {
+        text: 'Tipo',
+        align: 'center',
+        sortable: false,
+      },
+      {
+        text: 'Arquivo',
+        align: 'center',
+        sortable: false,
+      },
+      {
+        sortable: false,
+      },
+    ],
+    rules: {
+      required: v => !!v || 'Campo não preenchido',
+      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
+      cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
+      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
+      cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
+      email: (v) => {
+        // eslint-disable-next-line
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(v) || 'E-mail invalido';
+      },
+      url: (v) => {
+        // eslint-disable-next-line
+        const pattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+        if (v) return pattern.test(v) || 'Sítio invalido';
+        return true;
+      },
+      emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
+    },
+  }),
+  watch: {
+    estadosGetter() {
+      this.listaUF = this.estadosGetter;
+    },
+    municipiosGetter() {
+      this.listaMunicipios = this.municipiosGetter;
+    },
+    'organizacao.co_ibge': function (coIBGE) {
+      this.organizacao.endereco.co_municipio = '';
+      this.obterMunicipios(coIBGE);
+    },
+  },
+  mounted() {
+    this.obterEstados();
+  },
+  computed: {
+    ...mapGetters({
+      estadosGetter: 'localidade/estados',
+      municipiosGetter: 'localidade/municipios',
+      segmentosGetter: 'organizacao/segmentos',
     }),
-    watch: {
-      date() {
-        this.dateFormatted = this.formatDate(this.date);
-      },
+  },
+  methods: {
+    ...mapActions({
+      obterEstados: 'localidade/obterEstados',
+      obterMunicipios: 'localidade/obterMunicipios',
+    }),
+    validarIrProximaEtapa(formRef) {
+      if (this.$refs[formRef].validate()) {
+        this.etapaFormulario = this.etapaFormulario + 1;
+      }
     },
-    methods: {
-      validate() {
-        if (this.$refs.form.validate()) {
-          console.log('talkei');
-        }
-      },
-      formatDate(date) {
-        if (!date) return null;
-        const [year, month, day] = date.split('-');
-        return `${day}/${month}/${year}`;
-      },
-      reset() {
-        this.$refs.form.reset();
-      },
+    voltarEtapaAnterior() {
+      this.etapaFormulario = this.etapaFormulario - 1;
     },
-  };
+    reset() {
+      this.$refs.form.reset();
+    },
+    mostrar() {
+      console.log(this.organizacao);
+    },
+  },
+};
 </script>
