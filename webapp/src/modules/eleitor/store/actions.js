@@ -5,10 +5,6 @@ import * as types from './types';
 
 // eslint-disable-next-line no-empty-pattern
 export const enviarDadosEleitor = async ({}, eleitor) => {
-  // const dadosInscricao = eleitor;
-  // dadosInscricao.anexoCpf = eleitor.anexos.cpf;
-  // dadosInscricao.anexoDocumentoIdentificacao = eleitor.anexos.documento_identificacao;
-  // delete dadosInscricao.anexos;
   return eleitorService.enviarDadosEleitor(eleitor);
 };
 

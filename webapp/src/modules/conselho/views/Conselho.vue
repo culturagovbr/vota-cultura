@@ -8,28 +8,28 @@
         <v-toolbar-title>Inscrição - Conselho de Cultura</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
-        <v-stepper v-model="e1">
+        <v-stepper v-model="etapaFormulario">
           <v-stepper-header>
             <v-stepper-step
-              :complete="e1 > 1"
+              :complete="etapaFormulario > 1"
               step="1"
             >
               Dados do Conselho de Cultura
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
-              :complete="e1 > 2"
+              :complete="etapaFormulario > 2"
               step="2"
             >
               Dados do Representante
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
-              :complete="e1 > 3"
+              :complete="etapaFormulario > 3"
               step="3"
             >
               Anexos
@@ -41,19 +41,23 @@
               <v-form
                 ref="form_conselho"
                 v-model="valid_conselho"
-                lazy-validation>
+                lazy-validation
+              >
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl>
+                    grid-list-xl
+                  >
                     <v-layout>
                       <v-flex
                         xs12
-                        sm4>
+                        sm4
+                      >
                         <v-radio-group
                           v-model="conselho.tp_governamental"
                           row
-                          :rules="[rules.required]">
+                          :rules="[rules.required]"
+                        >
                           <v-radio
                             label="Estadual"
                             value="e"
@@ -69,7 +73,8 @@
                     <v-layout>
                       <v-flex
                         xs12
-                        sm3>
+                        sm3
+                      >
                         <v-text-field
                           v-model="conselho.nu_cnpj"
                           label="*CNPJ do Orgão Gestor do Conselho"
@@ -229,19 +234,20 @@
                       </v-flex>
                     </v-layout>
                   </v-container>
-
                 </v-card>
               </v-form>
 
               <v-btn
                 to="/inicio"
-                flat>
+                flat
+              >
                 Cancelar
               </v-btn>
               <v-btn
                 :disabled="!valid_conselho"
                 color="primary"
-                @click="validarIrProximaEtapa('form_conselho')">
+                @click="validarIrProximaEtapa('form_conselho')"
+              >
                 Próximo
               </v-btn>
             </v-stepper-content>
@@ -341,7 +347,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-text-field
                           v-model="conselho.representante.ds_email_confirmation"
                           label="*Confirmar e-mail"
@@ -357,13 +364,15 @@
               </v-form>
               <v-btn
                 flat
-                @click="voltarEtapaAnterior">
+                @click="voltarEtapaAnterior"
+              >
                 Anterior
               </v-btn>
               <v-btn
                 :disabled="!valid_representante"
                 color="primary"
-                @click="validarIrProximaEtapa('form_representante')">
+                @click="validarIrProximaEtapa('form_representante')"
+              >
                 Próximo
               </v-btn>
             </v-stepper-content>
@@ -372,11 +381,13 @@
               <v-form
                 ref="form_anexo"
                 v-model="valid_anexo"
-                lazy-validation>
+                lazy-validation
+              >
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl>
+                    grid-list-xl
+                  >
                     <v-layout>
                       <v-flex sm3>
                         <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
@@ -393,7 +404,10 @@
                           Documento de identificação do responsável*
                         </div>
                       </v-flex>
-                      <v-flex sm3 v-if="conselho.tp_governamental === 'c'">
+                      <v-flex
+                        v-if="conselho.tp_governamental === 'c'"
+                        sm3
+                      >
                         <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
                           Declaração de ciência e autorização do órgão gestor de cultura do estado*
                         </div>
@@ -402,37 +416,35 @@
 
                     <v-layout>
                       <v-flex sm3>
-                        <file v-model="anexo_ato_normativo_conselho"/>
+                        <file v-model="ato_normativo_conselho" />
                       </v-flex>
                       <v-flex sm3>
-                        <file v-model="anexo_ata_reuniao_conselho"/>
+                        <file v-model="ata_reuniao_conselho" />
                       </v-flex>
                       <v-flex sm3>
-                        <file v-model="anexo_documento_identificacao_responsavel"/>
+                        <file v-model="documento_identificacao_responsavel" />
                       </v-flex>
-                      <v-flex sm3 v-if="conselho.tp_governamental === 'c'">
-                        <file v-model="anexo_declaracao_ciencia_orgao_gestor"/>
+                      <v-flex
+                        v-if="conselho.tp_governamental === 'c'"
+                        sm3
+                      >
+                        <file v-model="declaracao_ciencia_orgao_gestor" />
                       </v-flex>
                     </v-layout>
                   </v-container>
                 </v-card>
               </v-form>
               <v-btn
-                :disabled="false"
-                color="primary"
-                to="/conselho/revisao-conselho"
+                flat
+                @click="voltarEtapaAnterior"
               >
-                Enviar
+                Anterior
               </v-btn>
               <v-btn
-                :disabled="false"
                 color="primary"
                 @click="apresentar"
               >
-                Enviar fake
-              </v-btn>
-              <v-btn flat>
-                Cancelar
+                Enviar
               </v-btn>
             </v-stepper-content>
           </v-stepper-items>
@@ -443,161 +455,168 @@
 </template>
 
 <script>
-  import {mapActions, mapGetters} from 'vuex';
-  import File from '@/core/components/upload/File';
+import { mapActions, mapGetters } from 'vuex';
+import File from '@/core/components/upload/File';
+import { eventHub } from '@/event';
 
 
-  export default {
-    components: {File},
-    data: () => ({
-      e1: 1,
-      listaUF: [],
-      listaMunicipios: [],
-      valid_conselho: false,
-      valid_representante: false,
-      valid_anexo: true,
-      conselho: {
-        no_orgao_gestor: '',
+export default {
+  components: { File },
+  data: () => ({
+    etapaFormulario: 1,
+    listaUF: [],
+    listaMunicipios: [],
+    valid_conselho: false,
+    valid_representante: false,
+    valid_anexo: false,
+    conselho: {
+      no_orgao_gestor: '',
+      ds_email: '',
+      ds_email_confirmacao: '',
+      nu_telefone: '',
+      nu_cnpj: '',
+      tp_governamental: '',
+      endereco: {
+        co_ibge: '',
+        ds_complemento: '',
+        nu_cep: '',
+        ds_logradouro: '',
+        co_municipio: '',
+      },
+      representante: {
         ds_email: '',
-        ds_email_confirmacao: '',
+        no_pessoa: '',
+        nu_rg: '',
+        nu_cpf: '',
         nu_telefone: '',
-        nu_cnpj: '',
-        tp_governamental: '',
-        endereco: {
-          ds_complemento: '',
-          nu_cep: '',
-          ds_logradouro: '',
-          co_municipio: '',
-        },
-        representante: {
-          ds_email: '',
-          no_pessoa: '',
-          nu_rg: '',
-          nu_cpf: '',
-          nu_telefone: '',
-          ds_email_confirmation: '',
-        },
-        ds_sitio_eletronico: '',
-        anexos: [],
+        ds_email_confirmation: '',
       },
-      anexo_ata_reuniao_conselho: {},
-      anexo_ato_normativo_conselho: {},
-      anexo_documento_identificacao_responsavel: {},
-      anexo_declaracao_ciencia_orgao_gestor: {},
-      steps: [
-        {
-          title: 'Dados do Conselho de Cultura',
-          id: 1,
-        },
-        {
-          title: 'Dados do Representante',
-          id: 2,
-        },
-        {
-          title: 'Anexos',
-          id: 3,
-        },
-      ],
-      headers: [
-        {
-          text: 'Tipo',
-          align: 'center',
-          sortable: false,
-        },
-        {
-          text: 'Arquivo',
-          align: 'center',
-          sortable: false,
-        },
-        {
-          sortable: false,
-        },
-      ],
-      rules: {
-        required: v => !!v || 'Campo não preenchido',
-        phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-        cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
-        cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-        cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
-        email: (v) => {
-          // eslint-disable-next-line
+      ds_sitio_eletronico: '',
+      anexos: [],
+    },
+    ata_reuniao_conselho: {},
+    ato_normativo_conselho: {},
+    documento_identificacao_responsavel: {},
+    declaracao_ciencia_orgao_gestor: {},
+    steps: [
+      {
+        title: 'Dados do Conselho de Cultura',
+        id: 1,
+      },
+      {
+        title: 'Dados do Representante',
+        id: 2,
+      },
+      {
+        title: 'Anexos',
+        id: 3,
+      },
+    ],
+    headers: [
+      {
+        text: 'Tipo',
+        align: 'center',
+        sortable: false,
+      },
+      {
+        text: 'Arquivo',
+        align: 'center',
+        sortable: false,
+      },
+      {
+        sortable: false,
+      },
+    ],
+    rules: {
+      required: v => !!v || 'Campo não preenchido',
+      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
+      cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
+      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
+      cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
+      email: (v) => {
+        // eslint-disable-next-line
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(v) || 'E-mail invalido';
-        },
-        url: (v) => {
-          // eslint-disable-next-line
+        return pattern.test(v) || 'E-mail invalido';
+      },
+      url: (v) => {
+        // eslint-disable-next-line
           const pattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-          if (v) return pattern.test(v) || 'Sítio invalido';
-          return true;
-        },
-        emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
+        if (v) return pattern.test(v) || 'Sítio invalido';
+        return true;
       },
+      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
+    },
+  }),
+  watch: {
+    estadosGetter() {
+      this.listaUF = this.estadosGetter;
+    },
+    municipiosGetter() {
+      this.listaMunicipios = this.municipiosGetter;
+    },
+    'conselho.co_ibge': function (coIBGE) {
+      this.conselho.endereco.co_municipio = '';
+      this.obterMunicipios(coIBGE);
+    },
+  },
+  mounted() {
+    this.obterEstados();
+  },
+  computed: {
+    ...mapGetters({
+      estadosGetter: 'localidade/estados',
+      municipiosGetter: 'localidade/municipios',
     }),
-    watch: {
-      estadosGetter() {
-        this.listaUF = this.estadosGetter;
-      },
-      municipiosGetter() {
-        this.listaMunicipios = this.municipiosGetter;
-      },
-      'conselho.co_ibge': function (coIBGE) {
-        this.obterMunicipios(coIBGE);
+  },
+  methods: {
+    ...mapActions({
+      obterEstados: 'localidade/obterEstados',
+      obterMunicipios: 'localidade/obterMunicipios',
+      confirmarConselho: 'conselho/confirmarConselho',
+    }),
+    validarIrProximaEtapa(formRef) {
+      if (this.$refs[formRef].validate()) {
+        this.etapaFormulario = this.etapaFormulario + 1;
       }
     },
-    mounted() {
-      this.obterEstados();
-    },
-    computed: {
-      ...mapGetters({
-        estadosGetter: 'localidade/estados',
-        municipiosGetter: 'localidade/municipios',
-      }),
-    },
-    methods: {
-      ...mapActions({
-        obterEstados: 'localidade/obterEstados',
-        obterMunicipios: 'localidade/obterMunicipios',
-      }),
-      validarIrProximaEtapa(formRef) {
-        if (this.$refs[formRef].validate()) {
-          this.e1 = this.e1 + 1;
+    apresentar() {
+      let erro = false;
+      this.conselho.anexos = [];
+      let anexos = [
+        'ata_reuniao_conselho',
+        'ato_normativo_conselho',
+        'documento_identificacao_responsavel',
+        'declaracao_ciencia_orgao_gestor',
+      ];
+      if (this.conselho.tp_governamental !== 'c') {
+        const index = anexos.indexOf('declaracao_ciencia_orgao_gestor');
+        if (index > -1) {
+          anexos.splice(index, 1);
         }
-      },
-      apresentar() {
-        this.conselho.anexos.push({
-          tp_arquivo: 'documento_identificacao',
-          no_extensao: this.anexo_ata_reuniao_conselho.fileExtension,
-          no_mime_type: this.anexo_ata_reuniao_conselho.fileType,
-          no_arquivo: this.anexo_ata_reuniao_conselho.filename,
-          arquivoCodificado: this.anexo_ata_reuniao_conselho.getFileEncodeBase64String(),
+      }
+      try {
+        anexos.forEach((nomeAnexo) => {
+          this.conselho.anexos.push({
+            tp_arquivo: nomeAnexo,
+            no_extensao: this[nomeAnexo].fileExtension,
+            no_mime_type: this[nomeAnexo].fileType,
+            no_arquivo: this[nomeAnexo].filename,
+            arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+          });
         });
-        this.conselho.anexos.push({
-          tp_arquivo: 'documento_identificacao',
-          no_extensao: this.anexo_ato_normativo_conselho.fileExtension,
-          no_mime_type: this.anexo_ato_normativo_conselho.fileType,
-          no_arquivo: this.anexo_ato_normativo_conselho.filename,
-          arquivoCodificado: this.anexo_ato_normativo_conselho.getFileEncodeBase64String(),
+      } catch (e) {
+        erro = true;
+        eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
+      }
+      if (!erro) {
+        this.confirmarConselho(this.conselho).then(() => {
+          this.$router.push('/conselho/revisao-conselho');
         });
-        this.conselho.anexos.push({
-          tp_arquivo: 'documento_identificacao',
-          no_extensao: this.anexo_documento_identificacao_responsavel.fileExtension,
-          no_mime_type: this.anexo_documento_identificacao_responsavel.fileType,
-          no_arquivo: this.anexo_documento_identificacao_responsavel.filename,
-          arquivoCodificado: this.anexo_documento_identificacao_responsavel.getFileEncodeBase64String(),
-        });
-        this.conselho.anexos.push({
-          tp_arquivo: 'documento_identificacao',
-          no_extensao: this.anexo_declaracao_ciencia_orgao_gestor.fileExtension,
-          no_mime_type: this.anexo_declaracao_ciencia_orgao_gestor.fileType,
-          no_arquivo: this.anexo_declaracao_ciencia_orgao_gestor.filename,
-          arquivoCodificado: this.anexo_declaracao_ciencia_orgao_gestor.getFileEncodeBase64String(),
-        });
-        console.log(this.conselho);
-      },
-
-      voltarEtapaAnterior() {
-        this.e1 = this.e1 - 1;
-      },
+      }
     },
-  };
+    voltarEtapaAnterior() {
+      this.etapaFormulario = this.etapaFormulario - 1;
+    },
+  },
+};
 </script>

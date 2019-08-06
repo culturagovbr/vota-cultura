@@ -15,24 +15,22 @@
             <v-toolbar-title>Confirmação dos dados</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container>
+            <v-container v-if="Object.keys(conselhoGetter).length > 0">
               <v-layout>
                 <v-flex>
                   <v-radio-group
-                    v-model="conselho.tp"
-                    row >
+                    v-model="conselho.tp_governamental"
+                    disabled
+                    row>
                     <v-radio
-                      disabled
                       label="Estadual"
-                      value="radio-1"
+                      value="e"
                     />
                     <v-radio
                       label="Capital"
-                      value="radio-2"
-                      disabled
+                      value="c"
                     />
                   </v-radio-group>
-
                 </v-flex>
               </v-layout>
 
@@ -40,7 +38,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.cnpj"
+                    v-model="conselho.nu_cnpj"
                     label="CNPJ do Orgão Gestor do Conselho"
                     append-icon="people"
                     mask="##.###.###/####-##"
@@ -53,19 +51,18 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.nomeOrgaoGestor"
-                  label="Nome do órgão gestor de cultura"
-                  append-icon="people"
-                  disabled
-                />
+                    v-model="conselho.no_orgao_gestor"
+                    label="Nome do órgão gestor de cultura"
+                    append-icon="people"
+                    disabled
+                  />
                 </v-flex>
               </v-layout>
-
 
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.telefone"
+                    v-model="conselho.nu_telefone"
                     label="Telefone"
                     append-icon="phone"
                     mask="(##) #####-####"
@@ -74,11 +71,10 @@
                 </v-flex>
               </v-layout>
 
-
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.email"
+                    v-model="conselho.ds_email"
                     label="E-mail"
                     append-icon="mail"
                     disabled
@@ -89,7 +85,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.sitioEletronico"
+                    v-model="conselho.ds_sitio_eletronico"
                     label="Sítio eletrônico do conselho"
                     append-icon="public"
                     disabled
@@ -100,7 +96,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.cep"
+                    v-model="conselho.endereco.nu_cep"
                     label="CEP"
                     append-icon="my_location"
                     mask="#####-###"
@@ -112,7 +108,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.logradouro"
+                    v-model="conselho.endereco.ds_logradouro"
                     label="Logradouro"
                     append-icon="place"
                     disabled
@@ -123,7 +119,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.complemento"
+                    v-model="conselho.endereco.ds_complemento"
                     label="Complemento"
                     disabled
                   />
@@ -133,7 +129,7 @@
               <v-layout>
                 <v-flex>
                   <v-select
-                    v-model="conselho.uf"
+                    v-model="conselho.endereco.co_ibge"
                     :items="['DF','GO']"
                     label="Unidade da Federação da Sede"
                     append-icon="place"
@@ -145,7 +141,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.cidade"
+                    v-model="conselho.endereco.co_municipio"
                     label="Cidade"
                     append-icon="place"
                     disabled
@@ -156,7 +152,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.nomeRepresentante"
+                    v-model="conselho.representante.no_pessoa"
                     label="Nome do Representante"
                     append-icon="perm_identity"
                     disabled
@@ -167,7 +163,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.celular"
+                    v-model="conselho.representante.nu_telefone"
                     label="Celular do representante"
                     append-icon="phone"
                     mask="(##) #####-####"
@@ -179,7 +175,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.cpf"
+                    v-model="conselho.representante.nu_cpf"
                     label="CPF"
                     append-icon="person"
                     mask="###.###.###.##"
@@ -191,7 +187,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.rg"
+                    v-model="conselho.representante.nu_rg"
                     label="RG"
                     append-icon="person"
                     mask="##.###.###-#"
@@ -203,7 +199,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.email"
+                    v-model="conselho.representante.ds_email"
                     label="E-mail do representante"
                     append-icon="mail"
                     disabled
@@ -212,12 +208,13 @@
               </v-layout>
 
               <v-checkbox
+                v-model="confirmacaoDadosDeInscricao"
                 :rules="[v => !!v || 'É necessário concordar para enviar!']"
                 label=" Declaro ser representante do órgão coordenador do conselho, vinculado ao órgão gestor de cultura do ente federado, designado (a) para o fornecimento das informações apresentadas e que assumo total responsabilidade pela veracidade das informações apresentadas.
 
 Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do Código Penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
                 required
-              ></v-checkbox>
+              />
 
               <v-layout
                 wrap
@@ -225,12 +222,13 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
               >
                 <v-flex offset-xs4>
                   <v-btn
-                    to="/inscricao/eleitor"
+                    to="/inscricao/conselho"
                   >
                     Cancelar
                   </v-btn>
                   <v-btn
                     color="primary"
+                    @click="salvar"
                   >
                     Confirmar
                   </v-btn>
@@ -245,28 +243,83 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import { eventHub } from '@/event';
+
 export default {
-  name: 'RevisaoEleitor',
+  name: 'RevisaoConselho',
   data: () => ({
+    confirmacaoDadosDeInscricao: false,
+    dialog: false,
+    listaUF: [],
     conselho: {
-      tp: 'radio-1',
-      cnpj: '78857057000107',
-      nomeOrgaoGestor: 'Teste de Nome',
-      telefone: '6136232853',
-      email: 'pedrophilipe.ti@gmail.com ',
-      sitioEletronico: 'www.google.com.br',
-      cep: '72853034',
-      logradouro: 'Jardim do Ingá ',
-      complemento: 'Rua 34 Quadra 34',
-      uf: 'GO',
-      cidade: 'Luziânia',
-      nomeRepresentante: 'Pedro Philipe Alves de Oliveira ',
-      celular: '6195465254',
-      cpf: '04752154874',
-      rg: '3265478',
-      email: 'pedro.teste@gmail.com'
+      no_orgao_gestor: '',
+      ds_email: '',
+      ds_email_confirmacao: '',
+      nu_telefone: '',
+      nu_cnpj: '',
+      tp_governamental: '',
+      endereco: {
+        co_ibge: '',
+        ds_complemento: '',
+        nu_cep: '',
+        ds_logradouro: '',
+        co_municipio: '',
+      },
+      representante: {
+        ds_email: '',
+        no_pessoa: '',
+        nu_rg: '',
+        nu_cpf: '',
+        nu_telefone: '',
+        ds_email_confirmation: '',
+      },
+      ds_sitio_eletronico: '',
+      anexos: [],
     },
   }),
-
+  computed: {
+    ...mapGetters({
+      conselhoGetter: 'conselho/conselho',
+      estadosGetter: 'localidade/estados',
+    }),
+  },
+  watch: {
+    conselhoGetter(value) {
+      this.conselho = value;
+    },
+  },
+  methods: {
+    ...mapActions({
+      enviarDadosConselho: 'conselho/enviarDadosConselho',
+    }),
+    salvar() {
+      this.enviarDadosConselho(this.conselhoGetter).then(() => {
+        eventHub.$emit(
+          'eventoSucesso',
+          'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
+        );
+        this.$router.push('/');
+      }).catch(() => {
+        eventHub.$emit(
+          'eventoErro',
+          'Houve algum erro ao enviar a sua inscrição.',
+        );
+        this.$router.push('/');
+      }).finally(() => {
+        this.fecharDialogo();
+      });
+    },
+    abrirDialogo() {
+      this.dialog = true;
+    },
+    fecharDialogo() {
+      this.dialog = false;
+    },
+  },
+  mounted() {
+    this.listaUF = this.estadosGetter;
+    this.conselho = this.conselhoGetter;
+  },
 };
 </script>

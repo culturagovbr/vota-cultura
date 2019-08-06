@@ -127,13 +127,15 @@
               >
                 <v-flex offset-xs4>
                   <v-btn
-                    to="/eleitor/inscricao">
+                    to="/eleitor/inscricao"
+                  >
                     Cancelar
                   </v-btn>
                   <v-btn
                     color="primary"
                     dark
-                    @click.stop="abrirDialogo">
+                    @click.stop="abrirDialogo"
+                  >
                     Confirmar
                   </v-btn>
                 </v-flex>
@@ -159,7 +161,7 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer/>
+            <v-spacer />
 
             <v-btn
               color="red darken-1"
@@ -174,7 +176,8 @@
               color="green darken-1"
               text
               flat
-              @click="salvar">
+              @click="salvar"
+            >
               Sim
             </v-btn>
           </v-card-actions>
@@ -185,76 +188,76 @@
 </template>
 
 <script>
-  import {mapActions, mapGetters} from 'vuex';
-  import {eventHub} from '@/event';
+import { mapActions, mapGetters } from 'vuex';
+import { eventHub } from '@/event';
 
-  export default {
-    name: 'RevisaoEleitor',
-    data: () => ({
-      dialog: false,
-      listaUF: [],
-      eleitor: {
-        nu_cpf: '',
-        no_eleitor: '',
-        nu_rg: '',
-        dt_nascimento: '',
-        st_estrangeiro: '',
-        co_endereco: '',
-        ds_email: '',
-        ds_email_confirmacao: '',
-        co_ibge: '',
-        anexos: {
-          cpf: '',
-          documento_identificacao: '',
-        },
+export default {
+  name: 'RevisaoEleitor',
+  data: () => ({
+    dialog: false,
+    listaUF: [],
+    eleitor: {
+      nu_cpf: '',
+      no_eleitor: '',
+      nu_rg: '',
+      dt_nascimento: '',
+      st_estrangeiro: '',
+      co_endereco: '',
+      ds_email: '',
+      ds_email_confirmacao: '',
+      co_ibge: '',
+      anexos: {
+        cpf: '',
+        documento_identificacao: '',
       },
+    },
+  }),
+  computed: {
+    ...mapGetters({
+      eleitorGetter: 'eleitor/eleitor',
+      estadosGetter: 'localidade/estados',
     }),
-    computed: {
-      ...mapGetters({
-        eleitorGetter: 'eleitor/eleitor',
-        estadosGetter: 'localidade/estados',
-      }),
+  },
+  watch: {
+    eleitorGetter(value) {
+      this.eleitor = value;
     },
-    watch: {
-      eleitorGetter(value) {
-        this.eleitor = value;
-      },
+  },
+  methods: {
+    ...mapActions({
+      enviarDadosEleitor: 'eleitor/enviarDadosEleitor',
+    }),
+    salvar() {
+      this.enviarDadosEleitor(this.eleitorGetter).then(() => {
+        eventHub.$emit(
+          'eventoSucesso',
+          'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
+        );
+        this.$router.push('/');
+      }).catch(() => {
+        eventHub.$emit(
+          'eventoErro',
+          'Houve algum erro ao enviar a sua inscrição.',
+        );
+        this.$router.push('/');
+      }).finally(() => {
+        this.fecharDialogo();
+      });
     },
-    methods: {
-      ...mapActions({
-        enviarDadosEleitor: 'eleitor/enviarDadosEleitor',
-      }),
-      salvar() {
-        this.enviarDadosEleitor(this.eleitorGetter).then(() => {
-          eventHub.$emit(
-            'eventoSucesso',
-            'Enviado com sucesso! Um email será enviado com os dados da inscrição.'
-          );
-          this.$router.push('/');
-        }).catch(() => {
-          eventHub.$emit(
-            'eventoErro',
-            'Houve algum erro ao enviar a sua inscrição.'
-          );
-          this.$router.push('/');
-        }).finally(() => {
-          this.fecharDialogo();
-        });
-      },
-      abrirDialogo() {
-        this.dialog = true;
-      },
-      fecharDialogo() {
-        this.dialog = false;
-      },
+    abrirDialogo() {
+      this.dialog = true;
     },
-    mounted() {
-      if (!Object.entries(this.eleitor).length) {
-        this.$router.push('/eleitor/inscricao');
-      }
-      this.listaUF = this.estadosGetter;
-      this.eleitor = this.eleitorGetter;
+    fecharDialogo() {
+      this.dialog = false;
     },
+  },
+  mounted() {
+    // if (!Object.entries(this.eleitor).length) {
+    //   this.$router.push('/eleitor/inscricao');
+    // }
+    this.listaUF = this.estadosGetter;
+    this.eleitor = this.eleitorGetter;
+  },
 
-  };
+};
 </script>
