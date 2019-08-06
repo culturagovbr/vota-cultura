@@ -19,16 +19,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
     }
 
-    protected function mapWebRoutes()
-    {
-        Route::group([
-            'middleware' => 'web',
-            'namespace'  => $this->namespace,
-        ], function ($router) {
-            require module_path('pessoa', 'Routes/web.php', 'app');
-        });
-    }
-
     protected function mapApiRoutes()
     {
         Route::group([
