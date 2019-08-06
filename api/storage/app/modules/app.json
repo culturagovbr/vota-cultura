@@ -59,6 +59,16 @@
         "enabled": true,
         "order": 9001
     },
+    "Pessoa": {
+        "basename": "Pessoa",
+        "name": "Pessoa",
+        "slug": "pessoa",
+        "version": "1.0",
+        "description": "Modulo destinado a pessoas f\u00edsica e jur\u00eddica.",
+        "id": 484420482,
+        "enabled": true,
+        "order": 9001
+    },
     "Representacao": {
         "basename": "Representacao",
         "name": "Representacao",

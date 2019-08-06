@@ -8,7 +8,7 @@ use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
 use Illuminate\Http\Request;
 
-class EleitorController extends AApiResourceController
+class EleitorApiResourceController extends AApiResourceController
 {
     use TApiResourceUpdate,
         TApiResourceDestroy;
