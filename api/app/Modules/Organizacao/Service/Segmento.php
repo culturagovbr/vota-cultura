@@ -12,6 +12,4 @@ class Segmento extends AbstractService
     {
         parent::__construct($model);
     }
-
-
 }

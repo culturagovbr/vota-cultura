@@ -642,6 +642,7 @@ import File from '@/core/components/upload/File';
 import { eventHub } from '@/event';
 
 export default {
+  name: "Organizacao",
   components: { File },
   data: () => ({
     valid_dados_entidade: false,
