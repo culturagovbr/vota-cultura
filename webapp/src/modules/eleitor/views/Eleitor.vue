@@ -271,6 +271,13 @@ export default {
     estadosGetter() {
       this.listaUF = this.estadosGetter;
     },
+//     'eleitor.nu_cpf': function (value) {
+//       if(value.length === 11) {
+//         this.consultarCPF(value).then((response) => {
+// console.log(response);
+//         });
+//       }
+//     },
   },
   mounted() {
     this.obterEstados();
@@ -284,6 +291,7 @@ export default {
     ...mapActions({
       confirmarEleitor: 'eleitor/confirmarEleitor',
       obterEstados: 'localidade/obterEstados',
+      consultarCPF: 'eleitor/consultarCPF',
     }),
     validate() {
       const validacaoDocumentoIdentificacao = !this.anexo_documento_identificacao && !this.anexo_documento_identificacao.getFileEncodeBase64String();

@@ -12,3 +12,7 @@ export const enviarDadosEleitor = async ({}, eleitor) => {
 export const confirmarEleitor = async ({ commit }, eleitor) => {
   commit(types.DEFINIR_ELEITOR, eleitor);
 };
+
+export const consultarCPF = async ({ commit }, cpf) => {
+  return eleitorService.consultarCPF(cpf);
+};

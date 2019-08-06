@@ -256,21 +256,17 @@
               <v-form
                 ref="form_representante"
                 v-model="valid_representante"
-                lazy-validation
-              >
+                lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl
-                  >
+                    grid-list-xl>
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm8
-                      >
+                        sm8>
                         <v-text-field
                           v-model="conselho.representante.no_pessoa"
                           label="*Nome do Representante"
@@ -281,8 +277,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="conselho.representante.nu_telefone"
                           label="*Celular do representante"
@@ -297,12 +292,10 @@
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="conselho.representante.nu_cpf"
                           label="*CPF"
@@ -315,8 +308,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="conselho.representante.nu_rg"
                           label="*RG"
@@ -330,12 +322,10 @@
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="conselho.representante.ds_email"
                           label="*E-mail do representante"
