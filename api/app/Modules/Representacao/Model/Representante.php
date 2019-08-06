@@ -27,4 +27,14 @@ class Representante extends Model
             'co_representante'
         );
     }
+
+    public function arquivos()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Upload\Model\Arquivo::class,
+            'rl_representante_arquivo',
+            'co_representante',
+            'co_arquivo'
+        );
+    }
 }

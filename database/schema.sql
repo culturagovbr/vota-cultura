@@ -197,7 +197,7 @@ CREATE TABLE rl_representante_arquivo (
 	co_representante     integer  NOT NULL ,
 	co_arquivo           integer  NOT NULL ,
 	tp_arquivo           varchar(60)  NOT NULL ,
-	tb_inscricao         char(1)  NOT NULL ,
+	tp_inscricao         char(1)  NOT NULL ,
 	CONSTRAINT pk_representante_arquivo_corepresentantearquivo PRIMARY KEY ( co_representante_arquivo ),
 	CONSTRAINT fk_representantearquivo_representante FOREIGN KEY ( co_representante ) REFERENCES tb_representante( co_representante )  ,
 	CONSTRAINT fk_representantearquivo_arquivo FOREIGN KEY ( co_arquivo ) REFERENCES tb_arquivo( co_arquivo )
@@ -211,7 +211,7 @@ COMMENT ON COLUMN rl_representante_arquivo.co_arquivo IS 'chave estrangeira liga
 
 COMMENT ON COLUMN rl_representante_arquivo.tp_arquivo IS 'opcoes:\n\ndeclaracao_representante\ndocumento_identificacao\ndocumento_cpf\nato_normativo\nata_reuniao\ndeclaracao_ciencia';
 
-COMMENT ON COLUMN rl_representante_arquivo.tb_inscricao IS '1 - Organização\n2 - Conselho';
+COMMENT ON COLUMN rl_representante_arquivo.tp_inscricao IS '1 - Organização\n2 - Conselho';
 
 CREATE TABLE rl_usuario_perfil (
 	co_usuario_perfil    SERIAL,
@@ -236,17 +236,14 @@ COMMENT ON CONSTRAINT fk_usuarioperfil_usuario ON rl_usuario_perfil IS 'relacion
 COMMENT ON CONSTRAINT fk_usuarioperfil_perfil ON rl_usuario_perfil IS 'chave estrangeira para tabela perfil';
 
 CREATE TABLE tb_municipio (
-	co_municipio         SERIAL,
-	co_ibge              integer  NOT NULL ,
+	co_municipio              integer  NOT NULL ,
 	no_municipio         varchar(50)  NOT NULL ,
 	co_uf                integer  NOT NULL ,
 	CONSTRAINT pk_municipio_comunicipio PRIMARY KEY ( co_municipio ),
 	CONSTRAINT fk_municipio_uf FOREIGN KEY ( co_uf ) REFERENCES tb_uf( co_ibge )
  );
 
-COMMENT ON COLUMN tb_municipio.co_municipio IS 'chave primaria da tabela';
-
-COMMENT ON COLUMN tb_municipio.co_ibge IS 'código da base do IBGE';
+COMMENT ON COLUMN tb_municipio.co_municipio IS 'chave primaria da tabela, código da base do IBGE';
 
 COMMENT ON COLUMN tb_municipio.no_municipio IS 'nome do município';
 
@@ -254,7 +251,7 @@ COMMENT ON COLUMN tb_municipio.co_uf IS 'chave estrangeira para tabela de uf';
 
 CREATE TABLE tb_endereco (
 	co_endereco          SERIAL,
-	ds_complemento       varchar(255)  NOT NULL ,
+	ds_complemento       varchar(255) ,
 	nu_cep               varchar(8)  NOT NULL ,
 	ds_logradouro        varchar(255)  NOT NULL ,
 	co_municipio         integer  NOT NULL ,

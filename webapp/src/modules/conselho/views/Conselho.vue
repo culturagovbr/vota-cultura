@@ -226,7 +226,7 @@
                           :items="listaMunicipios"
                           label="*Cidade"
                           append-icon="place"
-                          item-value="co_ibge"
+                          item-value="co_municipio"
                           item-text="no_municipio"
                           :rules="[rules.required]"
                           :disabled="conselho.co_ibge < 1 || conselho.co_ibge == null"
@@ -470,6 +470,7 @@ export default {
     valid_representante: false,
     valid_anexo: false,
     conselho: {
+      st_inscricao: 'e',
       no_orgao_gestor: '',
       ds_email: '',
       ds_email_confirmacao: '',

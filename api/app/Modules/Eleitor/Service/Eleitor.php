@@ -7,7 +7,7 @@ use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
 use App\Modules\Representacao\Service\Representante;
-use App\Modules\Representacao\Service\Upload;
+use App\Modules\Upload\Service\Upload;
 use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
 use DB;

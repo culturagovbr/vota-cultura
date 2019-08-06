@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Representacao\Service;
+namespace App\Modules\Upload\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Upload\Model\Arquivo as ArquivoModel;

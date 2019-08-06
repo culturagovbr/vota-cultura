@@ -6,9 +6,13 @@ use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Representacao\Service\Representante;
+use App\Modules\Upload\Service\Upload;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
+use App\Modules\Upload\Model\Arquivo;
+
+
 
 class Conselho extends AbstractService
 {
@@ -36,7 +40,7 @@ class Conselho extends AbstractService
             }
 
             $serviceRepresentante = app()->make(Representante::class);
-            $representante = $serviceRepresentante->cadastrar($dados);
+            $representante = $serviceRepresentante->cadastrar($dados['representante']);
 
             if (!$representante) {
                 throw new \HttpException('Não foi possível cadastrar o representante.');
@@ -44,14 +48,31 @@ class Conselho extends AbstractService
 
             $dados['co_representante'] = $representante->co_representante;
             $serviceEndereco = app()->make(Endereco::class);
-            $endereco = $serviceEndereco->cadastrar($dados);
+            $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
             if (!$endereco) {
-                throw new \HttpException('Não foi possível cadastrar o representante.');
+                throw new \HttpException('Não foi possível cadastrar o endereço.');
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;
             $conselho = parent::cadastrar($dados);
+
+            foreach($dados['anexos'] as $dadosArquivo) {
+                $modeloArquivo = app()->make(Arquivo::class);
+                $modeloArquivo->fill($dadosArquivo);
+                $serviceUpload = new Upload($modeloArquivo);
+                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+                    $dadosArquivo['arquivoCodificado'],
+                    'conselho/' . $dadosArquivo['tp_arquivo']
+                );
+                $representante->arquivos()->attach(
+                    $arquivoArmazenado->co_arquivo,
+                    [
+                        'tp_arquivo' => $dadosArquivo['tp_arquivo'],
+                        'tp_inscricao' => 2
+                    ]
+                );
+            }
 
 //            Mail::to($organizacao->ds_email)->send(
 //                new CadastroComSucesso($organizacao)

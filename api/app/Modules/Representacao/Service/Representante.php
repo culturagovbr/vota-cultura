@@ -6,6 +6,7 @@ use App\Core\Service\AbstractService;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class Representante extends AbstractService
 {
@@ -19,8 +20,6 @@ class Representante extends AbstractService
         try {
             $representante = $this->getModel()->where([
                 'ds_email' => $dados['ds_email']
-            ])->orWhere([
-                'no_organizacao' => $dados['no_orgao_gestor']
             ])->orWhere([
                 'nu_rg' => $dados['nu_rg']
             ])->orWhere([
