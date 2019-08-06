@@ -442,7 +442,7 @@
               </v-btn>
               <v-btn
                 color="primary"
-                @click="apresentar"
+                @click="salvar"
               >
                 Enviar
               </v-btn>
@@ -580,7 +580,7 @@ export default {
         this.etapaFormulario = this.etapaFormulario + 1;
       }
     },
-    apresentar() {
+    salvar() {
       let erro = false;
       this.conselho.anexos = [];
       let anexos = [
