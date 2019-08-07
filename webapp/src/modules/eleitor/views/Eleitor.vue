@@ -38,6 +38,7 @@
                   <v-flex sm6>
                     <v-text-field
                       v-model="eleitor.no_eleitor"
+                      :disabled="true"
                       label="*Nome completo"
                       append-icon="perm_identity"
                       :rules="[rules.required]"
@@ -271,13 +272,16 @@ export default {
     estadosGetter() {
       this.listaUF = this.estadosGetter;
     },
-//     'eleitor.nu_cpf': function (value) {
-//       if(value.length === 11) {
-//         this.consultarCPF(value).then((response) => {
-// console.log(response);
-//         });
-//       }
-//     },
+    'eleitor.nu_cpf': function (value) {
+      self.eleitor.no_eleitor = '';
+      if(value.length === 11) {
+        let self = this;
+        this.consultarCPF(value).then((response) => {
+          const { data } = response.data;
+          self.eleitor.no_eleitor = data.nmPessoaFisica;
+        });
+      }
+    },
   },
   mounted() {
     this.obterEstados();
