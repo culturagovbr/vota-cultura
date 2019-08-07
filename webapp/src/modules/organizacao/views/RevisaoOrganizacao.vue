@@ -354,89 +354,89 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { eventHub } from '@/event';
+  import {mapActions, mapGetters} from 'vuex';
+  import {eventHub} from '@/event';
 
-export default {
-  name: 'RevisaoConselho',
-  data: () => ({
-    confirmacaoDadosDeInscricao: false,
-    dialog: false,
-    listaUF: [],
-    conselho: {
-      no_orgao_gestor: '',
-      ds_email: '',
-      ds_email_confirmacao: '',
-      nu_telefone: '',
-      nu_cnpj: '',
-      tp_governamental: '',
-      endereco: {
-        co_ibge: '',
-        ds_complemento: '',
-        nu_cep: '',
-        ds_logradouro: '',
-        co_municipio: '',
-      },
-      representante: {
+  export default {
+    name: 'RevisaoConselho',
+    data: () => ({
+      confirmacaoDadosDeInscricao: false,
+      dialog: false,
+      listaUF: [],
+      conselho: {
+        no_orgao_gestor: '',
         ds_email: '',
-        no_pessoa: '',
-        nu_rg: '',
-        nu_cpf: '',
+        ds_email_confirmacao: '',
         nu_telefone: '',
-        ds_email_confirmation: '',
+        nu_cnpj: '',
+        tp_governamental: '',
+        endereco: {
+          co_ibge: '',
+          ds_complemento: '',
+          nu_cep: '',
+          ds_logradouro: '',
+          co_municipio: '',
+        },
+        representante: {
+          ds_email: '',
+          no_pessoa: '',
+          nu_rg: '',
+          nu_cpf: '',
+          nu_telefone: '',
+          ds_email_confirmation: '',
+        },
+        ds_sitio_eletronico: '',
+        anexos: [],
       },
-      ds_sitio_eletronico: '',
-      anexos: [],
-    },
-  }),
-  computed: {
-    ...mapGetters({
-      conselhoGetter: 'conselho/conselho',
-      estadosGetter: 'localidade/estados',
     }),
-  },
-  watch: {
-    conselhoGetter(value) {
-      this.conselho = value;
+    computed: {
+      ...mapGetters({
+        conselhoGetter: 'conselho/conselho',
+        estadosGetter: 'localidade/estados',
+      }),
     },
-  },
-  methods: {
+    watch: {
+      conselhoGetter(value) {
+        this.conselho = value;
+      },
+    },
+    methods: {
 
-    ...mapActions({
-      obterEstados: 'localidade/obterEstados',
-      obterMunicipios: 'localidade/obterMunicipios',
-      obterCriterios: 'organizacao/obterCriterios',
-      obterSegmentos: 'organizacao/obterSegmentos',
-      confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
-      // enviarDadosOrganizacao: 'conselho/enviarDadosOrganizacao',
-    }),
-    salvar() {
-      this.enviarDadosConselho(this.conselhoGetter).then(() => {
-        eventHub.$emit(
-          'eventoSucesso',
-          'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
-        );
-        this.$router.push('/');
-      }).catch(() => {
-        eventHub.$emit(
-          'eventoErro',
-          'Houve algum erro ao enviar a sua inscrição.',
-        );
-        this.$router.push('/');
-      }).finally(() => {
-        this.fecharDialogo();
-      });
+      ...mapActions({
+        obterEstados: 'localidade/obterEstados',
+        obterMunicipios: 'localidade/obterMunicipios',
+        obterCriterios: 'organizacao/obterCriterios',
+        obterSegmentos: 'organizacao/obterSegmentos',
+        confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
+        // enviarDadosOrganizacao: 'conselho/enviarDadosOrganizacao',
+      }),
+      salvar() {
+        this.enviarDadosConselho(this.conselhoGetter).then(() => {
+          eventHub.$emit(
+            'eventoSucesso',
+            'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
+          );
+          this.$router.push('/');
+        }).catch(() => {
+          eventHub.$emit(
+            'eventoErro',
+            'Houve algum erro ao enviar a sua inscrição.',
+          );
+          this.$router.push('/');
+        }).finally(() => {
+          this.fecharDialogo();
+        });
+      },
+      abrirDialogo() {
+        this.dialog = true;
+      },
+      fecharDialogo() {
+        this.dialog = false;
+      },
     },
-    abrirDialogo() {
-      this.dialog = true;
+    mounted() {
+      this.listaUF = this.estadosGetter;
+      this.organizacao = this.organizacaoGetter;
     },
-    fecharDialogo() {
-      this.dialog = false;
-    },
-  },
-  mounted() {
-    this.listaUF = this.estadosGetter;
-    this.organizacao = this.organizacaoGetter;
-  },
-};
+  };
 </script>

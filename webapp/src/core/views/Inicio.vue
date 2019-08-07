@@ -17,8 +17,7 @@
                 <v-flex xs12>
                   <v-btn class="yellow mt-2"
                          large
-                         to="/inscricao-conselho"
-                  >
+                         to="/inscricao-conselho">
                     Conselho Cultural
                   </v-btn>
                 </v-flex>
@@ -51,9 +50,9 @@
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
             <h2 class="headline">Inscreva-se</h2>
-            <span class="subheading">
-                              Cras facilisis mi vitae nunc
-                              </span>
+            <!--<span class="subheading">-->
+                              <!--Cras facilisis mi vitae nunc-->
+                              <!--</span>-->
           </div>
         </v-flex>
         <v-flex xs12>
@@ -81,7 +80,7 @@
                 <div class="text-xs-center">
                   <v-btn
                       color="green darken-4"
-                      to="/inscricao/organizacao"
+                      to="/organizacao/inscricao"
                       dark
                   >
                     <v-icon>
@@ -110,7 +109,7 @@
                 <div class="text-xs-center">
                   <v-btn
                       color="green darken-4"
-                      to="/inscricao/conselho"
+                      to="/conselho/inscricao"
                       dark>
                     <v-icon>
                       call_made
@@ -137,7 +136,7 @@
                   <div class="text-xs-center">
                     <v-btn
                         color="green darken-4"
-                        to="/inscricao/eleitor"
+                        to="/eleitor/inscricao"
                         dark>
                       <v-icon>
                         call_made

@@ -613,7 +613,7 @@ export default {
     valid_segmento: false,
     valid_criterio: false,
     valid_representante: false,
-    etapaFormulario: 5,
+    etapaFormulario: 1,
     listaUF: [],
     listaSegmentos: [],
     listaMunicipios: [],
