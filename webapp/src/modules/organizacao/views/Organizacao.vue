@@ -18,7 +18,7 @@
               Organização ou Entidade Cultural
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               :complete="etapaFormulario > 2"
@@ -26,7 +26,7 @@
               Responsável
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               :complete="etapaFormulario > 3"
@@ -34,7 +34,7 @@
               Segmento
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               :complete="etapaFormulario > 4"
@@ -42,7 +42,7 @@
               Declaração de enquadramento
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               :complete="etapaFormulario > 5"
@@ -74,7 +74,7 @@
                           placeholder="99.999.999/9999-99"
                           mask="##.###.###/####-##"
                           :rules="[rules.required, rules.cnpjMin]"
-                          required />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
@@ -85,7 +85,7 @@
                           append-icon="perm_identity"
                           :disabled="true"
                           :rules="[rules.required]"
-                          required />
+                          required/>
                       </v-flex>
 
                       <v-flex
@@ -98,7 +98,7 @@
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
-                          required />
+                          required/>
                       </v-flex>
                     </v-layout>
 
@@ -246,7 +246,7 @@
                           label="*Nome do Representante"
                           append-icon="perm_identity"
                           :rules="[rules.required]"
-                          required />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
@@ -324,24 +324,20 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn
-                flat
-                @click="voltarEtapaAnterior">
+              <v-btn flat @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
-              <v-btn
-                :disabled="!valid_representante"
-                color="primary"
-                @click="validarIrProximaEtapa('form_representante')">
+              <v-btn :disabled="!valid_representante"
+                     color="primary"
+                     @click="validarIrProximaEtapa('form_representante')">
                 Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <v-form
-                ref="form_segmento"
-                v-model="valid_segmento"
-                lazy-validation>
+              <v-form ref="form_segmento"
+                      v-model="valid_segmento"
+                      lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
@@ -354,8 +350,7 @@
                         sm6>
                         <v-radio-group
                           v-model="organizacao.co_segmento"
-                          label="*Informe o segmento no qual pretende concorrer"
-                        >
+                          label="*Informe o segmento no qual pretende concorrer">
                           <v-radio
                             v-for="(segmento, i) in listaSegmentos"
                             :key="i"
@@ -368,37 +363,31 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn
-                flat
-                @click="voltarEtapaAnterior">
+              <v-btn flat
+                     @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
-              <v-btn
-                :disabled="!valid_segmento"
-                color="primary"
-                @click="validarIrProximaEtapa('form_segmento')">
+              <v-btn :disabled="!valid_segmento"
+                     color="primary"
+                     @click="validarIrProximaEtapa('form_segmento')">
                 Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="4">
-              <v-form
-                ref="form_criterio"
-                v-model="valid_criterio"
-                lazy-validation>
+              <v-form ref="form_criterio"
+                      v-model="valid_criterio"
+                      lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl
-                  >
+                    grid-list-xl>
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.abrangencia_nacional"
                           :items="listaCriterios.abrangencia_nacional"
@@ -407,13 +396,11 @@
                           label="*Abrangência Nacional"
                           :rules="[rules.required]"
                           required
-                          placeholder="Selecione"
-                        />
+                          placeholder="Selecione"/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.abrangencia_estadual"
                           :items="listaCriterios.abrangencia_estadual"
@@ -422,19 +409,16 @@
                           label="*Abrangência Estadual"
                           :rules="[rules.required]"
                           required
-                          placeholder="Selecione"
-                        />
+                          placeholder="Selecione"/>
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.tempo_funcionamento"
                           :items="listaCriterios.tempo_funcionamento"
@@ -448,8 +432,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.nu_associados_filiados"
                           :items="listaCriterios.nu_associados_filiados"
@@ -458,19 +441,16 @@
                           label="*Nº de Associados ou Filiados"
                           :rules="[rules.required]"
                           required
-                          placeholder="Selecione"
-                        />
+                          placeholder="Selecione"/>
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.nu_atividades"
                           :items="listaCriterios.nu_atividades"
@@ -479,32 +459,27 @@
                           label="*Nº Atividades/projetos realizados no campo cultural a partir de 2016"
                           :rules="[rules.required]"
                           required
-                          placeholder="Selecione"
-                        />
+                          placeholder="Selecione"/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.participacao_instancias"
                           :items="listaCriterios.participacao_instancias"
                           item-value="co_criterio"
                           item-text="ds_detalhamento"
                           label="Participação em instâncias de formulação de política cultural"
-                          placeholder="Selecione"
-                        />
+                          placeholder="Selecione"/>
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.abrangencia_campo_cultural"
                           :items="listaCriterios.abrangencia_campo_cultural"
@@ -513,13 +488,11 @@
                           label="*Abrangência de projetos realizados no campo cultural a partir de 2016"
                           :rules="[rules.required]"
                           required
-                          placeholder="Selecione"
-                        />
+                          placeholder="Selecione"/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-select
                           v-model="organizacao.criterios.pesquisa_producao"
                           :items="listaCriterios.pesquisa_producao"
@@ -533,17 +506,12 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn
-                flat
-                @click="voltarEtapaAnterior"
-              >
+              <v-btn flat @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
-              <v-btn
-                :disabled="!valid_criterio"
-                color="primary"
-                @click="validarIrProximaEtapa('form_criterio')"
-              >
+              <v-btn :disabled="!valid_criterio"
+                     color="primary"
+                     @click="validarIrProximaEtapa('form_criterio')">
                 Próximo
               </v-btn>
             </v-stepper-content>
@@ -551,44 +519,45 @@
             <v-stepper-content step="5">
               <v-form lazy-validation>
                 <v-card flat>
-                  <v-container
-                    fluid
-                    grid-list-xl
-                  >
-                    <v-layout>
+                  <v-container fluid grid-list-xl>
+                    <v-layout align-center justify-center>
                       <v-flex sm3>
-                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
-                          Documento de identificação do responsável*
-                        </div>
-                      </v-flex>
-                      <v-flex sm3>
-                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
-                          Declaração do representante Legal*
+                        <div class="subheading mb-4">
+                          Envie os documentos abaixo:
                         </div>
                       </v-flex>
                     </v-layout>
 
-                    <v-layout>
+                    <v-layout align-center justify-center class="mb-4" wrap>
                       <v-flex sm3>
-                        <file v-model="documento_identificacao_responsavel" />
+                        <v-card max-width="344" min-height="230" class="mx-auto">
+                          <v-card-title class="subheading mb-1 justify-center">
+                            Documento de identificação do responsável*
+                          </v-card-title>
+                          <v-card-text>
+                            <file v-model="documento_identificacao_responsavel"/>
+                          </v-card-text>
+                        </v-card>
                       </v-flex>
+
                       <v-flex sm3>
-                        <file v-model="declaracao_representante_legal" />
+                        <v-card max-width="344" min-height="230" class="mx-auto">
+                          <v-card-title class="subheading mb-1 justify-center">
+                            Declaração do representante Legal*
+                          </v-card-title>
+                          <v-card-text>
+                            <file v-model="declaracao_representante_legal"/>
+                          </v-card-text>
+                        </v-card>
                       </v-flex>
                     </v-layout>
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn
-                flat
-                @click="voltarEtapaAnterior"
-              >
+              <v-btn flat @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
-              <v-btn
-                color="primary"
-                @click="salvar"
-              >
+              <v-btn color="primary" @click="salvar">
                 Enviar
               </v-btn>
             </v-stepper-content>
@@ -600,192 +569,192 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import _ from 'lodash';
-import File from '@/core/components/upload/File';
-import { eventHub } from '@/event';
+  import {mapActions, mapGetters} from 'vuex';
+  import _ from 'lodash';
+  import File from '@/core/components/upload/File';
+  import {eventHub} from '@/event';
 
-export default {
-  name: 'Organizacao',
-  components: { File },
-  data: () => ({
-    valid_dados_entidade: false,
-    valid_segmento: false,
-    valid_criterio: false,
-    valid_representante: false,
-    etapaFormulario: 1,
-    listaUF: [],
-    listaSegmentos: [],
-    listaMunicipios: [],
-    listaCriterios: [],
-    organizacao: {
-      st_inscricao: 'e',
-      co_segmento: '',
-      no_organizacao: '',
-      ds_email: '',
-      ds_email_confirmacao: '',
-      nu_telefone: '',
-      nu_cnpj: '',
-      endereco: {
-        co_ibge: '',
-        ds_complemento: '',
-        nu_cep: '',
-        ds_logradouro: '',
-        co_municipio: '',
-      },
-      representante: {
+  export default {
+    name: 'Organizacao',
+    components: {File},
+    data: () => ({
+      valid_dados_entidade: false,
+      valid_segmento: false,
+      valid_criterio: false,
+      valid_representante: false,
+      etapaFormulario: 5,
+      listaUF: [],
+      listaSegmentos: [],
+      listaMunicipios: [],
+      listaCriterios: [],
+      organizacao: {
+        st_inscricao: 'e',
+        co_segmento: '',
+        no_organizacao: '',
         ds_email: '',
-        no_pessoa: '',
-        nu_rg: '',
-        nu_cpf: '',
+        ds_email_confirmacao: '',
         nu_telefone: '',
-        ds_email_confirmation: '',
+        nu_cnpj: '',
+        endereco: {
+          co_ibge: '',
+          ds_complemento: '',
+          nu_cep: '',
+          ds_logradouro: '',
+          co_municipio: '',
+        },
+        representante: {
+          ds_email: '',
+          no_pessoa: '',
+          nu_rg: '',
+          nu_cpf: '',
+          nu_telefone: '',
+          ds_email_confirmation: '',
+        },
+        ds_sitio_eletronico: '',
+        anexos: [],
+        criterios: {
+          abrangencia_campo_cultural: '',
+          abrangencia_estadual: '',
+          abrangencia_nacional: '',
+          nu_associados_filiados: '',
+          nu_atividades: '',
+          participacao_instancias: '',
+          pesquisa_producao: '',
+          tempo_funcionamento: '',
+        },
       },
-      ds_sitio_eletronico: '',
-      anexos: [],
-      criterios: {
-        abrangencia_campo_cultural: '',
-        abrangencia_estadual: '',
-        abrangencia_nacional: '',
-        nu_associados_filiados: '',
-        nu_atividades: '',
-        participacao_instancias: '',
-        pesquisa_producao: '',
-        tempo_funcionamento: '',
+      declaracao_representante_legal: {},
+      documento_identificacao_responsavel: {},
+      headers: [
+        {
+          text: 'Tipo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          text: 'Arquivo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          sortable: false,
+        },
+      ],
+      rules: {
+        required: v => !!v || 'Campo não preenchido',
+        phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
+        cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
+        cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
+        cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
+        email: (v) => {
+          // eslint-disable-next-line
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(v) || 'E-mail invalido';
+        },
+        url: (v) => {
+          // eslint-disable-next-line
+          const pattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+          if (v) return pattern.test(v) || 'Sítio invalido';
+          return true;
+        },
+        emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
       },
-    },
-    declaracao_representante_legal: {},
-    documento_identificacao_responsavel: {},
-    headers: [
-      {
-        text: 'Tipo',
-        align: 'center',
-        sortable: false,
-      },
-      {
-        text: 'Arquivo',
-        align: 'center',
-        sortable: false,
-      },
-      {
-        sortable: false,
-      },
-    ],
-    rules: {
-      required: v => !!v || 'Campo não preenchido',
-      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-      cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
-      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-      cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
-      email: (v) => {
-        // eslint-disable-next-line
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'E-mail invalido';
-      },
-      url: (v) => {
-        // eslint-disable-next-line
-        const pattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-        if (v) return pattern.test(v) || 'Sítio invalido';
-        return true;
-      },
-      emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
-    },
-  }),
-  watch: {
-    estadosGetter() {
-      this.listaUF = this.estadosGetter;
-    },
-    municipiosGetter() {
-      this.listaMunicipios = this.municipiosGetter;
-    },
-    segmentosGetter() {
-      this.listaSegmentos = this.segmentosGetter;
-    },
-    'organizacao.co_ibge': function (coIBGE) {
-      this.organizacao.endereco.co_municipio = '';
-      this.obterMunicipios(coIBGE);
-    },
-    'organizacao.nu_cnpj': function (value) {
-      let self = this;
-      self.organizacao.no_organizacao = '';
-      if(value.length === 14) {
-        this.consultarCNPJ(value).then((response) => {
-          const { data } = response.data;
-          self.organizacao.no_organizacao = data.nmRazaoSocial;
-        });
-      }
-    },
-    criteriosGetter() {
-      const criterios = _.groupBy(
-        this.criteriosGetter, criterio => criterio.tp_criterio,
-      );
-      this.listaCriterios = criterios;
-    },
-  },
-  mounted() {
-    this.obterEstados();
-    this.obterSegmentos();
-    this.obterCriterios();
-  },
-  computed: {
-    ...mapGetters({
-      estadosGetter: 'localidade/estados',
-      municipiosGetter: 'localidade/municipios',
-      segmentosGetter: 'organizacao/segmentos',
-      criteriosGetter: 'organizacao/criterios',
     }),
-  },
-  methods: {
-    ...mapActions({
-      obterEstados: 'localidade/obterEstados',
-      obterMunicipios: 'localidade/obterMunicipios',
-      obterCriterios: 'organizacao/obterCriterios',
-      obterSegmentos: 'organizacao/obterSegmentos',
-      confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
-      consultarCNPJ: 'pessoa/consultarCNPJ',
-    }),
-    validarIrProximaEtapa(formRef) {
-      if (this.$refs[formRef].validate()) {
-        this.etapaFormulario = this.etapaFormulario + 1;
-      }
-    },
-    voltarEtapaAnterior() {
-      this.etapaFormulario = this.etapaFormulario - 1;
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    salvar() {
-      let erro = false;
-      this.organizacao.anexos = [];
-      const anexos = [
-        'documento_identificacao_responsavel',
-        'declaracao_representante_legal',
-      ];
-
-      try {
-        anexos.forEach((nomeAnexo) => {
-          this.organizacao.anexos.push({
-            tp_arquivo: nomeAnexo,
-            no_extensao: this[nomeAnexo].fileExtension,
-            no_mime_type: this[nomeAnexo].fileType,
-            no_arquivo: this[nomeAnexo].filename,
-            arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+    watch: {
+      estadosGetter() {
+        this.listaUF = this.estadosGetter;
+      },
+      municipiosGetter() {
+        this.listaMunicipios = this.municipiosGetter;
+      },
+      segmentosGetter() {
+        this.listaSegmentos = this.segmentosGetter;
+      },
+      'organizacao.co_ibge': function (coIBGE) {
+        this.organizacao.endereco.co_municipio = '';
+        this.obterMunicipios(coIBGE);
+      },
+      'organizacao.nu_cnpj': function (value) {
+        let self = this;
+        self.organizacao.no_organizacao = '';
+        if (value.length === 14) {
+          this.consultarCNPJ(value).then((response) => {
+            const {data} = response.data;
+            self.organizacao.no_organizacao = data.nmRazaoSocial;
           });
-        });
-      } catch (e) {
-        erro = true;
-        eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
-      }
-      if (!erro) {
-        this.confirmarOrganizacao(this.organizacao).then(() => {
-          this.$router.push('/organizacao/revisao-organizacao');
-        });
-      }
+        }
+      },
+      criteriosGetter() {
+        const criterios = _.groupBy(
+          this.criteriosGetter, criterio => criterio.tp_criterio,
+        );
+        this.listaCriterios = criterios;
+      },
     },
-    mostrar() {
-      console.log(this.organizacao);
+    mounted() {
+      this.obterEstados();
+      this.obterSegmentos();
+      this.obterCriterios();
     },
-  },
-};
+    computed: {
+      ...mapGetters({
+        estadosGetter: 'localidade/estados',
+        municipiosGetter: 'localidade/municipios',
+        segmentosGetter: 'organizacao/segmentos',
+        criteriosGetter: 'organizacao/criterios',
+      }),
+    },
+    methods: {
+      ...mapActions({
+        obterEstados: 'localidade/obterEstados',
+        obterMunicipios: 'localidade/obterMunicipios',
+        obterCriterios: 'organizacao/obterCriterios',
+        obterSegmentos: 'organizacao/obterSegmentos',
+        confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
+        consultarCNPJ: 'pessoa/consultarCNPJ',
+      }),
+      validarIrProximaEtapa(formRef) {
+        if (this.$refs[formRef].validate()) {
+          this.etapaFormulario = this.etapaFormulario + 1;
+        }
+      },
+      voltarEtapaAnterior() {
+        this.etapaFormulario = this.etapaFormulario - 1;
+      },
+      reset() {
+        this.$refs.form.reset();
+      },
+      salvar() {
+        let erro = false;
+        this.organizacao.anexos = [];
+        const anexos = [
+          'documento_identificacao_responsavel',
+          'declaracao_representante_legal',
+        ];
+
+        try {
+          anexos.forEach((nomeAnexo) => {
+            this.organizacao.anexos.push({
+              tp_arquivo: nomeAnexo,
+              no_extensao: this[nomeAnexo].fileExtension,
+              no_mime_type: this[nomeAnexo].fileType,
+              no_arquivo: this[nomeAnexo].filename,
+              arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+            });
+          });
+        } catch (e) {
+          erro = true;
+          eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
+        }
+        if (!erro) {
+          this.confirmarOrganizacao(this.organizacao).then(() => {
+            this.$router.push('/organizacao/revisao-organizacao');
+          });
+        }
+      },
+      mostrar() {
+        console.log(this.organizacao);
+      },
+    },
+  };
 </script>
