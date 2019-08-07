@@ -3,8 +3,7 @@
     <v-card>
       <v-toolbar
         dark
-        color="primary"
-      >
+        color="primary">
         <v-toolbar-title>Inscrição - Conselho de Cultura</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
@@ -12,26 +11,21 @@
           <v-stepper-header>
             <v-stepper-step
               :complete="etapaFormulario > 1"
-              step="1"
-            >
+              step="1">
               Dados do Conselho de Cultura
             </v-stepper-step>
-
-            <v-divider />
-
+            <v-divider/>
             <v-stepper-step
               :complete="etapaFormulario > 2"
-              step="2"
-            >
+              step="2">
               Dados do Representante
             </v-stepper-step>
 
-            <v-divider />
+            <v-divider/>
 
             <v-stepper-step
               :complete="etapaFormulario > 3"
-              step="3"
-            >
+              step="3">
               Anexos
             </v-stepper-step>
           </v-stepper-header>
@@ -41,23 +35,19 @@
               <v-form
                 ref="form_conselho"
                 v-model="valid_conselho"
-                lazy-validation
-              >
+                lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl
-                  >
+                    grid-list-xl>
                     <v-layout>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-radio-group
                           v-model="conselho.tp_governamental"
                           row
-                          :rules="[rules.required]"
-                        >
+                          :rules="[rules.required]">
                           <v-radio
                             label="Estadual"
                             value="e"
@@ -73,8 +63,7 @@
                     <v-layout>
                       <v-flex
                         xs12
-                        sm3
-                      >
+                        sm3>
                         <v-text-field
                           v-model="conselho.nu_cnpj"
                           label="*CNPJ do Orgão Gestor do Conselho"
@@ -82,25 +71,20 @@
                           placeholder="99.999.999/9999-99"
                           mask="##.###.###/####-##"
                           :rules="[rules.required, rules.cnpjMin]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm7
-                      >
+                        sm7>
                         <v-text-field
                           v-model="conselho.no_orgao_gestor"
                           label="*Nome do órgão gestor de cultura"
                           append-icon="people"
+                          :disabled="true"
                           :rules="[rules.required]"
-                          required
-                        />
+                          required/>
                       </v-flex>
-                      <v-flex
-                        xs12
-                        sm2
-                      >
+                      <v-flex xs12 sm2>
                         <v-text-field
                           v-model="conselho.nu_telefone"
                           label="*Telefone"
@@ -108,19 +92,16 @@
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="conselho.ds_email"
                           data-vv-name="email"
@@ -128,43 +109,36 @@
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="conselho.ds_email_confirmacao"
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email, rules.emailMatch(conselho.ds_email, conselho.ds_email_confirmacao)]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="conselho.ds_sitio_eletronico"
                           label="Sítio eletrônico do conselho"
                           append-icon="public"
-                          :rules="[rules.url]"
-                        />
+                          :rules="[rules.url]"/>
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm3
-                      >
+                        sm3>
                         <v-text-field
                           v-model="conselho.endereco.nu_cep"
                           label="*CEP"
@@ -172,40 +146,33 @@
                           placeholder="99999-999"
                           mask="#####-###"
                           :rules="[rules.required, rules.cepMin]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="conselho.endereco.ds_logradouro"
                           label="*Logradouro"
                           append-icon="place"
                           :rules="[rules.required]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm3
-                      >
+                        sm3>
                         <v-text-field
                           v-model="conselho.endereco.ds_complemento"
-                          label="Complemento"
-                        />
+                          label="Complemento"/>
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm3
-                      >
+                        sm3>
                         <v-select
                           v-model="conselho.co_ibge"
                           :items="listaUF"
@@ -214,13 +181,11 @@
                           item-value="co_ibge"
                           item-text="no_uf"
                           :rules="[rules.required]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm5
-                      >
+                        sm5>
                         <v-select
                           v-model="conselho.endereco.co_municipio"
                           :items="listaMunicipios"
@@ -239,24 +204,21 @@
 
               <v-btn
                 to="/inicio"
-                flat
-              >
+                flat>
                 Cancelar
               </v-btn>
               <v-btn
                 :disabled="!valid_conselho"
                 color="primary"
-                @click="validarIrProximaEtapa('form_conselho')"
-              >
+                @click="validarIrProximaEtapa('form_conselho')">
                 Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
-              <v-form
-                ref="form_representante"
-                v-model="valid_representante"
-                lazy-validation>
+              <v-form ref="form_representante"
+                      v-model="valid_representante"
+                      lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
@@ -272,8 +234,7 @@
                           label="*Nome do Representante"
                           append-icon="perm_identity"
                           :rules="[rules.required]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
@@ -285,8 +246,7 @@
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                     </v-layout>
 
@@ -303,8 +263,7 @@
                           placeholder="999.999.999.99"
                           mask="###.###.###.##"
                           :rules="[rules.required, rules.cpfMin]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
@@ -315,8 +274,7 @@
                           append-icon="person"
                           mask="#########"
                           :rules="[rules.required]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                     </v-layout>
 
@@ -332,21 +290,18 @@
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="conselho.representante.ds_email_confirmation"
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email, rules.emailMatch(conselho.representante.ds_email, conselho.representante.ds_email_confirmation)]"
-                          required
-                        />
+                          required/>
                       </v-flex>
                     </v-layout>
                   </v-container>
@@ -354,30 +309,22 @@
               </v-form>
               <v-btn
                 flat
-                @click="voltarEtapaAnterior"
-              >
+                @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
-              <v-btn
-                :disabled="!valid_representante"
-                color="primary"
-                @click="validarIrProximaEtapa('form_representante')"
-              >
+              <v-btn :disabled="!valid_representante"
+                     color="primary"
+                     @click="validarIrProximaEtapa('form_representante')">
                 Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <v-form
-                ref="form_anexo"
-                v-model="valid_anexo"
-                lazy-validation
-              >
+              <v-form ref="form_anexo"
+                      v-model="valid_anexo"
+                      lazy-validation>
                 <v-card flat>
-                  <v-container
-                    fluid
-                    grid-list-xl
-                  >
+                  <v-container fluid grid-list-xl>
                     <v-layout>
                       <v-flex sm3>
                         <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
@@ -396,8 +343,7 @@
                       </v-flex>
                       <v-flex
                         v-if="conselho.tp_governamental === 'c'"
-                        sm3
-                      >
+                        sm3>
                         <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
                           Declaração de ciência e autorização do órgão gestor de cultura do estado*
                         </div>
@@ -406,34 +352,29 @@
 
                     <v-layout>
                       <v-flex sm3>
-                        <file v-model="ato_normativo_conselho" />
+                        <file v-model="ato_normativo_conselho"/>
                       </v-flex>
                       <v-flex sm3>
-                        <file v-model="ata_reuniao_conselho" />
+                        <file v-model="ata_reuniao_conselho"/>
                       </v-flex>
                       <v-flex sm3>
-                        <file v-model="documento_identificacao_responsavel" />
+                        <file v-model="documento_identificacao_responsavel"/>
                       </v-flex>
                       <v-flex
                         v-if="conselho.tp_governamental === 'c'"
-                        sm3
-                      >
-                        <file v-model="declaracao_ciencia_orgao_gestor" />
+                        sm3>
+                        <file v-model="declaracao_ciencia_orgao_gestor"/>
                       </v-flex>
                     </v-layout>
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn
-                flat
-                @click="voltarEtapaAnterior"
-              >
+              <v-btn flat @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
               <v-btn
                 color="primary"
-                @click="salvar"
-              >
+                @click="salvar">
                 Enviar
               </v-btn>
             </v-stepper-content>
@@ -445,169 +386,179 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import File from '@/core/components/upload/File';
-import { eventHub } from '@/event';
+  import {mapActions, mapGetters} from 'vuex';
+  import File from '@/core/components/upload/File';
+  import {eventHub} from '@/event';
 
-
-export default {
-  components: { File },
-  data: () => ({
-    etapaFormulario: 1,
-    listaUF: [],
-    listaMunicipios: [],
-    valid_conselho: false,
-    valid_representante: false,
-    valid_anexo: false,
-    conselho: {
-      st_inscricao: 'e',
-      no_orgao_gestor: '',
-      ds_email: '',
-      ds_email_confirmacao: '',
-      nu_telefone: '',
-      nu_cnpj: '',
-      tp_governamental: '',
-      endereco: {
-        co_ibge: '',
-        ds_complemento: '',
-        nu_cep: '',
-        ds_logradouro: '',
-        co_municipio: '',
-      },
-      representante: {
+  export default {
+    components: {File},
+    data: () => ({
+      etapaFormulario: 1,
+      listaUF: [],
+      listaMunicipios: [],
+      valid_conselho: false,
+      valid_representante: false,
+      valid_anexo: false,
+      conselho: {
+        st_inscricao: 'e',
+        no_orgao_gestor: '',
         ds_email: '',
-        no_pessoa: '',
-        nu_rg: '',
-        nu_cpf: '',
+        ds_email_confirmacao: '',
         nu_telefone: '',
-        ds_email_confirmation: '',
+        nu_cnpj: '',
+        tp_governamental: '',
+        endereco: {
+          co_ibge: '',
+          ds_complemento: '',
+          nu_cep: '',
+          ds_logradouro: '',
+          co_municipio: '',
+        },
+        representante: {
+          ds_email: '',
+          no_pessoa: '',
+          nu_rg: '',
+          nu_cpf: '',
+          nu_telefone: '',
+          ds_email_confirmation: '',
+        },
+        ds_sitio_eletronico: '',
+        anexos: [],
       },
-      ds_sitio_eletronico: '',
-      anexos: [],
-    },
-    ata_reuniao_conselho: {},
-    ato_normativo_conselho: {},
-    documento_identificacao_responsavel: {},
-    declaracao_ciencia_orgao_gestor: {},
-    steps: [
-      {
-        title: 'Dados do Conselho de Cultura',
-        id: 1,
-      },
-      {
-        title: 'Dados do Representante',
-        id: 2,
-      },
-      {
-        title: 'Anexos',
-        id: 3,
-      },
-    ],
-    headers: [
-      {
-        text: 'Tipo',
-        align: 'center',
-        sortable: false,
-      },
-      {
-        text: 'Arquivo',
-        align: 'center',
-        sortable: false,
-      },
-      {
-        sortable: false,
-      },
-    ],
-    rules: {
-      required: v => !!v || 'Campo não preenchido',
-      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-      cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
-      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-      cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
-      email: (v) => {
-        // eslint-disable-next-line
+      ata_reuniao_conselho: {},
+      ato_normativo_conselho: {},
+      documento_identificacao_responsavel: {},
+      declaracao_ciencia_orgao_gestor: {},
+      steps: [
+        {
+          title: 'Dados do Conselho de Cultura',
+          id: 1,
+        },
+        {
+          title: 'Dados do Representante',
+          id: 2,
+        },
+        {
+          title: 'Anexos',
+          id: 3,
+        },
+      ],
+      headers: [
+        {
+          text: 'Tipo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          text: 'Arquivo',
+          align: 'center',
+          sortable: false,
+        },
+        {
+          sortable: false,
+        },
+      ],
+      rules: {
+        required: v => !!v || 'Campo não preenchido',
+        phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
+        cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
+        cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
+        cepMin: v => (v && v.length === 8) || 'Mínimo de 8 caracteres',
+        email: (v) => {
+          // eslint-disable-next-line
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'E-mail invalido';
-      },
-      url: (v) => {
-        // eslint-disable-next-line
+          return pattern.test(v) || 'E-mail invalido';
+        },
+        url: (v) => {
+          // eslint-disable-next-line
           const pattern = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-        if (v) return pattern.test(v) || 'Sítio invalido';
-        return true;
+          if (v) return pattern.test(v) || 'Sítio invalido';
+          return true;
+        },
+        emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
       },
-      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
-    },
-  }),
-  watch: {
-    estadosGetter() {
-      this.listaUF = this.estadosGetter;
-    },
-    municipiosGetter() {
-      this.listaMunicipios = this.municipiosGetter;
-    },
-    'conselho.co_ibge': function (coIBGE) {
-      this.conselho.endereco.co_municipio = '';
-      this.obterMunicipios(coIBGE);
-    },
-  },
-  mounted() {
-    this.obterEstados();
-  },
-  computed: {
-    ...mapGetters({
-      estadosGetter: 'localidade/estados',
-      municipiosGetter: 'localidade/municipios',
     }),
-  },
-  methods: {
-    ...mapActions({
-      obterEstados: 'localidade/obterEstados',
-      obterMunicipios: 'localidade/obterMunicipios',
-      confirmarConselho: 'conselho/confirmarConselho',
-    }),
-    validarIrProximaEtapa(formRef) {
-      if (this.$refs[formRef].validate()) {
-        this.etapaFormulario = this.etapaFormulario + 1;
-      }
-    },
-    salvar() {
-      let erro = false;
-      this.conselho.anexos = [];
-      let anexos = [
-        'ata_reuniao_conselho',
-        'ato_normativo_conselho',
-        'documento_identificacao_responsavel',
-        'declaracao_ciencia_orgao_gestor',
-      ];
-      if (this.conselho.tp_governamental !== 'c') {
-        const index = anexos.indexOf('declaracao_ciencia_orgao_gestor');
-        if (index > -1) {
-          anexos.splice(index, 1);
-        }
-      }
-      try {
-        anexos.forEach((nomeAnexo) => {
-          this.conselho.anexos.push({
-            tp_arquivo: nomeAnexo,
-            no_extensao: this[nomeAnexo].fileExtension,
-            no_mime_type: this[nomeAnexo].fileType,
-            no_arquivo: this[nomeAnexo].filename,
-            arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+    watch: {
+      estadosGetter() {
+        this.listaUF = this.estadosGetter;
+      },
+      municipiosGetter() {
+        this.listaMunicipios = this.municipiosGetter;
+      },
+      'conselho.co_ibge': function (coIBGE) {
+        this.conselho.endereco.co_municipio = '';
+        this.obterMunicipios(coIBGE);
+      },
+      'conselho.nu_cnpj': function (value) {
+        let self = this;
+        self.conselho.no_orgao_gestor = '';
+        if(value.length === 14) {
+          this.consultarCNPJ(value).then((response) => {
+            const { data } = response.data;
+            self.conselho.no_orgao_gestor = data.nmRazaoSocial;
           });
-        });
-      } catch (e) {
-        erro = true;
-        eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
-      }
-      if (!erro) {
-        this.confirmarConselho(this.conselho).then(() => {
-          this.$router.push('/conselho/revisao-conselho');
-        });
-      }
+        }
+      },
     },
-    voltarEtapaAnterior() {
-      this.etapaFormulario = this.etapaFormulario - 1;
+    mounted() {
+      this.obterEstados();
     },
-  },
-};
+    computed: {
+      ...mapGetters({
+        estadosGetter: 'localidade/estados',
+        municipiosGetter: 'localidade/municipios',
+      }),
+    },
+    methods: {
+      ...mapActions({
+        obterEstados: 'localidade/obterEstados',
+        obterMunicipios: 'localidade/obterMunicipios',
+        confirmarConselho: 'conselho/confirmarConselho',
+        consultarCNPJ: 'pessoa/consultarCNPJ',
+      }),
+      validarIrProximaEtapa(formRef) {
+        if (this.$refs[formRef].validate()) {
+          this.etapaFormulario = this.etapaFormulario + 1;
+        }
+      },
+      salvar() {
+        let erro = false;
+        this.conselho.anexos = [];
+        let anexos = [
+          'ata_reuniao_conselho',
+          'ato_normativo_conselho',
+          'documento_identificacao_responsavel',
+          'declaracao_ciencia_orgao_gestor',
+        ];
+        if (this.conselho.tp_governamental !== 'c') {
+          const index = anexos.indexOf('declaracao_ciencia_orgao_gestor');
+          if (index > -1) {
+            anexos.splice(index, 1);
+          }
+        }
+        try {
+          anexos.forEach((nomeAnexo) => {
+            this.conselho.anexos.push({
+              tp_arquivo: nomeAnexo,
+              no_extensao: this[nomeAnexo].fileExtension,
+              no_mime_type: this[nomeAnexo].fileType,
+              no_arquivo: this[nomeAnexo].filename,
+              arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+            });
+          });
+        } catch (e) {
+          erro = true;
+          eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
+        }
+        if (!erro) {
+          this.confirmarConselho(this.conselho).then(() => {
+            this.$router.push('/conselho/revisao-conselho');
+          });
+        }
+      },
+      voltarEtapaAnterior() {
+        this.etapaFormulario = this.etapaFormulario - 1;
+      },
+    },
+  };
 </script>

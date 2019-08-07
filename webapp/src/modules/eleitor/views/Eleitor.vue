@@ -273,9 +273,9 @@ export default {
       this.listaUF = this.estadosGetter;
     },
     'eleitor.nu_cpf': function (value) {
+      let self = this;
       self.eleitor.no_eleitor = '';
       if(value.length === 11) {
-        let self = this;
         this.consultarCPF(value).then((response) => {
           const { data } = response.data;
           self.eleitor.no_eleitor = data.nmPessoaFisica;
@@ -295,7 +295,7 @@ export default {
     ...mapActions({
       confirmarEleitor: 'eleitor/confirmarEleitor',
       obterEstados: 'localidade/obterEstados',
-      consultarCPF: 'eleitor/consultarCPF',
+      consultarCPF: 'pessoa/consultarCPF',
     }),
     validate() {
       const validacaoDocumentoIdentificacao = !this.anexo_documento_identificacao && !this.anexo_documento_identificacao.getFileEncodeBase64String();

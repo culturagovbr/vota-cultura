@@ -1,4 +1,4 @@
 export const state = {
-  pessoaFisica: [],
-  pessoaJuridica: [],
+  pessoaFisica: {},
+  pessoaJuridica: {},
 };

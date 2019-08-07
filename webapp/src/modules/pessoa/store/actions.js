@@ -5,5 +5,5 @@ export const consultarCPF = async ({ commit }, cpf) => {
 };
 
 export const consultarCNPJ = async ({ commit }, cnpj) => {
-  return pessoaService.consultarCPF(cnpj);
+  return pessoaService.consultarCNPJ(cnpj);
 };

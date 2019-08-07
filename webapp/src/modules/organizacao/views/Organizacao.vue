@@ -3,8 +3,7 @@
     <v-card>
       <v-toolbar
         dark
-        color="primary"
-      >
+        color="primary">
         <v-btn @click="mostrar">
           clique aq
         </v-btn>
@@ -15,8 +14,7 @@
           <v-stepper-header>
             <v-stepper-step
               :complete="etapaFormulario > 1"
-              step="1"
-            >
+              step="1">
               Organização ou Entidade Cultural
             </v-stepper-step>
 
@@ -24,8 +22,7 @@
 
             <v-stepper-step
               :complete="etapaFormulario > 2"
-              step="2"
-            >
+              step="2">
               Responsável
             </v-stepper-step>
 
@@ -33,8 +30,7 @@
 
             <v-stepper-step
               :complete="etapaFormulario > 3"
-              step="3"
-            >
+              step="3">
               Segmento
             </v-stepper-step>
 
@@ -42,8 +38,7 @@
 
             <v-stepper-step
               :complete="etapaFormulario > 4"
-              step="4"
-            >
+              step="4">
               Declaração de enquadramento
             </v-stepper-step>
 
@@ -51,8 +46,7 @@
 
             <v-stepper-step
               :complete="etapaFormulario > 5"
-              step="5"
-            >
+              step="5">
               Anexo
             </v-stepper-step>
           </v-stepper-header>
@@ -62,21 +56,17 @@
               <v-form
                 ref="form_dados_entidade"
                 v-model="valid_dados_entidade"
-                lazy-validation
-              >
+                lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl
-                  >
+                    grid-list-xl>
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm5
-                      >
+                        sm5>
                         <v-text-field
                           v-model="organizacao.nu_cnpj"
                           label="*CNPJ"
@@ -84,26 +74,23 @@
                           placeholder="99.999.999/9999-99"
                           mask="##.###.###/####-##"
                           :rules="[rules.required, rules.cnpjMin]"
-                          required
-                        />
+                          required />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm5
-                      >
+                        sm5>
                         <v-text-field
                           v-model="organizacao.no_organizacao"
                           label="*Nome da Organização/Entidade"
                           append-icon="perm_identity"
+                          :disabled="true"
                           :rules="[rules.required]"
-                          required
-                        />
+                          required />
                       </v-flex>
 
                       <v-flex
                         xs12
-                        sm2
-                      >
+                        sm2>
                         <v-text-field
                           v-model="organizacao.nu_telefone"
                           label="*Telefone"
@@ -111,19 +98,16 @@
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
-                          required
-                        />
+                          required />
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="organizacao.ds_email"
                           data-vv-name="email"
@@ -136,8 +120,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="organizacao.ds_email_confirmacao"
                           label="*Confirmar e-mail"
@@ -149,8 +132,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="organizacao.ds_sitio_eletronico"
                           label="Sítio eletrônico da Organização/Entidade"
@@ -162,12 +144,10 @@
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm3
-                      >
+                        sm3>
                         <v-text-field
                           v-model="organizacao.endereco.nu_cep"
                           label="*CEP"
@@ -180,8 +160,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="organizacao.endereco.ds_logradouro"
                           label="*Logradouro"
@@ -192,8 +171,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm3
-                      >
+                        sm3>
                         <v-text-field
                           v-model="organizacao.endereco.ds_complemento"
                           label="Complemento"
@@ -203,12 +181,10 @@
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm3
-                      >
+                        sm3>
                         <v-select
                           v-model="organizacao.co_ibge"
                           :items="listaUF"
@@ -222,8 +198,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm5
-                      >
+                        sm5>
                         <v-select
                           v-model="organizacao.endereco.co_municipio"
                           :items="listaMunicipios"
@@ -241,14 +216,12 @@
               </v-form>
               <v-btn
                 to="/inicio"
-                flat
-              >
+                flat>
                 Cancelar
               </v-btn>
               <v-btn
                 color="primary"
-                @click="validarIrProximaEtapa('form_dados_entidade')"
-              >
+                @click="validarIrProximaEtapa('form_dados_entidade')">
                 Próximo
               </v-btn>
             </v-stepper-content>
@@ -257,33 +230,27 @@
               <v-form
                 ref="form_representante"
                 v-model="valid_representante"
-                lazy-validation
-              >
+                lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl
-                  >
+                    grid-list-xl>
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm8
-                      >
+                        sm8>
                         <v-text-field
                           v-model="organizacao.representante.no_pessoa"
                           label="*Nome do Representante"
                           append-icon="perm_identity"
                           :rules="[rules.required]"
-                          required
-                        />
+                          required />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4
-                      >
+                        sm4>
                         <v-text-field
                           v-model="organizacao.representante.nu_telefone"
                           label="*Celular do representante"
@@ -298,12 +265,10 @@
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="organizacao.representante.nu_cpf"
                           label="*CPF"
@@ -316,8 +281,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="organizacao.representante.nu_rg"
                           label="*RG"
@@ -331,12 +295,10 @@
 
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="organizacao.representante.ds_email"
                           label="*E-mail do representante"
@@ -348,8 +310,7 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-text-field
                           v-model="organizacao.representante.ds_email_confirmation"
                           label="*Confirmar e-mail"
@@ -365,15 +326,13 @@
               </v-form>
               <v-btn
                 flat
-                @click="voltarEtapaAnterior"
-              >
+                @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
               <v-btn
                 :disabled="!valid_representante"
                 color="primary"
-                @click="validarIrProximaEtapa('form_representante')"
-              >
+                @click="validarIrProximaEtapa('form_representante')">
                 Próximo
               </v-btn>
             </v-stepper-content>
@@ -382,21 +341,17 @@
               <v-form
                 ref="form_segmento"
                 v-model="valid_segmento"
-                lazy-validation
-              >
+                lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl
-                  >
+                    grid-list-xl>
                     <v-layout
                       wrap
-                      align-center
-                    >
+                      align-center>
                       <v-flex
                         xs12
-                        sm6
-                      >
+                        sm6>
                         <v-radio-group
                           v-model="organizacao.co_segmento"
                           label="*Informe o segmento no qual pretende concorrer">
@@ -428,15 +383,13 @@
               </v-form>
               <v-btn
                 flat
-                @click="voltarEtapaAnterior"
-              >
+                @click="voltarEtapaAnterior">
                 Anterior
               </v-btn>
               <v-btn
                 :disabled="!valid_segmento"
                 color="primary"
-                @click="validarIrProximaEtapa('form_segmento')"
-              >
+                @click="validarIrProximaEtapa('form_segmento')">
                 Próximo
               </v-btn>
             </v-stepper-content>
@@ -445,8 +398,7 @@
               <v-form
                 ref="form_criterio"
                 v-model="valid_criterio"
-                lazy-validation
-              >
+                lazy-validation>
                 <v-card flat>
                   <v-container
                     fluid
@@ -727,6 +679,16 @@ export default {
       this.organizacao.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
     },
+    'organizacao.nu_cnpj': function (value) {
+      let self = this;
+      self.organizacao.no_organizacao = '';
+      if(value.length === 14) {
+        this.consultarCNPJ(value).then((response) => {
+          const { data } = response.data;
+          self.organizacao.no_organizacao = data.nmRazaoSocial;
+        });
+      }
+    },
   },
   mounted() {
     this.obterEstados();
@@ -742,6 +704,7 @@ export default {
     ...mapActions({
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
+      consultarCNPJ: 'pessoa/consultarCNPJ',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {
