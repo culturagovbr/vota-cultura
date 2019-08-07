@@ -354,26 +354,13 @@
                         sm6>
                         <v-radio-group
                           v-model="organizacao.co_segmento"
-                          label="*Informe o segmento no qual pretende concorrer">
+                          label="*Informe o segmento no qual pretende concorrer"
+                        >
                           <v-radio
-                            label="Técnico-artístico"
-                            value="radio-1"
-                          />
-                          <v-radio
-                            label="Patrimônio cultural"
-                            value="radio-2"
-                          />
-                          <v-radio
-                            label="Culturas populares"
-                            value="radio-3"
-                          />
-                          <v-radio
-                            label="Culturas dos povos indígenas"
-                            value="radio-4"
-                          />
-                          <v-radio
-                            label="Expressões culturais afro-brasileiras"
-                            value="radio-5"
+                            v-for="(segmento, i) in listaSegmentos"
+                            :key="i"
+                            :label="segmento.ds_detalhamento"
+                            :value="segmento.co_segmento"
                           />
                         </v-radio-group>
                       </v-flex>
@@ -413,7 +400,10 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
+                          v-model="organizacao.criterios.abrangencia_nacional"
+                          :items="listaCriterios.abrangencia_nacional"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
                           label="*Abrangência Nacional"
                           :rules="[rules.required]"
                           required
@@ -425,7 +415,10 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
+                          v-model="organizacao.criterios.abrangencia_estadual"
+                          :items="listaCriterios.abrangencia_estadual"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
                           label="*Abrangência Estadual"
                           :rules="[rules.required]"
                           required
@@ -443,7 +436,10 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
+                          v-model="organizacao.criterios.tempo_funcionamento"
+                          :items="listaCriterios.tempo_funcionamento"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
                           label="*Tempo de Funcionamento"
                           :rules="[rules.required]"
                           required
@@ -455,7 +451,10 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
+                          v-model="organizacao.criterios.nu_associados_filiados"
+                          :items="listaCriterios.nu_associados_filiados"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
                           label="*Nº de Associados ou Filiados"
                           :rules="[rules.required]"
                           required
@@ -473,7 +472,10 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
+                          v-model="organizacao.criterios.nu_atividades"
+                          :items="listaCriterios.nu_atividades"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
                           label="*Nº Atividades/projetos realizados no campo cultural a partir de 2016"
                           :rules="[rules.required]"
                           required
@@ -485,8 +487,11 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
-                          label="Nº Participação em instâncias de formulação de política cultural"
+                          v-model="organizacao.criterios.participacao_instancias"
+                          :items="listaCriterios.participacao_instancias"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
+                          label="Participação em instâncias de formulação de política cultural"
                           placeholder="Selecione"
                         />
                       </v-flex>
@@ -501,7 +506,10 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
+                          v-model="organizacao.criterios.abrangencia_campo_cultural"
+                          :items="listaCriterios.abrangencia_campo_cultural"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
                           label="*Abrangência de projetos realizados no campo cultural a partir de 2016"
                           :rules="[rules.required]"
                           required
@@ -513,7 +521,10 @@
                         sm6
                       >
                         <v-select
-                          :items="['']"
+                          v-model="organizacao.criterios.pesquisa_producao"
+                          :items="listaCriterios.pesquisa_producao"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
                           label="Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016"
                           placeholder="Selecione"
                         />
@@ -576,7 +587,7 @@
               </v-btn>
               <v-btn
                 color="primary"
-                @click="mostrar"
+                @click="salvar"
               >
                 Enviar
               </v-btn>
@@ -590,21 +601,23 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import _ from 'lodash';
 import File from '@/core/components/upload/File';
 import { eventHub } from '@/event';
 
 export default {
-  name: "Organizacao",
+  name: 'Organizacao',
   components: { File },
   data: () => ({
     valid_dados_entidade: false,
     valid_segmento: false,
     valid_criterio: false,
     valid_representante: false,
-    etapaFormulario: 1,
+    etapaFormulario: 5,
     listaUF: [],
     listaSegmentos: [],
     listaMunicipios: [],
+    listaCriterios: [],
     organizacao: {
       st_inscricao: 'e',
       co_segmento: '',
@@ -630,6 +643,16 @@ export default {
       },
       ds_sitio_eletronico: '',
       anexos: [],
+      criterios: {
+        abrangencia_campo_cultural: '',
+        abrangencia_estadual: '',
+        abrangencia_nacional: '',
+        nu_associados_filiados: '',
+        nu_atividades: '',
+        participacao_instancias: '',
+        pesquisa_producao: '',
+        tempo_funcionamento: '',
+      },
     },
     declaracao_representante_legal: {},
     documento_identificacao_responsavel: {},
@@ -675,6 +698,9 @@ export default {
     municipiosGetter() {
       this.listaMunicipios = this.municipiosGetter;
     },
+    segmentosGetter() {
+      this.listaSegmentos = this.segmentosGetter;
+    },
     'organizacao.co_ibge': function (coIBGE) {
       this.organizacao.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
@@ -689,21 +715,33 @@ export default {
         });
       }
     },
+    criteriosGetter() {
+      const criterios = _.groupBy(
+        this.criteriosGetter, criterio => criterio.tp_criterio,
+      );
+      this.listaCriterios = criterios;
+    },
   },
   mounted() {
     this.obterEstados();
+    this.obterSegmentos();
+    this.obterCriterios();
   },
   computed: {
     ...mapGetters({
       estadosGetter: 'localidade/estados',
       municipiosGetter: 'localidade/municipios',
       segmentosGetter: 'organizacao/segmentos',
+      criteriosGetter: 'organizacao/criterios',
     }),
   },
   methods: {
     ...mapActions({
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
+      obterCriterios: 'organizacao/obterCriterios',
+      obterSegmentos: 'organizacao/obterSegmentos',
+      confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
       consultarCNPJ: 'pessoa/consultarCNPJ',
     }),
     validarIrProximaEtapa(formRef) {
@@ -716,6 +754,34 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
+    },
+    salvar() {
+      let erro = false;
+      this.organizacao.anexos = [];
+      const anexos = [
+        'documento_identificacao_responsavel',
+        'declaracao_representante_legal',
+      ];
+
+      try {
+        anexos.forEach((nomeAnexo) => {
+          this.organizacao.anexos.push({
+            tp_arquivo: nomeAnexo,
+            no_extensao: this[nomeAnexo].fileExtension,
+            no_mime_type: this[nomeAnexo].fileType,
+            no_arquivo: this[nomeAnexo].filename,
+            arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+          });
+        });
+      } catch (e) {
+        erro = true;
+        eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
+      }
+      if (!erro) {
+        this.confirmarOrganizacao(this.organizacao).then(() => {
+          this.$router.push('/organizacao/revisao-organizacao');
+        });
+      }
     },
     mostrar() {
       console.log(this.organizacao);

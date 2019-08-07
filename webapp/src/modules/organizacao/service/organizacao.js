@@ -4,3 +4,5 @@ import * as service from '../../shared/service/base/index';
 export const cadastrarOrganizacao = organizacao => service.postRequest('/organizacao', organizacao);
 
 export const obterSegmentos = () => service.getRequest('/organizacao/segmento');
+
+export const obterCriterios = () => service.getRequest('/organizacao/criterio');
