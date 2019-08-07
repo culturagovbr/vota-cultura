@@ -240,13 +240,16 @@
                       align-center>
                       <v-flex
                         xs12
-                        sm8>
+                        sm3>
                         <v-text-field
-                          v-model="organizacao.representante.no_pessoa"
-                          label="*Nome do Representante"
-                          append-icon="perm_identity"
-                          :rules="[rules.required]"
+                          v-model="organizacao.representante.nu_cpf"
+                          label="*CPF"
+                          append-icon="person"
+                          placeholder="999.999.999.99"
+                          mask="###.###.###.##"
+                          :rules="[rules.required, rules.cpfMin]"
                           required/>
+
                       </v-flex>
                       <v-flex
                         xs12
@@ -258,8 +261,7 @@
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
-                          required
-                        />
+                          required />
                       </v-flex>
                     </v-layout>
 
@@ -268,20 +270,18 @@
                       align-center>
                       <v-flex
                         xs12
-                        sm6>
+                        sm8>
                         <v-text-field
-                          v-model="organizacao.representante.nu_cpf"
-                          label="*CPF"
-                          append-icon="person"
-                          placeholder="999.999.999.99"
-                          mask="###.###.###.##"
-                          :rules="[rules.required, rules.cpfMin]"
-                          required
-                        />
+                          v-model="organizacao.representante.no_pessoa"
+                          label="*Nome do Representante"
+                          :disabled="true"
+                          append-icon="perm_identity"
+                          :rules="[rules.required]"
+                          required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm4>
                         <v-text-field
                           v-model="organizacao.representante.nu_rg"
                           label="*RG"
@@ -339,15 +339,9 @@
                       v-model="valid_segmento"
                       lazy-validation>
                 <v-card flat>
-                  <v-container
-                    fluid
-                    grid-list-xl>
-                    <v-layout
-                      wrap
-                      align-center>
-                      <v-flex
-                        xs12
-                        sm6>
+                  <v-container fluid grid-list-xl>
+                    <v-layout wrap align-center>
+                      <v-flex xs12 sm6>
                         <v-radio-group
                           v-model="organizacao.co_segmento"
                           label="*Informe o segmento no qual pretende concorrer">
@@ -582,7 +576,7 @@
       valid_segmento: false,
       valid_criterio: false,
       valid_representante: false,
-      etapaFormulario: 5,
+      etapaFormulario: 1,
       listaUF: [],
       listaSegmentos: [],
       listaMunicipios: [],
@@ -684,11 +678,20 @@
           });
         }
       },
+      'organizacao.representante.nu_cpf': function (value) {
+        let self = this;
+        self.organizacao.representante.no_pessoa = '';
+        if (value.length === 11) {
+          this.consultarCPF(value).then((response) => {
+            const {data} = response.data;
+            self.organizacao.representante.no_pessoa = data.nmPessoaFisica;
+          });
+        }
+      },
       criteriosGetter() {
-        const criterios = _.groupBy(
+        this.listaCriterios = _.groupBy(
           this.criteriosGetter, criterio => criterio.tp_criterio,
         );
-        this.listaCriterios = criterios;
       },
     },
     mounted() {
@@ -712,6 +715,7 @@
         obterSegmentos: 'organizacao/obterSegmentos',
         confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
         consultarCNPJ: 'pessoa/consultarCNPJ',
+        consultarCPF: 'pessoa/consultarCPF',
       }),
       validarIrProximaEtapa(formRef) {
         if (this.$refs[formRef].validate()) {

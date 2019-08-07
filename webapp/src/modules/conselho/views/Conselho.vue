@@ -228,12 +228,14 @@
                       align-center>
                       <v-flex
                         xs12
-                        sm8>
+                        sm3>
                         <v-text-field
-                          v-model="conselho.representante.no_pessoa"
-                          label="*Nome do Representante"
-                          append-icon="perm_identity"
-                          :rules="[rules.required]"
+                          v-model="conselho.representante.nu_cpf"
+                          label="*CPF"
+                          append-icon="person"
+                          placeholder="999.999.999.99"
+                          mask="###.###.###.##"
+                          :rules="[rules.required, rules.cpfMin]"
                           required/>
                       </v-flex>
                       <v-flex
@@ -255,19 +257,18 @@
                       align-center>
                       <v-flex
                         xs12
-                        sm6>
+                        sm8>
                         <v-text-field
-                          v-model="conselho.representante.nu_cpf"
-                          label="*CPF"
-                          append-icon="person"
-                          placeholder="999.999.999.99"
-                          mask="###.###.###.##"
-                          :rules="[rules.required, rules.cpfMin]"
+                          v-model="conselho.representante.no_pessoa"
+                          :disabled="true"
+                          label="*Nome do Representante"
+                          append-icon="perm_identity"
+                          :rules="[rules.required]"
                           required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm4>
                         <v-text-field
                           v-model="conselho.representante.nu_rg"
                           label="*RG"
@@ -401,7 +402,7 @@
   export default {
     components: {File},
     data: () => ({
-      etapaFormulario: 1,
+      etapaFormulario: 2,
       listaUF: [],
       listaMunicipios: [],
       valid_conselho: false,
@@ -507,6 +508,16 @@
           });
         }
       },
+      'conselho.representante.nu_cpf': function (value) {
+        let self = this;
+        self.conselho.representante.no_pessoa = '';
+        if (value.length === 11) {
+          this.consultarCPF(value).then((response) => {
+            const {data} = response.data;
+            self.conselho.representante.no_pessoa = data.nmPessoaFisica;
+          });
+        }
+      },
     },
     mounted() {
       this.obterEstados();
@@ -523,6 +534,7 @@
         obterMunicipios: 'localidade/obterMunicipios',
         confirmarConselho: 'conselho/confirmarConselho',
         consultarCNPJ: 'pessoa/consultarCNPJ',
+        consultarCPF: 'pessoa/consultarCPF',
       }),
       validarIrProximaEtapa(formRef) {
         if (this.$refs[formRef].validate()) {
