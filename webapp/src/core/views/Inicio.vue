@@ -17,8 +17,7 @@
                 <v-flex xs12>
                   <v-btn class="yellow mt-2"
                          large
-                         to="/inscricao-conselho"
-                  >
+                         to="/inscricao-conselho">
                     Conselho Cultural
                   </v-btn>
                 </v-flex>
@@ -51,9 +50,9 @@
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
             <h2 class="headline">Inscreva-se</h2>
-            <span class="subheading">
-                              Cras facilisis mi vitae nunc
-                              </span>
+            <!--<span class="subheading">-->
+                              <!--Cras facilisis mi vitae nunc-->
+                              <!--</span>-->
           </div>
         </v-flex>
         <v-flex xs12>
@@ -70,18 +69,15 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
-                    ornare.
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada
-                    fames ac turpis egestas.
-                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
-                    Suspendisse potenti.
+                    Pessoa jurídica de direito privado sem fins lucrativos, legalmente constituída,
+                    de caráter associativo, com atuação nacional comprovada no campo cultural, em ao
+                    menos cinco estados de duas macrorregiões brasileiras
                   </v-card-text>
                 </v-card>
                 <div class="text-xs-center">
                   <v-btn
                       color="green darken-4"
-                      to="/inscricao/organizacao"
+                      to="/organizacao/inscricao"
                       dark
                   >
                     <v-icon>
@@ -99,18 +95,15 @@
                     <div class="headline">Conselhos de Cultura Estaduais e Distrital</div>
                   </v-card-title>
                   <v-card-text>
-                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
-                    ornare.
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada
-                    fames ac turpis egestas.
-                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
-                    Suspendisse potenti.
+                    Órgão colegiado de cultura vinculados à administração pública do Estado ou
+                    Distrito Federal, e na impossibilidade declarada de participação de conselho no
+                    âmbito do Estado, aquele vinculado à administração pública da respectiva capital
                   </v-card-text>
                 </v-card>
                 <div class="text-xs-center">
                   <v-btn
                       color="green darken-4"
-                      to="/inscricao/conselho"
+                      to="/conselho/inscricao"
                       dark>
                     <v-icon>
                       call_made
@@ -127,17 +120,12 @@
                     <div class="headline text-xs-center">Eleitor</div>
                   </v-card-title>
                   <v-card-text>
-                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
-                    ornare.
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada
-                    fames ac turpis egestas.
-                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
-                    Suspendisse potenti.
+                    Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
                   </v-card-text>
                   <div class="text-xs-center">
                     <v-btn
                         color="green darken-4"
-                        to="/inscricao/eleitor"
+                        to="/eleitor/inscricao"
                         dark>
                       <v-icon>
                         call_made

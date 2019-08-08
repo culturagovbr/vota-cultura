@@ -198,9 +198,7 @@
                 <v-flex>
                   <v-radio-group
                     v-model="organizacao.co_segmento"
-                    label="*Informe o segmento no qual pretende concorrer"
-                    disabled
-                  >
+                    label="Segmento">
                     <v-radio
                       v-for="(segmento, i) in listaSegmentos"
                       :key="i"
@@ -390,24 +388,24 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import _ from 'lodash';
-import { eventHub } from '@/event';
+  import {mapActions, mapGetters} from 'vuex';
+  import _ from 'lodash';
+import {eventHub} from '@/event';
 
-export default {
-  name: 'RevisaoOrganizacao',
+  export default {
+    name: 'RevisaoOrganizacao',
   data: () => ({
     confirmacaoDadosdeInscricao: false,
-    confirmacaoDadosDeInscricao: false,
-    dialog: false,
-    listaUF: [],
-    listaSegmentos: [],
+      confirmacaoDadosDeInscricao: false,
+      dialog: false,
+      listaUF: [],
+      listaSegmentos: [],
     listaMunicipios: [],
     listaCriterios: [],
     organizacao: {
       st_inscricao: 'e',
       co_segmento: '',
-      no_organizacao: '',
+        no_organizacao: '',
       ds_email: '',
       ds_email_confirmacao: '',
       nu_telefone: '',
@@ -447,17 +445,17 @@ export default {
       segmentosGetter: 'organizacao/segmentos',
       criteriosGetter: 'organizacao/criterios',
       organizacaoGetter: 'organizacao/organizacao',
-    }),
-  },
-  watch: {
-    criteriosGetter() {
+      }),
+    },
+    watch: {
+      criteriosGetter() {
       const criterios = _.groupBy(
         this.criteriosGetter, criterio => criterio.tp_criterio,
       );
       this.listaCriterios = criterios;
     },
     organizacaoGetter(value) {
-      this.organizacao = value;
+        this.organizacao = value;
       this.obterMunicipios(this.organizacao.co_ibge);
     },
   },
@@ -467,23 +465,23 @@ export default {
       obterMunicipios: 'localidade/obterMunicipios',
       obterCriterios: 'organizacao/obterCriterios',
       obterSegmentos: 'organizacao/obterSegmentos',
-      enviarDadosOrganizacao: 'organizacao/enviarDadosOrganizacao',
-    }),
-    salvar() {
-      this.enviarDadosOrganizacao(this.organizacaoGetter).then(() => {
-        eventHub.$emit(
-          'eventoSucesso',
-          'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
-        );
-        this.$router.push('/');
-      }).catch(() => {
-        eventHub.$emit(
-          'eventoErro',
-          'Houve algum erro ao enviar a sua inscrição.',
-        );
-        this.$router.push('/');
-      }).finally(() => {
-        console.log(this.organizacao);
+        enviarDadosOrganizacao: 'organizacao/enviarDadosOrganizacao',
+      }),
+      salvar() {
+        this.enviarDadosOrganizacao(this.organizacaoGetter).then(() => {
+          eventHub.$emit(
+            'eventoSucesso',
+            'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
+          );
+          this.$router.push('/');
+        }).catch(() => {
+          eventHub.$emit(
+            'eventoErro',
+            'Houve algum erro ao enviar a sua inscrição.',
+          );
+          this.$router.push('/');
+        }).finally(() => {
+          console.log(this.organizacao);
         // this.fecharDialogo();
       });
     },
@@ -500,7 +498,7 @@ export default {
     this.listaUF = this.estadosGetter;
     this.listaMunicipios = this.municipiosGetter;
     this.listaSegmentos = this.segmentosGetter;
-    this.organizacao = this.organizacaoGetter;
-  },
-};
+      this.organizacao = this.organizacaoGetter;
+    },
+  };
 </script>

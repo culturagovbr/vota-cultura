@@ -228,12 +228,14 @@
                       align-center>
                       <v-flex
                         xs12
-                        sm8>
+                        sm3>
                         <v-text-field
-                          v-model="conselho.representante.no_pessoa"
-                          label="*Nome do Representante"
-                          append-icon="perm_identity"
-                          :rules="[rules.required]"
+                          v-model="conselho.representante.nu_cpf"
+                          label="*CPF"
+                          append-icon="person"
+                          placeholder="999.999.999.99"
+                          mask="###.###.###.##"
+                          :rules="[rules.required, rules.cpfMin]"
                           required/>
                       </v-flex>
                       <v-flex
@@ -255,19 +257,18 @@
                       align-center>
                       <v-flex
                         xs12
-                        sm6>
+                        sm8>
                         <v-text-field
-                          v-model="conselho.representante.nu_cpf"
-                          label="*CPF"
-                          append-icon="person"
-                          placeholder="999.999.999.99"
-                          mask="###.###.###.##"
-                          :rules="[rules.required, rules.cpfMin]"
+                          v-model="conselho.representante.no_pessoa"
+                          :disabled="true"
+                          label="*Nome do Representante"
+                          append-icon="perm_identity"
+                          :rules="[rules.required]"
                           required/>
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm4>
                         <v-text-field
                           v-model="conselho.representante.nu_rg"
                           label="*RG"
@@ -325,47 +326,55 @@
                       lazy-validation>
                 <v-card flat>
                   <v-container fluid grid-list-xl>
-                    <v-layout>
+
+                    <v-layout align-center justify-center>
                       <v-flex sm3>
-                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
-                          Ato normativo que constituiu o conselho*
+                        <div class="subheading mb-4">
+                          Envie os documentos abaixo:
                         </div>
                       </v-flex>
+                    </v-layout>
+                    <v-layout align-center justify-center class="mb-4" wrap>
                       <v-flex sm3>
-                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
-                          Ata da última reunião do conselho*
-                        </div>
+                        <v-card max-width="344" min-height="230" class="mx-auto">
+                          <v-card-title class="subheading mb-1 justify-center">Ato normativo que constituiu o conselho*</v-card-title>
+                          <v-card-text>
+                            <file v-model="ato_normativo_conselho"/>
+                          </v-card-text>
+                        </v-card>
                       </v-flex>
                       <v-flex sm3>
-                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
-                          Documento de identificação do responsável*
-                        </div>
+                        <v-card max-width="344" min-height="230" class="mx-auto">
+                          <v-card-title class="subheading mb-1 justify-center">
+                            Ata da última reunião do conselho*
+                          </v-card-title>
+                          <v-card-text>
+                            <file v-model="ata_reuniao_conselho"/>
+                          </v-card-text>
+                        </v-card>
                       </v-flex>
-                      <v-flex
-                        v-if="conselho.tp_governamental === 'c'"
-                        sm3>
-                        <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
-                          Declaração de ciência e autorização do órgão gestor de cultura do estado*
-                        </div>
+                      <v-flex sm3>
+                        <v-card max-width="344" class="mx-auto">
+                          <v-card-title class="subheading mb-1 justify-center">
+                            Documento de identificação do responsável*
+                          </v-card-title>
+                          <v-card-text>
+                            <file v-model="documento_identificacao_responsavel"/>
+                          </v-card-text>
+                        </v-card>
+                      </v-flex>
+                      <v-flex sm3 v-if="conselho.tp_governamental === 'c'">
+                        <v-card max-width="344" class="mx-auto">
+                          <v-card-title class="subheading mb-1 justify-center">
+                            Declaração de ciência e autorização do órgão gestor de cultura do estado*
+                          </v-card-title>
+                          <v-card-text>
+                            <file v-model="declaracao_ciencia_orgao_gestor"/>
+                          </v-card-text>
+                        </v-card>
                       </v-flex>
                     </v-layout>
 
-                    <v-layout>
-                      <v-flex sm3>
-                        <file v-model="ato_normativo_conselho"/>
-                      </v-flex>
-                      <v-flex sm3>
-                        <file v-model="ata_reuniao_conselho"/>
-                      </v-flex>
-                      <v-flex sm3>
-                        <file v-model="documento_identificacao_responsavel"/>
-                      </v-flex>
-                      <v-flex
-                        v-if="conselho.tp_governamental === 'c'"
-                        sm3>
-                        <file v-model="declaracao_ciencia_orgao_gestor"/>
-                      </v-flex>
-                    </v-layout>
                   </v-container>
                 </v-card>
               </v-form>
@@ -393,7 +402,7 @@
   export default {
     components: {File},
     data: () => ({
-      etapaFormulario: 1,
+      etapaFormulario: 2,
       listaUF: [],
       listaMunicipios: [],
       valid_conselho: false,
@@ -499,6 +508,16 @@
           });
         }
       },
+      'conselho.representante.nu_cpf': function (value) {
+        let self = this;
+        self.conselho.representante.no_pessoa = '';
+        if (value.length === 11) {
+          this.consultarCPF(value).then((response) => {
+            const {data} = response.data;
+            self.conselho.representante.no_pessoa = data.nmPessoaFisica;
+          });
+        }
+      },
     },
     mounted() {
       this.obterEstados();
@@ -515,6 +534,7 @@
         obterMunicipios: 'localidade/obterMunicipios',
         confirmarConselho: 'conselho/confirmarConselho',
         consultarCNPJ: 'pessoa/consultarCNPJ',
+        consultarCPF: 'pessoa/consultarCPF',
       }),
       validarIrProximaEtapa(formRef) {
         if (this.$refs[formRef].validate()) {

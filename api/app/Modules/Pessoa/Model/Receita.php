@@ -52,7 +52,7 @@ class Receita
 
     public function definirURLBusca(string $servico, string $identificador)
     {
-        $this->urlBusca = $this->obterReceitaHost() . "/{$servico}/consultar/{$identificador}";
+        $this->urlBusca = $this->obterReceitaHost() . "/{$servico}/consultar/{$identificador}/basico";
         return $this->urlBusca;
     }
 
