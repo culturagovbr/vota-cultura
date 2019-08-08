@@ -29,8 +29,8 @@ class Organizacao extends Model
         return $this->belongsToMany(
             \App\Modules\Organizacao\Model\Criterio::class,
             'rl_organizacao_criterio',
-            'co_criterio',
-            'co_organizacao'
+            'co_organizacao',
+            'co_criterio'
         )->as('rl_organizacao_criterio');
     }
 
