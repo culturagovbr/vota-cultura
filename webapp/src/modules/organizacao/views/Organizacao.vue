@@ -4,9 +4,6 @@
       <v-toolbar
         dark
         color="primary">
-        <v-btn @click="mostrar">
-          clique aq
-        </v-btn>
         <v-toolbar-title>Inscrição - Organização ou Entidade Cultural</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
@@ -186,7 +183,7 @@
                         xs12
                         sm3>
                         <v-select
-                          v-model="organizacao.co_ibge"
+                          v-model="organizacao.endereco.co_ibge"
                           :items="listaUF"
                           label="*Unidade da Federação da sede"
                           append-icon="place"
@@ -207,7 +204,7 @@
                           item-value="co_municipio"
                           item-text="no_municipio"
                           :rules="[rules.required]"
-                          :disabled="organizacao.co_ibge < 1 || organizacao.co_ibge == null"
+                          :disabled="organizacao.endereco.co_ibge < 1 || organizacao.endereco.co_ibge == null"
                         />
                       </v-flex>
                     </v-layout>
@@ -499,23 +496,7 @@
 
                     <v-layout
                       wrap
-                      align-center
-                    >
-                      <v-flex
-                        xs12
-                        sm6
-                      >
-                        <v-select
-                          v-model="organizacao.criterios.abrangencia_campo_cultural"
-                          :items="listaCriterios.abrangencia_campo_cultural"
-                          item-value="co_criterio"
-                          item-text="ds_detalhamento"
-                          label="*Abrangência de projetos realizados no campo cultural a partir de 2016"
-                          :rules="[rules.required]"
-                          required
-                          placeholder="Selecione"
-                        />
-                      </v-flex>
+                      align-center>
                       <v-flex
                         xs12
                         sm6
@@ -613,7 +594,7 @@ export default {
     valid_segmento: false,
     valid_criterio: false,
     valid_representante: false,
-    etapaFormulario: 5,
+    etapaFormulario: 1,
     listaUF: [],
     listaSegmentos: [],
     listaMunicipios: [],
@@ -644,7 +625,6 @@ export default {
       ds_sitio_eletronico: '',
       anexos: [],
       criterios: {
-        abrangencia_campo_cultural: '',
         abrangencia_estadual: '',
         abrangencia_nacional: '',
         nu_associados_filiados: '',
@@ -701,7 +681,7 @@ export default {
     segmentosGetter() {
       this.listaSegmentos = this.segmentosGetter;
     },
-    'organizacao.co_ibge': function (coIBGE) {
+    'organizacao.endereco.co_ibge': function (coIBGE) {
       this.organizacao.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
     },
@@ -777,14 +757,12 @@ export default {
         erro = true;
         eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
       }
+
       if (!erro) {
         this.confirmarOrganizacao(this.organizacao).then(() => {
           this.$router.push('/organizacao/revisao-organizacao');
         });
       }
-    },
-    mostrar() {
-      console.log(this.organizacao);
     },
   },
 };

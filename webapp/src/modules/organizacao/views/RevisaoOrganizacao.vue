@@ -15,7 +15,8 @@
             <v-toolbar-title>Confirmação dos dados</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container>
+            <v-container v-if="Object.keys(organizacaoGetter).length > 0">
+              <!--<v-container>-->
               <v-layout>
                 <v-flex>
                   <v-text-field
@@ -100,7 +101,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="organizacao.endereco.ds_complementos"
+                    v-model="organizacao.endereco.ds_complemento"
                     label="Complemento"
                     disabled
                   />
@@ -110,7 +111,7 @@
               <v-layout>
                 <v-flex>
                   <v-select
-                    v-model="organizacao.co_ibge"
+                    v-model="organizacao.endereco.co_ibge"
                     :items="listaUF"
                     label="Unidade da Federação da sede"
                     append-icon="place"
@@ -164,7 +165,6 @@
                     v-model="organizacao.representante.nu_cpf"
                     label="CPF"
                     append-icon="person"
-                    placeholder="999.999.999.99"
                     mask="###.###.###.##"
                     disabled
                   />
@@ -198,7 +198,9 @@
                 <v-flex>
                   <v-radio-group
                     v-model="organizacao.co_segmento"
-                    label="Segmento">
+                    label="*Informe o segmento no qual pretende concorrer"
+                    disabled
+                  >
                     <v-radio
                       v-for="(segmento, i) in listaSegmentos"
                       :key="i"
@@ -217,7 +219,6 @@
                     item-value="co_criterio"
                     item-text="ds_detalhamento"
                     label="Abrangência Nacional"
-                    :rules="[rules.required]"
                     disabled
                   />
                 </v-flex>
@@ -230,8 +231,7 @@
                     :items="listaCriterios.abrangencia_estadual"
                     item-value="co_criterio"
                     item-text="ds_detalhamento"
-                    label="*Abrangência Estadual"
-                    :rules="[rules.required]"
+                    label="Abrangência Estadual"
                     disabled
                   />
                 </v-flex>
@@ -244,10 +244,8 @@
                     :items="listaCriterios.tempo_funcionamento"
                     item-value="co_criterio"
                     item-text="ds_detalhamento"
-                    label="*Tempo de Funcionamento"
-                    :rules="[rules.required]"
-                    required
-                    placeholder="Selecione"
+                    label="Tempo de Funcionamento"
+                    disabled
                   />
                 </v-flex>
               </v-layout>
@@ -259,10 +257,8 @@
                     :items="listaCriterios.nu_associados_filiados"
                     item-value="co_criterio"
                     item-text="ds_detalhamento"
-                    label="*Nº de Associados ou Filiados"
-                    :rules="[rules.required]"
-                    required
-                    placeholder="Selecione"
+                    label="Nº de Associados ou Filiados"
+                    disabled
                   />
                 </v-flex>
               </v-layout>
@@ -275,10 +271,8 @@
                     :items="listaCriterios.nu_atividades"
                     item-value="co_criterio"
                     item-text="ds_detalhamento"
-                    label="*Nº Atividades/projetos realizados no campo cultural a partir de 2016"
-                    :rules="[rules.required]"
-                    required
-                    placeholder="Selecione"
+                    label="Nº Atividades/projetos realizados no campo cultural a partir de 2016"
+                    disabled
                   />
                 </v-flex>
               </v-layout>
@@ -291,22 +285,7 @@
                     item-value="co_criterio"
                     item-text="ds_detalhamento"
                     label="Participação em instâncias de formulação de política cultural"
-                    placeholder="Selecione"
-                  />
-                </v-flex>
-              </v-layout>
-
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    v-model="organizacao.criterios.abrangencia_campo_cultural"
-                    :items="listaCriterios.abrangencia_campo_cultural"
-                    item-value="co_criterio"
-                    item-text="ds_detalhamento"
-                    label="*Abrangência de projetos realizados no campo cultural a partir de 2016"
-                    :rules="[rules.required]"
-                    required
-                    placeholder="Selecione"
+                    disabled
                   />
                 </v-flex>
               </v-layout>
@@ -319,17 +298,17 @@
                     item-value="co_criterio"
                     item-text="ds_detalhamento"
                     label="Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016"
-                    placeholder="Selecione"
+                    disabled
                   />
                 </v-flex>
               </v-layout>
 
               <v-checkbox
+                v-model="confirmacaoDadosdeInscricao"
                 :rules="[v => !!v || 'É necessário concordar para enviar!']"
                 label=" Declaro ser representante da organização ou entidade cultural inscrita neste edital e designado (a) para o fornecimento das informações solicitadas e que assumo total responsabilidade pela veracidade das informações apresentadas.
 
 Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do Código Penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
-                required
               />
 
               <v-layout
@@ -340,36 +319,99 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                   <v-btn to="/organizacao/inscricao">
                     Cancelar
                   </v-btn>
-                  <v-btn color="primary">
+                  <v-btn
+                    :disabled="!confirmacaoDadosdeInscricao"
+                    color="primary"
+                    @click="abrirDialogo"
+                  >
                     Confirmar
                   </v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
+            <v-container v-else>
+                <v-layout>
+                  <v-flex>
+                    <v-alert
+                      type="error"
+                      :value="true"
+                    >
+                      É necessário preencher as informações do cadastro.
+                    </v-alert>
+                    <div class="mb-6">
+                      <v-btn to="/organizacao/inscricao">
+                        Voltar
+                      </v-btn>
+                    </div>
+                  </v-flex>
+                </v-layout>
+              </v-container>
           </v-card-text>
         </v-card>
       </v-flex>
+    </v-layout>
+    <v-layout justify-center>
+      <v-dialog
+        v-model="dialog"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">
+            Deseja realmente enviar?
+          </v-card-title>
+
+          <v-card-text>
+            Os dados enviados não poderão ser alterados posteriormente.
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer />
+
+            <v-btn
+              color="red darken-1"
+              text
+              flat
+              @click="fecharDialogo">
+              Não
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              flat
+              @click="salvar">
+              Sim
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import _ from 'lodash';
 import { eventHub } from '@/event';
 
 export default {
-  name: 'RevisaoConselho',
+  name: 'RevisaoOrganizacao',
   data: () => ({
+    confirmacaoDadosdeInscricao: false,
     confirmacaoDadosDeInscricao: false,
     dialog: false,
     listaUF: [],
-    conselho: {
-      no_orgao_gestor: '',
+    listaSegmentos: [],
+    listaMunicipios: [],
+    listaCriterios: [],
+    organizacao: {
+      st_inscricao: 'e',
+      co_segmento: '',
+      no_organizacao: '',
       ds_email: '',
       ds_email_confirmacao: '',
       nu_telefone: '',
       nu_cnpj: '',
-      tp_governamental: '',
       endereco: {
         co_ibge: '',
         ds_complemento: '',
@@ -387,31 +429,48 @@ export default {
       },
       ds_sitio_eletronico: '',
       anexos: [],
+      criterios: {
+        abrangencia_estadual: '',
+        abrangencia_nacional: '',
+        nu_associados_filiados: '',
+        nu_atividades: '',
+        participacao_instancias: '',
+        pesquisa_producao: '',
+        tempo_funcionamento: '',
+      },
     },
   }),
   computed: {
     ...mapGetters({
-      conselhoGetter: 'conselho/conselho',
       estadosGetter: 'localidade/estados',
+      municipiosGetter: 'localidade/municipios',
+      segmentosGetter: 'organizacao/segmentos',
+      criteriosGetter: 'organizacao/criterios',
+      organizacaoGetter: 'organizacao/organizacao',
     }),
   },
   watch: {
-    conselhoGetter(value) {
-      this.conselho = value;
+    criteriosGetter() {
+      const criterios = _.groupBy(
+        this.criteriosGetter, criterio => criterio.tp_criterio,
+      );
+      this.listaCriterios = criterios;
+    },
+    organizacaoGetter(value) {
+      this.organizacao = value;
+      this.obterMunicipios(this.organizacao.co_ibge);
     },
   },
   methods: {
-
     ...mapActions({
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       obterCriterios: 'organizacao/obterCriterios',
       obterSegmentos: 'organizacao/obterSegmentos',
-      confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
-      // enviarDadosOrganizacao: 'conselho/enviarDadosOrganizacao',
+      enviarDadosOrganizacao: 'organizacao/enviarDadosOrganizacao',
     }),
     salvar() {
-      this.enviarDadosConselho(this.conselhoGetter).then(() => {
+      this.enviarDadosOrganizacao(this.organizacaoGetter).then(() => {
         eventHub.$emit(
           'eventoSucesso',
           'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
@@ -424,7 +483,8 @@ export default {
         );
         this.$router.push('/');
       }).finally(() => {
-        this.fecharDialogo();
+        console.log(this.organizacao);
+        // this.fecharDialogo();
       });
     },
     abrirDialogo() {
@@ -435,7 +495,11 @@ export default {
     },
   },
   mounted() {
+    this.obterSegmentos();
+    this.obterCriterios();
     this.listaUF = this.estadosGetter;
+    this.listaMunicipios = this.municipiosGetter;
+    this.listaSegmentos = this.segmentosGetter;
     this.organizacao = this.organizacaoGetter;
   },
 };
