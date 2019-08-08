@@ -69,12 +69,9 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
-                    ornare.
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada
-                    fames ac turpis egestas.
-                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
-                    Suspendisse potenti.
+                    Pessoa jurídica de direito privado sem fins lucrativos, legalmente constituída,
+                    de caráter associativo, com atuação nacional comprovada no campo cultural, em ao
+                    menos cinco estados de duas macrorregiões brasileiras
                   </v-card-text>
                 </v-card>
                 <div class="text-xs-center">
@@ -98,12 +95,9 @@
                     <div class="headline">Conselhos de Cultura Estaduais e Distrital</div>
                   </v-card-title>
                   <v-card-text>
-                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
-                    ornare.
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada
-                    fames ac turpis egestas.
-                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
-                    Suspendisse potenti.
+                    Órgão colegiado de cultura vinculados à administração pública do Estado ou
+                    Distrito Federal, e na impossibilidade declarada de participação de conselho no
+                    âmbito do Estado, aquele vinculado à administração pública da respectiva capital
                   </v-card-text>
                 </v-card>
                 <div class="text-xs-center">
@@ -126,12 +120,7 @@
                     <div class="headline text-xs-center">Eleitor</div>
                   </v-card-title>
                   <v-card-text>
-                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt
-                    ornare.
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada
-                    fames ac turpis egestas.
-                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt.
-                    Suspendisse potenti.
+                    Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
                   </v-card-text>
                   <div class="text-xs-center">
                     <v-btn
