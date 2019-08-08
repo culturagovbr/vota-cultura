@@ -24,8 +24,8 @@ COMMENT ON COLUMN tb_arquivo.dh_insercao IS 'data da inserção do arquivo';
 CREATE TABLE tb_criterio (
 	co_criterio          SERIAL,
 	tp_criterio          varchar(30)  NOT NULL ,
-	ds_criterio          varchar(100)  NOT NULL ,
-	ds_detalhamento      varchar(50)  NOT NULL ,
+	ds_criterio          varchar(150)  NOT NULL ,
+	ds_detalhamento      varchar(255)  NOT NULL ,
 	qt_pontuacao         integer  NOT NULL ,
 	qt_peso              integer  NOT NULL ,
 	CONSTRAINT pk_criterio_cocriterio PRIMARY KEY ( co_criterio )
@@ -277,7 +277,7 @@ CREATE TABLE tb_organizacao (
 	nu_cnpj              varchar(14)  NOT NULL ,
 	no_organizacao       varchar(100)  NOT NULL ,
 	ds_email             varchar(100)  NOT NULL ,
-	nu_telefone          varchar(8)  NOT NULL ,
+	nu_telefone          varchar(11)  NOT NULL ,
 	co_segmento          integer  NOT NULL ,
 	co_usuario           integer   ,
 	co_endereco          integer  NOT NULL ,
@@ -321,8 +321,6 @@ CREATE TABLE rl_organizacao_criterio (
 	CONSTRAINT fk_criterio_organizacao FOREIGN KEY ( co_criterio ) REFERENCES tb_criterio( co_criterio )  ,
 	CONSTRAINT fk_organizacao_criterio FOREIGN KEY ( co_organizacao ) REFERENCES tb_organizacao( co_organizacao )
  );
-
-CREATE INDEX unq_rl_organizacao_criterio_fk_criterio ON rl_organizacao_criterio ( co_criterio );
 
 COMMENT ON COLUMN rl_organizacao_criterio.co_organizacao_criterio IS 'chave primária da tabela';
 
