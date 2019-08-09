@@ -41,7 +41,7 @@
                       :disabled="true"
                       label="*Nome completo"
                       append-icon="perm_identity"
-                      :rules="[rules.required]"
+                      :rules="[rules.cpfInvalido]"
                       required
                     />
                   </v-flex>
@@ -68,6 +68,8 @@
                       append-icon="mail"
                       placeholder="email@exemplo.com"
                       :rules="[rules.required, rules.email]"
+                      counter
+                      maxlength="250"
                       required
                     />
                   </v-flex>
@@ -78,6 +80,8 @@
                       append-icon="mail"
                       placeholder="email@exemplo.com"
                       :rules="[rules.required, rules.email, rules.emailMatch(email, emailConfirmation)]"
+                      counter
+                      maxlength="250"
                       required
                     />
                   </v-flex>
@@ -104,8 +108,10 @@
                           <v-text-field
                             v-model="eleitor.dt_nascimento"
                             label="*Data de Nascimento"
-                            :rules="[rules.required]"
+                            :rules="[rules.required, rules.dataAniversario]"
                             append-icon="event"
+                            placeholder="ex: 01/12/2019"
+                            return-masked-value
                             mask="##/##/####"
                             required
                             v-on="on"
@@ -261,6 +267,7 @@
       emailConfirmation: '',
       rules: {
         required: v => !!v || 'Campo não preenchido',
+        cpfInvalido: v => !!v || 'CPF não encontrado',
         phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
         cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
         email: (v) => {
@@ -269,7 +276,28 @@
           return pattern.test(v) || 'E-mail invalido';
         },
         emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
-        dateMin: () => {
+        dataAniversario: (v) => {
+          const bits = v.split('/');
+          const hoje = new Date();
+          const dataAniversario = new Date(bits[2], bits[1] - 1, bits[0]);
+
+          const validDate = dataAniversario && (dataAniversario.getMonth() + 1) == bits[1];
+
+          if(!validDate){
+            return 'Data inválida';
+          }
+
+          let ano = hoje.getFullYear() - dataAniversario.getFullYear();
+          const mes = hoje.getMonth() - dataAniversario.getMonth();
+          if (mes < 0 || (mes === 0 && hoje.getDate() < dataAniversario.getDate())) {
+            ano--;
+          }
+
+          if (ano > 100 || ano < 18) {
+            return 'É necessário ter entre 18 e 100 anos';
+          }
+
+          return true;
         },
       },
     }),
