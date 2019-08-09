@@ -6,13 +6,12 @@ use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Representacao\Service\Representante;
+use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use App\Modules\Upload\Service\Upload;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use App\Modules\Upload\Model\Arquivo;
-
-
 
 class Conselho extends AbstractService
 {
@@ -69,14 +68,15 @@ class Conselho extends AbstractService
                     $arquivoArmazenado->co_arquivo,
                     [
                         'tp_arquivo' => $dadosArquivo['tp_arquivo'],
-                        'tp_inscricao' => 2
+                        'tp_inscricao' => RepresentanteModel::TIPO_INSCRICAO_CONSELHO
                     ]
                 );
             }
 
-//            Mail::to($organizacao->ds_email)->send(
-//                new CadastroComSucesso($organizacao)
-//            );
+            Mail::to($representante->ds_email)->send(
+                new CadastroComSucesso($representante)
+            );
+
             return $conselho;
         } catch (\Exception $queryException) {
             DB::rollBack();

@@ -4,14 +4,15 @@ namespace App\Modules\Organizacao\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Localidade\Service\Endereco;
+use App\Modules\Organizacao\Mail\Organizacao\CadastroComSucesso;
 use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Representacao\Service\Representante;
-use App\Modules\Segmento\Service\Segmento;
+use App\Modules\Representacao\Model\Representante as RepresentanteModel;
+use App\Modules\Upload\Model\Arquivo;
+use App\Modules\Upload\Service\Upload;
 use Illuminate\Database\Eloquent\Model;
-use DB;
 use Illuminate\Http\Response;
-use function json_decode;
-use function json_encode;
+use Illuminate\Support\Facades\DB;
 
 class Organizacao extends AbstractService
 {
@@ -23,6 +24,11 @@ class Organizacao extends AbstractService
     public function cadastrar(array $dados): ?Model
     {
         try {
+
+            $anexos = $dados['anexos'];
+            unset($dados['anexos']);
+
+            DB::beginTransaction();
             $organizacao = $this->getModel()->where([
                 'ds_email' => $dados['ds_email']
             ])->orWhere([
@@ -30,15 +36,6 @@ class Organizacao extends AbstractService
             ])->orWhere([
                 'nu_cnpj' => $dados['nu_cnpj']
             ])->first();
-
-            $criteriosIds = [];
-            foreach($dados['criterios'] as $criterio ) {
-                $criteriosIds[] = $criterio;
-//                $criteriosIds[] = $criterio;
-            }
-            print_r(json_encode($criteriosIds));
-            die();
-
 
             if ($organizacao) {
                 throw new \HttpException(
@@ -53,8 +50,8 @@ class Organizacao extends AbstractService
             if (!$representante) {
                 throw new \HttpException('Não foi possível cadastrar o representante.');
             }
-
             $dados['co_representante'] = $representante->co_representante;
+
             $serviceEndereco = app()->make(Endereco::class);
             $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
@@ -63,30 +60,35 @@ class Organizacao extends AbstractService
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;
-
             $organizacao = parent::cadastrar($dados);
 
-            foreach($dados['anexos'] as $dadosArquivo) {
+            foreach(array_values($dados['criterios']) as $criterioId) {
+                $organizacao->criterios()->attach($criterioId);
+            }
+
+            foreach($anexos as $dadosCriterio) {
                 $modeloArquivo = app()->make(Arquivo::class);
-                $modeloArquivo->fill($dadosArquivo);
+                $modeloArquivo->fill($dadosCriterio);
                 $serviceUpload = new Upload($modeloArquivo);
                 $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-                    $dadosArquivo['arquivoCodificado'],
-                    'conselho/' . $dadosArquivo['tp_arquivo']
+                    $dadosCriterio['arquivoCodificado'],
+                    'organizacao/' . $dadosCriterio['tp_arquivo']
                 );
 
                 $representante->arquivos()->attach(
                     $arquivoArmazenado->co_arquivo,
                     [
-                        'tp_arquivo' => $dadosArquivo['tp_arquivo'],
-                        'tp_inscricao' => 1
+                        'tp_arquivo' => $dadosCriterio['tp_arquivo'],
+                        'tp_inscricao' => RepresentanteModel::TIPO_INSCRICAO_ORGANIZACAO
                     ]
                 );
             }
 
-//            Mail::to($organizacao->ds_email)->send(
-//                new CadastroComSucesso($organizacao)
-//            );
+            Mail::to($organizacao->ds_email)->send(
+                new CadastroComSucesso($organizacao)
+            );
+
+            DB::commit();
             return $organizacao;
         } catch (\Exception $queryException) {
             DB::rollBack();

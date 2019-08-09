@@ -29,8 +29,8 @@ class Organizacao extends Model
         return $this->belongsToMany(
             \App\Modules\Organizacao\Model\Criterio::class,
             'rl_organizacao_criterio',
-            'co_criterio',
-            'co_organizacao'
+            'co_organizacao',
+            'co_criterio'
         )->as('rl_organizacao_criterio');
     }
 
@@ -67,6 +67,15 @@ class Organizacao extends Model
             \App\Modules\Representacao\Model\Representante::class,
             'co_representante',
             'co_representante'
+        );
+    }
+
+    public function getTelefoneFormatadoAttribute()
+    {
+        return chunk_split(
+            $this->nu_telefone,
+            2,
+            ' '
         );
     }
 

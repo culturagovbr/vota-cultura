@@ -11,4 +11,5 @@ class Criterio extends AbstractService
     {
         parent::__construct($model);
     }
+
 }

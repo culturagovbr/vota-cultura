@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Representante extends Model
 {
+    const TIPO_INSCRICAO_ORGANIZACAO = 1;
+    const TIPO_INSCRICAO_CONSELHO = 2;
+
     protected $table = 'tb_representante';
     protected $primaryKey = 'co_representante';
 

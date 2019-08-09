@@ -198,7 +198,8 @@
                 <v-flex>
                   <v-radio-group
                     v-model="organizacao.co_segmento"
-                    label="Segmento">
+                    label="Segmento"
+                  >
                     <v-radio
                       v-for="(segmento, i) in listaSegmentos"
                       :key="i"
