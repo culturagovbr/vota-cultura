@@ -81,7 +81,7 @@
                           label="*Nome da Organização/Entidade"
                           append-icon="perm_identity"
                           :disabled="true"
-                          :rules="[rules.required]"
+                          :rules="[rules.cnpjInvalido]"
                           required/>
                       </v-flex>
 
@@ -112,6 +112,8 @@
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email]"
+                          counter
+                          maxlength="100"
                           required
                         />
                       </v-flex>
@@ -124,6 +126,8 @@
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email, rules.emailMatch(organizacao.ds_email, organizacao.ds_email_confirmacao)]"
+                          counter
+                          maxlength="100"
                           required
                         />
                       </v-flex>
@@ -134,6 +138,8 @@
                           v-model="organizacao.ds_sitio_eletronico"
                           label="Sítio eletrônico da Organização/Entidade"
                           append-icon="public"
+                          counter
+                          maxlength="250"
                           :rules="[rules.url]"
                         />
                       </v-flex>
@@ -163,6 +169,8 @@
                           label="*Logradouro"
                           append-icon="place"
                           :rules="[rules.required]"
+                          counter
+                          maxlength="250"
                           required
                         />
                       </v-flex>
@@ -171,6 +179,8 @@
                         sm3>
                         <v-text-field
                           v-model="organizacao.endereco.ds_complemento"
+                          counter
+                          maxlength="250"
                           label="Complemento"
                         />
                       </v-flex>
@@ -273,7 +283,7 @@
                           label="*Nome do Representante"
                           :disabled="true"
                           append-icon="perm_identity"
-                          :rules="[rules.required]"
+                          :rules="[rules.cpfInvalido]"
                           required/>
                       </v-flex>
                       <v-flex
@@ -284,6 +294,8 @@
                           label="*RG"
                           append-icon="person"
                           mask="#########"
+                          counter
+                          maxlength="11"
                           :rules="[rules.required]"
                           required
                         />
@@ -302,6 +314,8 @@
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email]"
+                          counter
+                          maxlength="250"
                           required
                         />
                       </v-flex>
@@ -314,6 +328,8 @@
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email, rules.emailMatch(organizacao.representante.ds_email, organizacao.representante.ds_email_confirmation)]"
+                          counter
+                          maxlength="250"
                           required
                         />
                       </v-flex>
@@ -555,11 +571,12 @@ export default {
   name: 'Organizacao',
   components: { File },
   data: () => ({
+    mascaraTelefone: '(##) #####-####',
     valid_dados_entidade: false,
     valid_segmento: false,
     valid_criterio: false,
     valid_representante: false,
-    etapaFormulario: 4,
+    etapaFormulario: 1,
     listaUF: [],
     listaSegmentos: [],
     listaMunicipios: [],
@@ -618,6 +635,8 @@ export default {
     ],
     rules: {
       required: v => !!v || 'Campo não preenchido',
+      cnpjInvalido: v => !!v || 'CNPJ não encontrado',
+      cpfInvalido: v => !!v || 'CPF não encontrado',
       phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
       cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
       cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
