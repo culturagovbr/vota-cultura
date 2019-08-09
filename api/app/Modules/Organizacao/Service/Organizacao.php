@@ -4,6 +4,7 @@ namespace App\Modules\Organizacao\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Localidade\Service\Endereco;
+use App\Modules\Organizacao\Mail\Organizacao\CadastroComSucesso;
 use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Representacao\Service\Representante;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
@@ -83,9 +84,9 @@ class Organizacao extends AbstractService
                 );
             }
 
-//            Mail::to($organizacao->ds_email)->send(
-//                new CadastroComSucesso($organizacao)
-//            );
+            Mail::to($organizacao->ds_email)->send(
+                new CadastroComSucesso($organizacao)
+            );
 
             DB::commit();
             return $organizacao;

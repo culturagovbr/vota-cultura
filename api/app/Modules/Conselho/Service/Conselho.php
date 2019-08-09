@@ -73,9 +73,9 @@ class Conselho extends AbstractService
                 );
             }
 
-//            Mail::to($organizacao->ds_email)->send(
-//                new CadastroComSucesso($organizacao)
-//            );
+            Mail::to($representante->ds_email)->send(
+                new CadastroComSucesso($representante)
+            );
 
             return $conselho;
         } catch (\Exception $queryException) {

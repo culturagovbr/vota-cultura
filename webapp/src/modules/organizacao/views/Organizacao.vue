@@ -4,9 +4,6 @@
       <v-toolbar
         dark
         color="primary">
-        <v-btn @click="mostrar">
-          clique aq
-        </v-btn>
         <v-toolbar-title>Inscrição - Organização ou Entidade Cultural</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
@@ -562,7 +559,7 @@ export default {
     valid_segmento: false,
     valid_criterio: false,
     valid_representante: false,
-    etapaFormulario: 1,
+    etapaFormulario: 4,
     listaUF: [],
     listaSegmentos: [],
     listaMunicipios: [],
@@ -663,11 +660,20 @@ export default {
         });
       }
     },
+    'organizacao.representante.nu_cpf': function (value) {
+      let self = this;
+      self.organizacao.representante.no_pessoa = '';
+      if (value.length === 11) {
+        this.consultarCPF(value).then((response) => {
+          const {data} = response.data;
+          self.organizacao.representante.no_pessoa = data.nmPessoaFisica;
+        });
+      }
+    },
     criteriosGetter() {
-      const criterios = _.groupBy(
+      this.listaCriterios = _.groupBy(
         this.criteriosGetter, criterio => criterio.tp_criterio,
       );
-      this.listaCriterios = criterios;
     },
   },
   mounted() {
@@ -691,6 +697,7 @@ export default {
       obterSegmentos: 'organizacao/obterSegmentos',
       confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
       consultarCNPJ: 'pessoa/consultarCNPJ',
+      consultarCPF: 'pessoa/consultarCPF',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {

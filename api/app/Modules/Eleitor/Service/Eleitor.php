@@ -57,9 +57,9 @@ class Eleitor extends AbstractService
                 );
             }
 
-//            Mail::to($eleitor->ds_email)->send(
-//                new CadastroComSucesso($eleitor)
-//            );
+            Mail::to($eleitor->ds_email)->send(
+                new CadastroComSucesso($eleitor)
+            );
 
             return $eleitor;
         } catch (\Exception $exception) {

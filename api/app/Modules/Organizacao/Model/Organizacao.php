@@ -70,4 +70,13 @@ class Organizacao extends Model
         );
     }
 
+    public function getTelefoneFormatadoAttribute()
+    {
+        return chunk_split(
+            $this->nu_telefone,
+            2,
+            ' '
+        );
+    }
+
 }
