@@ -6,6 +6,7 @@
     app
     clipped
     :width="drawWidth"
+    @input="$emit('input', $event)"
   >
     <vue-perfect-scrollbar
       class="drawer-menu--scroll"
@@ -131,6 +132,10 @@ export default {
     VuePerfectScrollbar,
   },
   props: {
+    value: {
+      type: Boolean,
+      default: true,
+    },
     expanded: {
       type: Boolean,
       default: true,
@@ -139,7 +144,6 @@ export default {
       type: [Number, String],
       default: '260',
     },
-    showDrawer: Boolean,
   },
   data() {
     return {
@@ -148,6 +152,7 @@ export default {
       scrollSettings: {
         maxScrollbarLength: 160,
       },
+      showDrawer: false,
     };
   },
   computed: {
@@ -158,8 +163,11 @@ export default {
       return this.$vuetify.options.extra.sideNav;
     },
   },
-  created() {},
-
+  watch: {
+    value(val) {
+      this.showDrawer = val;
+    },
+  },
   methods: {
     genChildTarget(item, subItem) {
       if (subItem.href) {

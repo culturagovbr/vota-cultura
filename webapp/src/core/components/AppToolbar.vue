@@ -11,7 +11,7 @@
         alt="Logo do Sistema"
         class="ml-3 mt-2"
       >
-      <v-toolbar-title class="ml-0 pl-3 mt-2">
+      <v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">
         <span>{{ appTitle }}</span>
       </v-toolbar-title>
       <v-btn
