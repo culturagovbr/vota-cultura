@@ -69,6 +69,7 @@
                           label="*CNPJ do Orgão Gestor do Conselho"
                           append-icon="people"
                           placeholder="99.999.999/9999-99"
+                          :error-messages="nomeConselhoError"
                           mask="##.###.###/####-##"
                           :rules="[rules.required, rules.cnpjMin]"
                           required/>
@@ -81,7 +82,8 @@
                           label="*Nome do órgão gestor de cultura"
                           append-icon="people"
                           :disabled="true"
-                          :rules="[rules.required]"
+                          :error-messages="nomeConselhoError"
+                          :rules="[rules.cnpjInvalido]"
                           required/>
                       </v-flex>
                       <v-flex xs12 sm2>
@@ -108,6 +110,8 @@
                           label="*E-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
+                          counter
+                          maxlength="100"
                           :rules="[rules.required, rules.email]"
                           required/>
                       </v-flex>
@@ -119,6 +123,8 @@
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
+                          counter
+                          maxlength="100"
                           :rules="[rules.required, rules.email, rules.emailMatch(conselho.ds_email, conselho.ds_email_confirmacao)]"
                           required/>
                       </v-flex>
@@ -129,6 +135,8 @@
                           v-model="conselho.ds_sitio_eletronico"
                           label="Sítio eletrônico do conselho"
                           append-icon="public"
+                          counter
+                          maxlength="250"
                           :rules="[rules.url]"/>
                       </v-flex>
                     </v-layout>
@@ -155,6 +163,8 @@
                           v-model="conselho.endereco.ds_logradouro"
                           label="*Logradouro"
                           append-icon="place"
+                          counter
+                          maxlength="250"
                           :rules="[rules.required]"
                           required/>
                       </v-flex>
@@ -163,6 +173,8 @@
                         sm3>
                         <v-text-field
                           v-model="conselho.endereco.ds_complemento"
+                          counter
+                          maxlength="250"
                           label="Complemento"/>
                       </v-flex>
                     </v-layout>
@@ -235,6 +247,7 @@
                           append-icon="person"
                           placeholder="999.999.999.99"
                           mask="###.###.###.##"
+                          :error-messages="nomeRepresentante"
                           :rules="[rules.required, rules.cpfMin]"
                           required/>
                       </v-flex>
@@ -263,7 +276,8 @@
                           :disabled="true"
                           label="*Nome do Representante"
                           append-icon="perm_identity"
-                          :rules="[rules.required]"
+                          :error-messages="nomeRepresentante"
+                          :rules="[rules.cpfInvalido]"
                           required/>
                       </v-flex>
                       <v-flex
@@ -291,6 +305,8 @@
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           :rules="[rules.required, rules.email]"
+                          counter
+                          maxlength="100"
                           required/>
                       </v-flex>
                       <v-flex
@@ -398,11 +414,14 @@
   import {mapActions, mapGetters} from 'vuex';
   import File from '@/core/components/upload/File';
   import {eventHub} from '@/event';
+  import Validate from '../../shared/util/validate';
 
   export default {
     components: {File},
     data: () => ({
-      etapaFormulario: 2,
+      nomeConselhoError: '',
+      nomeRepresentante: '',
+      etapaFormulario: 1,
       listaUF: [],
       listaMunicipios: [],
       valid_conselho: false,
@@ -469,6 +488,8 @@
       ],
       rules: {
         required: v => !!v || 'Campo não preenchido',
+        cnpjInvalido: v => !!v || 'CNPJ não encontrado',
+        cpfInvalido: v => !!v || 'CPF não encontrado',
         phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
         cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
         cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
@@ -501,21 +522,25 @@
       'conselho.nu_cnpj': function (value) {
         let self = this;
         self.conselho.no_orgao_gestor = '';
-        if(value.length === 14) {
+        this.nomeConselhoError = 'CNPJ inválido';
+        if (value.length === 14 && Validate.isCnpjValido(value)) {
           this.consultarCNPJ(value).then((response) => {
             const { data } = response.data;
             self.conselho.no_orgao_gestor = data.nmRazaoSocial;
           });
+          this.nomeConselhoError = '';
         }
       },
       'conselho.representante.nu_cpf': function (value) {
         let self = this;
         self.conselho.representante.no_pessoa = '';
-        if (value.length === 11) {
+        this.nomeRepresentante = 'CPF inválido';
+        if (value.length === 11 && Validate.isCpfValido(value)) {
           this.consultarCPF(value).then((response) => {
             const {data} = response.data;
             self.conselho.representante.no_pessoa = data.nmPessoaFisica;
           });
+          this.nomeRepresentante = '';
         }
       },
     },

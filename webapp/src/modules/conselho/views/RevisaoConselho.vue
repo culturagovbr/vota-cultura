@@ -221,6 +221,7 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                     Cancelar
                   </v-btn>
                   <v-btn
+                    :disabled="!confirmacaoDadosDeInscricao"
                     color="primary"
                     @click="salvar">
                     Confirmar

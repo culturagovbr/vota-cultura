@@ -69,6 +69,7 @@
                           label="*CNPJ"
                           append-icon="people"
                           placeholder="99.999.999/9999-99"
+                          :error-messages="nomeOrganizacaoError"
                           mask="##.###.###/####-##"
                           :rules="[rules.required, rules.cnpjMin]"
                           required/>
@@ -283,7 +284,7 @@
                           v-model="organizacao.representante.no_pessoa"
                           label="*Nome do Representante"
                           :disabled="true"
-                          :error-messages="nomeResponsavel"
+                          :error-messages="nomeRepresentante"
                           append-icon="perm_identity"
                           :rules="[rules.cnpjInvalido]"
                           required/>
@@ -575,7 +576,7 @@ export default {
   components: { File },
   data: () => ({
     nomeOrganizacaoError: '',
-    nomeResponsavel: '',
+    nomeRepresentante: '',
     mascaraTelefone: '(##) #####-####',
     valid_dados_entidade: false,
     valid_segmento: false,
@@ -689,13 +690,13 @@ export default {
     'organizacao.representante.nu_cpf': function (value) {
       let self = this;
       self.organizacao.representante.no_pessoa = '';
-      this.nomeResponsavel = 'CPF inválido';
+      this.nomeRepresentante = 'CPF inválido';
       if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
           const {data} = response.data;
           self.organizacao.representante.no_pessoa = data.nmPessoaFisica;
         });
-        this.nomeResponsavel = '';
+        this.nomeRepresentante = '';
       }
     },
     criteriosGetter() {
