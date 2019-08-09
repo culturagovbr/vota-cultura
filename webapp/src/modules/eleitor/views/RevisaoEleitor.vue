@@ -233,6 +233,7 @@ export default {
           'eventoSucesso',
           'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
         );
+        this.eleitor = Object.assign({});
         this.$router.push('/');
       }).catch(() => {
         eventHub.$emit(

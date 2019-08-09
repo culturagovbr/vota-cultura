@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    v-model="showDrawer"
+    :value="showDrawer"
     class="app--drawer"
     :mini-variant.sync="mini"
     app
@@ -176,9 +176,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.app--drawer
-  overflow: hidden
-  .drawer-menu--scroll
-    height: calc(100vh - 48px)
-    overflow: auto
+/*.app--drawer*/
+  /*overflow: hidden*/
+  /*.drawer-menu--scroll*/
+    /*height: calc(100vh - 48px)*/
+    /*overflow: auto*/
 </style>

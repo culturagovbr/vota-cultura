@@ -199,7 +199,7 @@
                   <v-radio-group
                     v-model="organizacao.co_segmento"
                     label="Segmento"
-                  >
+                    disabled>
                     <v-radio
                       v-for="(segmento, i) in listaSegmentos"
                       :key="i"
@@ -329,22 +329,22 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
               </v-layout>
             </v-container>
             <v-container v-else>
-                <v-layout>
-                  <v-flex>
-                    <v-alert
-                      type="error"
-                      :value="true"
-                    >
-                      É necessário preencher as informações do cadastro.
-                    </v-alert>
-                    <div class="mb-6">
-                      <v-btn to="/organizacao/inscricao">
-                        Voltar
-                      </v-btn>
-                    </div>
-                  </v-flex>
-                </v-layout>
-              </v-container>
+              <v-layout>
+                <v-flex>
+                  <v-alert
+                    type="error"
+                    :value="true"
+                  >
+                    É necessário preencher as informações do cadastro.
+                  </v-alert>
+                  <div class="mb-6">
+                    <v-btn to="/organizacao/inscricao">
+                      Voltar
+                    </v-btn>
+                  </div>
+                </v-flex>
+              </v-layout>
+            </v-container>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -364,7 +364,7 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer />
+            <v-spacer/>
 
             <v-btn
               color="red darken-1"
@@ -391,81 +391,81 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
 <script>
   import {mapActions, mapGetters} from 'vuex';
   import _ from 'lodash';
-import {eventHub} from '@/event';
+  import {eventHub} from '@/event';
 
   export default {
     name: 'RevisaoOrganizacao',
-  data: () => ({
-    confirmacaoDadosdeInscricao: false,
+    data: () => ({
+      confirmacaoDadosdeInscricao: false,
       confirmacaoDadosDeInscricao: false,
       dialog: false,
       listaUF: [],
       listaSegmentos: [],
-    listaMunicipios: [],
-    listaCriterios: [],
-    organizacao: {
-      st_inscricao: 'e',
-      co_segmento: '',
+      listaMunicipios: [],
+      listaCriterios: [],
+      organizacao: {
+        st_inscricao: 'e',
+        co_segmento: '',
         no_organizacao: '',
-      ds_email: '',
-      ds_email_confirmacao: '',
-      nu_telefone: '',
-      nu_cnpj: '',
-      endereco: {
-        co_ibge: '',
-        ds_complemento: '',
-        nu_cep: '',
-        ds_logradouro: '',
-        co_municipio: '',
-      },
-      representante: {
         ds_email: '',
-        no_pessoa: '',
-        nu_rg: '',
-        nu_cpf: '',
+        ds_email_confirmacao: '',
         nu_telefone: '',
-        ds_email_confirmation: '',
+        nu_cnpj: '',
+        endereco: {
+          co_ibge: '',
+          ds_complemento: '',
+          nu_cep: '',
+          ds_logradouro: '',
+          co_municipio: '',
+        },
+        representante: {
+          ds_email: '',
+          no_pessoa: '',
+          nu_rg: '',
+          nu_cpf: '',
+          nu_telefone: '',
+          ds_email_confirmation: '',
+        },
+        ds_sitio_eletronico: '',
+        anexos: [],
+        criterios: {
+          abrangencia_estadual: '',
+          abrangencia_nacional: '',
+          nu_associados_filiados: '',
+          nu_atividades: '',
+          participacao_instancias: '',
+          pesquisa_producao: '',
+          tempo_funcionamento: '',
+        },
       },
-      ds_sitio_eletronico: '',
-      anexos: [],
-      criterios: {
-        abrangencia_estadual: '',
-        abrangencia_nacional: '',
-        nu_associados_filiados: '',
-        nu_atividades: '',
-        participacao_instancias: '',
-        pesquisa_producao: '',
-        tempo_funcionamento: '',
-      },
-    },
-  }),
-  computed: {
-    ...mapGetters({
-      estadosGetter: 'localidade/estados',
-      municipiosGetter: 'localidade/municipios',
-      segmentosGetter: 'organizacao/segmentos',
-      criteriosGetter: 'organizacao/criterios',
-      organizacaoGetter: 'organizacao/organizacao',
+    }),
+    computed: {
+      ...mapGetters({
+        estadosGetter: 'localidade/estados',
+        municipiosGetter: 'localidade/municipios',
+        segmentosGetter: 'organizacao/segmentos',
+        criteriosGetter: 'organizacao/criterios',
+        organizacaoGetter: 'organizacao/organizacao',
       }),
     },
     watch: {
       criteriosGetter() {
-      const criterios = _.groupBy(
-        this.criteriosGetter, criterio => criterio.tp_criterio,
-      );
-      this.listaCriterios = criterios;
-    },
-    organizacaoGetter(value) {
+        const criterios = _.groupBy(
+          this.criteriosGetter, criterio => criterio.tp_criterio,
+        );
+        this.listaCriterios = criterios;
+      },
+      organizacaoGetter(value) {
         this.organizacao = value;
-      this.obterMunicipios(this.organizacao.co_ibge);
+        this.obterMunicipios(this.organizacao.co_ibge);
+      },
     },
-  },
-  methods: {
-    ...mapActions({
-      obterEstados: 'localidade/obterEstados',
-      obterMunicipios: 'localidade/obterMunicipios',
-      obterCriterios: 'organizacao/obterCriterios',
-      obterSegmentos: 'organizacao/obterSegmentos',
+    methods: {
+      ...mapActions({
+        obterEstados: 'localidade/obterEstados',
+        obterMunicipios: 'localidade/obterMunicipios',
+        obterCriterios: 'organizacao/obterCriterios',
+        obterSegmentos: 'organizacao/obterSegmentos',
         enviarDadosOrganizacao: 'organizacao/enviarDadosOrganizacao',
       }),
       salvar() {
@@ -474,6 +474,8 @@ import {eventHub} from '@/event';
             'eventoSucesso',
             'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
           );
+
+          this.organizacao = Object.assign({});
           this.$router.push('/');
         }).catch(() => {
           eventHub.$emit(
@@ -483,22 +485,22 @@ import {eventHub} from '@/event';
           this.$router.push('/');
         }).finally(() => {
           console.log(this.organizacao);
-        // this.fecharDialogo();
-      });
+          // this.fecharDialogo();
+        });
+      },
+      abrirDialogo() {
+        this.dialog = true;
+      },
+      fecharDialogo() {
+        this.dialog = false;
+      },
     },
-    abrirDialogo() {
-      this.dialog = true;
-    },
-    fecharDialogo() {
-      this.dialog = false;
-    },
-  },
-  mounted() {
-    this.obterSegmentos();
-    this.obterCriterios();
-    this.listaUF = this.estadosGetter;
-    this.listaMunicipios = this.municipiosGetter;
-    this.listaSegmentos = this.segmentosGetter;
+    mounted() {
+      this.obterSegmentos();
+      this.obterCriterios();
+      this.listaUF = this.estadosGetter;
+      this.listaMunicipios = this.municipiosGetter;
+      this.listaSegmentos = this.segmentosGetter;
       this.organizacao = this.organizacaoGetter;
     },
   };
