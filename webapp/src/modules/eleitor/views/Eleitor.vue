@@ -224,6 +224,7 @@
   import {mapActions, mapGetters} from 'vuex';
   import File from '@/core/components/upload/File';
   import {eventHub} from '@/event';
+  import Validate from '../../shared/util/validate';
 
   export default {
     name: 'Eleitor',

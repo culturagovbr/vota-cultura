@@ -303,7 +303,7 @@
               </v-layout>
 
               <v-checkbox
-                v-model="confirmacaoDadosdeInscricao"
+                v-model="confirmacaoDadosDeInscricao"
                 :rules="[v => !!v || 'É necessário concordar para enviar!']"
                 label=" Declaro ser representante da organização ou entidade cultural inscrita neste edital e designado (a) para o fornecimento das informações solicitadas e que assumo total responsabilidade pela veracidade das informações apresentadas.
 
@@ -319,7 +319,7 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                     Cancelar
                   </v-btn>
                   <v-btn
-                    :disabled="!confirmacaoDadosdeInscricao"
+                    :disabled="!confirmacaoDadosDeInscricao"
                     color="primary"
                     @click="abrirDialogo"
                   >
@@ -396,7 +396,6 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
   export default {
     name: 'RevisaoOrganizacao',
     data: () => ({
-      confirmacaoDadosdeInscricao: false,
       confirmacaoDadosDeInscricao: false,
       dialog: false,
       listaUF: [],
