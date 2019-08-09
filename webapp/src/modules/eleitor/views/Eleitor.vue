@@ -169,9 +169,9 @@
                 </v-layout>
 
                 <v-layout align-center justify-center>
-                  <v-flex sm3>
+                  <v-flex sm5>
                     <div class="subheading mb-4">
-                      Envie os documentos abaixo:
+                      Envie os documentos abaixo (somente formato PDF):
                     </div>
                   </v-flex>
                 </v-layout>

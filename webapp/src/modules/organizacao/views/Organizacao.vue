@@ -518,9 +518,9 @@
                 <v-card flat>
                   <v-container fluid grid-list-xl>
                     <v-layout align-center justify-center>
-                      <v-flex sm3>
-                        <div class="subheading mb-4">
-                          Envie os documentos abaixo:
+                      <v-flex sm5>
+                        <div class="subheading mb-5">
+                          Envie os documentos abaixo (somente formato PDF):
                         </div>
                       </v-flex>
                     </v-layout>

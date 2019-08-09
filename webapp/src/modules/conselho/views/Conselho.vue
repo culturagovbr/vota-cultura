@@ -344,16 +344,18 @@
                   <v-container fluid grid-list-xl>
 
                     <v-layout align-center justify-center>
-                      <v-flex sm3>
+                      <v-flex sm5>
                         <div class="subheading mb-4">
-                          Envie os documentos abaixo:
+                          Envie os documentos abaixo (somente formato PDF):
                         </div>
                       </v-flex>
                     </v-layout>
                     <v-layout align-center justify-center class="mb-4" wrap>
                       <v-flex sm3>
                         <v-card max-width="344" min-height="230" class="mx-auto">
-                          <v-card-title class="subheading mb-1 justify-center">Ato normativo que constituiu o conselho*</v-card-title>
+                          <v-card-title class="subheading mb-1 justify-center">
+                            Ato normativo que constituiu o conselho*
+                          </v-card-title>
                           <v-card-text>
                             <file v-model="ato_normativo_conselho"/>
                           </v-card-text>
@@ -525,7 +527,7 @@
         this.nomeConselhoError = 'CNPJ inválido';
         if (value.length === 14 && Validate.isCnpjValido(value)) {
           this.consultarCNPJ(value).then((response) => {
-            const { data } = response.data;
+            const {data} = response.data;
             self.conselho.no_orgao_gestor = data.nmRazaoSocial;
           });
           this.nomeConselhoError = '';
