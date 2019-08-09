@@ -474,6 +474,8 @@ import {eventHub} from '@/event';
             'eventoSucesso',
             'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
           );
+
+          this.organizacao = Object.assign({});
           this.$router.push('/');
         }).catch(() => {
           eventHub.$emit(

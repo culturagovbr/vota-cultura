@@ -252,31 +252,7 @@ export default {
     confirmacaoDadosDeInscricao: false,
     dialog: false,
     listaUF: [],
-    conselho: {
-      no_orgao_gestor: '',
-      ds_email: '',
-      ds_email_confirmacao: '',
-      nu_telefone: '',
-      nu_cnpj: '',
-      tp_governamental: '',
-      endereco: {
-        co_ibge: '',
-        ds_complemento: '',
-        nu_cep: '',
-        ds_logradouro: '',
-        co_municipio: '',
-      },
-      representante: {
-        ds_email: '',
-        no_pessoa: '',
-        nu_rg: '',
-        nu_cpf: '',
-        nu_telefone: '',
-        ds_email_confirmation: '',
-      },
-      ds_sitio_eletronico: '',
-      anexos: [],
-    },
+    conselho: {},
   }),
   computed: {
     ...mapGetters({
@@ -299,6 +275,7 @@ export default {
           'eventoSucesso',
           'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
         );
+        this.conselho = Object.assign({});
         this.$router.push('/');
       }).catch(() => {
         eventHub.$emit(
