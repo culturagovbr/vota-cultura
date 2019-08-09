@@ -81,6 +81,7 @@
                           label="*Nome da Organização/Entidade"
                           append-icon="perm_identity"
                           :disabled="true"
+                          :error-messages="nomeOrganizacaoError"
                           :rules="[rules.cnpjInvalido]"
                           required/>
                       </v-flex>
@@ -96,6 +97,7 @@
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
                           required/>
+
                       </v-flex>
                     </v-layout>
 
@@ -256,7 +258,6 @@
                           mask="###.###.###.##"
                           :rules="[rules.required, rules.cpfMin]"
                           required/>
-
                       </v-flex>
                       <v-flex
                         xs12
@@ -282,8 +283,9 @@
                           v-model="organizacao.representante.no_pessoa"
                           label="*Nome do Representante"
                           :disabled="true"
+                          :error-messages="nomeResponsavel"
                           append-icon="perm_identity"
-                          :rules="[rules.cpfInvalido]"
+                          :rules="[rules.cnpjInvalido]"
                           required/>
                       </v-flex>
                       <v-flex
@@ -566,11 +568,14 @@
   import _ from 'lodash';
   import File from '@/core/components/upload/File';
   import {eventHub} from '@/event';
+  import Validate from '../../shared/util/validate';
 
 export default {
   name: 'Organizacao',
   components: { File },
   data: () => ({
+    nomeOrganizacaoError: '',
+    nomeResponsavel: '',
     mascaraTelefone: '(##) #####-####',
     valid_dados_entidade: false,
     valid_segmento: false,
@@ -672,21 +677,25 @@ export default {
     'organizacao.nu_cnpj': function (value) {
       let self = this;
       self.organizacao.no_organizacao = '';
-      if(value.length === 14) {
+      this.nomeOrganizacaoError = 'CNPJ inválido';
+      if (value.length === 14 && Validate.isCnpjValido(value)) {
         this.consultarCNPJ(value).then((response) => {
           const { data } = response.data;
           self.organizacao.no_organizacao = data.nmRazaoSocial;
         });
+        this.nomeOrganizacaoError = '';
       }
     },
     'organizacao.representante.nu_cpf': function (value) {
       let self = this;
       self.organizacao.representante.no_pessoa = '';
-      if (value.length === 11) {
+      this.nomeResponsavel = 'CPF inválido';
+      if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
           const {data} = response.data;
           self.organizacao.representante.no_pessoa = data.nmPessoaFisica;
         });
+        this.nomeResponsavel = '';
       }
     },
     criteriosGetter() {

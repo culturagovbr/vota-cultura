@@ -15,6 +15,29 @@ const isCpfValido = (strCPF) => {
   return true;
 };
 
+const isCnpjValido = (strCnpj) => {
+  var cnpj = strCnpj;
+  var valida = new Array(6,5,4,3,2,9,8,7,6,5,4,3,2);
+  var dig1= new Number;
+  var dig2= new Number;
+
+  let exp = /\.|\-|\//g
+  cnpj = cnpj.toString().replace( exp, "" );
+  var digito = new Number(eval(cnpj.charAt(12)+cnpj.charAt(13)));
+
+  for(let i = 0; i<valida.length; i++){
+    dig1 += (i>0? (cnpj.charAt(i-1)*valida[i]):0);
+    dig2 += cnpj.charAt(i)*valida[i];
+  }
+  dig1 = (((dig1%11)<2)? 0:(11-(dig1%11)));
+  dig2 = (((dig2%11)<2)? 0:(11-(dig2%11)));
+
+  if(((dig1*10)+dig2) != digito)
+    return false;
+  return true;
+};
+
+
 const isEmailValido = (strEmail) => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
   return regex.test(strEmail);
@@ -30,4 +53,5 @@ export default {
   isCpfValido,
   isEmailValido,
   isSenhaValida,
+  isCnpjValido,
 };
