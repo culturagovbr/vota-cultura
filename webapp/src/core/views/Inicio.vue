@@ -1,14 +1,17 @@
 <template>
   <div>
     <section>
-      <v-parallax src="https://live.staticflickr.com/638/22469726173_ebad8cb534_k.jpg" height="600">
+      <!--<v-parallax src="https://live.staticflickr.com/638/22469726173_ebad8cb534_k.jpg" height="600">-->
+      <!--<v-parallax src="img/banner.png" height="600">-->
+      <!--<v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>-->
+      <v-img src="img/banner.png" height="600"></v-img>
         <v-layout
                 column
                 align-center
                 justify-center
                 class="white--text">
-          <h1 class="white--text font-weight-bold display-3 text-xs-center">Eleições 2019</h1>
-          <div class="subheading mb-1 text-xs-center">Conselho Nacional de Política Cultural</div>
+          <!--<h1 class="white&#45;&#45;text font-weight-bold display-3 text-xs-center">Eleições 2019</h1>-->
+          <!--<div dark class="subheading mb-1 text-xs-center">Conselho Nacional de Política Cultural</div>-->
           <v-slide-y-transition>
             <v-container grid-list-md
                          text-xs-center
@@ -39,7 +42,7 @@
             </v-container>
           </v-slide-y-transition>
         </v-layout>
-      </v-parallax>
+      <!--</v-parallax>-->
     </section>
 
     <section>
