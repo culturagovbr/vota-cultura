@@ -199,7 +199,7 @@
                   <v-radio-group
                     v-model="organizacao.co_segmento"
                     label="Segmento"
-                  >
+                    disabled>
                     <v-radio
                       v-for="(segmento, i) in listaSegmentos"
                       :key="i"
