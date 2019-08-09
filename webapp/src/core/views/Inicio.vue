@@ -146,12 +146,12 @@
           <div class="headline white--text mb-3 text-xs-center">Leia o Edital na integra</div>
           <em>Se informe sobre a chamada publica para composição do conselho nacional de política
             cultural</em>
+
           <v-btn
                   class="green darken-4 mt-5 white--text"
                   dark
                   large
-                  href="/pre-made-themes"
-          >
+                  href="EDITAL_01_12_08_2019-CNPC.pdf">
             Ver Edital
           </v-btn>
         </v-layout>
