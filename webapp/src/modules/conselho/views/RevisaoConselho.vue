@@ -179,8 +179,7 @@
                     label="CPF"
                     append-icon="person"
                     mask="###.###.###.##"
-                    disabled
-                  />
+                    disabled />
                 </v-flex>
               </v-layout>
 
@@ -191,8 +190,7 @@
                     label="RG"
                     append-icon="person"
                     mask="##.###.###-#"
-                    disabled
-                  />
+                    disabled />
                 </v-flex>
               </v-layout>
 
@@ -202,8 +200,7 @@
                     v-model="conselho.representante.ds_email"
                     label="E-mail do representante"
                     append-icon="mail"
-                    disabled
-                  />
+                    disabled />
                 </v-flex>
               </v-layout>
 
@@ -213,25 +210,37 @@
                 label=" Declaro ser representante do órgão coordenador do conselho, vinculado ao órgão gestor de cultura do ente federado, designado (a) para o fornecimento das informações apresentadas e que assumo total responsabilidade pela veracidade das informações apresentadas.
 
 Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do Código Penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
-                required
-              />
+                required />
 
               <v-layout
                 wrap
-                align-center
-              >
+                align-center>
                 <v-flex offset-xs4>
                   <v-btn
-                    to="/inscricao/conselho"
-                  >
+                    to="/inscricao/conselho">
                     Cancelar
                   </v-btn>
                   <v-btn
                     color="primary"
-                    @click="salvar"
-                  >
+                    @click="salvar">
                     Confirmar
                   </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container v-else>
+              <v-layout>
+                <v-flex>
+                  <v-alert
+                    type="error"
+                    :value="true">
+                    É necessário preencher as informações do cadastro.
+                  </v-alert>
+                  <div class="mb-6">
+                    <v-btn to="/conselho/inscricao">
+                      Voltar
+                    </v-btn>
+                  </div>
                 </v-flex>
               </v-layout>
             </v-container>
