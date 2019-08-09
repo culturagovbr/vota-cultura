@@ -1,7 +1,7 @@
-INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (1, 'abrangencia_nacional', 'Abrangência nacional', '2 macroregiões', 1, 2);
-INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (2, 'abrangencia_nacional', 'Abrangência nacional', '3 macroregiões', 2, 2);
-INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (3, 'abrangencia_nacional', 'Abrangência nacional', '4 macroregiões', 3, 2);
-INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (4, 'abrangencia_nacional', 'Abrangência nacional', '5 macroregiões', 4, 2);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (1, 'abrangencia_nacional', 'Abrangência nacional', '2 macrorregiões', 1, 2);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (2, 'abrangencia_nacional', 'Abrangência nacional', '3 macrorregiões', 2, 2);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (3, 'abrangencia_nacional', 'Abrangência nacional', '4 macrorregiões', 3, 2);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (4, 'abrangencia_nacional', 'Abrangência nacional', '5 macrorregiões', 4, 2);
 
 
 INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (5, 'abrangencia_estadual', 'Abrangência estadual', 'De 5 a 10 estados', 1, 2);
