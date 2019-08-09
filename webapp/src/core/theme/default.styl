@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------
-[Table of contents] 
-/*  
+[Table of contents]
+/*
 # overwrite some style of stylus
 
 /*------------------------------------------------------------------
@@ -28,19 +28,19 @@ h2
   font-weight: $font-weights.light
   letter-spacing: -0.5
 
-h3 
+h3
   font-size: 24px
   font-weight: $font-weights.light
   letter-spacing: normal
 
-h4 
+h4
   font-size: 20px
   font-weight: $font-weights.light
-  letter-spacing: normal  
-h5 
+  letter-spacing: normal
+h5
   font-size: 16px
   font-weight: $font-weights.regular
-  letter-spacing: normal  
+  letter-spacing: normal
 
 /*------------------------------------------------------------------
 [Components/AppToolbar]
@@ -54,7 +54,9 @@ h5
   position relative
   @media $display-breakpoints.sm-and-down
     height: 54px
-    margin-left: -15px !important
+    width: 75px
+    margin-left: -17px !important;
+
 
   .button-drawer
     position: absolute;
@@ -66,6 +68,10 @@ h5
     height: 36px
     @media $display-breakpoints.sm-and-down
       height: 28px
+      margin-top: 0px !important;
+  .button-drawer
+    top: 4px;
+
 
 
 /*------------------------------------------------------------------
@@ -81,20 +87,20 @@ h5
 
 /*------------------------------------------------------------------
 [Components / Card]
-*/  
+*/
 .v-card
   // box-shadow: 0 1px 3px 1px rgba(0,0,0,0.03)
   box-shadow: 0 1px 1px 0 rgba(60,64,67,.08), 0 1px 3px 1px rgba(60,64,67,.16);
-  &__actions 
-    .v-btn 
+  &__actions
+    .v-btn
       margin: 0 8px;
       min-width: 56px
       &:first-child
         margin-left: 0
-  
+
 /*------------------------------------------------------------------
 [Components / Timeline]
-*/    
+*/
 
 .timeline
   position: relative;
@@ -106,14 +112,14 @@ h5
     display: -webkit-box;
     display: flex
 
-  &-detail 
+  &-detail
     -webkit-box-flex: 1;
     flex: 1 1 0%;
     padding-bottom: 30px
     @media $display-breakpoints.sm-and-down
       display: none;
 
-  &-point 
+  &-point
     position: relative;
     flex-shrink: 0;
     -webkit-box-flex: 0;
@@ -159,7 +165,7 @@ h5
     margin-left: -3px;
     border-radius: 50%
 
-  &-content 
+  &-content
     -webkit-box-flex: 1;
     flex: 1 1 0%;
     margin-bottom: 60px
@@ -189,43 +195,43 @@ h5
   &-point-xs &-point
     width: 32px
   &-point-sm &-point
-    width: 64px      
+    width: 64px
   &-point-lg &-point
-    width: 128px      
+    width: 128px
   &-point-xl &-point
     width: 256px
 
   @media $display-breakpoints.md-and-down
-    & &-block &-detail 
+    & &-block &-detail
       -webkit-box-ordinal-group:2;
       order: 1;
-    & &-block &-content 
+    & &-block &-content
       -webkit-box-ordinal-group: 4;
       order: 3
 
   @media $display-breakpoints.md-and-up
-      & &-block:nth-child(even) &-detail 
+      & &-block:nth-child(even) &-detail
         -webkit-box-ordinal-group:2;
         order: 1;
         text-align: right
-      
-      & &-block:nth-child(even) &-content 
+
+      & &-block:nth-child(even) &-content
         -webkit-box-ordinal-group: 4;
         order: 3
 
-      & &-block:nth-child(odd) &-detail 
+      & &-block:nth-child(odd) &-detail
         -webkit-box-ordinal-group: 4;
         order: 3;
-        text-align: left  
+        text-align: left
 
-      & &-block:nth-child(odd) &-content 
+      & &-block:nth-child(odd) &-content
         -webkit-box-ordinal-group: 2;
         order: 1
     &&-content-left &-block &-detail
     -webkit-box-ordinal-group: 4;
     order: 3;
     text-align: left
-  
+
   &&-content-left &-block &-content
     -webkit-box-ordinal-group: 2;
     order: 1;
@@ -248,16 +254,16 @@ h5
       box-shadow: 0 1px 3px 1px rgba(0,0,0,0.03)
     &--list
       a.list__tile--active
-        background: #eee        
+        background: #eee
     &--scrollbar
-      height:calc(100vh - 48px)             
+      height:calc(100vh - 48px)
       @media $display-breakpoints.sm-and-down
-        height:calc(100vh - 48px - 56px)  
+        height:calc(100vh - 48px - 56px)
   &-room
     &--toolbar
       box-shadow: 0 1px 3px 1px rgba(0,0,0,0.03)
     &--scrollbar
-      height: calc(100vh - 48px - 80px)         
+      height: calc(100vh - 48px - 80px)
 /*------------------------------------------------------------------
 [Components / mail]
 */
@@ -268,11 +274,11 @@ h5
     &--layout
       padding-top: 64px!important
       @media $display-breakpoints.sm-and-down
-        padding-top: 56px!important         
+        padding-top: 56px!important
     &--toolbar
       margin-top: 64px!important
       @media $display-breakpoints.sm-and-down
-        margin-top: 56px!important      
+        margin-top: 56px!important
       .check-all
         flex: 0 0
         margin-top: 0
@@ -282,15 +288,15 @@ h5
     &--layout
       padding-top: 64px!important
       @media $display-breakpoints.sm-and-down
-        padding-top: 56px!important        
+        padding-top: 56px!important
     &--toolbar
       margin-top: 64px !important
       @media $display-breakpoints.sm-and-down
-        margin-top: 56px!important        
+        margin-top: 56px!important
     &--scrollbar
       height: calc(100vh - 64px - 64px)
       @media $display-breakpoints.sm-and-down
-        height : calc(100vh - 56px - 56px)      
+        height : calc(100vh - 56px - 56px)
 .v-input.search
   .v-input__slot
     margin-top: 8px
