@@ -70,9 +70,6 @@ export default {
     acceptedFileTypes: {
       type: Array,
       default: () => [
-        'image/png',
-        'image/jpeg',
-        'image/jpg',
         'application/pdf',
       ],
     },
@@ -83,9 +80,6 @@ export default {
     fileValidateTypeLabelExpectedTypesMap: {
       type: Object,
       default: () => ({
-        'image/png': '.png',
-        'image/jpg': '.jpg',
-        'image/jpeg': '.jpeg',
         'application/pdf': '.pdf',
       }),
     },
