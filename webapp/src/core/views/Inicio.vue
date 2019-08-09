@@ -158,6 +158,15 @@
                   href="EDITAL_01_12_08_2019-CNPC.pdf">
             Ver Edital
           </v-btn>
+
+          <v-btn
+                  class="green darken-4 mt-5 white--text"
+                  dark
+                  large
+                  target="_blank"
+                  href="CARTILHA_CNPC.pdf">
+            Ver Cartilha
+          </v-btn>
         </v-layout>
       </v-parallax>
     </section>
