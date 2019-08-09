@@ -6,23 +6,28 @@
     clipped-left
   >
     <div class="toolbar-logo theme--dark green darken-4">
+        <!--:src="require('@/core/assets/logo.svg')"-->
+      <v-toolbar-side-icon @click="handleDrawerToggle"></v-toolbar-side-icon>
       <img
-        :src="require('@/core/assets/logo.svg')"
-        alt="Logo do Sistema"
-        class="ml-3 mt-2"
-      >
-      <v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">
-        <span>{{ appTitle }}</span>
-      </v-toolbar-title>
-      <v-btn
-        class="button-drawer"
-        color="green darken-4"
-        icon
-        @click="handleDrawerToggle"
-      >
-        <v-icon v-text="drawer ? 'chevron_right' : 'chevron_left'" />
-      </v-btn>
+        src="img/logo-cnpc-novo-site.png"
+        alt="Logo do Sistema">
+        <!--class="ml-3 mt-2"-->
+      <!--<v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">-->
+        <!--<span>{{ appTitle }}</span>-->
+      <!--</v-toolbar-title>-->
+
+      <!--<v-btn-->
+        <!--class="button-drawer"-->
+        <!--color="green darken-4"-->
+        <!--icon-->
+        <!--@click="handleDrawerToggle"-->
+      <!--&gt;-->
+        <!--<v-icon v-text="drawer ? 'chevron_right' : 'chevron_left'" />-->
+      <!--</v-btn>-->
     </div>
+      <v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">
+      <span>{{ appTitle }}</span>
+      </v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
       <v-btn

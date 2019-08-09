@@ -95,5 +95,6 @@ export default {
   top: 50% !important;
   right: 0;
   border-radius: 0;
+  display: none;
 }
 </style>
