@@ -19,8 +19,9 @@ class OrganizacaoApiResourceController extends AApiResourceController
         parent::__construct($service);
     }
 
-    public function show(Organizacao $model): \Illuminate\Http\JsonResponse
+    public function show($identificador): \Illuminate\Http\JsonResponse
     {
+        $model = $this->service->obterUm($identificador);
         return parent::genericShow($model);
     }
 }
