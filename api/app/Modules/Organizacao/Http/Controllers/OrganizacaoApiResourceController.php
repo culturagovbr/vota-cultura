@@ -2,6 +2,8 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
+use App\Modules\Organizacao\Model\Criterio;
+use App\Modules\Organizacao\Model\Organizacao;
 use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
@@ -17,5 +19,8 @@ class OrganizacaoApiResourceController extends AApiResourceController
         parent::__construct($service);
     }
 
-
+    public function show(Organizacao $model): \Illuminate\Http\JsonResponse
+    {
+        return parent::genericShow($model);
+    }
 }
