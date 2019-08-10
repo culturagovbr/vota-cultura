@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 
 trait TApiResourceShow
 {
-    public function show(Model $model): \Illuminate\Http\JsonResponse
+    public function genericShow(Model $model): \Illuminate\Http\JsonResponse
     {
         return $this->sendResponse(
             $model->toArray(),

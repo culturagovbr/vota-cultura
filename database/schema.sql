@@ -81,6 +81,7 @@ CREATE TABLE tb_representante (
 	no_pessoa            varchar(100)  NOT NULL ,
 	nu_rg                varchar(9)  NOT NULL ,
 	nu_cpf               varchar(11)  NOT NULL ,
+	nu_telefone          varchar(11)  NOT NULL ,
 	CONSTRAINT pk_tb_representante_co_representante PRIMARY KEY ( co_representante ),
 	CONSTRAINT uk_01_representante_cpf UNIQUE ( nu_cpf )
  );

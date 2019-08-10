@@ -18,91 +18,91 @@
     <b>
         Telefone:
     </b>
-    {{ $organizacao->nu_telefone }}
+    {{ $organizacao->telefone_formatado }}
 </p>
 <p>
     <b>
         E-mail:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->ds_email }}
 </p>
 <p>
     <b>
         Sítio eletrônico da Organização/Entidade:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->ds_sitio_eletronico }}
 </p>
 <p>
     <b>
         CEP:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->endereco->nu_cep }}
 </p>
 <p>
     <b>
         Logradouro:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->endereco->ds_logradouro }}
 </p>
 <p>
     <b>
         Complemento:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->endereco->ds_complemento }}
 </p>
 <p>
     <b>
         Unidade da Federação da sede:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->endereco->municipio->uf->no_uf }}
 </p>
 <p>
     <b>
         Cidade:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->endereco->municipio->no_municipio }}
 </p>
 <p>
     <b>
         Nome do Responsável:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->representante->no_pessoa }}
 </p>
 <p>
     <b>
         Celular do Responsável:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->representante->telefone_formatado }}
 </p>
 <p>
     <b>
         CPF:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->representante->nu_cpf }}
 </p>
 <p>
     <b>
         RG:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->representante->nu_rg }}
 </p>
 <p>
     <b>
         E-mail do Responsável:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->representante->ds_email }}
 </p>
 <p>
     <b>
         Segmento:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->segmento->ds_detalhamento }}
 </p>
 <p>
     <b>
         Abrangência Nacional:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->criterio->ds_detalhamento }}
 </p>
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Localidade\Model;
 
+use App\Modules\Localidade\Model\Uf as ModelUF;
 use Illuminate\Database\Eloquent\Model;
 
 class Municipio extends Model
@@ -17,4 +18,12 @@ class Municipio extends Model
 
     public $timestamps = false;
 
+    public function uf()
+    {
+        return $this->belongsTo(
+            ModelUF::class,
+            'co_ibge',
+            'co_municipio'
+        );
+    }
 }
