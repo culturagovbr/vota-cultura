@@ -1,21 +1,18 @@
 <template>
+
+
   <v-navigation-drawer
     :value="showDrawer"
-    class="app--drawer"
     :mini-variant.sync="mini"
-    app
-    clipped
-    :width="drawWidth"
+    class="app--drawer"
+    absolute
+    floating
     @input="$emit('input', $event)"
   >
     <vue-perfect-scrollbar
-      class="drawer-menu--scroll"
       :settings="scrollSettings"
     >
-      <v-list
-        dense
-        expand
-      >
+      <v-list>
         <template v-for="item in menus">
           <!--group with subitems-->
           <v-list-group
@@ -184,9 +181,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-/*.app--drawer*/
-  /*overflow: hidden*/
-  /*.drawer-menu--scroll*/
-    /*height: calc(100vh - 48px)*/
-    /*overflow: auto*/
+  .ps-container{
+    position: relative;
+    top: 60px;
+  }
 </style>

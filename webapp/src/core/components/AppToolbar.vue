@@ -2,9 +2,7 @@
   <v-toolbar
     color="green darken-3"
     dark
-    app
-    clipped-left
-  >
+    clipped-left>
     <div class="toolbar-logo theme--dark green darken-4">
         <!--:src="require('@/core/assets/logo.svg')"-->
       <v-toolbar-side-icon @click="handleDrawerToggle"></v-toolbar-side-icon>
