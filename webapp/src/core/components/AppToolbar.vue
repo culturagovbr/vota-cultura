@@ -26,7 +26,7 @@
       <!--</v-btn>-->
     </div>
       <v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">
-      <span>{{ appTitle }}</span>
+      <span class="flex headline font-weight-medium">{{ appTitle }}</span>
       </v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>

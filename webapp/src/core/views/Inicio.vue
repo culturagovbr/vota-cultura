@@ -4,7 +4,7 @@
       <!--<v-parallax src="https://live.staticflickr.com/638/22469726173_ebad8cb534_k.jpg" height="600">-->
       <!--<v-parallax src="img/banner.png" height="600">-->
       <!--<v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>-->
-      <v-img src="img/banner.png" height="600"></v-img>
+      <v-img src="img/banner.png" height="800"></v-img>
       <v-layout
         column
         align-center
@@ -144,7 +144,7 @@
     </section>
 
     <section>
-      <v-parallax src="http://live.staticflickr.com/7659/16882869738_88aee08242_h.jpg" height="380">
+      <v-parallax src="img/vota-parallax.jpg" height="380">
         <v-layout column align-center justify-center row fill-height>
           <v-layout row align-center justify-center>
             <v-flex>
