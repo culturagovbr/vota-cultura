@@ -31,6 +31,7 @@
                       label="*CPF"
                       append-icon="account_circle"
                       :rules="[rules.required, rules.cpfMin]"
+                      :error-messages="nomeEleitorError"
                       mask="###.###.###-##"
                       required
                     />
@@ -41,6 +42,7 @@
                       :disabled="true"
                       label="*Nome completo"
                       append-icon="perm_identity"
+                      :error-messages="nomeEleitorError"
                       :rules="[rules.cpfInvalido]"
                       required
                     />
@@ -231,6 +233,7 @@
     components: {File},
     data: () => ({
       anexoCpf: '',
+      nomeEleitorError:'',
       valid: false,
       date: '',
       dateFormatted: '',
@@ -312,11 +315,13 @@
       'eleitor.nu_cpf': function (value) {
         let self = this;
         self.eleitor.no_eleitor = '';
-        if (value.length === 11) {
+        this.nomeEleitorError = 'CPF inválido';
+          if (value.length === 11 && Validate.isCpfValido(value)) {
           this.consultarCPF(value).then((response) => {
             const {data} = response.data;
             self.eleitor.no_eleitor = data.nmPessoaFisica;
           });
+          this.nomeEleitorError = '';
         }
       },
     },
