@@ -7,7 +7,7 @@ class Telefone
     public static function adicionarMascara($numeroTelefone) : ?string
     {
         if(strlen($numeroTelefone) < 10) {
-            throw new \Exception('A string precisa ter no mínimo 10 caracteres.');
+            return $numeroTelefone;
         }
         $ddd = '(' . substr($numeroTelefone, 0, 2) . ')';
         if (strlen($numeroTelefone) == 10) {
