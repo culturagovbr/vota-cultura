@@ -27,4 +27,13 @@ class Endereco extends Model
         );
     }
 
+    public function municipio()
+    {
+        return $this->belongsTo(
+            \App\Modules\Localidade\Model\Municipio::class,
+            'co_municipio',
+            'co_municipio'
+        );
+    }
+
 }
