@@ -72,11 +72,7 @@ class Organizacao extends Model
 
     public function getTelefoneFormatadoAttribute()
     {
-        return chunk_split(
-            $this->nu_telefone,
-            2,
-            ' '
-        );
+        return \App\Modules\Core\Helper\Telefone::adicionarMascara($this->nu_telefone);
     }
 
 }
