@@ -3,6 +3,7 @@
 namespace App\Modules\Organizacao\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 
 class Organizacao extends Model
 {
@@ -72,7 +73,7 @@ class Organizacao extends Model
 
     public function getTelefoneFormatadoAttribute()
     {
-        return \App\Modules\Core\Helper\Telefone::adicionarMascara($this->nu_telefone);
+        return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Representacao\Model;
 
+use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -18,6 +19,7 @@ class Representante extends Model
         'no_pessoa',
         'nu_rg',
         'nu_cpf',
+        'nu_telefone',
     ];
 
     public $timestamps = false;
@@ -39,5 +41,10 @@ class Representante extends Model
             'co_representante',
             'co_arquivo'
         );
+    }
+
+    public function getTelefoneFormatadoAttribute()
+    {
+        return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
 }
