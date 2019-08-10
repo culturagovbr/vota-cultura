@@ -100,11 +100,15 @@
 </p>
 <p>
     <b>
-        Abrangência Nacional:
+        Critérios:
     </b>
-    {{ $organizacao->criterio->ds_detalhamento }}
-</p>
 
+    <ul>
+        @foreach ($organizacao->criterios as $criterio)
+            <li>{{$criterio->ds_criterio}}: {{$criterio->ds_detalhamento}}</li>
+        @endforeach
+    </ul>
+</p>
 
 <p>Atenciosamente,</p>
 <p>Minist&eacute;rio da Cidadania</p>
