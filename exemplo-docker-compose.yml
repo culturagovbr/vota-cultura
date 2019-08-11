@@ -42,7 +42,10 @@ services:
     volumes:
       - ./webapp:/home/node/app
     command:
-      sh -c 'npm i && npm run serve'
+      #      sh -c 'npm i && npm run serve'
+      sh -c 'npm run serve'
+    #      sh -c 'npm run build'
+    #      sh -c 'npm run watch'
     ports:
       - "8080:8080"
     environment:
