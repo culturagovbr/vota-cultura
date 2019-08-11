@@ -227,7 +227,7 @@
         >
           <v-flex
             xs12
-            sm4
+            sm5
           >
             <v-card class="elevation-0 transparent">
               <v-card-title
@@ -249,7 +249,7 @@
           </v-flex>
           <v-flex
             xs12
-            sm4
+            sm5
             offset-sm1
           >
             <v-card class="elevation-0 transparent">
@@ -262,7 +262,9 @@
                 </div>
               </v-card-title>
               <v-card-text>
-                Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                Os esclarecimentos e informações complementares necessários à aplicação dos
+                termos deste Edital poderão ser obtidos junto à Central de Relacionamento usando
+                os contatos abaixo:
               </v-card-text>
               <v-list class="transparent">
                 <v-list-tile>
@@ -272,30 +274,29 @@
                     </v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content>
-                    <v-list-tile-title>777-867-5309</v-list-tile-title>
+                    <v-list-tile-title>121 - Ouvidoria Geral do Ministério da Cidadania</v-list-tile-title>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-action>
                     <v-icon class="text--lighten-2">
-                      place
+                      person
+                    </v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-content>
+                    <v-list-tile-title>Fale Conosco/Central de Relacionamento</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                  <v-list-tile-action>
+                    <v-icon class="text--lighten-2">
+                      link
                     </v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content>
                     <v-list-tile-title>
-                      SCS Q.09 Lote C Torre X 11º ANDAR
-                      CEP: 70.108-200 Brasília/DF
+                      <a href="http://cidadania.gov.br" target="_blank">Ministério da Cidadania</a>
                     </v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="text--lighten-2">
-                      email
-                    </v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>suporte@cidadania.com</v-list-tile-title>
                   </v-list-tile-content>
                 </v-list-tile>
               </v-list>
@@ -308,7 +309,7 @@
 </template>
 
 <script>
-import {  mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   data: () => ({
