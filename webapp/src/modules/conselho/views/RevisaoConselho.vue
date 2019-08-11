@@ -21,7 +21,8 @@
                   <v-radio-group
                     v-model="conselho.tp_governamental"
                     disabled
-                    row>
+                    row
+                  >
                     <v-radio
                       label="Estadual"
                       value="e"
@@ -130,8 +131,10 @@
                 <v-flex>
                   <v-select
                     v-model="conselho.endereco.co_ibge"
-                    :items="['DF','GO']"
+                    :items="listaUF"
                     label="Unidade da Federação da Sede"
+                    item-value="co_ibge"
+                    item-text="no_uf"
                     append-icon="place"
                     disabled
                   />
@@ -179,7 +182,8 @@
                     label="CPF"
                     append-icon="person"
                     mask="###.###.###.##"
-                    disabled />
+                    disabled
+                  />
                 </v-flex>
               </v-layout>
 
@@ -190,7 +194,8 @@
                     label="RG"
                     append-icon="person"
                     mask="##.###.###-#"
-                    disabled />
+                    disabled
+                  />
                 </v-flex>
               </v-layout>
 
@@ -200,7 +205,8 @@
                     v-model="conselho.representante.ds_email"
                     label="E-mail do representante"
                     append-icon="mail"
-                    disabled />
+                    disabled
+                  />
                 </v-flex>
               </v-layout>
 
@@ -210,20 +216,24 @@
                 label=" Declaro ser representante do órgão coordenador do conselho, vinculado ao órgão gestor de cultura do ente federado, designado (a) para o fornecimento das informações apresentadas e que assumo total responsabilidade pela veracidade das informações apresentadas.
 
 Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do Código Penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
-                required />
+                required
+              />
 
               <v-layout
                 wrap
-                align-center>
+                align-center
+              >
                 <v-flex offset-xs4>
                   <v-btn
-                    to="/inscricao/conselho">
+                    to="/inscricao/conselho"
+                  >
                     Cancelar
                   </v-btn>
                   <v-btn
                     :disabled="!confirmacaoDadosDeInscricao"
                     color="primary"
-                    @click="salvar">
+                    @click="salvar"
+                  >
                     Confirmar
                   </v-btn>
                 </v-flex>
@@ -234,7 +244,8 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                 <v-flex>
                   <v-alert
                     type="error"
-                    :value="true">
+                    :value="true"
+                  >
                     É necessário preencher as informações do cadastro.
                   </v-alert>
                   <div class="mb-6">
@@ -273,6 +284,9 @@ export default {
   watch: {
     conselhoGetter(value) {
       this.conselho = value;
+    },
+    estadosGetter() {
+      this.listaUF = this.estadosGetter;
     },
   },
   methods: {
