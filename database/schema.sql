@@ -46,8 +46,8 @@ COMMENT ON COLUMN tb_criterio.qt_peso IS 'peso da pontuação';
 CREATE TABLE tb_cronograma (
 	co_cronograma        SERIAL,
 	tp_cronograma        varchar(60)  NOT NULL ,
-	dh_inicio            date  NOT NULL ,
-	dh_fim               date  NOT NULL ,
+	dh_inicio            timestamp  NOT NULL ,
+	dh_fim               timestamp  NOT NULL ,
 	CONSTRAINT pk_tb_cronograma_co_cronograma PRIMARY KEY ( co_cronograma )
  );
 
