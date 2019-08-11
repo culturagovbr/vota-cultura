@@ -240,7 +240,7 @@
                           item-value="co_municipio"
                           item-text="no_municipio"
                           :rules="[rules.required]"
-                          :disabled="conselho.co_ibge < 1 || conselho.co_ibge == null"
+                          :disabled="conselho.endereco.co_ibge < 1 || conselho.endereco.co_ibge == null"
                         />
                       </v-flex>
                     </v-layout>
@@ -606,7 +606,7 @@ export default {
     municipiosGetter() {
       this.listaMunicipios = this.municipiosGetter;
     },
-    'conselho.co_ibge': function (coIBGE) {
+    'conselho.endereco.co_ibge': function (coIBGE) {
       this.conselho.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
     },

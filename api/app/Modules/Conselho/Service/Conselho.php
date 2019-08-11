@@ -3,6 +3,7 @@
 namespace App\Modules\Conselho\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Conselho\Mail\Conselho\CadastroComSucesso;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Representacao\Service\Representante;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use App\Modules\Upload\Model\Arquivo;
+use Illuminate\Support\Facades\Mail;
 
 class Conselho extends AbstractService
 {
@@ -23,6 +25,11 @@ class Conselho extends AbstractService
     public function cadastrar(array $dados): ?Model
     {
         try {
+            $anexos = $dados['anexos'];
+            unset($dados['anexos']);
+
+            DB::beginTransaction();
+
             $conselho = $this->getModel()->where([
                 'ds_email' => $dados['ds_email']
             ])->orWhere([
@@ -56,7 +63,7 @@ class Conselho extends AbstractService
             $dados['co_endereco'] = $endereco->co_endereco;
             $conselho = parent::cadastrar($dados);
 
-            foreach($dados['anexos'] as $dadosArquivo) {
+            foreach($anexos as $dadosArquivo) {
                 $modeloArquivo = app()->make(Arquivo::class);
                 $modeloArquivo->fill($dadosArquivo);
                 $serviceUpload = new Upload($modeloArquivo);
@@ -77,6 +84,7 @@ class Conselho extends AbstractService
                 new CadastroComSucesso($representante)
             );
 
+            DB::commit();
             return $conselho;
         } catch (\Exception $queryException) {
             DB::rollBack();
