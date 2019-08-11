@@ -199,7 +199,8 @@
                   <v-radio-group
                     v-model="organizacao.co_segmento"
                     label="Segmento"
-                    disabled>
+                    disabled
+                  >
                     <v-radio
                       v-for="(segmento, i) in listaSegmentos"
                       :key="i"
@@ -364,13 +365,14 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer/>
+            <v-spacer />
 
             <v-btn
               color="red darken-1"
               text
               flat
-              @click="fecharDialogo">
+              @click="fecharDialogo"
+            >
               Não
             </v-btn>
 
@@ -378,7 +380,8 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
               color="green darken-1"
               text
               flat
-              @click="salvar">
+              @click="salvar"
+            >
               Sim
             </v-btn>
           </v-card-actions>
@@ -389,118 +392,84 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
 </template>
 
 <script>
-  import {mapActions, mapGetters} from 'vuex';
-  import _ from 'lodash';
-  import {eventHub} from '@/event';
+import { mapActions, mapGetters } from 'vuex';
+import _ from 'lodash';
+import { eventHub } from '@/event';
 
-  export default {
-    name: 'RevisaoOrganizacao',
-    data: () => ({
-      confirmacaoDadosDeInscricao: false,
-      dialog: false,
-      listaUF: [],
-      listaSegmentos: [],
-      listaMunicipios: [],
-      listaCriterios: [],
-      organizacao: {
-        st_inscricao: 'e',
-        co_segmento: '',
-        no_organizacao: '',
-        ds_email: '',
-        ds_email_confirmacao: '',
-        nu_telefone: '',
-        nu_cnpj: '',
-        endereco: {
-          co_ibge: '',
-          ds_complemento: '',
-          nu_cep: '',
-          ds_logradouro: '',
-          co_municipio: '',
-        },
-        representante: {
-          ds_email: '',
-          no_pessoa: '',
-          nu_rg: '',
-          nu_cpf: '',
-          nu_telefone: '',
-          ds_email_confirmation: '',
-        },
-        ds_sitio_eletronico: '',
-        anexos: [],
-        criterios: {
-          abrangencia_estadual: '',
-          abrangencia_nacional: '',
-          nu_associados_filiados: '',
-          nu_atividades: '',
-          participacao_instancias: '',
-          pesquisa_producao: '',
-          tempo_funcionamento: '',
-        },
-      },
+export default {
+  name: 'RevisaoOrganizacao',
+  data: () => ({
+    confirmacaoDadosDeInscricao: false,
+    dialog: false,
+    listaUF: [],
+    listaSegmentos: [],
+    listaMunicipios: [],
+    listaCriterios: [],
+    organizacao: {},
+  }),
+  computed: {
+    ...mapGetters({
+      estadosGetter: 'localidade/estados',
+      municipiosGetter: 'localidade/municipios',
+      segmentosGetter: 'organizacao/segmentos',
+      criteriosGetter: 'organizacao/criterios',
+      organizacaoGetter: 'organizacao/organizacao',
     }),
-    computed: {
-      ...mapGetters({
-        estadosGetter: 'localidade/estados',
-        municipiosGetter: 'localidade/municipios',
-        segmentosGetter: 'organizacao/segmentos',
-        criteriosGetter: 'organizacao/criterios',
-        organizacaoGetter: 'organizacao/organizacao',
-      }),
+  },
+  watch: {
+    criteriosGetter() {
+      const criterios = _.groupBy(
+        this.criteriosGetter, criterio => criterio.tp_criterio,
+      );
+      this.listaCriterios = criterios;
     },
-    watch: {
-      criteriosGetter() {
-        const criterios = _.groupBy(
-          this.criteriosGetter, criterio => criterio.tp_criterio,
+    organizacaoGetter(value) {
+      this.organizacao = value;
+      this.obterMunicipios(this.organizacao.co_ibge);
+    },
+  },
+  methods: {
+    ...mapActions({
+      obterEstados: 'localidade/obterEstados',
+      obterMunicipios: 'localidade/obterMunicipios',
+      obterCriterios: 'organizacao/obterCriterios',
+      obterSegmentos: 'organizacao/obterSegmentos',
+      enviarDadosOrganizacao: 'organizacao/enviarDadosOrganizacao',
+    }),
+    salvar() {
+      this.enviarDadosOrganizacao(this.organizacaoGetter).then(() => {
+        eventHub.$emit(
+          'eventoSucesso',
+          'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
         );
-        this.listaCriterios = criterios;
-      },
-      organizacaoGetter(value) {
-        this.organizacao = value;
-        this.obterMunicipios(this.organizacao.co_ibge);
-      },
-    },
-    methods: {
-      ...mapActions({
-        obterEstados: 'localidade/obterEstados',
-        obterMunicipios: 'localidade/obterMunicipios',
-        obterCriterios: 'organizacao/obterCriterios',
-        obterSegmentos: 'organizacao/obterSegmentos',
-        enviarDadosOrganizacao: 'organizacao/enviarDadosOrganizacao',
-      }),
-      salvar() {
-        this.enviarDadosOrganizacao(this.organizacaoGetter).then(() => {
-          eventHub.$emit(
-            'eventoSucesso',
-            'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
-          );
 
-          this.organizacao = Object.assign({});
-          this.$router.push('/');
-        }).catch(() => {
-          eventHub.$emit(
-            'eventoErro',
-            'Houve algum erro ao enviar a sua inscrição.',
-          );
-          this.$router.push('/');
-        }).finally(() => {
-          console.log(this.organizacao);
-          // this.fecharDialogo();
-        });
-      },
-      abrirDialogo() {
-        this.dialog = true;
-      },
-      fecharDialogo() {
-        this.dialog = false;
-      },
+        this.organizacao = Object.assign({});
+        this.$router.push('/');
+      }).catch(() => {
+        eventHub.$emit(
+          'eventoErro',
+          'Houve algum erro ao enviar a sua inscrição.',
+        );
+        this.$router.push('/');
+      }).finally(() => {
+        console.log(this.organizacao);
+        // this.fecharDialogo();
+      });
     },
-    mounted() {
-      this.obterSegmentos();
-      this.obterCriterios();
-      this.listaUF = this.estadosGetter;
-      this.listaMunicipios = this.municipiosGetter;
-      this.listaSegmentos = this.segmentosGetter;
-      this.organizacao = this.organizacaoGetter;
+    abrirDialogo() {
+      this.dialog = true;
     },
-  };
+    fecharDialogo() {
+      this.dialog = false;
+    },
+  },
+  mounted() {
+    this.obterSegmentos();
+    this.obterCriterios();
+    this.listaUF = this.estadosGetter;
+    this.listaMunicipios = this.municipiosGetter;
+    this.listaSegmentos = this.segmentosGetter;
+    this.organizacao = this.organizacaoGetter;
+  },
+};
 </script>

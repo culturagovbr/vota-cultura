@@ -201,21 +201,7 @@ export default {
     formEnviado: false,
     dialog: false,
     listaUF: [],
-    eleitor: {
-      nu_cpf: '',
-      no_eleitor: '',
-      nu_rg: '',
-      dt_nascimento: '',
-      st_estrangeiro: '',
-      co_endereco: '',
-      ds_email: '',
-      ds_email_confirmacao: '',
-      co_ibge: '',
-      anexos: {
-        cpf: '',
-        documento_identificacao: '',
-      },
-    },
+    eleitor: {},
   }),
   computed: {
     ...mapGetters({
