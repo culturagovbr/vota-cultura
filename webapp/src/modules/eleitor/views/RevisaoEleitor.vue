@@ -15,7 +15,8 @@
             <v-toolbar-title>Confirmação dos dados</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container v-if="Object.keys(eleitorGetter).length > 0">
+            <v-container>
+            <!--<v-container v-if="Object.keys(eleitorGetter).length > 0">-->
               <v-layout
                 wrap
                 align-center
@@ -173,6 +174,7 @@
             </v-btn>
 
             <v-btn
+              :disabled="formEnviado"
               color="green darken-1"
               text
               flat
@@ -190,10 +192,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { eventHub } from '@/event';
+import _ from 'lodash';
+
 
 export default {
   name: 'RevisaoEleitor',
   data: () => ({
+    formEnviado: false,
     dialog: false,
     listaUF: [],
     eleitor: {},
@@ -214,20 +219,24 @@ export default {
       enviarDadosEleitor: 'eleitor/enviarDadosEleitor',
     }),
     salvar() {
-      this.enviarDadosEleitor(this.eleitorGetter).then(() => {
+      this.formEnviado = true;
+      let eleitor = _.cloneDeep(this.eleitor)
+      eleitor.dt_nascimento = this.formatarDataCarbon(eleitor.dt_nascimento);
+      this.enviarDadosEleitor(eleitor).then(() => {
         eventHub.$emit(
           'eventoSucesso',
           'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
         );
         this.eleitor = Object.assign({});
         this.$router.push('/');
-      }).catch(() => {
+      }).catch((response) => {
         eventHub.$emit(
           'eventoErro',
-          'Houve algum erro ao enviar a sua inscrição.',
+          response.response.data.message,
         );
         this.$router.push('/');
       }).finally(() => {
+          this.formEnviado = false;
         this.fecharDialogo();
       });
     },
@@ -237,11 +246,15 @@ export default {
     fecharDialogo() {
       this.dialog = false;
     },
+    formatarDataCarbon(data){
+        var dia  = data.split("/")[0];
+        var mes  = data.split("/")[1];
+        var ano  = data.split("/")[2];
+
+        return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+    },
   },
   mounted() {
-    // if (!Object.entries(this.eleitor).length) {
-    //   this.$router.push('/eleitor/inscricao');
-    // }
     this.listaUF = this.estadosGetter;
     this.eleitor = this.eleitorGetter;
   },

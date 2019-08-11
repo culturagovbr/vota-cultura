@@ -184,9 +184,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-/*.app--drawer*/
-  /*overflow: hidden*/
-  /*.drawer-menu--scroll*/
-    /*height: calc(100vh - 48px)*/
-    /*overflow: auto*/
+
 </style>
