@@ -31,31 +31,21 @@ use Illuminate\Http\Request;
  */
 Route::group([
     'prefix' => 'conta'
-], function ($router) {
-    Route::get('/', function (Request $request) {
-        return [
-            'rota padrao'
-        ];
-    });
-
-    Route::group([
-        'middleware' => 'api',
-        'prefix' => 'auth'
-    ], function ($router) {
-        Route::post('login', 'AuthController@login');
-        Route::get('logout', 'AuthController@logout');
-        Route::post('refresh', 'AuthController@refresh');
-        Route::get('me', 'AuthController@me');
-    });
-
-    Route::apiResource('ativacao', 'AtivacaoController',
-        ['only' => ['update']]);
-
-
-    Route::apiResource('usuario', 'UsuarioController');
-    Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
-
-    Route::apiResource('recuperacao/senha', 'RecuperacaoSenhaController',
-        ['only' => ['store','update']]);
-
+], function () {
+//    Route::group([
+//        'middleware' => 'api',
+//        'prefix' => 'auth'
+//    ], function () {
+//        Route::post('login', 'AuthController@login');
+//        Route::get('logout', 'AuthController@logout');
+//        Route::post('refresh', 'AuthController@refresh');
+//        Route::get('me', 'AuthController@me');
+//    });
+//
+//    Route::apiResource('ativacao', 'AtivacaoApiResourceController',
+//        ['only' => ['update']]);
+//
+//    Route::apiResource('usuario', 'UsuarioApiResourceController');
+//    Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
+//    Route::apiResource('recuperacao/senha', 'RecuperacaoSenhaApiResourceController', ['only' => ['store','update']]);
 });

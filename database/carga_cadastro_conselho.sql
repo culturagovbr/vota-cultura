@@ -1,0 +1,5 @@
+INSERT INTO representante (co_representante, ds_email, no_pessoa, nu_rg, nu_cpf) VALUES (1, 'viniciusfesil@gmail.com', 'Vinicius Feitosa da Silva', '12345678', '12345678901');
+INSERT INTO perfil (co_perfil, no_perfil, ds_perfil, st_ativo) VALUES (1, 'administrador', 'Administrador do sistema', true);
+INSERT INTO usuario (co_usuario, no_nome, st_ativo, ds_email, ds_senha, dh_cadastro, dh_ultima_atualizacao, ds_codigo_ativacao, co_perfil) VALUES (1, 'Vinicius Feitosa da Silva', true, 'viniciusfesil@gmail.com', '$2y$10$2Ps8byWIURX4zh6B.hbEFuvDN4jAHIKYh5rhHP14c4KRujH9kGBEO', '2019-07-29', '2019-07-29', 'asdasdQEQWeqwrqwgt23tqwe', 1);
+INSERT INTO endereco (co_endereco, ds_complemento, nu_cep, ds_logradouro, co_municipio) VALUES (1, 'Casa 99', '70750610', 'Samambaia Sul', 1);
+INSERT INTO conselho (co_conselho, no_orgao_gestor, ds_email, nu_telefone, nu_cnpj, tp_governamental, co_endereco, co_representante, co_usuario, ds_sitio_eletronico, st_inscricao) VALUES (1, 'Orgão Gestor 1', 'vinicius.feitosa@basis.com.br', '06199999999', '40230926000198', '1', 1, 1, 1, 'https://jsonplaceholder.typicode.com', 'A');

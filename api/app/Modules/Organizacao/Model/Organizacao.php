@@ -3,6 +3,7 @@
 namespace App\Modules\Organizacao\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 
 class Organizacao extends Model
 {
@@ -24,13 +25,13 @@ class Organizacao extends Model
 
     public $timestamps = false;
 
-    public function criterios ()
+    public function criterios()
     {
         return $this->belongsToMany(
             \App\Modules\Organizacao\Model\Criterio::class,
             'rl_organizacao_criterio',
-            'co_criterio',
-            'co_organizacao'
+            'co_organizacao',
+            'co_criterio'
         )->as('rl_organizacao_criterio');
     }
 
@@ -54,8 +55,8 @@ class Organizacao extends Model
 
     public function endereco()
     {
-        return $this->belongsTo(
-            \App\Modules\Localizacao\Model\Endereco::class,
+        return $this->hasOne(
+            \App\Modules\Localidade\Model\Endereco::class,
             'co_endereco',
             'co_endereco'
         );
@@ -63,11 +64,16 @@ class Organizacao extends Model
 
     public function representante()
     {
-        return $this->belongsTo(
+        return $this->hasOne(
             \App\Modules\Representacao\Model\Representante::class,
             'co_representante',
             'co_representante'
         );
+    }
+
+    public function getTelefoneFormatadoAttribute()
+    {
+        return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
 
 }

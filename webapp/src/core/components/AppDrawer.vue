@@ -1,11 +1,12 @@
 <template>
   <v-navigation-drawer
-    v-model="showDrawer"
+    :value="showDrawer"
     class="app--drawer"
     :mini-variant.sync="mini"
     app
     clipped
     :width="drawWidth"
+    @input="$emit('input', $event)"
   >
     <vue-perfect-scrollbar
       class="drawer-menu--scroll"
@@ -122,8 +123,9 @@
   </v-navigation-drawer>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import menu from '@/core/api/menu';
+import menuAPI from '@/core/api/menu';
 
 export default {
   name: 'AppDrawer',
@@ -131,6 +133,10 @@ export default {
     VuePerfectScrollbar,
   },
   props: {
+    value: {
+      type: Boolean,
+      default: true,
+    },
     expanded: {
       type: Boolean,
       default: true,
@@ -139,18 +145,24 @@ export default {
       type: [Number, String],
       default: '260',
     },
-    showDrawer: Boolean,
   },
   data() {
     return {
       mini: false,
-      menus: menu,
+      menus: [],
       scrollSettings: {
         maxScrollbarLength: 160,
       },
+      showDrawer: false,
+      menuInscrivaseAtivo: false,
     };
   },
   computed: {
+    ...mapGetters({
+      ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
+      ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
+      ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
+    }),
     computeGroupActive() {
       return true;
     },
@@ -158,9 +170,71 @@ export default {
       return this.$vuetify.options.extra.sideNav;
     },
   },
-  created() {},
-
+  watch: {
+    value(val) {
+      this.showDrawer = val;
+    },
+    ativarInscricaoConselho(value) {
+      let objetoMenu = {};
+      if (value === true) {
+        objetoMenu = {
+          title: 'Conselhos de Cultura',
+          group: 'apps',
+          name: 'Conselho',
+          icon: 'group',
+        };
+      }
+      this.definirItemMenuInscricao('Conselho', objetoMenu);
+    },
+    ativarInscricaoOrganizacao(value) {
+      let objetoMenu = {};
+      if (value === true) {
+        objetoMenu = {
+          title: 'Organização ou Entidade Cultural',
+          group: 'apps',
+          name: 'Organizacao',
+          icon: 'color_lens',
+        };
+      }
+      this.definirItemMenuInscricao('Organizacao', objetoMenu);
+    },
+    ativarInscricaoEleitor(value) {
+      let objetoMenu = {};
+      if (value === true) {
+        objetoMenu = {
+          title: 'Eleitor',
+          group: 'apps',
+          name: 'Eleitor',
+          icon: 'thumbs_up_down',
+        };
+      }
+      this.definirItemMenuInscricao('Eleitor', objetoMenu);
+    },
+  },
+  mounted() {
+    this.obterCronogramas();
+    this.menus = menuAPI;
+  },
   methods: {
+    ...mapActions({
+      obterCronogramas: 'cronograma/obterCronogramas',
+    }),
+
+    definirItemMenuInscricao(nomeMenu, objetoMenu) {
+      const nomeAgrupadorInscricoes = 'AgrupadorInscricao';
+      const indiceAgrupadorInscricaoDeMenus = this.menus.findIndex(indice => indice.name === nomeAgrupadorInscricoes);
+      if (indiceAgrupadorInscricaoDeMenus === -1) {
+        this.menus.push({ header: 'Inscreva-se', name: nomeAgrupadorInscricoes });
+      }
+      const indiceItemDeMenus = this.menus.findIndex(indice => indice.name === nomeMenu);
+      if (Object.keys(objetoMenu).length < 1 && indiceItemDeMenus > -1) {
+        this.menus.splice(indiceItemDeMenus);
+      }
+      if (Object.keys(objetoMenu).length > 1 && indiceItemDeMenus === -1) {
+        this.menus.push(objetoMenu);
+      }
+    },
+
     genChildTarget(item, subItem) {
       if (subItem.href) {
         return {};
@@ -176,9 +250,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.app--drawer
-  overflow: hidden
-  .drawer-menu--scroll
-    height: calc(100vh - 48px)
-    overflow: auto
+
 </style>

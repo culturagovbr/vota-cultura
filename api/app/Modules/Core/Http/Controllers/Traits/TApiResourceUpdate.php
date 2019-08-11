@@ -2,6 +2,9 @@
 
 namespace App\Modules\Core\Http\Controllers\Traits;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 trait TApiResourceUpdate
 {
     public function update(Request $request, $identificador)

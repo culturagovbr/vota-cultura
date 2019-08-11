@@ -10,7 +10,7 @@
 <p>
     <b>CPF:</b> {{$usuario->no_cpf}}
     <b>E-mail:</b> {{$usuario->ds_email}}
-    <b>Data de Nascimento:</b> {{$usuario->dt_nascimento->format('d/m/Y')}}
+    <b>Data de Nascimento:</b> {{$usuario->dt_nascimento->format('Localizacao')}}
 </p>
 
 <p>Atenciosamente,</p>

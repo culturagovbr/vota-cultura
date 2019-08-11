@@ -13,17 +13,40 @@ class Eleitor extends Model
         'dt_nascimento',
     ];
 
-
     protected $fillable = [
         'nu_cpf',
+        'ds_email',
         'no_eleitor',
         'nu_rg',
         'dt_nascimento',
         'st_estrangeiro',
-        'co_endereco',
+        'co_ibge',
         'co_usuario',
     ];
 
     public $timestamps = false;
 
+    public function uf()
+    {
+        return $this->hasOne(
+            \App\Modules\Localidade\Model\Uf::class,
+            'co_ibge',
+            'co_ibge'
+        );
+    }
+
+    public function arquivos()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Upload\Model\Arquivo::class,
+            'rl_eleitor_arquivo',
+            'co_eleitor',
+            'co_arquivo'
+        );
+    }
+
+    public function getNacionalidadeAttribute()
+    {
+        return ($this->st_estrangeiro === true) ? 'Estrangeiro' : 'Brasileiro';
+    }
 }

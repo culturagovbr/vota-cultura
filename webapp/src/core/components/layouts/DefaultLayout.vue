@@ -4,8 +4,8 @@
     class="app dashboard"
   >
     <app-drawer
+      v-model="showDrawer"
       class="app--drawer"
-      :show-drawer="showDrawer"
     />
     <app-toolbar
       class="app--toolbar"
