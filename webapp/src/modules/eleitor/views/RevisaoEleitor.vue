@@ -15,8 +15,7 @@
             <v-toolbar-title>Confirmação dos dados</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container>
-            <!--<v-container v-if="Object.keys(eleitorGetter).length > 0">-->
+            <v-container v-if="Object.keys(eleitorGetter).length > 0">
               <v-layout
                 wrap
                 align-center
