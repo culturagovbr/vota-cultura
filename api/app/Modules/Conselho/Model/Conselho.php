@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conselho\Model;
 
+use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class Conselho extends Model
@@ -48,5 +49,10 @@ class Conselho extends Model
             'co_usuario',
             'co_usuario'
         );
+    }
+
+    public function getTelefoneFormatadoAttribute()
+    {
+        return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
 }
