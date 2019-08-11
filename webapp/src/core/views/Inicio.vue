@@ -6,54 +6,6 @@
         alt="Logo do Sistema"
         height="800"
       />
-
-      <v-layout
-        column
-        align-center
-        justify-center
-        class="white--text"
-      >
-        <v-slide-y-transition>
-          <v-container
-            grid-list-md
-            text-xs-center
-          >
-            <v-layout
-              row
-              wrap
-            >
-              <v-flex xs12>
-                <v-btn
-                  class="yellow mt-2"
-                  large
-                  to="/inscricao-conselho"
-                >
-                  Conselho Cultural
-                </v-btn>
-              </v-flex>
-              <v-flex xs12>
-                <v-btn
-                  class="yellow mt-2"
-                  to="/formulario-tres"
-                  large
-                >
-                  Organização / Entidade Cultural
-                </v-btn>
-              </v-flex>
-              <v-flex xs12>
-                <v-btn
-                  class="yellow mt-2"
-                  to="/formulario-dois"
-                  large
-                >
-                  Eleitor
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-slide-y-transition>
-      </v-layout>
-      <!--</v-parallax>-->
     </section>
 
     <section>
