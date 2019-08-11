@@ -21,8 +21,11 @@ class OrganizacaoApiResourceController extends AApiResourceController
 
     public function show($identificador): \Illuminate\Http\JsonResponse
     {
-        $model = $this->service->obterUm($identificador);
+        throw new \Exception("Método não disponível");
+    }
 
-        return parent::genericShow($model);
+    public function index(): \Illuminate\Http\JsonResponse
+    {
+        throw new \Exception("Método não disponível");
     }
 }

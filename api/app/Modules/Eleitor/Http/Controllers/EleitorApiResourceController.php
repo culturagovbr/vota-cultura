@@ -20,8 +20,13 @@ class EleitorApiResourceController extends AApiResourceController
         return parent::__construct($service);
     }
 
-    public function show(Eleitor $model): \Illuminate\Http\JsonResponse
+    public function show($identificador): \Illuminate\Http\JsonResponse
     {
-        return parent::genericShow($model);
+        throw new \Exception("Método não disponível");
+    }
+
+    public function index(): \Illuminate\Http\JsonResponse
+    {
+        throw new \Exception("Método não disponível");
     }
 }
