@@ -24,6 +24,7 @@ services:
       - ./database/carga_municipios.sql:/docker-entrypoint-initdb.d/2.carga_municipios.sql
       - ./database/carga_criterios.sql:/docker-entrypoint-initdb.d/3.carga_criterios.sql
       - ./database/carga_segmentos.sql:/docker-entrypoint-initdb.d/4.carga_segmentos.sql
+      - ./database/carga_cronograma.sql:/docker-entrypoint-initdb.d/5.carga_cronograma.sql
     networks:
       - votacultura_network
   webapp-service:

@@ -1,9 +1,9 @@
 CREATE TABLE tb_arquivo (
 	co_arquivo           SERIAL,
-	no_arquivo           varchar(50)  NOT NULL ,
+	no_arquivo           varchar(255)  NOT NULL ,
 	ds_localizacao       varchar(255)  NOT NULL ,
 	dh_insercao          date DEFAULT current_date NOT NULL ,
-	no_extensao           varchar(50) ,
+	no_extensao           varchar(255) ,
 	no_mime_type           varchar(50) ,
 	CONSTRAINT pk_arquivo_coarquivo PRIMARY KEY ( co_arquivo )
  );
@@ -23,7 +23,7 @@ COMMENT ON COLUMN tb_arquivo.dh_insercao IS 'data da inserção do arquivo';
 
 CREATE TABLE tb_criterio (
 	co_criterio          SERIAL,
-	tp_criterio          varchar(30)  NOT NULL ,
+	tp_criterio          varchar(100)  NOT NULL ,
 	ds_criterio          varchar(150)  NOT NULL ,
 	ds_detalhamento      varchar(255)  NOT NULL ,
 	qt_pontuacao         integer  NOT NULL ,
@@ -45,7 +45,7 @@ COMMENT ON COLUMN tb_criterio.qt_peso IS 'peso da pontuação';
 
 CREATE TABLE tb_cronograma (
 	co_cronograma        SERIAL,
-	tp_cronograma        varchar(60)  NOT NULL ,
+	tp_cronograma        varchar(100)  NOT NULL ,
 	dh_inicio            timestamp  NOT NULL ,
 	dh_fim               timestamp  NOT NULL ,
 	CONSTRAINT pk_tb_cronograma_co_cronograma PRIMARY KEY ( co_cronograma )
@@ -200,7 +200,7 @@ CREATE TABLE rl_representante_arquivo (
 	co_representante_arquivo SERIAL,
 	co_representante     integer  NOT NULL ,
 	co_arquivo           integer  NOT NULL ,
-	tp_arquivo           varchar(60)  NOT NULL ,
+	tp_arquivo           varchar(100)  NOT NULL ,
 	tp_inscricao         char(1)  NOT NULL ,
 	CONSTRAINT pk_representante_arquivo_corepresentantearquivo PRIMARY KEY ( co_representante_arquivo ),
 	CONSTRAINT fk_representantearquivo_representante FOREIGN KEY ( co_representante ) REFERENCES tb_representante( co_representante )  ,
@@ -406,7 +406,7 @@ CREATE TABLE rl_eleitor_arquivo (
 	co_eleitor_arquivo SERIAL,
 	co_eleitor     integer  NOT NULL ,
 	co_arquivo           integer  NOT NULL ,
-	tp_arquivo           varchar(60)  NOT NULL ,
+	tp_arquivo           varchar(100)  NOT NULL ,
 	CONSTRAINT pk_eleitor_arquivo_coeleitorarquivo PRIMARY KEY ( co_eleitor_arquivo ),
 	CONSTRAINT fk_eleitorarquivo_eleitor FOREIGN KEY ( co_eleitor ) REFERENCES tb_eleitor( co_eleitor )  ,
 	CONSTRAINT fk_eleitorarquivo_arquivo FOREIGN KEY ( co_arquivo ) REFERENCES tb_arquivo( co_arquivo )

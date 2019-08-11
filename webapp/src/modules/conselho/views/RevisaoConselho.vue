@@ -301,10 +301,10 @@ export default {
         );
         this.conselho = Object.assign({});
         this.$router.push('/');
-      }).catch(() => {
+      }).catch((response) => {
         eventHub.$emit(
           'eventoErro',
-          'Houve algum erro ao enviar a sua inscrição.',
+          response.response.data.message,
         );
         this.$router.push('/');
       }).finally(() => {

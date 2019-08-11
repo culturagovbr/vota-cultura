@@ -4,85 +4,85 @@
 </p>
 <p>
     <b>
-        CNPJ do Orgão Gestor do Conselho
+        CNPJ do Orgão Gestor do Conselho:
     </b>
     {{ $conselho->nu_cnpj }}
 </p>
 <p>
     <b>
-        Nome do órgão gestor de cultura
+        Nome do órgão gestor de cultura:
     </b>
     {{ $conselho->no_orgao_gestor }}
 </p>
 <p>
     <b>
-        Telefone
+        Telefone:
     </b>
     {{ $conselho->telefone_formatado }}
 </p>
 <p>
     <b>
-        E-mail
+        E-mail:
     </b>
     {{ $conselho->ds_email }}
 </p>
 <p>
     <b>
-        Sítio eletrônico do conselho
+        Sítio eletrônico do conselho:
     </b>
     {{ $conselho->ds_sitio_eletronico }}
 </p>
 <p>
     <b>
-        CEP
+        CEP:
     </b>
     {{ $conselho->endereco->nu_cep }}
 </p>
 <p>
     <b>
-        Logradouro
+        Logradouro:
     </b>
     {{ $conselho->endereco->ds_logradouro }}
 </p>
 <p>
     <b>
-        Complemento
+        Complemento:
     </b>
     {{ $conselho->endereco->ds_logradouro }}
 </p>
 <p>
     <b>
-        Unidade da Federação da Sede
+        Unidade da Federação da Sede:
     </b>
     {{ $conselho->endereco->municipio->uf->no_uf }}
 </p>
 <p>
     <b>
-        Cidade
+        Cidade:
     </b>
     {{ $conselho->endereco->municipio->no_municipio }}
 </p>
 <p>
     <b>
-        Nome do Representante
+        Nome do Representante:
     </b>
     {{ $conselho->representante->no_pessoa }}
 </p>
 <p>
     <b>
-        Celular do representante
+        Celular do representante:
     </b>
     {{ $conselho->representante->telefone_formatado }}
 </p>
 <p>
     <b>
-        CPF
+        CPF:
     </b>
     {{ $conselho->representante->nu_cpf }}
 </p>
 <p>
     <b>
-        RG
+        RG:
     </b>
     {{ $conselho->representante->nu_rg }}
 </p>
@@ -92,17 +92,7 @@
     </b>
     {{ $conselho->representante->ds_email }}
 </p>
-{{--<p>--}}
-{{--    <b>--}}
-{{--        Critérios:--}}
-{{--    </b>--}}
 
-{{--<ul>--}}
-{{--    @foreach ($conselho->criterios as $criterio)--}}
-{{--        <li>{{$criterio->ds_criterio}}: {{$criterio->ds_detalhamento}}</li>--}}
-{{--    @endforeach--}}
-{{--</ul>--}}
-{{--</p>--}}
 
 <p>Atenciosamente,</p>
 <p>Minist&eacute;rio da Cidadania</p>

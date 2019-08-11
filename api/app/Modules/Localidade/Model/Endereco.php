@@ -18,14 +18,14 @@ class Endereco extends Model
 
     public $timestamps = false;
 
-    public function organizacoes()
-    {
-        return $this->hasMany(
-            \App\Modules\Organizacao\Model\Organizacao::class,
-            'co_endereco',
-            'co_endereco'
-        );
-    }
+//    public function organizacoes()
+//    {
+//        return $this->hasMany(
+//            \App\Modules\Organizacao\Model\Organizacao::class,
+//            'co_endereco',
+//            'co_endereco'
+//        );
+//    }
 
     public function municipio()
     {

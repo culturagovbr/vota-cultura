@@ -235,7 +235,7 @@ export default {
         );
         this.$router.push('/');
       }).finally(() => {
-          this.formEnviado = false;
+        this.formEnviado = false;
         this.fecharDialogo();
       });
     },

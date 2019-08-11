@@ -3,7 +3,6 @@
 
 namespace App\Modules\Organizacao\Mail\Organizacao;
 
-use App\Modules\Organizacao\Service\Segmento;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -23,7 +22,8 @@ class CadastroComSucesso extends Mailable
 
     public function build()
     {
-        return $this->subject('Ministério da Cidadania - Inscrição Realizada com sucesso')
+
+        return $this->subject('Ministério da Cidadania - Inscrição realizada com sucesso')
             ->view('organizacao::organizacao.email.cadastro-com-sucesso')
             ->with([
                 'organizacao' => $this->organizacao,

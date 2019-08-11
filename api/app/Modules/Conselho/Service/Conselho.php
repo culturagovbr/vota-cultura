@@ -81,7 +81,7 @@ class Conselho extends AbstractService
             }
 
             Mail::to($representante->ds_email)->send(
-                new CadastroComSucesso($representante)
+                new CadastroComSucesso($conselho)
             );
 
             DB::commit();

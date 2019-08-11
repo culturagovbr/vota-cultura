@@ -13,6 +13,7 @@ use App\Modules\Upload\Service\Upload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class Organizacao extends AbstractService
 {
@@ -84,7 +85,7 @@ class Organizacao extends AbstractService
                 );
             }
 
-            Mail::to($organizacao->ds_email)->send(
+            Mail::to($representante->ds_email)->send(
                 new CadastroComSucesso($organizacao)
             );
 

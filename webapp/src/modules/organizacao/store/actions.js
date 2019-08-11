@@ -3,7 +3,7 @@ import * as types from './types';
 
 // eslint-disable-next-line no-empty-pattern
 export const enviarDadosOrganizacao = async ({ commit }, organizacao) => {
-  // commit(types.DEFINIR_ORGANIZACAO, {});
+  commit(types.DEFINIR_ORGANIZACAO, {});
   return organizacaoService.enviarDadosOrganizacao(organizacao);
 };
 

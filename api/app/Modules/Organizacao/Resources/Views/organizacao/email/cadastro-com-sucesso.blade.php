@@ -6,7 +6,7 @@
     <b>
         CNPJ:
     </b>
-    {{ $organizacao->nu_cpf }}
+    {{ $organizacao->nu_cnpj }}
 </p>
 <p>
     <b>

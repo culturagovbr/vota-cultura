@@ -445,15 +445,14 @@ export default {
 
         this.organizacao = Object.assign({});
         this.$router.push('/');
-      }).catch(() => {
+      }).catch((response) => {
         eventHub.$emit(
           'eventoErro',
-          'Houve algum erro ao enviar a sua inscrição.',
+          response.response.data.message,
         );
         this.$router.push('/');
       }).finally(() => {
-        console.log(this.organizacao);
-        // this.fecharDialogo();
+        this.fecharDialogo();
       });
     },
     abrirDialogo() {

@@ -25,7 +25,7 @@ class Organizacao extends Model
 
     public $timestamps = false;
 
-    public function criterios ()
+    public function criterios()
     {
         return $this->belongsToMany(
             \App\Modules\Organizacao\Model\Criterio::class,
@@ -55,7 +55,7 @@ class Organizacao extends Model
 
     public function endereco()
     {
-        return $this->belongsTo(
+        return $this->hasOne(
             \App\Modules\Localidade\Model\Endereco::class,
             'co_endereco',
             'co_endereco'
@@ -64,7 +64,7 @@ class Organizacao extends Model
 
     public function representante()
     {
-        return $this->belongsTo(
+        return $this->hasOne(
             \App\Modules\Representacao\Model\Representante::class,
             'co_representante',
             'co_representante'

@@ -22,7 +22,7 @@ class Municipio extends Model
     {
         return $this->belongsTo(
             ModelUF::class,
-            'co_municipio',
+            'co_uf',
             'co_ibge'
         );
     }
