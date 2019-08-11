@@ -15,7 +15,6 @@
       >
         <v-slide-y-transition>
           <v-container
-            v-show="ativar_inscricao === true"
             grid-list-md
             text-xs-center
           >
@@ -357,32 +356,20 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import {  mapGetters } from 'vuex';
 
 export default {
   data: () => ({
-    ativar_inscricao: false,
   }),
-  mounted() {
-    this.obterCronogramas();
-  },
-    watch: {
-        ativarInscricaoOrganizacao(value) {
-            console.log(value);
-        },
-    },
   computed: {
     ...mapGetters({
-      cronogramasGetter: 'cronograma/cronogramas',
       ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
       ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
       ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
     }),
   },
   methods: {
-    ...mapActions({
-      obterCronogramas: 'cronograma/obterCronogramas',
-    }),
+
   },
 };
 </script>

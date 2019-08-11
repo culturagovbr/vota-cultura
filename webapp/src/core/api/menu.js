@@ -5,25 +5,6 @@ const Menu = [
     icon: 'home',
     name: 'Inicio',
   },
-  { header: 'Inscreva-se' },
-  {
-    title: 'Organização ou Entidade Cultural',
-    group: 'apps',
-    name: 'Organizacao',
-    icon: 'color_lens',
-  },
-  {
-    title: 'Conselhos de Cultura',
-    group: 'apps',
-    name: 'Conselho',
-    icon: 'group',
-  },
-  {
-    title: 'Eleitor',
-    group: 'apps',
-    name: 'Eleitor',
-    icon: 'thumbs_up_down',
-  },
 ];
 
 Menu.forEach((item) => {
