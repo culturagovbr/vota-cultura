@@ -7,6 +7,7 @@ import conselho from '@/modules/conselho/store/';
 import eleitor from '@/modules/eleitor/store/';
 import organizacao from '@/modules/organizacao/store/';
 import localidade from '@/modules/localidade/store/';
+import cronograma from '@/modules/cronograma/store/';
 import pessoa from '@/modules/pessoa/store/';
 
 Vue.use(Vuex);
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     eleitor,
     organizacao,
     localidade,
+    cronograma,
     pessoa,
   },
   getters: {

@@ -3,7 +3,6 @@ import RoutersConta from '@/modules/conta/router';
 import RoutersOrganizacao from '@/modules/organizacao/router';
 import RoutersConselho from '@/modules/conselho/router';
 import RoutersEleitor from '@/modules/eleitor/router';
-import RoutersCronograma from '@/modules/cronograma/router';
 
 export default [
   {
@@ -30,5 +29,4 @@ export default [
   ...RoutersOrganizacao,
   ...RoutersConselho,
   ...RoutersEleitor,
-  ...RoutersCronograma,
 ];

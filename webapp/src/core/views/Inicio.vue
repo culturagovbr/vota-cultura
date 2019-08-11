@@ -114,6 +114,7 @@
                 </v-card>
                 <div class="text-xs-center">
                   <v-btn
+                    v-if="ativarInscricaoOrganizacao"
                     color="green darken-4"
                     to="/organizacao/inscricao"
                     dark
@@ -153,6 +154,7 @@
                 </v-card>
                 <div class="text-xs-center">
                   <v-btn
+                    v-if="ativarInscricaoConselho"
                     color="green darken-4"
                     to="/conselho/inscricao"
                     dark
@@ -189,6 +191,7 @@
                   </v-card-text>
                   <div class="text-xs-center">
                     <v-btn
+                      v-if="ativarInscricaoEleitor"
                       color="green darken-4"
                       to="/eleitor/inscricao"
                       dark
@@ -354,11 +357,32 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
-  data() {
-    return {
-      ativar_inscricao: false,
-    };
+  data: () => ({
+    ativar_inscricao: false,
+  }),
+  mounted() {
+    this.obterCronogramas();
+  },
+    watch: {
+        ativarInscricaoOrganizacao(value) {
+            console.log(value);
+        },
+    },
+  computed: {
+    ...mapGetters({
+      cronogramasGetter: 'cronograma/cronogramas',
+      ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
+      ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
+      ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      obterCronogramas: 'cronograma/obterCronogramas',
+    }),
   },
 };
 </script>
