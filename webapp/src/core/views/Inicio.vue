@@ -1,41 +1,52 @@
 <template>
   <div>
     <section>
-      <!--<v-parallax src="https://live.staticflickr.com/638/22469726173_ebad8cb534_k.jpg" height="600">-->
-      <!--<v-parallax src="img/banner.png" height="600">-->
-      <!--<v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>-->
-      <v-img :src="require('../../assets/banner.png')" alt="Logo do Sistema" height="800"></v-img>
+      <v-img
+        :src="require('../../assets/banner.png')"
+        alt="Logo do Sistema"
+        height="800"
+      />
 
       <v-layout
         column
         align-center
         justify-center
-        class="white--text">
-        <!--<h1 class="white&#45;&#45;text font-weight-bold display-3 text-xs-center">Eleições 2019</h1>-->
-        <!--<div dark class="subheading mb-1 text-xs-center">Conselho Nacional de Política Cultural</div>-->
+        class="white--text"
+      >
         <v-slide-y-transition>
-          <v-container grid-list-md
-                       text-xs-center
-                       v-show="ativar_inscricao === true">
-            <v-layout row wrap>
+          <v-container
+            v-show="ativar_inscricao === true"
+            grid-list-md
+            text-xs-center
+          >
+            <v-layout
+              row
+              wrap
+            >
               <v-flex xs12>
-                <v-btn class="yellow mt-2"
-                       large
-                       to="/inscricao-conselho">
+                <v-btn
+                  class="yellow mt-2"
+                  large
+                  to="/inscricao-conselho"
+                >
                   Conselho Cultural
                 </v-btn>
               </v-flex>
               <v-flex xs12>
-                <v-btn class="yellow mt-2"
-                       to="/formulario-tres"
-                       large>
+                <v-btn
+                  class="yellow mt-2"
+                  to="/formulario-tres"
+                  large
+                >
                   Organização / Entidade Cultural
                 </v-btn>
               </v-flex>
               <v-flex xs12>
-                <v-btn class="yellow mt-2"
-                       to="/formulario-dois"
-                       large>
+                <v-btn
+                  class="yellow mt-2"
+                  to="/formulario-dois"
+                  large
+                >
                   Eleitor
                 </v-btn>
               </v-flex>
@@ -47,13 +58,21 @@
     </section>
 
     <section>
-      <v-layout column
-                wrap
-                class="my-5"
-                align-center>
-        <v-flex xs12 sm4 class="my-3">
+      <v-layout
+        column
+        wrap
+        class="my-5"
+        align-center
+      >
+        <v-flex
+          xs12
+          sm4
+          class="my-3"
+        >
           <div class="text-xs-center">
-            <h2 class="headline">Inscreva-se</h2>
+            <h2 class="headline">
+              Inscreva-se
+            </h2>
             <!--<span class="subheading">-->
             <!--Cras facilisis mi vitae nunc-->
             <!--</span>-->
@@ -61,13 +80,28 @@
         </v-flex>
         <v-flex xs12>
           <v-container grid-list-xl>
-            <v-layout row wrap align-center>
-              <v-flex xs12 md4>
+            <v-layout
+              row
+              wrap
+              align-center
+            >
+              <v-flex
+                xs12
+                md4
+              >
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
-                    <v-icon x-large class="text--lighten-2">color_lens</v-icon>
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      color_lens
+                    </v-icon>
                   </v-card-text>
-                  <v-card-title primary-title class="layout justify-center">
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
                     <div class="headline text-xs-center">
                       Organizações e Entidades Culturais
                     </div>
@@ -90,13 +124,26 @@
                   </v-btn>
                 </div>
               </v-flex>
-              <v-flex xs12 md4>
+              <v-flex
+                xs12
+                md4
+              >
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
-                    <v-icon x-large class="text--lighten-2">group</v-icon>
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      group
+                    </v-icon>
                   </v-card-text>
-                  <v-card-title primary-title class="layout justify-center">
-                    <div class="headline">Conselhos de Cultura Estaduais e Distrital</div>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline">
+                      Conselhos de Cultura Estaduais e Distrital
+                    </div>
                   </v-card-title>
                   <v-card-text>
                     Órgão colegiado de cultura vinculados à administração pública do Estado ou
@@ -108,20 +155,34 @@
                   <v-btn
                     color="green darken-4"
                     to="/conselho/inscricao"
-                    dark>
+                    dark
+                  >
                     <v-icon>
                       call_made
                     </v-icon>
                   </v-btn>
                 </div>
               </v-flex>
-              <v-flex xs12 md4>
+              <v-flex
+                xs12
+                md4
+              >
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
-                    <v-icon x-large class="text--lighten-2">thumbs_up_down</v-icon>
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      thumbs_up_down
+                    </v-icon>
                   </v-card-text>
-                  <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center">Eleitor</div>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Eleitor
+                    </div>
                   </v-card-title>
                   <v-card-text>
                     Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
@@ -130,7 +191,8 @@
                     <v-btn
                       color="green darken-4"
                       to="/eleitor/inscricao"
-                      dark>
+                      dark
+                    >
                       <v-icon>
                         call_made
                       </v-icon>
@@ -145,23 +207,43 @@
     </section>
 
     <section>
-      <v-parallax :src="require('../../assets/vota-parallax.jpg')" height="380">
-        <v-layout column align-center justify-center row fill-height>
-          <v-layout row align-center justify-center>
+      <v-parallax
+        :src="require('../../assets/vota-parallax.jpg')"
+        height="380"
+      >
+        <v-layout
+          column
+          align-center
+          justify-center
+          row
+          fill-height
+        >
+          <v-layout
+            row
+            align-center
+            justify-center
+          >
             <v-flex>
-              <div class="headline white--text mb-3 text-xs-center">Leia o Edital na integra</div>
+              <div class="headline white--text mb-3 text-xs-center">
+                Leia o Edital na integra
+              </div>
               <em>Se informe sobre a chamada publica para composição do conselho nacional de política
                 cultural</em>
             </v-flex>
           </v-layout>
-          <v-layout row align-center justify-center>
+          <v-layout
+            row
+            align-center
+            justify-center
+          >
             <v-flex>
               <v-btn
                 class="green darken-4 mt-5 white--text"
                 dark
                 large
                 target="_blank"
-                href="EDITAL_01_12_08_2019-CNPC.pdf">
+                href="EDITAL_01_12_08_2019-CNPC.pdf"
+              >
                 Ver Edital
               </v-btn>
             </v-flex>
@@ -171,24 +253,36 @@
                 dark
                 large
                 target="_blank"
-                href="CARTILHA_CNPC.pdf">
+                href="CARTILHA_CNPC.pdf"
+              >
                 Ver Cartilha
               </v-btn>
-
             </v-flex>
           </v-layout>
-
         </v-layout>
       </v-parallax>
     </section>
 
     <section>
       <v-container grid-list-xl>
-        <v-layout row wrap justify-center class="my-5">
-          <v-flex xs12 sm4>
+        <v-layout
+          row
+          wrap
+          justify-center
+          class="my-5"
+        >
+          <v-flex
+            xs12
+            sm4
+          >
             <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">O que é Conselho Nacional de Política Cultural?</div>
+              <v-card-title
+                primary-title
+                class="layout justify-center"
+              >
+                <div class="headline">
+                  O que é Conselho Nacional de Política Cultural?
+                </div>
               </v-card-title>
               <v-card-text>
                 O CNPC é um órgão colegiado integrante da estrutura do Ministério da Cultura.
@@ -199,10 +293,19 @@
               </v-card-text>
             </v-card>
           </v-flex>
-          <v-flex xs12 sm4 offset-sm1>
+          <v-flex
+            xs12
+            sm4
+            offset-sm1
+          >
             <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Fale Conosco</div>
+              <v-card-title
+                primary-title
+                class="layout justify-center"
+              >
+                <div class="headline">
+                  Fale Conosco
+                </div>
               </v-card-title>
               <v-card-text>
                 Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -210,7 +313,9 @@
               <v-list class="transparent">
                 <v-list-tile>
                   <v-list-tile-action>
-                    <v-icon class="text--lighten-2">phone</v-icon>
+                    <v-icon class="text--lighten-2">
+                      phone
+                    </v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content>
                     <v-list-tile-title>777-867-5309</v-list-tile-title>
@@ -218,7 +323,9 @@
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-action>
-                    <v-icon class="text--lighten-2">place</v-icon>
+                    <v-icon class="text--lighten-2">
+                      place
+                    </v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content>
                     <v-list-tile-title>
@@ -229,7 +336,9 @@
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-action>
-                    <v-icon class="text--lighten-2">email</v-icon>
+                    <v-icon class="text--lighten-2">
+                      email
+                    </v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content>
                     <v-list-tile-title>suporte@cidadania.com</v-list-tile-title>
@@ -245,11 +354,11 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        ativar_inscricao: false
-      }
-    }
-  };
+export default {
+  data() {
+    return {
+      ativar_inscricao: false,
+    };
+  },
+};
 </script>
