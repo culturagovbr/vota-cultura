@@ -19,8 +19,10 @@ class ConselhoApiResourceController extends AApiResourceController
         $this->service = $service;
     }
 
-    public function show(Conselho $model): \Illuminate\Http\JsonResponse
+    public function show($identificador): \Illuminate\Http\JsonResponse
     {
+        $model = $this->service->obterUm($identificador);
+
         return parent::genericShow($model);
     }
 }
