@@ -144,7 +144,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.endereco.co_municipio"
+                    v-model="conselho.endereco.no_municipio"
                     label="Cidade"
                     append-icon="place"
                     disabled
