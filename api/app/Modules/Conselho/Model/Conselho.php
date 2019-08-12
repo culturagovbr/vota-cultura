@@ -12,6 +12,7 @@ class Conselho extends Model
 
     protected $fillable = [
         'no_orgao_gestor',
+        'no_conselho',
         'ds_email',
         'nu_telefone',
         'nu_cnpj',

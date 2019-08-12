@@ -63,6 +63,17 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
+                    v-model="conselho.no_conselho"
+                    label="*Nome do conselho de cultura"
+                    append-icon="people"
+                    disabled
+                  />
+                </v-flex>
+              </v-layout>
+
+              <v-layout>
+                <v-flex>
+                  <v-text-field
                     v-model="conselho.nu_telefone"
                     label="Telefone"
                     append-icon="phone"
@@ -143,10 +154,13 @@
 
               <v-layout>
                 <v-flex>
-                  <v-text-field
-                    v-model="conselho.endereco.no_municipio"
+                  <v-select
+                    v-model="conselho.endereco.co_municipio"
+                    :items="listaMunicipios"
                     label="Cidade"
                     append-icon="place"
+                    item-value="co_municipio"
+                    item-text="no_municipio"
                     disabled
                   />
                 </v-flex>
@@ -273,17 +287,20 @@ export default {
     confirmacaoDadosDeInscricao: false,
     dialog: false,
     listaUF: [],
+    listaMunicipios: [],
     conselho: {},
   }),
   computed: {
     ...mapGetters({
       conselhoGetter: 'conselho/conselho',
       estadosGetter: 'localidade/estados',
+      municipiosGetter: 'localidade/municipios',
     }),
   },
   watch: {
     conselhoGetter(value) {
       this.conselho = value;
+      this.obterMunicipios(this.conselho.co_ibge);
     },
     estadosGetter() {
       this.listaUF = this.estadosGetter;
@@ -292,6 +309,7 @@ export default {
   methods: {
     ...mapActions({
       enviarDadosConselho: 'conselho/enviarDadosConselho',
+      obterMunicipios: 'localidade/obterMunicipios',
     }),
     salvar() {
       this.enviarDadosConselho(this.conselhoGetter).then(() => {
@@ -321,6 +339,7 @@ export default {
   mounted() {
     this.listaUF = this.estadosGetter;
     this.conselho = this.conselhoGetter;
+    this.listaMunicipios = this.municipiosGetter;
   },
 };
 </script>

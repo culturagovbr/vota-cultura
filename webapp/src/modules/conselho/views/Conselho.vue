@@ -86,22 +86,34 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm7
+                        sm3
                       >
                         <v-text-field
                           v-model="conselho.no_orgao_gestor"
                           label="*Nome do órgão gestor de cultura"
-                          append-icon="people"
+                          append-icon="people_outline"
                           :disabled="true"
-                          :error-messages="nomeConselhoError"
                           :rules="[rules.cnpjInvalido]"
                           required
                         />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm2
+                        sm4
                       >
+                        <v-text-field
+                          v-model="conselho.no_conselho"
+                          label="*Nome do conselho de cultura"
+                          append-icon="people"
+                          counter
+                          maxlength="150"
+                          :rules="[rules.required]"
+                          required
+                        />
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        sm2>
                         <v-text-field
                           v-model="conselho.nu_telefone"
                           label="*Telefone"
@@ -519,6 +531,7 @@ export default {
     valid_representante: false,
     valid_anexo: false,
     conselho: {
+      no_conselho: '',
       st_inscricao: 'e',
       no_orgao_gestor: '',
       ds_email: '',

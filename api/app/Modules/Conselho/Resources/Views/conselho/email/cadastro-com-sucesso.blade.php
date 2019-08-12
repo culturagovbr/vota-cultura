@@ -16,6 +16,12 @@
 </p>
 <p>
     <b>
+        Nome do órgão gestor de cultura:
+    </b>
+    {{ $conselho->no_conselho }}
+</p>
+<p>
+    <b>
         Telefone:
     </b>
     {{ $conselho->telefone_formatado }}

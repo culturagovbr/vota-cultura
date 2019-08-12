@@ -332,6 +332,7 @@ COMMENT ON COLUMN rl_organizacao_criterio.co_organizacao IS 'chave estrangeira l
 CREATE TABLE tb_conselho (
 	co_conselho          SERIAL,
 	no_orgao_gestor      varchar(150)  NOT NULL ,
+	no_conselho          varchar(150) NOT NULL ,
 	ds_email             varchar(50)  NOT NULL ,
 	nu_telefone          varchar(11)  NOT NULL ,
 	nu_cnpj              varchar(14)  NOT NULL ,
@@ -349,7 +350,9 @@ CREATE TABLE tb_conselho (
 
 COMMENT ON COLUMN tb_conselho.co_conselho IS 'chave primária da tabela';
 
-COMMENT ON COLUMN tb_conselho.no_orgao_gestor IS 'nome do conselho';
+COMMENT ON COLUMN tb_conselho.no_orgao_gestor IS 'nome do Orgão gestor do conselho';
+
+COMMENT ON COLUMN tb_conselho.no_orgao_gestor IS 'Nome do conselho de cultura';
 
 COMMENT ON COLUMN tb_conselho.ds_email IS 'email para contato com o conselho';
 
