@@ -263,8 +263,7 @@
               </v-card-title>
               <v-card-text>
                 Esclarecimentos e informações complementares necessários à aplicação dos
-                termos deste Edital poderão ser obtidos junto à Central de Relacionamento usando
-                os contatos abaixo:
+                termos deste Edital poderão ser obtidos junto à Central de Relacionamento:
               </v-card-text>
               <v-list class="transparent">
                 <v-list-tile>
