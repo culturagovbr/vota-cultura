@@ -703,6 +703,27 @@ export default {
       this.listaCriterios = _.groupBy(
         this.criteriosGetter, criterio => criterio.tp_criterio,
       );
+
+      const participacaoInstancias = [{
+        co_criterio: '',
+        ds_detalhamento: 'Selecione',
+        tp_criterio: 'participacao_instancias',
+      }];
+      this.listaCriterios.participacao_instancias.forEach((criterio) => {
+        participacaoInstancias.push(criterio);
+      });
+      this.listaCriterios.participacao_instancias = participacaoInstancias;
+
+      const pesquisaProducao = [{
+        co_criterio: '',
+        ds_detalhamento: 'Selecione',
+        tp_criterio: 'pesquisa_producao',
+      }];
+      this.listaCriterios.pesquisa_producao.forEach((criterio) => {
+        pesquisaProducao.push(criterio);
+      });
+      this.listaCriterios.pesquisa_producao = pesquisaProducao;
+
     },
   },
   mounted() {
