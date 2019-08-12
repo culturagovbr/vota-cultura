@@ -71,6 +71,7 @@ export default {
       type: Array,
       default: () => [
         'application/pdf',
+        'image/jpeg',
       ],
     },
     maxFileSize: {
