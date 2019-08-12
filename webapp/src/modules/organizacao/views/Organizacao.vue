@@ -582,7 +582,7 @@ export default {
     valid_segmento: false,
     valid_criterio: false,
     valid_representante: false,
-    etapaFormulario: 4,
+    etapaFormulario: 1,
     listaUF: [],
     listaSegmentos: [],
     listaMunicipios: [],
