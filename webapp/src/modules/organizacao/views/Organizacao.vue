@@ -20,7 +20,7 @@
             <v-stepper-step
               :complete="etapaFormulario > 2"
               step="2">
-              Responsável
+              Representante
             </v-stepper-step>
 
             <v-divider/>
@@ -529,7 +529,7 @@
                       <v-flex sm3>
                         <v-card max-width="344" min-height="230" class="mx-auto">
                           <v-card-title class="subheading mb-1 justify-center">
-                            Documento de identificação do responsável*
+                            Documento de identificação do representante*
                           </v-card-title>
                           <v-card-text>
                             <file v-model="documento_identificacao_responsavel"/>

@@ -466,7 +466,7 @@
                           class="mx-auto"
                         >
                           <v-card-title class="subheading mb-1 justify-center">
-                            Documento de identificação do responsável*
+                            Documento de identificação do representante*
                           </v-card-title>
                           <v-card-text>
                             <file v-model="documento_identificacao_responsavel" />

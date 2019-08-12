@@ -140,7 +140,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="organizacao.representante.no_pessoa"
-                    label="Nome do Responsável"
+                    label="Nome do Representante"
                     append-icon="perm_identity"
                     disabled
                   />
@@ -151,7 +151,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="organizacao.representante.nu_telefone"
-                    label="Celular do Responsável"
+                    label="Celular do Representante"
                     append-icon="phone"
                     mask="(##) #####-####"
                     disabled
@@ -187,7 +187,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="organizacao.representante.ds_email"
-                    label="E-mail do Responsável"
+                    label="E-mail do Representante"
                     append-icon="mail"
                     disabled
                   />

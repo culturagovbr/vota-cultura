@@ -64,7 +64,7 @@
 </p>
 <p>
     <b>
-        Nome do Responsável:
+        Nome do Representante:
     </b>
     {{ $organizacao->representante->no_pessoa }}
 </p>
@@ -88,7 +88,7 @@
 </p>
 <p>
     <b>
-        E-mail do Responsável:
+        E-mail do Representante:
     </b>
     {{ $organizacao->representante->ds_email }}
 </p>
