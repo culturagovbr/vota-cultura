@@ -106,7 +106,7 @@
                           label="*Nome do conselho de cultura"
                           append-icon="people"
                           counter
-                          maxlength="150"
+                          maxlength="250"
                           :rules="[rules.required]"
                           required
                         />
