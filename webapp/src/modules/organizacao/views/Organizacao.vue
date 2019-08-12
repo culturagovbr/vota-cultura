@@ -36,7 +36,7 @@
             <v-stepper-step
               :complete="etapaFormulario > 4"
               step="4">
-              Declaração de enquadramento
+              Critérios
             </v-stepper-step>
 
             <v-divider/>
@@ -582,7 +582,7 @@ export default {
     valid_segmento: false,
     valid_criterio: false,
     valid_representante: false,
-    etapaFormulario: 1,
+    etapaFormulario: 4,
     listaUF: [],
     listaSegmentos: [],
     listaMunicipios: [],

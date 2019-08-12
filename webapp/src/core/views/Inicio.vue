@@ -172,19 +172,19 @@
           row
           fill-height
         >
-          <v-layout
-            row
-            align-center
-            justify-center
-          >
-            <v-flex>
-              <div class="headline white--text mb-3 text-xs-center">
-                Leia o Edital na integra
-              </div>
-              <em>Se informe sobre a chamada publica para composição do conselho nacional de política
-                cultural</em>
-            </v-flex>
-          </v-layout>
+          <!--<v-layout-->
+            <!--row-->
+            <!--align-center-->
+            <!--justify-center-->
+          <!--&gt;-->
+            <!--<v-flex>-->
+              <!--<div class="headline white&#45;&#45;text mb-3 text-xs-center">-->
+                <!--Leia o Edital na integra-->
+              <!--</div>-->
+              <!--<em>Se informe sobre a chamada publica para composição do conselho nacional de política-->
+                <!--cultural</em>-->
+            <!--</v-flex>-->
+          <!--</v-layout>-->
           <v-layout
             row
             align-center
@@ -198,7 +198,7 @@
                 target="_blank"
                 href="EDITAL_01_12_08_2019-CNPC.pdf"
               >
-                Ver Edital
+                Acesse o Edital
               </v-btn>
             </v-flex>
             <v-flex>
@@ -209,7 +209,7 @@
                 target="_blank"
                 href="CARTILHA_CNPC.pdf"
               >
-                Ver Cartilha
+                Acesse a Cartilha
               </v-btn>
             </v-flex>
           </v-layout>
@@ -239,9 +239,9 @@
                 </div>
               </v-card-title>
               <v-card-text>
-                O CNPC é um órgão colegiado integrante da estrutura do Ministério da Cultura.
+                O Conselho Nacional de Política Cultural (CNPC) é um órgão colegiado integrante da estrutura do Ministério da Cultura.
                 Esse órgão tem como finalidade propor a formulação de políticas públicas,
-                promovendo a articulação e o debate dos diferentes níveis d governo e sociedade
+                promovendo a articulação e o debate dos diferentes níveis de governo e a sociedade
                 civil organizada, para o desenvolvimento e fomento das atividades culturais no
                 território nacional.
               </v-card-text>
@@ -262,7 +262,7 @@
                 </div>
               </v-card-title>
               <v-card-text>
-                Os esclarecimentos e informações complementares necessários à aplicação dos
+                Esclarecimentos e informações complementares necessários à aplicação dos
                 termos deste Edital poderão ser obtidos junto à Central de Relacionamento usando
                 os contatos abaixo:
               </v-card-text>
@@ -280,22 +280,12 @@
                 <v-list-tile>
                   <v-list-tile-action>
                     <v-icon class="text--lighten-2">
-                      person
-                    </v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>Fale Conosco/Central de Relacionamento</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="text--lighten-2">
                       link
                     </v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content>
                     <v-list-tile-title>
-                      <a href="http://cidadania.gov.br" target="_blank">Ministério da Cidadania</a>
+                      <a href="http://mds.gov.br/ministerio-da-cidadania/ouvidoria-do-ministerio/central-de-relacionamento" target="_blank">Fale Conosco/Central de Relacionamento</a>
                     </v-list-tile-title>
                   </v-list-tile-content>
                 </v-list-tile>
