@@ -421,3 +421,7 @@ COMMENT ON COLUMN rl_eleitor_arquivo.co_arquivo IS 'chave estrangeira ligando a 
 COMMENT ON COLUMN rl_eleitor_arquivo.tp_arquivo IS 'opcoes:\n\ndeclaracao_eleitor\ndocumento_identificacao\ndocumento_cpf\nato_normativo\nata_reuniao\ndeclaracao_ciencia';
 
 
+ALTER TABLE public.tb_eleitor ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE public.tb_conselho ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE public.tb_organizacao ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE public.tb_representante ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
