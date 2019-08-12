@@ -41,11 +41,11 @@
 
             <v-divider/>
 
-            <v-stepper-step
-              :complete="etapaFormulario > 5"
-              step="5">
-              Anexo
-            </v-stepper-step>
+            <!--<v-stepper-step-->
+              <!--:complete="etapaFormulario > 5"-->
+              <!--step="5">-->
+              <!--Anexo-->
+            <!--</v-stepper-step>-->
           </v-stepper-header>
 
           <v-stepper-items>
@@ -508,55 +508,11 @@
               </v-btn>
               <v-btn :disabled="!valid_criterio"
                      color="primary"
-                     @click="validarIrProximaEtapa('form_criterio')">
+                     @click="salvar">
                 Próximo
               </v-btn>
             </v-stepper-content>
 
-            <v-stepper-content step="5">
-              <v-form lazy-validation>
-                <v-card flat>
-                  <v-container fluid grid-list-xl>
-                    <v-layout align-center justify-center>
-                      <v-flex sm5>
-                        <div class="subheading mb-5">
-                          Envie os documentos abaixo (somente formato PDF):
-                        </div>
-                      </v-flex>
-                    </v-layout>
-
-                    <v-layout align-center justify-center class="mb-4" wrap>
-                      <v-flex sm3>
-                        <v-card max-width="344" min-height="230" class="mx-auto">
-                          <v-card-title class="subheading mb-1 justify-center">
-                            Documento de identificação do representante*
-                          </v-card-title>
-                          <v-card-text>
-                            <file v-model="documento_identificacao_responsavel"/>
-                          </v-card-text>
-                        </v-card>
-                      </v-flex>
-                      <v-flex sm3>
-                        <v-card max-width="344" min-height="230" class="mx-auto">
-                          <v-card-title class="subheading mb-1 justify-center">
-                            Declaração do representante Legal*
-                          </v-card-title>
-                          <v-card-text>
-                            <file v-model="declaracao_representante_legal"/>
-                          </v-card-text>
-                        </v-card>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </v-card>
-              </v-form>
-              <v-btn flat @click="voltarEtapaAnterior">
-                Anterior
-              </v-btn>
-              <v-btn color="primary" @click="salvar">
-                Enviar
-              </v-btn>
-            </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
       </v-card-text>
@@ -611,7 +567,6 @@ export default {
         ds_email_confirmation: '',
       },
       ds_sitio_eletronico: '',
-      anexos: [],
       criterios: {
         abrangencia_estadual: '',
         abrangencia_nacional: '',
@@ -622,8 +577,8 @@ export default {
         tempo_funcionamento: '',
       },
     },
-    declaracao_representante_legal: {},
-    documento_identificacao_responsavel: {},
+    // declaracao_representante_legal: {},
+    // documento_identificacao_responsavel: {},
     headers: [
       {
         text: 'Tipo',
@@ -766,29 +721,7 @@ export default {
       this.$refs.form.reset();
     },
     salvar() {
-      let erro = false;
-      this.organizacao.anexos = [];
-      const anexos = [
-        'documento_identificacao_responsavel',
-        'declaracao_representante_legal',
-      ];
-
-      try {
-        anexos.forEach((nomeAnexo) => {
-          this.organizacao.anexos.push({
-            tp_arquivo: nomeAnexo,
-            no_extensao: this[nomeAnexo].fileExtension,
-            no_mime_type: this[nomeAnexo].fileType,
-            no_arquivo: this[nomeAnexo].filename,
-            arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
-          });
-        });
-      } catch (e) {
-        erro = true;
-        eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
-      }
-
-      if (!erro) {
+      if (this.$refs.form_criterio.validate()) {
         this.confirmarOrganizacao(this.organizacao).then(() => {
           this.$router.push('/organizacao/revisao-organizacao');
         });

@@ -26,8 +26,8 @@ class Organizacao extends AbstractService
     {
         try {
 
-            $anexos = $dados['anexos'];
-            unset($dados['anexos']);
+//            $anexos = $dados['anexos'];
+//            unset($dados['anexos']);
 
             DB::beginTransaction();
             $organizacao = $this->getModel()->where([
@@ -67,23 +67,23 @@ class Organizacao extends AbstractService
                 $organizacao->criterios()->attach($criterioId);
             }
 
-            foreach($anexos as $dadosCriterio) {
-                $modeloArquivo = app()->make(Arquivo::class);
-                $modeloArquivo->fill($dadosCriterio);
-                $serviceUpload = new Upload($modeloArquivo);
-                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-                    $dadosCriterio['arquivoCodificado'],
-                    'organizacao/' . $dadosCriterio['tp_arquivo']
-                );
-
-                $representante->arquivos()->attach(
-                    $arquivoArmazenado->co_arquivo,
-                    [
-                        'tp_arquivo' => $dadosCriterio['tp_arquivo'],
-                        'tp_inscricao' => RepresentanteModel::TIPO_INSCRICAO_ORGANIZACAO
-                    ]
-                );
-            }
+//            foreach($anexos as $dadosCriterio) {
+//                $modeloArquivo = app()->make(Arquivo::class);
+//                $modeloArquivo->fill($dadosCriterio);
+//                $serviceUpload = new Upload($modeloArquivo);
+//                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+//                    $dadosCriterio['arquivoCodificado'],
+//                    'organizacao/' . $dadosCriterio['tp_arquivo']
+//                );
+//
+//                $representante->arquivos()->attach(
+//                    $arquivoArmazenado->co_arquivo,
+//                    [
+//                        'tp_arquivo' => $dadosCriterio['tp_arquivo'],
+//                        'tp_inscricao' => RepresentanteModel::TIPO_INSCRICAO_ORGANIZACAO
+//                    ]
+//                );
+//            }
 
             Mail::to($representante->ds_email)->send(
                 new CadastroComSucesso($organizacao)
