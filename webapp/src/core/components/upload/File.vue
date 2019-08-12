@@ -81,6 +81,7 @@ export default {
       type: Object,
       default: () => ({
         'application/pdf': '.pdf',
+        'image/jpeg': '.jpeg',
       }),
     },
     options: {
