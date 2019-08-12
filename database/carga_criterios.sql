@@ -8,9 +8,9 @@ INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, 
 INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (6, 'abrangencia_estadual', 'Abrangência estadual', 'De 11 a 18 estados', 2, 2);
 INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (7, 'abrangencia_estadual', 'Abrangência estadual', 'De 19 a 27 estados', 3, 2);
 
-INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (8, 'tempo_funcionamento', 'Tempo de funcionamento', 'De 3 a 5 estados', 1, 1);
-INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (9, 'tempo_funcionamento', 'Tempo de funcionamento', 'De 6 a 10 estados', 2, 1);
-INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (10, 'tempo_funcionamento', 'Tempo de funcionamento', 'De 11 a 15 estados', 3, 1);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (8, 'tempo_funcionamento', 'Tempo de funcionamento', 'De 3 a 5 anos', 1, 1);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (9, 'tempo_funcionamento', 'Tempo de funcionamento', 'De 6 a 10 anos', 2, 1);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (10, 'tempo_funcionamento', 'Tempo de funcionamento', 'De 11 a 15 anos', 3, 1);
 INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (11, 'tempo_funcionamento', 'Tempo de funcionamento', 'Acima de 15 anos', 4, 1);
 
 INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (12, 'nu_associados_filiados', 'Número de associados ou filiados', 'Até 100', 1, 1);
@@ -29,4 +29,5 @@ INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, 
 
 INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (23, 'pesquisa_producao', 'Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016', 'De 1 a 5', 1, 1);
 INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (24, 'pesquisa_producao', 'Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016', 'De 6 a 10', 2, 1);
+INSERT INTO tb_criterio(co_criterio, tp_criterio, ds_criterio, ds_detalhamento, qt_pontuacao, qt_peso) VALUES (25, 'pesquisa_producao', 'Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016', 'Acima de 10', 3, 1);
 
