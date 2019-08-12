@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Eleitor extends AbstractService
 {
@@ -35,7 +34,7 @@ class Eleitor extends AbstractService
             ])->first();
 
             if ($eleitor) {
-                throw new HttpException(
+                throw new \Exception(
                     Response::HTTP_NOT_ACCEPTABLE,
                     'Eleitor já cadastrado.'
                 );

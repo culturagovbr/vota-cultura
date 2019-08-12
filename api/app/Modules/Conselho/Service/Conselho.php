@@ -38,8 +38,9 @@ class Conselho extends AbstractService
                 'nu_cnpj' => $dados['nu_cnpj']
             ])->first();
 
+
             if ($conselho) {
-                throw new \HttpException(
+                throw new \Exception(
                     'Conselho já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -49,7 +50,7 @@ class Conselho extends AbstractService
             $representante = $serviceRepresentante->cadastrar($dados['representante']);
 
             if (!$representante) {
-                throw new \HttpException('Não foi possível cadastrar o representante.');
+                throw new \Exception('Não foi possível cadastrar o representante.');
             }
 
             $dados['co_representante'] = $representante->co_representante;
@@ -57,7 +58,7 @@ class Conselho extends AbstractService
             $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
             if (!$endereco) {
-                throw new \HttpException('Não foi possível cadastrar o endereço.');
+                throw new \Exception('Não foi possível cadastrar o endereço.');
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;

@@ -64,13 +64,13 @@
 </p>
 <p>
     <b>
-        Nome do Representante:
+        Nome do representante:
     </b>
     {{ $organizacao->representante->no_pessoa }}
 </p>
 <p>
     <b>
-        Celular do Responsável:
+        Celular do representante:
     </b>
     {{ $organizacao->representante->telefone_formatado }}
 </p>
@@ -88,7 +88,7 @@
 </p>
 <p>
     <b>
-        E-mail do Representante:
+        E-mail do representante:
     </b>
     {{ $organizacao->representante->ds_email }}
 </p>

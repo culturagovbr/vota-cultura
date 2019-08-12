@@ -75,7 +75,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="conselho.nu_telefone"
-                    label="Telefone"
+                    label="Telefone do Conselho"
                     append-icon="phone"
                     mask="(##) #####-####"
                     disabled
@@ -87,7 +87,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="conselho.ds_email"
-                    label="E-mail"
+                    label="E-mail do Conselho"
                     append-icon="mail"
                     disabled
                   />
@@ -170,7 +170,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="conselho.representante.no_pessoa"
-                    label="Nome do Representante"
+                    label="Nome do representante"
                     append-icon="perm_identity"
                     disabled
                   />
@@ -239,14 +239,15 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
               >
                 <v-flex offset-xs4>
                   <v-btn
-                    to="/inscricao/conselho"
+                    @click="voltar"
                   >
-                    Cancelar
+                    <!--to="/conselho/inscricao"-->
+                    Voltar
                   </v-btn>
                   <v-btn
                     :disabled="!confirmacaoDadosDeInscricao"
                     color="primary"
-                    @click="salvar"
+                    @click="abrirDialogo"
                   >
                     Confirmar
                   </v-btn>
@@ -263,7 +264,7 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                     É necessário preencher as informações do cadastro.
                   </v-alert>
                   <div class="mb-6">
-                    <v-btn to="/conselho/inscricao">
+                    <v-btn @click="voltar">
                       Voltar
                     </v-btn>
                   </div>
@@ -273,6 +274,44 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
           </v-card-text>
         </v-card>
       </v-flex>
+      <v-layout justify-center>
+        <v-dialog
+          v-model="dialog"
+          max-width="290"
+        >
+          <v-card>
+            <v-card-title class="headline">
+              Deseja realmente enviar?
+            </v-card-title>
+
+            <v-card-text>
+              Os dados enviados não poderão ser alterados posteriormente.
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer />
+
+              <v-btn
+                color="red darken-1"
+                text
+                flat
+                @click="fecharDialogo"
+              >
+                Não
+              </v-btn>
+
+              <v-btn
+                color="green darken-1"
+                text
+                flat
+                @click="salvar"
+              >
+                Sim
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
     </v-layout>
   </v-container>
 </template>
@@ -311,6 +350,9 @@ export default {
       enviarDadosConselho: 'conselho/enviarDadosConselho',
       obterMunicipios: 'localidade/obterMunicipios',
     }),
+    voltar() {
+      this.$router.push({ name: 'Conselho' });
+    },
     salvar() {
       this.enviarDadosConselho(this.conselhoGetter).then(() => {
         eventHub.$emit(

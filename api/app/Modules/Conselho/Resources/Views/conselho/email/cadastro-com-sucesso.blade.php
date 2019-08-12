@@ -22,13 +22,13 @@
 </p>
 <p>
     <b>
-        Telefone:
+        Telefone do Conselho:
     </b>
     {{ $conselho->telefone_formatado }}
 </p>
 <p>
     <b>
-        E-mail:
+        E-mail do Conselho:
     </b>
     {{ $conselho->ds_email }}
 </p>
@@ -70,7 +70,7 @@
 </p>
 <p>
     <b>
-        Nome do Representante:
+        Nome do representante:
     </b>
     {{ $conselho->representante->no_pessoa }}
 </p>

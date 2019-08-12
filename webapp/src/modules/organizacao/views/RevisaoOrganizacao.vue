@@ -140,7 +140,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="organizacao.representante.no_pessoa"
-                    label="Nome do Representante"
+                    label="Nome do representante"
                     append-icon="perm_identity"
                     disabled
                   />
@@ -151,7 +151,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="organizacao.representante.nu_telefone"
-                    label="Celular do Representante"
+                    label="Celular do representante"
                     append-icon="phone"
                     mask="(##) #####-####"
                     disabled
@@ -187,7 +187,7 @@
                 <v-flex>
                   <v-text-field
                     v-model="organizacao.representante.ds_email"
-                    label="E-mail do Representante"
+                    label="E-mail do representante"
                     append-icon="mail"
                     disabled
                   />
@@ -316,8 +316,10 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                 align-center
               >
                 <v-flex offset-xs4>
-                  <v-btn to="/organizacao/inscricao">
-                    Cancelar
+                  <v-btn
+                    @click="voltar"
+                  >
+                    Voltar
                   </v-btn>
                   <v-btn
                     :disabled="!confirmacaoDadosDeInscricao"
@@ -427,6 +429,7 @@ export default {
       this.organizacao = value;
       this.obterMunicipios(this.organizacao.co_ibge);
     },
+
   },
   methods: {
     ...mapActions({
@@ -436,13 +439,15 @@ export default {
       obterSegmentos: 'organizacao/obterSegmentos',
       enviarDadosOrganizacao: 'organizacao/enviarDadosOrganizacao',
     }),
+    voltar() {
+      this.$router.push({ name: 'Organizacao' });
+    },
     salvar() {
       this.enviarDadosOrganizacao(this.organizacaoGetter).then(() => {
         eventHub.$emit(
           'eventoSucesso',
           'Enviado com sucesso! Um email será enviado com os dados da inscrição.',
         );
-
         this.organizacao = Object.assign({});
         this.$router.push('/');
       }).catch((response) => {

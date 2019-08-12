@@ -253,7 +253,7 @@
                         sm3>
                         <v-text-field
                           v-model="organizacao.representante.nu_cpf"
-                          label="*CPF"
+                          label="*CPF do representante"
                           append-icon="person"
                           placeholder="999.999.999.99"
                           mask="###.###.###.##"
@@ -282,7 +282,7 @@
                         sm8>
                         <v-text-field
                           v-model="organizacao.representante.no_pessoa"
-                          label="*Nome do Representante"
+                          label="*Nome do representante"
                           :disabled="true"
                           :error-messages="nomeRepresentante"
                           append-icon="perm_identity"
@@ -294,7 +294,7 @@
                         sm4>
                         <v-text-field
                           v-model="organizacao.representante.nu_rg"
-                          label="*RG"
+                          label="*RG do representante"
                           append-icon="person"
                           mask="#########"
                           counter
@@ -727,6 +727,10 @@ export default {
     },
   },
   mounted() {
+    if (Object.keys(this.organizacaoGetter).length > 0) {
+      this.organizacao = this.organizacaoGetter;
+      this.obterMunicipios(this.organizacao.endereco.co_municipio);
+    }
     this.obterEstados();
     this.obterSegmentos();
     this.obterCriterios();
@@ -737,6 +741,7 @@ export default {
       municipiosGetter: 'localidade/municipios',
       segmentosGetter: 'organizacao/segmentos',
       criteriosGetter: 'organizacao/criterios',
+      organizacaoGetter: 'organizacao/organizacao',
     }),
   },
   methods: {

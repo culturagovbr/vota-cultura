@@ -14,14 +14,14 @@
               :complete="etapaFormulario > 1"
               step="1"
             >
-              Dados do Conselho de Cultura
+              Conselho de Cultura
             </v-stepper-step>
             <v-divider />
             <v-stepper-step
               :complete="etapaFormulario > 2"
               step="2"
             >
-              Dados do Representante
+              Representante
             </v-stepper-step>
 
             <v-divider />
@@ -116,7 +116,7 @@
                         sm2>
                         <v-text-field
                           v-model="conselho.nu_telefone"
-                          label="*Telefone"
+                          label="*Telefone do Conselho"
                           append-icon="phone"
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
@@ -137,7 +137,7 @@
                         <v-text-field
                           v-model="conselho.ds_email"
                           data-vv-name="email"
-                          label="*E-mail"
+                          label="*E-mail do Conselho"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
                           counter
@@ -296,7 +296,7 @@
                       >
                         <v-text-field
                           v-model="conselho.representante.nu_cpf"
-                          label="*CPF"
+                          label="*CPF do representante"
                           append-icon="person"
                           placeholder="999.999.999.99"
                           mask="###.###.###.##"
@@ -332,7 +332,7 @@
                         <v-text-field
                           v-model="conselho.representante.no_pessoa"
                           :disabled="true"
-                          label="*Nome do Representante"
+                          label="*Nome do representante"
                           append-icon="perm_identity"
                           :error-messages="nomeRepresentante"
                           :rules="[rules.cpfInvalido]"
@@ -345,9 +345,11 @@
                       >
                         <v-text-field
                           v-model="conselho.representante.nu_rg"
-                          label="*RG"
+                          label="*RG do representante"
                           append-icon="person"
                           mask="#########"
+                          counter
+                          maxlength="11"
                           :rules="[rules.required]"
                           required
                         />
@@ -466,7 +468,7 @@
                           class="mx-auto"
                         >
                           <v-card-title class="subheading mb-1 justify-center">
-                            Documento de identificação do representante*
+                            Documento de identificação do representante com CPF*
                           </v-card-title>
                           <v-card-text>
                             <file v-model="documento_identificacao_responsavel" />
@@ -482,7 +484,7 @@
                           class="mx-auto"
                         >
                           <v-card-title class="subheading mb-1 justify-center">
-                            Declaração de ciência e autorização do órgão gestor de cultura do estado*
+                            Declaração de Impossibilidade de Participação do Conselho Estadual de Cultura*
                           </v-card-title>
                           <v-card-text>
                             <file v-model="declaracao_ciencia_orgao_gestor" />
@@ -563,11 +565,11 @@ export default {
     declaracao_ciencia_orgao_gestor: {},
     steps: [
       {
-        title: 'Dados do Conselho de Cultura',
+        title: 'Conselho de Cultura',
         id: 1,
       },
       {
-        title: 'Dados do Representante',
+        title: 'Representante',
         id: 2,
       },
       {
@@ -649,12 +651,16 @@ export default {
     },
   },
   mounted() {
+    if (Object.keys(this.conselhoGetter).length > 0) {
+      this.conselho = this.conselhoGetter;
+    }
     this.obterEstados();
   },
   computed: {
     ...mapGetters({
       estadosGetter: 'localidade/estados',
       municipiosGetter: 'localidade/municipios',
+      conselhoGetter: 'conselho/conselho',
     }),
   },
   methods: {

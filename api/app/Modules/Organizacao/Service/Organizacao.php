@@ -39,7 +39,7 @@ class Organizacao extends AbstractService
             ])->first();
 
             if ($organizacao) {
-                throw new \HttpException(
+                throw new \Exception(
                     'Organizacao já cadastrada.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -49,7 +49,7 @@ class Organizacao extends AbstractService
             $representante = $serviceRepresentante->cadastrar($dados['representante']);
 
             if (!$representante) {
-                throw new \HttpException('Não foi possível cadastrar o representante.');
+                throw new \Exception('Não foi possível cadastrar o representante.');
             }
             $dados['co_representante'] = $representante->co_representante;
 
@@ -57,7 +57,7 @@ class Organizacao extends AbstractService
             $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
             if (!$endereco) {
-                throw new \HttpException('Não foi possível cadastrar o endereço.');
+                throw new \Exception('Não foi possível cadastrar o endereço.');
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;
