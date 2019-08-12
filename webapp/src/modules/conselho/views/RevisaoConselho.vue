@@ -229,7 +229,7 @@
                 :rules="[v => !!v || 'É necessário concordar para enviar!']"
                 label=" Declaro ser representante do órgão coordenador do conselho, vinculado ao órgão gestor de cultura do ente federado, designado (a) para o fornecimento das informações apresentadas e que assumo total responsabilidade pela veracidade das informações apresentadas.
 
-Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do Código Penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
+Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do código penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
                 required
               />
 

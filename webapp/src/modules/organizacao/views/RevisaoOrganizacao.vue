@@ -308,7 +308,7 @@
                 :rules="[v => !!v || 'É necessário concordar para enviar!']"
                 label=" Declaro ser representante da organização ou entidade cultural inscrita neste edital e designado (a) para o fornecimento das informações solicitadas e que assumo total responsabilidade pela veracidade das informações apresentadas.
 
-Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do Código Penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
+Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeitará às penalidades previstas no Art. 299 do código penal brasileiro, sem prejuízo de outras medidas administrativas e legais cabíveis."
               />
 
               <v-layout
