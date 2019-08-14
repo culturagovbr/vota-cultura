@@ -239,7 +239,7 @@
                 </div>
               </v-card-title>
               <v-card-text>
-                O Conselho Nacional de Política Cultural (CNPC) é um órgão colegiado integrante da estrutura do Ministério da Cidadania
+                O Conselho Nacional de Política Cultural (CNPC) é um órgão colegiado integrante da estrutura do Ministério da Cidadania.
                 Esse órgão tem como finalidade propor a formulação de políticas públicas,
                 promovendo a articulação e o debate dos diferentes níveis de governo e a sociedade
                 civil organizada, para o desenvolvimento e fomento das atividades culturais no
