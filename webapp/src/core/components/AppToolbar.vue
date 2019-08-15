@@ -8,7 +8,9 @@
     <div class="toolbar-logo theme--dark green darken-4">
         <!--:src="require('@/core/assets/logo.svg')"-->
       <v-toolbar-side-icon @click="handleDrawerToggle"></v-toolbar-side-icon>
-      <img :src="require('../../assets/logo-cnpc-novo-site.png')" alt="Logo do Sistema">
+      <router-link to="/inicio">
+        <img :src="require('../../assets/logo-cnpc-novo-site.png')" alt="Logo do Sistema"/>
+      </router-link>
         <!--class="ml-3 mt-2"-->
       <!--<v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">-->
         <!--<span>{{ appTitle }}</span>-->

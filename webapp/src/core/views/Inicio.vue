@@ -2,7 +2,7 @@
   <div>
     <section>
       <v-img
-        :src="require('../../assets/banner.png')"
+        :src="require('@/assets/banner.png')"
         alt="Logo do Sistema"
         height="800"
       />
@@ -162,8 +162,8 @@
 
     <section>
       <v-parallax
-        :src="require('../../assets/vota-parallax.jpg')"
-        height="380"
+        :src="require('@/assets/banner_2.jpg')"
+        height="500"
       >
         <v-layout
           column
@@ -192,7 +192,7 @@
           >
             <v-flex>
               <v-btn
-                class="green darken-4 mt-5 white--text"
+                class="yellow darken-4 mt-5 white--text"
                 dark
                 large
                 target="_blank"
@@ -203,7 +203,7 @@
             </v-flex>
             <v-flex>
               <v-btn
-                class="green darken-4 mt-5 white--text"
+                class="yellow darken-4 mt-5 white--text"
                 dark
                 large
                 target="_blank"
