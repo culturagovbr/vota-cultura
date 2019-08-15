@@ -291,11 +291,15 @@ export default {
     },
   },
   mounted() {
+    if (Object.keys(this.eleitorGetter).length > 0) {
+      this.eleitor = this.eleitorGetter;
+    }
     this.obterEstados();
   },
   computed: {
     ...mapGetters({
       estadosGetter: 'localidade/estados',
+      eleitorGetter: 'eleitor/eleitor',
     }),
   },
   methods: {

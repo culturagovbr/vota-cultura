@@ -127,7 +127,7 @@
               >
                 <v-flex offset-xs4>
                   <v-btn
-                    to="/eleitor/inscricao"
+                    @click="voltar"
                   >
                     Cancelar
                   </v-btn>
@@ -190,8 +190,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import { eventHub } from '@/event';
 import _ from 'lodash';
+import { eventHub } from '@/event';
 
 
 export default {
@@ -217,9 +217,12 @@ export default {
     ...mapActions({
       enviarDadosEleitor: 'eleitor/enviarDadosEleitor',
     }),
+    voltar() {
+      this.$router.push({ name: 'Eleitor' });
+    },
     salvar() {
       this.formEnviado = true;
-      let eleitor = _.cloneDeep(this.eleitor)
+      const eleitor = _.cloneDeep(this.eleitor);
       eleitor.dt_nascimento = this.formatarDataCarbon(eleitor.dt_nascimento);
       this.enviarDadosEleitor(eleitor).then(() => {
         eventHub.$emit(
@@ -245,12 +248,12 @@ export default {
     fecharDialogo() {
       this.dialog = false;
     },
-    formatarDataCarbon(data){
-        var dia  = data.split("/")[0];
-        var mes  = data.split("/")[1];
-        var ano  = data.split("/")[2];
+    formatarDataCarbon(data) {
+      const dia = data.split('/')[0];
+      const mes = data.split('/')[1];
+      const ano = data.split('/')[2];
 
-        return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
+      return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },
   },
   mounted() {
