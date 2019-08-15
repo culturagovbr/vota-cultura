@@ -125,19 +125,52 @@
                 wrap
                 align-center
               >
-                <v-flex offset-xs4>
+                <v-flex>
+                  <v-checkbox
+                    v-model="confirmacaoDadosDeInscricao"
+                    :rules="[v => !!v || 'É necessário concordar para enviar!']"
+                    label="Declaro que assumo total responsabilidade pela veracidade das informações
+                    apresentadas em conformidade com o Edital de Chamada Pública para composição dos
+                    representantes da sociedade civil no Conselho Nacional de Política Cultural no
+                    triênio 2019/2022."
+                    required
+                  />
+                </v-flex>
+              </v-layout>
+              <v-layout
+                wrap
+                align-center
+              >
+                <v-flex offset-xs3>
                   <v-btn
                     @click="voltar"
                   >
                     Cancelar
                   </v-btn>
                   <v-btn
+                    :disabled="!confirmacaoDadosDeInscricao"
                     color="primary"
-                    dark
-                    @click.stop="abrirDialogo"
+                    @click="abrirDialogo"
                   >
                     Confirmar
                   </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container v-else>
+              <v-layout>
+                <v-flex>
+                  <v-alert
+                    type="error"
+                    :value="true"
+                  >
+                    É necessário preencher as informações do cadastro.
+                  </v-alert>
+                  <div class="mb-6">
+                    <v-btn @click="voltar">
+                      Voltar
+                    </v-btn>
+                  </div>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -199,6 +232,7 @@ export default {
   data: () => ({
     formEnviado: false,
     dialog: false,
+    confirmacaoDadosDeInscricao: false,
     listaUF: [],
     eleitor: {},
   }),
