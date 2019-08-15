@@ -42,20 +42,6 @@ class Eleitor extends AbstractService
 
             $eleitor = parent::cadastrar($dados);
 
-            foreach($dados['anexos'] as $dadosArquivo) {
-                $modeloArquivo = app()->make(Arquivo::class);
-                $modeloArquivo->fill($dadosArquivo);
-                $serviceUpload = new Upload($modeloArquivo);
-                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-                    $dadosArquivo['arquivoCodificado'],
-                    'eleitor/' . $dadosArquivo['tp_arquivo']
-                );
-                $eleitor->arquivos()->attach(
-                    $arquivoArmazenado->co_arquivo,
-                    ['tp_arquivo' => $dadosArquivo['tp_arquivo']]
-                );
-            }
-
             Mail::to($eleitor->ds_email)->send(
                 new CadastroComSucesso($eleitor)
             );

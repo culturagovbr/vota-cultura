@@ -124,7 +124,7 @@
                           locale="pt-BR"
                           scrollable
                         >
-                          <v-spacer/>
+                          <v-spacer />
                           <v-btn
                             flat
                             color="primary"
@@ -170,37 +170,6 @@
                   </v-flex>
                 </v-layout>
 
-                <v-layout align-center justify-center>
-                  <v-flex sm5>
-                    <div class="subheading mb-4">
-                      Envie os documentos abaixo (somente formato PDF):
-                    </div>
-                  </v-flex>
-                </v-layout>
-                <v-layout align-center justify-center class="mb-4" wrap>
-                  <v-flex sm3>
-                    <v-card max-width="344"
-                            class="mx-auto">
-                      <v-card-title class="subheading mb-1 justify-center">CPF*</v-card-title>
-                      <v-card-text>
-                        <file v-model="anexo_cpf"/>
-                      </v-card-text>
-                    </v-card>
-                  </v-flex>
-                  <v-flex sm3>
-                    <v-card max-width="344"
-                            class="mx-auto">
-                      <v-card-title class="subheading mb-1 justify-center">
-                        Documento de identificação*
-                      </v-card-title>
-                      <v-card-text>
-                        <file v-model="anexo_documento_identificacao"/>
-                      </v-card-text>
-                    </v-card>
-                    <div class="title text-xs-center text-md-center text-lg-center text-sm-center">
-                    </div>
-                  </v-flex>
-                </v-layout>
                 <v-btn to="/">
                   Cancelar
                 </v-btn>
@@ -223,158 +192,133 @@
 </template>
 
 <script>
-  import {mapActions, mapGetters} from 'vuex';
-  import File from '@/core/components/upload/File';
-  import {eventHub} from '@/event';
-  import Validate from '../../shared/util/validate';
+import { mapActions, mapGetters } from 'vuex';
+import File from '@/core/components/upload/File';
+import { eventHub } from '@/event';
+import Validate from '../../shared/util/validate';
 
-  export default {
-    name: 'Eleitor',
-    components: {File},
-    data: () => ({
-      anexoCpf: '',
-      nomeEleitorError:'',
-      valid: false,
-      date: '',
-      dateFormatted: '',
-      menu: false,
-      headers: [
-        {
-          text: 'Tipo',
-          align: 'center',
-          sortable: false,
-        },
-        {
-          text: 'Arquivo',
-          align: 'center',
-          sortable: false,
-        },
-        {
-          sortable: false,
-        },
-      ],
-      eleitor: {
-        nu_cpf: '',
-        no_eleitor: '',
-        nu_rg: '',
-        dt_nascimento: '',
-        st_estrangeiro: '',
-        ds_email: '',
-        ds_email_confirmacao: '',
-        co_ibge: '',
-        anexos: [],
+export default {
+  name: 'Eleitor',
+  components: { File },
+  data: () => ({
+    nomeEleitorError: '',
+    valid: false,
+    date: '',
+    dateFormatted: '',
+    menu: false,
+    headers: [
+      {
+        text: 'Tipo',
+        align: 'center',
+        sortable: false,
       },
-      anexo_cpf: {},
-      anexo_documento_identificacao: {},
-      listaUF: [],
-      email: '',
-      emailConfirmation: '',
-      rules: {
-        required: v => !!v || 'Campo não preenchido',
-        cpfInvalido: v => !!v || 'CPF não encontrado',
-        phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-        cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-        email: (v) => {
-          // eslint-disable-next-line
+      {
+        text: 'Arquivo',
+        align: 'center',
+        sortable: false,
+      },
+      {
+        sortable: false,
+      },
+    ],
+    eleitor: {
+      nu_cpf: '',
+      no_eleitor: '',
+      nu_rg: '',
+      dt_nascimento: '',
+      st_estrangeiro: '',
+      ds_email: '',
+      ds_email_confirmacao: '',
+      co_ibge: '',
+    },
+    listaUF: [],
+    email: '',
+    emailConfirmation: '',
+    rules: {
+      required: v => !!v || 'Campo não preenchido',
+      cpfInvalido: v => !!v || 'CPF não encontrado',
+      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
+      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
+      email: (v) => {
+        // eslint-disable-next-line
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(v) || 'E-mail invalido';
-        },
-        emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
-        dataAniversario: (v) => {
-          const bits = v.split('/');
-          const hoje = new Date();
-          const dataAniversario = new Date(bits[2], bits[1] - 1, bits[0]);
-
-          const validDate = dataAniversario && (dataAniversario.getMonth() + 1) == bits[1];
-
-          if(!validDate){
-            return 'Data inválida';
-          }
-
-          let ano = hoje.getFullYear() - dataAniversario.getFullYear();
-          const mes = hoje.getMonth() - dataAniversario.getMonth();
-          if (mes < 0 || (mes === 0 && hoje.getDate() < dataAniversario.getDate())) {
-            ano--;
-          }
-
-          if (ano > 100 || ano < 18) {
-            return 'É necessário ter entre 18 e 100 anos';
-          }
-
-          return true;
-        },
+        return pattern.test(v) || 'E-mail invalido';
       },
+      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
+      dataAniversario: (v) => {
+        const bits = v.split('/');
+        const hoje = new Date();
+        const dataAniversario = new Date(bits[2], bits[1] - 1, bits[0]);
+
+        const validDate = dataAniversario && (dataAniversario.getMonth() + 1) == bits[1];
+
+        if (!validDate) {
+          return 'Data inválida';
+        }
+
+        let ano = hoje.getFullYear() - dataAniversario.getFullYear();
+        const mes = hoje.getMonth() - dataAniversario.getMonth();
+        if (mes < 0 || (mes === 0 && hoje.getDate() < dataAniversario.getDate())) {
+          ano--;
+        }
+
+        if (ano > 100 || ano < 18) {
+          return 'É necessário ter entre 18 e 100 anos';
+        }
+
+        return true;
+      },
+    },
+  }),
+  watch: {
+    date() {
+      this.eleitor.dt_nascimento = this.formatDate(this.date);
+    },
+    estadosGetter() {
+      this.listaUF = this.estadosGetter;
+    },
+    'eleitor.nu_cpf': function (value) {
+      const self = this;
+      self.eleitor.no_eleitor = '';
+      this.nomeEleitorError = 'CPF inválido';
+      if (value.length === 11 && Validate.isCpfValido(value)) {
+        this.consultarCPF(value).then((response) => {
+          const { data } = response.data;
+          self.eleitor.no_eleitor = data.nmPessoaFisica;
+        });
+        this.nomeEleitorError = '';
+      }
+    },
+  },
+  mounted() {
+    this.obterEstados();
+  },
+  computed: {
+    ...mapGetters({
+      estadosGetter: 'localidade/estados',
     }),
-    watch: {
-      date() {
-        this.eleitor.dt_nascimento = this.formatDate(this.date);
-      },
-      estadosGetter() {
-        this.listaUF = this.estadosGetter;
-      },
-      'eleitor.nu_cpf': function (value) {
-        let self = this;
-        self.eleitor.no_eleitor = '';
-        this.nomeEleitorError = 'CPF inválido';
-          if (value.length === 11 && Validate.isCpfValido(value)) {
-          this.consultarCPF(value).then((response) => {
-            const {data} = response.data;
-            self.eleitor.no_eleitor = data.nmPessoaFisica;
-          });
-          this.nomeEleitorError = '';
-        }
-      },
+  },
+  methods: {
+    ...mapActions({
+      confirmarEleitor: 'eleitor/confirmarEleitor',
+      obterEstados: 'localidade/obterEstados',
+      consultarCPF: 'pessoa/consultarCPF',
+    }),
+    validate() {
+      if (this.$refs.form.validate()) {
+        this.confirmarEleitor(this.eleitor).then(() => {
+          this.$router.push('/eleitor/revisao-eleitor');
+        });
+      }
     },
-    mounted() {
-      this.obterEstados();
+    formatDate(date) {
+      if (!date) return null;
+      const [year, month, day] = date.split('-');
+      return `${day}/${month}/${year}`;
     },
-    computed: {
-      ...mapGetters({
-        estadosGetter: 'localidade/estados',
-      }),
+    reset() {
+      this.$refs.form.reset();
     },
-    methods: {
-      ...mapActions({
-        confirmarEleitor: 'eleitor/confirmarEleitor',
-        obterEstados: 'localidade/obterEstados',
-        consultarCPF: 'pessoa/consultarCPF',
-      }),
-      validate() {
-        const validacaoDocumentoIdentificacao = !this.anexo_documento_identificacao && !this.anexo_documento_identificacao.getFileEncodeBase64String();
-        const validacaoCPF = !this.anexo_cpf && !this.anexo_cpf.getFileEncodeBase64String();
-        if (validacaoDocumentoIdentificacao || validacaoCPF) {
-          this.$refs.form.validate();
-          eventHub.$emit('eventoErro', 'Todos os anexos são obrigatórios!');
-        } else if (this.$refs.form.validate()) {
-          this.eleitor.anexos.push({
-            tp_arquivo: 'documento_cpf',
-            no_extensao: this.anexo_cpf.fileExtension,
-            no_mime_type: this.anexo_cpf.fileType,
-            no_arquivo: this.anexo_cpf.filename,
-            arquivoCodificado: this.anexo_cpf.getFileEncodeBase64String(),
-          });
-
-          this.eleitor.anexos.push({
-            tp_arquivo: 'documento_identificacao',
-            no_extensao: this.anexo_documento_identificacao.fileExtension,
-            no_mime_type: this.anexo_documento_identificacao.fileType,
-            no_arquivo: this.anexo_documento_identificacao.filename,
-            arquivoCodificado: this.anexo_documento_identificacao.getFileEncodeBase64String(),
-          });
-
-          this.confirmarEleitor(this.eleitor).then(() => {
-            this.$router.push('/eleitor/revisao-eleitor');
-          });
-        }
-      },
-      formatDate(date) {
-        if (!date) return null;
-        const [year, month, day] = date.split('-');
-        return `${day}/${month}/${year}`;
-      },
-      reset() {
-        this.$refs.form.reset();
-      },
-    },
-  };
+  },
+};
 </script>
