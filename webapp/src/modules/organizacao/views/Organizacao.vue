@@ -428,7 +428,7 @@
                           :rules="[rules.required]"
                           required
                           box
-                          hint="Atividades ou projetos culturais em, no mínimo, 5 estados, , a partir e 2016."
+                          hint="Atividades ou projetos culturais em, no mínimo, 5 estados, a partir de 2016."
                           persistent-hint
                           placeholder="Selecione"/>
                       </v-flex>
@@ -504,7 +504,7 @@
                           label="Participação em instâncias de formulação de política cultural"
                           placeholder="Selecione"
                           box
-                          hint="Na qualidade de conselheiro ou membro, comprovado por documento de designação ou  de posse"
+                          hint="Na qualidade de conselheiro ou membro, comprovado por documento de designação ou de posse."
                           persistent-hint
                         />
                       </v-flex>
@@ -524,7 +524,7 @@
                           label="Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016"
                           placeholder="Selecione"
                           box
-                          hint="Publicações, pesquisa de campo, artigos científicos"
+                          hint="Publicações, pesquisa de campo, artigos científicos."
                           persistent-hint
                         />
                       </v-flex>
