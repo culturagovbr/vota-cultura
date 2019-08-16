@@ -398,15 +398,23 @@
                       <v-flex
                         xs12
                         sm6>
-                        <v-select
-                          v-model="organizacao.criterios.abrangencia_nacional"
-                          :items="listaCriterios.abrangencia_nacional"
-                          item-value="co_criterio"
-                          item-text="ds_detalhamento"
-                          label="*Abrangência Nacional"
-                          :rules="[rules.required]"
-                          required
-                          placeholder="Selecione"/>
+
+                          <v-select
+                            v-model="organizacao.criterios.abrangencia_nacional"
+                            :items="listaCriterios.abrangencia_nacional"
+                            item-value="co_criterio"
+                            item-text="ds_detalhamento"
+                            label="*Abrangência Nacional"
+                            :rules="[rules.required]"
+                            required
+                            box
+                            hint="Atividades ou projetos culturais em, no mínimo, 5 estados de 2
+                            macrorregiões brasileiras, a partir de 2016."
+                            persistent-hint
+                            >
+                          </v-select>
+
+
                       </v-flex>
                       <v-flex
                         xs12
@@ -419,6 +427,9 @@
                           label="*Abrangência Estadual"
                           :rules="[rules.required]"
                           required
+                          box
+                          hint="Atividades ou projetos culturais em, no mínimo, 5 estados, , a partir e 2016."
+                          persistent-hint
                           placeholder="Selecione"/>
                       </v-flex>
                     </v-layout>
@@ -438,6 +449,9 @@
                           :rules="[rules.required]"
                           required
                           placeholder="Selecione"
+                          box
+                          hint="A partir da data de fundação."
+                          persistent-hint
                         />
                       </v-flex>
                       <v-flex
@@ -451,7 +465,11 @@
                           label="*Nº de Associados ou Filiados"
                           :rules="[rules.required]"
                           required
-                          placeholder="Selecione"/>
+                          placeholder="Selecione"
+                          box
+                          hint="Lista de associados ou filiados atestada pelo dirigente da organização ou entidade cultural."
+                          persistent-hint
+                        />
                       </v-flex>
                     </v-layout>
 
@@ -469,7 +487,11 @@
                           label="*Nº Atividades/projetos realizados no campo cultural a partir de 2016"
                           :rules="[rules.required]"
                           required
-                          placeholder="Selecione"/>
+                          placeholder="Selecione"
+                          box
+                          hint="Comprovados por relatório de atividades e portfólio."
+                          persistent-hint
+                        />
                       </v-flex>
                       <v-flex
                         xs12
@@ -480,7 +502,11 @@
                           item-value="co_criterio"
                           item-text="ds_detalhamento"
                           label="Participação em instâncias de formulação de política cultural"
-                          placeholder="Selecione"/>
+                          placeholder="Selecione"
+                          box
+                          hint="Na qualidade de conselheiro ou membro, comprovado por documento de designação ou  de posse"
+                          persistent-hint
+                        />
                       </v-flex>
                     </v-layout>
 
@@ -497,6 +523,9 @@
                           item-text="ds_detalhamento"
                           label="Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016"
                           placeholder="Selecione"
+                          box
+                          hint="Publicações, pesquisa de campo, artigos científicos"
+                          persistent-hint
                         />
                       </v-flex>
                     </v-layout>
