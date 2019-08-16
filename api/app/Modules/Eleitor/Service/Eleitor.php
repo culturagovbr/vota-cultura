@@ -25,6 +25,7 @@ class Eleitor extends AbstractService
     public function cadastrar(array $dados): ?Model
     {
         try {
+            DB::beginTransaction();
             $eleitor = $this->getModel()->where([
                 'nu_cpf' => $dados['nu_cpf']
             ])->orWhere([
@@ -42,10 +43,13 @@ class Eleitor extends AbstractService
 
             $eleitor = parent::cadastrar($dados);
 
-            Mail::to($eleitor->ds_email)->send(
+            Mail::to($eleitor->ds_email)
+                ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+                ->send(
                 new CadastroComSucesso($eleitor)
             );
 
+            DB::commit();
             return $eleitor;
         } catch (\Exception $exception) {
             DB::rollBack();

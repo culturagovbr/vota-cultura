@@ -81,7 +81,9 @@ class Conselho extends AbstractService
                 );
             }
 
-            Mail::to($representante->ds_email)->send(
+            Mail::to($representante->ds_email)
+                ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+                ->send(
                 new CadastroComSucesso($conselho)
             );
 
