@@ -5,7 +5,9 @@ export const state = {
 };
 
 export const mutations = {
-  [types.SET_USUARIO](state, dados) {
+  [types.DEFINIR_USUARIO](state, dados) {
     state.usuario = dados;
+  },
+  [types.DEFINIR_DADOS_PRIMEIRO_ACESSO]() {
   },
 };

@@ -10,6 +10,19 @@ export const ativarUsuario = ativacao => service.putRequest('/conta/ativacao', a
 
 export const cadastrarUsuario = usuario => service.postRequest('/conta/usuario', usuario);
 
-export const alterarSenha = (codigoAlteracao, usuario) => service.putRequest('/conta/recuperacao/senha', codigoAlteracao, usuario);
+export const alterarSenha = (codigoAlteracao, usuario) => service.putRequest(
+  '/conta/recuperacao/senha',
+  codigoAlteracao,
+  usuario,
+);
 
-export const usuarioAlterarSenha = (coUsuario, usuario) => service.putRequest('/conta/usuario/alteracao/senha', coUsuario, usuario);
+export const usuarioAlterarSenha = (coUsuario, usuario) => service.putRequest(
+  '/conta/usuario/alteracao/senha',
+  coUsuario,
+  usuario,
+);
+
+export const solicitarPrimeiroAcesso = payload => service.postRequest(
+  '/conta/usuario/primeiro-acesso',
+  payload,
+);

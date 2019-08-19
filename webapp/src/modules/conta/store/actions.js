@@ -38,3 +38,5 @@ export const usuarioAlterarSenha = async (state, { coUsuario, usuario }) => usua
 export const logout = async () => usuarioService.logout({}).then(() => {
   localStorage.removeItem('user_token');
 });
+
+export const solicitarPrimeiroAcesso = async (state, payload) => usuarioService.solicitarPrimeiroAcesso(payload);
