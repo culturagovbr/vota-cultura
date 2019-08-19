@@ -18,15 +18,16 @@ services:
     expose:
     - "5432"
     volumes:
-      - ./database/docker-data/postgres:/var/lib/postgresql/data
-      - ./database/schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
-      - ./database/carga_ufs.sql:/docker-entrypoint-initdb.d/1.carga_ufs.sql
-      - ./database/carga_municipios.sql:/docker-entrypoint-initdb.d/2.carga_municipios.sql
-      - ./database/carga_criterios.sql:/docker-entrypoint-initdb.d/3.carga_criterios.sql
-      - ./database/carga_segmentos.sql:/docker-entrypoint-initdb.d/4.carga_segmentos.sql
-      - ./database/carga_cronograma.sql:/docker-entrypoint-initdb.d/5.carga_cronograma.sql
+    - ./database/docker-data/postgres:/var/lib/postgresql/data
+    - ./database/0.schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
+    - ./database/1.carga_ufs.sql:/docker-entrypoint-initdb.d/1.carga_ufs.sql
+    - ./database/2.carga_municipios.sql:/docker-entrypoint-initdb.d/2.carga_municipios.sql
+    - ./database/3.carga_criterios.sql:/docker-entrypoint-initdb.d/3.carga_criterios.sql
+    - ./database/4.carga_segmentos.sql:/docker-entrypoint-initdb.d/4.carga_segmentos.sql
+    - ./database/5.carga_cronograma.sql:/docker-entrypoint-initdb.d/5.carga_cronograma.sql
+    - ./database/6.carga_cronograma.sql:/docker-entrypoint-initdb.d/6.carga_perfil.sql
     networks:
-      - votacultura_network
+    - votacultura_network
   webapp-service:
     #    build: ./webapp
     image: node:10
@@ -41,18 +42,18 @@ services:
     #      timeout: 5s
     #      retries: 3
     volumes:
-      - ./webapp:/home/node/app
+    - ./webapp:/home/node/app
     command:
       #      sh -c 'npm i && npm run serve'
       #sh -c 'npm run serve'
       sh -c 'npm i && npm run build'
     #      sh -c 'npm run watch'
     ports:
-      - "8080:8080"
+    - "8080:8080"
     environment:
-      - NODE_ENV=development
+    - NODE_ENV=development
     networks:
-      - votacultura_network
+    - votacultura_network
 
   api-service:
     container_name: votacultura-api
@@ -60,18 +61,18 @@ services:
     image: cidadania/votacultura-php-fpm:1.2.1
     working_dir: /application
     volumes:
-      - ./api:/application
-      #- ./api/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+    - ./api:/application
+    #- ./api/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     environment:
-      - APP_ENV=local
+    - APP_ENV=local
     depends_on:
-      - database-service
+    - database-service
     links:
-      - database-service
-      # CONTAINER:ALIAS
+    - database-service
+    # CONTAINER:ALIAS
     restart: on-failure
     networks:
-      - votacultura_network
+    - votacultura_network
 
   webserver-service:
     build:
@@ -83,28 +84,28 @@ services:
     container_name: votacultura-webserver
     working_dir: /application
     volumes:
-      - ./api:/application
-      - ./api/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    - ./api:/application
+    - ./api/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "88:80"
+    - "88:80"
     depends_on:
-      - api-service
+    - api-service
     networks:
-      - votacultura_network
+    - votacultura_network
 
   webapp-webserver-service:
     image: nginx:1.17-alpine
     container_name: votacultura-webapp-webserver
     #    working_dir: /usr/share/nginx/html
     volumes:
-      - ./webapp/dist:/usr/share/nginx/html
-      - ./webapp/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    - ./webapp/dist:/usr/share/nginx/html
+    - ./webapp/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "80:80"
+    - "80:80"
     links:
-      - webserver-service
+    - webserver-service
     networks:
-      - votacultura_network
+    - votacultura_network
 
 # http://localhost > builded webapp
 # http://localhost/api/localidade/uf >
