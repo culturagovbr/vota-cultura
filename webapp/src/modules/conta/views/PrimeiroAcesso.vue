@@ -24,24 +24,24 @@
               >
                 <v-tabs-slider />
 
-                <v-tab href="#tab-organizacao">
+                <v-tab href="#organizacao">
                   Organização e Entidade
                   <v-icon>color_lens</v-icon>
                 </v-tab>
 
-                <v-tab href="#tab-conselho">
+                <v-tab href="#conselho">
                   Conselho
                   <v-icon>group</v-icon>
                 </v-tab>
 
-                <v-tab href="#tab-eleitor">
+                <v-tab href="#eleitor">
                   Eleitor
                   <v-icon>thumbs_up_down</v-icon>
                 </v-tab>
               </v-tabs>
 
               <v-tabs-items v-model="dadosPrimeiroAcesso.tp_inscricao">
-                <v-tab-item value="tab-organizacao">
+                <v-tab-item value="organizacao">
                   <v-card flat>
                     <v-card-text>
                       <v-text-field
@@ -64,7 +64,7 @@
                     </v-card-text>
                   </v-card>
                 </v-tab-item>
-                <v-tab-item value="tab-conselho">
+                <v-tab-item value="conselho">
                   <v-card flat>
                     <v-card-text>
                       <v-text-field
@@ -87,7 +87,7 @@
                     </v-card-text>
                   </v-card>
                 </v-tab-item>
-                <v-tab-item value="tab-eleitor">
+                <v-tab-item value="eleitor">
                   <v-card flat>
                     <v-card-text>
                       <v-text-field
@@ -163,14 +163,13 @@ import { mapActions } from 'vuex';
 import Validate from '@/modules/shared/util/validate';
 
 export default {
+  name: 'PrimeiroAcesso',
   data: () => ({
     loading: false,
     formularioValido: true,
     step: 1,
     dadosPrimeiroAcesso: {
       no_cpf: '',
-      dt_nascimento: '',
-      no_email: '',
       nu_cnpj: '',
       tp_inscricao: null,
     },

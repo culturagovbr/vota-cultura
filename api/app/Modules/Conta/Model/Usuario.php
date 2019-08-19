@@ -19,11 +19,15 @@ class Usuario extends Authenticatable implements JWTSubject
     ];
 
     protected $fillable = [
-        'no_pessoa',
+        'no_nome',
+        'st_ativo',
         'ds_email',
+        'ds_senha',
         'dh_cadastro',
         'dh_ultima_atualizacao',
-        'st_ativo',
+        'ds_codigo_ativacao',
+        'co_perfil',
+        'nu_cpf',
         'perfis',
     ];
 
@@ -35,15 +39,15 @@ class Usuario extends Authenticatable implements JWTSubject
 
     public $timestamps = false;
 
-    public function perfis()
-    {
-        return $this->belongsToMany(
-            \App\Modules\Conta\Model\Perfil::class,
-            'rl_usuario_perfil',
-            'co_usuario',
-            'co_perfil'
-        );
-    }
+//    public function perfis()
+//    {
+//        return $this->belongsToMany(
+//            \App\Modules\Conta\Model\Perfil::class,
+//            'rl_usuario_perfil',
+//            'co_usuario',
+//            'co_perfil'
+//        );
+//    }
 
     public function organizacoes()
     {
@@ -94,5 +98,13 @@ class Usuario extends Authenticatable implements JWTSubject
     public function validarSenha($ds_senha)
     {
         return password_verify($ds_senha, $this->ds_senha);
+    }
+
+    public function gerarCodigoAtivacao() : void
+    {
+        if(empty($this->ds_email)) {
+            throw new \Exception("E-mail não definido.");
+        }
+        $this->ds_codigo_ativacao = sha1(mt_rand(1, 999) . time() . $this->ds_email);
     }
 }

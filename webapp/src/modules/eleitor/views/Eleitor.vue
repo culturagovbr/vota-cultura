@@ -38,7 +38,7 @@
                   </v-flex>
                   <v-flex sm6>
                     <v-text-field
-                      v-model="eleitor.no_eleitor"
+                      v-model="eleitor.no_nome"
                       :disabled="true"
                       label="*Nome completo"
                       append-icon="perm_identity"
@@ -223,7 +223,7 @@ export default {
     ],
     eleitor: {
       nu_cpf: '',
-      no_eleitor: '',
+      no_nome: '',
       nu_rg: '',
       dt_nascimento: '',
       st_estrangeiro: '',
@@ -279,12 +279,12 @@ export default {
     },
     'eleitor.nu_cpf': function (value) {
       const self = this;
-      self.eleitor.no_eleitor = '';
+      self.eleitor.no_nome = '';
       this.nomeEleitorError = 'CPF inválido';
       if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
           const { data } = response.data;
-          self.eleitor.no_eleitor = data.nmPessoaFisica;
+          self.eleitor.no_nome = data.nmPessoaFisica;
         });
         this.nomeEleitorError = '';
       }

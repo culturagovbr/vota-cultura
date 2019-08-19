@@ -36,7 +36,7 @@
               >
                 <v-flex>
                   <v-text-field
-                    v-model="eleitorGetter.no_eleitor"
+                    v-model="eleitorGetter.no_nome"
                     disabled
                     label="Nome completo"
                     append-icon="perm_identity"

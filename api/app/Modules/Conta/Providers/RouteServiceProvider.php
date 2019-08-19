@@ -9,11 +9,6 @@ class RouteServiceProvider extends ServiceProvider
 {
     protected $namespace = 'App\Modules\Conta\Http\Controllers';
 
-    public function boot()
-    {
-        parent::boot();
-    }
-
     public function map()
     {
         $this->mapApiRoutes();

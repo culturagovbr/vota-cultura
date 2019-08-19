@@ -12,7 +12,7 @@
     <b>
         Nome Completo:
     </b>
-    {{ $eleitor->no_eleitor }}
+    {{ $eleitor->no_nome }}
 </p>
 <p>
     <b>

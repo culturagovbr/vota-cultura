@@ -148,7 +148,9 @@ CREATE TABLE tb_usuario (
 	dh_ultima_atualizacao date  NOT NULL ,
 	ds_codigo_ativacao   varchar(255)  NOT NULL ,
 	co_perfil            integer   ,
-	CONSTRAINT pk_usuario_cousuario PRIMARY KEY ( co_usuario )
+	nu_cpf               varchar(11)  NOT NULL ,
+	CONSTRAINT pk_usuario_cousuario PRIMARY KEY ( co_usuario ),
+	CONSTRAINT unq_tb_usuario_nu_cpf UNIQUE ( nu_cpf )
  );
 
 COMMENT ON COLUMN tb_usuario.co_usuario IS 'chave primária da tabela';
@@ -168,6 +170,8 @@ COMMENT ON COLUMN tb_usuario.dh_ultima_atualizacao IS 'data da ultima alteraçã
 COMMENT ON COLUMN tb_usuario.ds_codigo_ativacao IS 'código para ativação do cadastro do usuario';
 
 COMMENT ON COLUMN tb_usuario.co_perfil IS 'perfil do usuario';
+
+COMMENT ON COLUMN tb_usuario.nu_cpf IS 'número de cpf do representante';
 
 CREATE TABLE tb_versionamento (
 	co_versionamento     SERIAL,
@@ -375,7 +379,7 @@ COMMENT ON COLUMN tb_conselho.st_inscricao IS 'situação em que se encontra a i
 CREATE TABLE tb_eleitor (
 	co_eleitor           SERIAL,
 	nu_cpf               varchar(11)  NOT NULL ,
-	no_eleitor           varchar(255)  NOT NULL ,
+	no_nome           varchar(255)  NOT NULL ,
 	nu_rg                varchar(9)  NOT NULL ,
 	dt_nascimento        date  NOT NULL ,
 	st_estrangeiro       bool DEFAULT false NOT NULL ,
@@ -391,7 +395,7 @@ COMMENT ON COLUMN tb_eleitor.co_eleitor IS 'chave primária da tabela';
 
 COMMENT ON COLUMN tb_eleitor.nu_cpf IS 'número de CPF do eleitor';
 
-COMMENT ON COLUMN tb_eleitor.no_eleitor IS 'nome do eleitor';
+COMMENT ON COLUMN tb_eleitor.no_nome IS 'nome do eleitor';
 
 COMMENT ON COLUMN tb_eleitor.nu_rg IS 'numero do RG do eleitor';
 
@@ -428,3 +432,7 @@ ALTER TABLE public.tb_eleitor ADD dh_cadastro timestamp DEFAULT current_timestam
 ALTER TABLE public.tb_conselho ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
 ALTER TABLE public.tb_organizacao ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
 ALTER TABLE public.tb_representante ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE public.tb_usuario ALTER COLUMN dh_cadastro TYPE timestamp USING dh_cadastro::timestamp;
+ALTER TABLE public.tb_usuario ALTER COLUMN dh_cadastro SET DEFAULT current_timestamp;
+ALTER TABLE public.tb_usuario ALTER COLUMN dh_ultima_atualizacao TYPE timestamp USING dh_ultima_atualizacao::timestamp;
+ALTER TABLE public.tb_usuario ALTER COLUMN dh_ultima_atualizacao SET DEFAULT current_timestamp;

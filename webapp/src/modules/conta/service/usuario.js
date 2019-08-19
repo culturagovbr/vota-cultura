@@ -6,7 +6,7 @@ export const logout = usuario => service.getRequest('/conta/auth/logout', usuari
 
 export const recuperarSenha = usuario => service.postRequest('/conta/recuperacao/senha', usuario);
 
-export const ativarUsuario = ativacao => service.putRequest('/conta/ativacao', ativacao, {});
+export const ativarUsuario = ativacao => service.putRequest('/conta/ativar-usuario', ativacao, {});
 
 export const cadastrarUsuario = usuario => service.postRequest('/conta/usuario', usuario);
 
