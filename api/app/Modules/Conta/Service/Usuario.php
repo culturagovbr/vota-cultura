@@ -2,6 +2,8 @@
 
 namespace App\Modules\Conta\Service;
 
+use App\Modules\Conselho\Model\Conselho as ConselhoModel;
+use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil as PerfilModel;
 use App\Core\Service\AbstractService;
@@ -27,33 +29,37 @@ class Usuario extends AbstractService
         try {
             DB::beginTransaction();
 //            $usuarioPrimeiroAcesso = new \stdClass();
+
+            if (!in_array($request->tp_inscricao, ['conselho', 'organizacao', 'eleitor'])) {
+                throw new \Exception("Tipo de inscrição desconhecido.");
+            }
+
             switch ($request->tp_inscricao) {
                 case 'eleitor':
                     $eleitorModel = app()->makeWith(EleitorModel::class, $request->post());
-                    $eleitor = $eleitorModel->whereNull('co_usuario')->firstOrFail();
-
-                    $dadosUsuario = $eleitor->toArray();
-                    $dadosUsuario['no_nome'] = $eleitor->no_eleitor;
-                    unset($dadosUsuario['no_eleitor']);
-                    $dadosUsuario['st_ativo'] = FALSE;
-                    $dadosUsuario['ds_senha'] = substr(sha1(time()), 0, 8);
+                    $model = $eleitorModel->whereNull('co_usuario')->firstOrFail();
+                    $dadosUsuario = $model->toArray();
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ELEITOR;
-                    $usuarioModel = $this->cadastrar($dadosUsuario);
-                    $eleitor->co_usuario = $usuarioModel->co_usuario;
-                    $eleitor->save();
-                    break;
-                case 'organizacao':
-//                    $usuarioPrimeiroAcesso =
-                    xd('organizacao');
                     break;
                 case 'conselho':
-//                    $usuarioPrimeiroAcesso =
-                        xd('conselho');
+                    $conselhoModel = app()->makeWith(ConselhoModel::class, $request->post());
+                    $model = $conselhoModel->whereNull('co_usuario')->firstOrFail()->representante;
+                    $dadosUsuario = $model->toArray();
+                    $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_CONSELHO;
+                    break;
+                case 'organizacao':
+                    $organizacaoModel = app()->makeWith(OrganizacaoModel::class, $request->post());
+                    $model = $organizacaoModel->whereNull('co_usuario')->firstOrFail()->representante;
+                    $dadosUsuario = $model->toArray();
+                    $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ORGANIZACAO;
                     break;
                 default:
-                    xd('default');
+                    throw new \Exception("Tipo de inscrição não informado.");
             }
 
+            $usuarioModel = $this->cadastrar($dadosUsuario);
+            $model->co_usuario = $usuarioModel->co_usuario;
+            $model->save();
 
             DB::commit();
             return $usuarioModel;
@@ -67,7 +73,10 @@ class Usuario extends AbstractService
     {
         try {
 
-            $usuario = $this->getModel()->where(['ds_codigo_ativacao' => $codigo_ativacao, 'st_ativo' => false])->first();
+            $usuario = $this->getModel()->where([
+                'ds_codigo_ativacao' => $codigo_ativacao,
+                'st_ativo' => false
+            ])->first();
             if (!$usuario) {
                 throw new \Exception('Usuario não encontrado', 422);
             }
@@ -86,7 +95,7 @@ class Usuario extends AbstractService
 
     }
 
-    public function cadastrar(array $dados) : ?Model
+    public function cadastrar(array $dados): ?Model
     {
         try {
             $usuario = $this->getModel()->where([
@@ -99,6 +108,8 @@ class Usuario extends AbstractService
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
+
+            $dados['ds_senha'] = substr(sha1(time()), 0, 8);
 
             DB::beginTransaction();
             $usuario = $this->getModel();
