@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "votacultura.webservice.fullname" . }}
+  labels:
+    app: {{ template "votacultura.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.webservice.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "votacultura.webservice.fullname" . }}
+      version: "1.0"
+  template:
+    metadata:
+      labels:
+        app: {{ template "votacultura.webservice.fullname" . }}
+        version: "1.0"
+    spec:
+      initContainers:
+        - name: init-ds
+          image: busybox
+          command:
+            - '/bin/sh'
+            - '-c'
+            - |
+                while true
+                do
+                  if [ $? -eq 0 ]; then
+                    echo "DB is UP"
+                    break
+                  fi
+                  echo "DB is not yet reachable;sleep for 10s before retry"
+                  sleep 10
+                done
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+      - name: {{ template "votacultura.webservice.fullname" . }}
+        image: "{{ .Values.webservice.image.repository }}:{{ .Values.webservice.image.tag }}"
+        imagePullPolicy: Always
+        env:
+        - name: EXPOSE_PORT
+          value: {{ .Values.webservice.service.servicePort }}
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "1024Mi"
+            cpu: "2"
+        ports:
+        - name: http
+          containerPort: {{ .Values.webservice.service.servicePort }}

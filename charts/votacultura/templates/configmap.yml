@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: votacultura-config
+data:
+  APP_BASE_PATH: xxxx
+  XXXX_YYY: zzzz

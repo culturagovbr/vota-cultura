@@ -1,0 +1,43 @@
+imagePullSecret: regcred
+
+webapp:
+  name: webapp
+  image:
+    repository: registry:5000/vota-cultura/webapp
+    tag: desenvolvimento
+  replicaCount: 1
+  ingress:
+    enabled: true
+    url: "vota-cultura.apps.cidadania.gov.br"
+  service:
+    servicePort: 80
+    type: NodePort
+
+
+webservice:
+  name: webservice
+  image:
+    repository: registry:5000/vota-cultura/webservice
+    tag: desenvolvimento
+  replicaCount: 1
+  ingress:
+    enabled: true
+    url: "vota-cultura-api.apps.cidadania.gov.br"
+  database:
+    jdbc: "jdbc:postgresql://pgsql-votacultura:5432/votacultura"
+    username: votacultura
+    password: votacultura
+  service:
+    servicePort: 80
+    type: NodePort
+
+postgresql:
+  install: true
+  imageTag: 11.4.0
+  fullnameOverride: pgsql-votacultura
+  postgresqlUsername: votacultura
+  postgresqlPassword: votacultura
+  postgresqlDatabase: votacultura
+  persistence:
+    storageClass: nfs-des
+    size: 10Gi

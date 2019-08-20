@@ -65,7 +65,7 @@ services:
     working_dir: /usr/share/nginx/html
     volumes:
     - ./webapp/dist:/usr/share/nginx/html
-    - ./webapp/docker/webserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    - ./webapp/docker/default.conf:/etc/nginx/conf.d/default.conf
     ports:
     - "80:80"
     networks:
