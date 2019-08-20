@@ -22,7 +22,7 @@ export const usuarioAlterarSenha = (coUsuario, usuario) => service.putRequest(
 );
 
 export const solicitarPrimeiroAcesso = payload => service.postRequest(
-  '/conta/usuario/primeiro-acesso',
+  '/conta/primeiro-acesso',
   payload,
 );
 

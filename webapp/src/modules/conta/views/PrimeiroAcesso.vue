@@ -55,7 +55,7 @@
                         v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
-                        label="CPF"
+                        label="CPF do responsável"
                         mask="###.###.###-##"
                         validate-on-blur
                         type="text"
@@ -78,7 +78,7 @@
                         v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
-                        label="CPF"
+                        label="CPF do responsável"
                         mask="###.###.###-##"
                         validate-on-blur
                         type="text"
