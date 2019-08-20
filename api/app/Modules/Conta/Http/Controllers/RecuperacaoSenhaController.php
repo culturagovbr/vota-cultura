@@ -28,7 +28,7 @@ class RecuperacaoSenhaController extends Controller
     }
 
 
-    public function update(Request $request, $ds_codigo_alteracao)
+    public function update(Request $request, $ds_codigo_alteracao): \Illuminate\Http\JsonResponse
     {
         return $this->sendResponse(
             $this->recuperacaoSenhaService->alterarSenha($ds_codigo_alteracao, $request->only(['ds_senha'])),

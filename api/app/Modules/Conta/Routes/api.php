@@ -35,6 +35,10 @@ Route::group([
 
     Route::post('primeiro-acesso', 'AtivacaoController@store');
     Route::put('ativar-usuario/{codigo_ativacao}', 'AtivacaoController@update');
+
+    Route::post('recuperar-senha', 'RecuperacaoSenhaController@store');
+
+    Route::put('recuperacao/alterar-senha/{codigo_alteracao}', 'RecuperacaoSenhaController@update');
 //    Route::group([
 //        'middleware' => 'api',
 //        'prefix' => 'auth'

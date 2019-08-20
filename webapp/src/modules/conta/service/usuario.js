@@ -4,16 +4,15 @@ export const login = usuario => service.postRequest('/conta/auth/login', usuario
 
 export const logout = usuario => service.getRequest('/conta/auth/logout', usuario);
 
-export const recuperarSenha = usuario => service.postRequest('/conta/recuperacao/senha', usuario);
 
 export const ativarUsuario = ativacao => service.putRequest('/conta/ativar-usuario', ativacao, {});
 
 export const cadastrarUsuario = usuario => service.postRequest('/conta/usuario', usuario);
 
-export const alterarSenha = (codigoAlteracao, usuario) => service.putRequest(
-  '/conta/recuperacao/senha',
+export const alterarSenha = (codigoAlteracao, payload) => service.putRequest(
+  '/conta/recuperacao/alterar-senha',
   codigoAlteracao,
-  usuario,
+    payload,
 );
 
 export const usuarioAlterarSenha = (coUsuario, usuario) => service.putRequest(
@@ -25,4 +24,9 @@ export const usuarioAlterarSenha = (coUsuario, usuario) => service.putRequest(
 export const solicitarPrimeiroAcesso = payload => service.postRequest(
   '/conta/usuario/primeiro-acesso',
   payload,
+);
+
+export const recuperarSenha = payload => service.postRequest(
+    '/conta/usuario/recuperacao-senha',
+    payload,
 );

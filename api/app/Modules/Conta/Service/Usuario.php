@@ -28,7 +28,6 @@ class Usuario extends AbstractService
     {
         try {
             DB::beginTransaction();
-//            $usuarioPrimeiroAcesso = new \stdClass();
 
             if (!in_array($request->tp_inscricao, ['conselho', 'organizacao', 'eleitor'])) {
                 throw new \Exception("Tipo de inscrição desconhecido.");
@@ -83,6 +82,7 @@ class Usuario extends AbstractService
 
             DB::beginTransaction();
             $usuario->st_ativo = true;
+            $usuario->ds_codigo_ativacao = null;
             $usuario->save();
             DB::commit();
 
@@ -113,6 +113,7 @@ class Usuario extends AbstractService
 
             DB::beginTransaction();
             $usuario = $this->getModel();
+            unset($dados['dh_cadastro']);
             $usuario->fill($dados);
             $usuario->gerarCodigoAtivacao();
             $horarioAtual = Carbon::now();

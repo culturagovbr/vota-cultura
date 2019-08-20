@@ -52,7 +52,7 @@
                         :rules="[rules.CNPJValido]"
                       />
                       <v-text-field
-                        v-model="dadosPrimeiroAcesso.no_cpf"
+                        v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
                         label="CPF"
@@ -75,7 +75,7 @@
                         :rules="[rules.CNPJValido]"
                       />
                       <v-text-field
-                        v-model="dadosPrimeiroAcesso.no_cpf"
+                        v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
                         label="CPF"
@@ -91,7 +91,7 @@
                   <v-card flat>
                     <v-card-text>
                       <v-text-field
-                        v-model="dadosPrimeiroAcesso.no_cpf"
+                        v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
                         label="CPF"
@@ -169,7 +169,7 @@ export default {
     formularioValido: true,
     step: 1,
     dadosPrimeiroAcesso: {
-      no_cpf: '',
+      nu_cpf: '',
       nu_cnpj: '',
       tp_inscricao: null,
     },

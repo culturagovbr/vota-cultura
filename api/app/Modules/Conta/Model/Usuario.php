@@ -26,6 +26,7 @@ class Usuario extends Authenticatable implements JWTSubject
         'dh_cadastro',
         'dh_ultima_atualizacao',
         'ds_codigo_ativacao',
+        'ds_codigo_alteracao',
         'co_perfil',
         'nu_cpf',
         'perfis',
@@ -34,6 +35,7 @@ class Usuario extends Authenticatable implements JWTSubject
     protected $hidden = [
         'ds_senha',
         'ds_codigo_ativacao',
+        'ds_codigo_alteracao',
         'pivot'
     ];
 
@@ -105,6 +107,19 @@ class Usuario extends Authenticatable implements JWTSubject
         if(empty($this->ds_email)) {
             throw new \Exception("E-mail não definido.");
         }
-        $this->ds_codigo_ativacao = sha1(mt_rand(1, 999) . time() . $this->ds_email);
+        $this->ds_codigo_ativacao = $this->gerarCodigo($this->ds_email);
+    }
+
+    public function gerarCodigoAlteracao() : void
+    {
+        if(empty($this->nu_cpf)) {
+            throw new \Exception("E-mail não definido.");
+        }
+        $this->ds_codigo_alteracao = $this->gerarCodigo($this->nu_cpf);
+    }
+
+    private function gerarCodigo(string $string) : string
+    {
+        return sha1(mt_rand(1, 999) . time() . $string);
     }
 }

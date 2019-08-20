@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import Validate from '@/modules/shared/util/validate';
 
 export default {
@@ -69,9 +69,9 @@ export default {
       minCaracter: value => value.length >= 8 || "Mínimo 8 caracteres",
       senhaValida: value =>
         Validate.isSenhaValida(value) ||
-        "Mínimo uma letra maiúscula, uma minúscula e um número",
+        "É necessário conter uma letra maiúscula e um número",
       confirmaSenha: (confirma_senha, ds_senha) =>
-        confirma_senha === ds_senha || "A senha não confere"
+        confirma_senha === ds_senha || "A senhas não conferem"
     },
   }),
   methods: {
@@ -91,6 +91,8 @@ export default {
       }).catch((error) => {
         this.loading = false;
         this.mensagemErro(error.response.data.message);
+        this.$router.push('/');
+
       });
     },
   },
