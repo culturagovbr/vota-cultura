@@ -19,13 +19,7 @@ services:
     - "5432"
     volumes:
     - ./database/docker-data/postgres:/var/lib/postgresql/data
-    - ./database/0.schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
-    - ./database/1.carga_ufs.sql:/docker-entrypoint-initdb.d/1.carga_ufs.sql
-    - ./database/2.carga_municipios.sql:/docker-entrypoint-initdb.d/2.carga_municipios.sql
-    - ./database/3.carga_criterios.sql:/docker-entrypoint-initdb.d/3.carga_criterios.sql
-    - ./database/4.carga_segmentos.sql:/docker-entrypoint-initdb.d/4.carga_segmentos.sql
-    - ./database/5.carga_cronograma.sql:/docker-entrypoint-initdb.d/5.carga_cronograma.sql
-    - ./database/6.carga_cronograma.sql:/docker-entrypoint-initdb.d/6.carga_perfil.sql
+    - ./database/:/docker-entrypoint-initdb.d/
     networks:
     - votacultura_network
   webapp-service:
