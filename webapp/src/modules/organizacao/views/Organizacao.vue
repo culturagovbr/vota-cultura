@@ -281,7 +281,7 @@
                         xs12
                         sm8>
                         <v-text-field
-                          v-model="organizacao.representante.no_pessoa"
+                          v-model="organizacao.representante.no_nome"
                           label="*Nome do representante"
                           :disabled="true"
                           :error-messages="nomeRepresentante"
@@ -589,7 +589,7 @@ export default {
       },
       representante: {
         ds_email: '',
-        no_pessoa: '',
+        no_nome: '',
         nu_rg: '',
         nu_cpf: '',
         nu_telefone: '',
@@ -673,12 +673,12 @@ export default {
     },
     'organizacao.representante.nu_cpf': function (value) {
       let self = this;
-      self.organizacao.representante.no_pessoa = '';
+      self.organizacao.representante.no_nome = '';
       this.nomeRepresentante = 'CPF inválido';
       if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
           const {data} = response.data;
-          self.organizacao.representante.no_pessoa = data.nmPessoaFisica;
+          self.organizacao.representante.no_nome = data.nmPessoaFisica;
         });
         this.nomeRepresentante = '';
       }

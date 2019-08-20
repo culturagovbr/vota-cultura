@@ -73,7 +73,7 @@ class Usuario extends Authenticatable implements JWTSubject
         $dadosPayload = [
             'user' => [
                 'co_usuario' => $this->co_usuario,
-                'no_pessoa' => $this->no_pessoa,
+                'no_nome' => $this->no_nome,
                 'ds_email' => $this->ds_email,
                 'dh_cadastro' => $this->dh_cadastro->format('Localizacao-m-d H:i:s'),
                 'dh_ultima_atualizacao' => $this->dh_ultima_atualizacao->format('Localizacao-m-d H:i:s'),

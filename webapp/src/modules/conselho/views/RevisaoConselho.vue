@@ -169,7 +169,7 @@
               <v-layout>
                 <v-flex>
                   <v-text-field
-                    v-model="conselho.representante.no_pessoa"
+                    v-model="conselho.representante.no_nome"
                     label="Nome do representante"
                     append-icon="perm_identity"
                     disabled

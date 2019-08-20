@@ -16,7 +16,7 @@ class Representante extends Model
 
     protected $fillable = [
         'ds_email',
-        'no_pessoa',
+        'no_nome',
         'nu_rg',
         'nu_cpf',
         'nu_telefone',

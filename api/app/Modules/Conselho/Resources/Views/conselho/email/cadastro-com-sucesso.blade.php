@@ -72,7 +72,7 @@
     <b>
         Nome do representante:
     </b>
-    {{ $conselho->representante->no_pessoa }}
+    {{ $conselho->representante->no_nome }}
 </p>
 <p>
     <b>

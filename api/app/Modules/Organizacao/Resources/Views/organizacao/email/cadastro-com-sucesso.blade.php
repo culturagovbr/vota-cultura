@@ -66,7 +66,7 @@
     <b>
         Nome do representante:
     </b>
-    {{ $organizacao->representante->no_pessoa }}
+    {{ $organizacao->representante->no_nome }}
 </p>
 <p>
     <b>

@@ -330,7 +330,7 @@
                         sm8
                       >
                         <v-text-field
-                          v-model="conselho.representante.no_pessoa"
+                          v-model="conselho.representante.no_nome"
                           :disabled="true"
                           label="*Nome do representante"
                           append-icon="perm_identity"
@@ -550,7 +550,7 @@ export default {
       },
       representante: {
         ds_email: '',
-        no_pessoa: '',
+        no_nome: '',
         nu_rg: '',
         nu_cpf: '',
         nu_telefone: '',
@@ -639,12 +639,12 @@ export default {
     },
     'conselho.representante.nu_cpf': function (value) {
       const self = this;
-      self.conselho.representante.no_pessoa = '';
+      self.conselho.representante.no_nome = '';
       this.nomeRepresentante = 'CPF inválido';
       if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
           const { data } = response.data;
-          self.conselho.representante.no_pessoa = data.nmPessoaFisica;
+          self.conselho.representante.no_nome = data.nmPessoaFisica;
         });
         this.nomeRepresentante = '';
       }

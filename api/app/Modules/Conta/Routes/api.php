@@ -32,6 +32,7 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'conta'
 ], function () {
+
     Route::post('primeiro-acesso', 'AtivacaoController@store');
     Route::put('ativar-usuario/{codigo_ativacao}', 'AtivacaoController@update');
 //    Route::group([

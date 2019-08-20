@@ -436,3 +436,4 @@ ALTER TABLE public.tb_usuario ALTER COLUMN dh_cadastro TYPE timestamp USING dh_c
 ALTER TABLE public.tb_usuario ALTER COLUMN dh_cadastro SET DEFAULT current_timestamp;
 ALTER TABLE public.tb_usuario ALTER COLUMN dh_ultima_atualizacao TYPE timestamp USING dh_ultima_atualizacao::timestamp;
 ALTER TABLE public.tb_usuario ALTER COLUMN dh_ultima_atualizacao SET DEFAULT current_timestamp;
+ALTER TABLE public.tb_representante rename column no_pessoa to no_nome;
