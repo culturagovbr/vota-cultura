@@ -147,8 +147,7 @@ export default {
       const usuarioLogado = obterInformacoesJWT(localStorage.getItem('user_token')).user;
 
       this.alterarSenha({
-        coUsuario: usuarioLogado.co_usuario,
-        usuario: this.usuario,
+        // usuario: this.usuario,
       })
         .then(() => {
           this.mensagemSucesso('Senha alterada com sucesso');
