@@ -16,100 +16,30 @@
             lazy-validation
           >
             <v-card>
-              <v-tabs
-                v-model="dadosRecuperacao.tp_inscricao"
-                color="white"
-                centered
-                icons-and-text
-              >
-                <v-tabs-slider />
-
-                <v-tab href="#organizacao">
-                  Organização e Entidade
-                  <v-icon>color_lens</v-icon>
-                </v-tab>
-
-                <v-tab href="#conselho">
-                  Conselho
-                  <v-icon>group</v-icon>
-                </v-tab>
-
-                <v-tab href="#eleitor">
-                  Eleitor
-                  <v-icon>thumbs_up_down</v-icon>
-                </v-tab>
-              </v-tabs>
-
-              <v-tabs-items v-model="dadosRecuperacao.tp_inscricao">
-                <v-tab-item value="organizacao">
-                  <v-card flat>
-                    <v-card-text>
-                      <v-text-field
-                        v-model="dadosRecuperacao.nu_cnpj"
-                        label="CNPJ"
-                        prepend-icon="people"
-                        mask="##.###.###/####-##"
-                        :rules="[rules.required, rules.CNPJValido]"
-                        required
-                      />
-                      <v-text-field
-                        v-model="dadosRecuperacao.nu_cpf"
-                        prepend-icon="account_circle"
-                        name="login"
-                        label="CPF"
-                        mask="###.###.###-##"
-                        validate-on-blur
-                        type="text"
-                        :rules="[rules.required, rules.CPFValido]"
-                        required
-                      />
-                    </v-card-text>
-                  </v-card>
-                </v-tab-item>
-                <v-tab-item value="conselho">
-                  <v-card flat>
-                    <v-card-text>
-                      <v-text-field
-                        v-model="dadosRecuperacao.nu_cnpj"
-                        label="CNPJ"
-                        prepend-icon="people"
-                        mask="##.###.###/####-##"
-                        :rules="[rules.required, rules.CNPJValido]"
-                        required
-                      />
-                      <v-text-field
-                        v-model="dadosRecuperacao.nu_cpf"
-                        prepend-icon="account_circle"
-                        name="login"
-                        label="CPF"
-                        mask="###.###.###-##"
-                        validate-on-blur
-                        type="text"
-                        :rules="[rules.required, rules.CPFValido]"
-                        required
-                      />
-                    </v-card-text>
-                  </v-card>
-                </v-tab-item>
-                <v-tab-item value="eleitor">
-                  <v-card flat>
-                    <v-card-text>
-                      <v-text-field
-                        v-model="dadosRecuperacao.nu_cpf"
-                        prepend-icon="account_circle"
-                        name="login"
-                        label="CPF"
-                        mask="###.###.###-##"
-                        validate-on-blur
-                        type="text"
-                        :rules="[rules.required, rules.CPFValido]"
-                        required
-                      />
-                    </v-card-text>
-                  </v-card>
-                </v-tab-item>
-              </v-tabs-items>
-            </v-card>
+              <v-card-text>
+                <v-text-field
+                  v-model="dadosRecuperacao.nu_cpf"
+                  prepend-icon="account_circle"
+                  name="login"
+                  label="*CPF do Representante/Eleitor"
+                  mask="###.###.###-##"
+                  validate-on-blur
+                  type="text"
+                  :rules="[rules.required, rules.CPFValido]"
+                  required
+                />
+                <v-text-field
+                  v-model="dadosRecuperacao.ds_email"
+                  prepend-icon="account_circle"
+                  name="login"
+                  label="*Email do Representante/Eleitor"
+                  validate-on-blur
+                  type="text"
+                  :rules="[rules.required, rules.emailValido]"
+                  required
+                />
+              </v-card-text>
+           </v-card>
           </v-form>
         </v-card-text>
         <div class="login-btn">
@@ -182,7 +112,11 @@ export default {
     rules: {
       required: value => !!value || 'Este campo é obrigatório',
       CPFValido: value => Validate.isCpfValido(value) || 'CPF inválido',
-      CNPJValido: value => Validate.isCnpjValido(value) || 'CNPJ inválido',
+      emailValido: (v) => {
+        // eslint-disable-next-line
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(v) || 'E-mail invalido';
+      },
     },
   }),
   mounted() {

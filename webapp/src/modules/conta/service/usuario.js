@@ -27,6 +27,6 @@ export const solicitarPrimeiroAcesso = payload => service.postRequest(
 );
 
 export const recuperarSenha = payload => service.postRequest(
-    '/conta/usuario/recuperacao-senha',
+    '/conta/recuperar-senha',
     payload,
 );
