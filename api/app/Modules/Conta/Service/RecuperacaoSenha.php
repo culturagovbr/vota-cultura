@@ -58,10 +58,12 @@ class RecuperacaoSenha implements IService
         }
     }
 
-    public function alterarSenha($codigo_alteracao, array $dados)
+    public function alterarSenha($ds_codigo_ativacao, array $dados)
     {
         try {
-            $usuario = $this->usuarioService->getModel()->where(['ds_codigo_alteracao' => $codigo_alteracao, 'st_ativo' => true])->first();
+            $usuario = $this->usuarioService->getModel()->where([
+                'ds_codigo_ativacao' => $ds_codigo_ativacao
+            ])->first();
             if (!$usuario) {
                 throw new ValidacaoCustomizadaException(
                     'Código inválido ou já utilizado!',
@@ -69,8 +71,9 @@ class RecuperacaoSenha implements IService
                 );
             }
             DB::beginTransaction();
-            $usuario->ds_codigo_alteracao = null;
+            $usuario->ds_codigo_ativacao = null;
             $usuario->setSenha($dados['ds_senha']);
+            $usuario->st_ativo = true;
             $usuario->save();
             DB::commit();
 

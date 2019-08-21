@@ -14,7 +14,14 @@ class Representante extends Model
     protected $table = 'tb_representante';
     protected $primaryKey = 'co_representante';
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
+    protected $dates = [
+        'dh_cadastro'
+    ];
+
     protected $fillable = [
+        'dh_cadastro',
         'ds_email',
         'no_nome',
         'nu_rg',

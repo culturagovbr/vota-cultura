@@ -40,7 +40,7 @@ export default [
         component: () => import(/* webpackChunkName: "recuperar-senha" */ '@/modules/conta/views/RecuperacaoDeSenha.vue'),
       },
       {
-        path: 'alterar-senha/:ds_codigo_alteracao',
+        path: 'alterar-senha/:ds_codigo_ativacao',
         name: 'conta-alterar-senha',
         meta: { title: 'Alterar Senha', public: true },
         component: () => import(/* webpackChunkName: "conta-alterar-senha" */ '@/modules/conta/views/AlteracaoDeSenha.vue'),

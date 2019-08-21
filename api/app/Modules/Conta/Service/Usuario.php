@@ -38,14 +38,16 @@ class Usuario extends AbstractService
                     break;
                 case 'conselho':
                     $conselhoModel = app()->makeWith(ConselhoModel::class, $request->post());
-                    $model = $conselhoModel->whereNull('co_usuario')->firstOrFail()->representante;
-                    $dadosUsuario = $model->toArray();
+                    $model = $conselhoModel->whereNull('co_usuario')->firstOrFail();
+                    $representante = $model->representante;
+                    $dadosUsuario = $representante->toArray();
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_CONSELHO;
                     break;
                 case 'organizacao':
                     $organizacaoModel = app()->makeWith(OrganizacaoModel::class, $request->post());
                     $model = $organizacaoModel->whereNull('co_usuario')->firstOrFail()->representante;
-                    $dadosUsuario = $model->toArray();
+                    $representante = $model->representante;
+                    $dadosUsuario = $representante->toArray();
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ORGANIZACAO;
                     break;
                 default:

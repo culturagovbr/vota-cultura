@@ -24,7 +24,7 @@ class CadastroComSucesso extends Mailable
     {
 
         $linkAtivacao = env('WEB_APP_HOST')
-            . "/conta/ativar-usuario/{$this->usuario->ds_codigo_ativacao}";
+            . "/conta/alterar-senha/{$this->usuario->ds_codigo_ativacao}";
         return $this->subject('Ministério da Cidadania - Cadastro Realizado com sucesso')
             ->view('conta::usuario.email.cadastro-com-sucesso')
             ->with([
