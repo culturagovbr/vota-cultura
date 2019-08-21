@@ -29,10 +29,6 @@ class Usuario extends AbstractService
         try {
             DB::beginTransaction();
 
-            if (!in_array($request->tp_inscricao, ['conselho', 'organizacao', 'eleitor'])) {
-                throw new \Exception("Tipo de inscrição desconhecido.");
-            }
-
             switch ($request->tp_inscricao) {
                 case 'eleitor':
                     $eleitorModel = app()->makeWith(EleitorModel::class, $request->post());
@@ -53,7 +49,8 @@ class Usuario extends AbstractService
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ORGANIZACAO;
                     break;
                 default:
-                    throw new \Exception("Tipo de inscrição não informado.");
+                    throw new \Exception("Tipo de inscrição desconhecido.");
+                    break;
             }
 
             $usuarioModel = $this->cadastrar($dadosUsuario);
