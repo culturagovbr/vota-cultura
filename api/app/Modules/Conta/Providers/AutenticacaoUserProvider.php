@@ -24,7 +24,7 @@ class AutenticacaoUserProvider implements UserProvider
 
         $usuario = new Usuario($dadosUsuario);
 //        $usuario->ds_email = $dadosUsuario['email'];
-//        $usuario->no_cpf = $dadosUsuario['cpf'];
+//        $usuario->nu_cpf = $dadosUsuario['cpf'];
         return $usuario;
     }
 
@@ -60,19 +60,16 @@ class AutenticacaoUserProvider implements UserProvider
     public function retrieveByCredentials(array $credentials)
     {
         $usuario = \App\Modules\Conta\Model\Usuario::where(
-            'no_cpf',
-            $credentials['no_cpf']
+            'nu_cpf',
+            $credentials['nu_cpf']
         )->first();
 
-        if(!$usuario) {
+        if(!$usuario || $usuario->st_ativo === false) {
             return null;
         }
 
-        if($usuario->st_ativo === false) {
-            return null;
-        }
-
-        $usuarioValido = password_verify($credentials['ds_senha'], $usuario->ds_senha);
+        $senhaCriptografada = $usuario->ds_senha;
+        $usuarioValido = password_verify($credentials['ds_senha'], $senhaCriptografada);
         if(!$usuarioValido) {
             return null;
         }

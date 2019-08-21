@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import NProgress from 'nprogress';
-// import store from './store';
+import store from './store';
 import appRoutes from './routerConfig';
-// import { obterInformacoesJWT } from '@/modules/shared/service/helpers/jwt';
+import { tokenValida } from '@/modules/shared/service/helpers/jwt';
 import 'nprogress/nprogress.css';
 import coreRoutes from '@/core/router';
 
@@ -17,32 +17,24 @@ const router = new Router({
   routes,
 });
 
-// const isEmpty = string => (!string || string.length === 0);
-
 router.beforeEach((to, from, next) => {
   NProgress.start();
 
-  return next();
-  // const authRequired = !to.meta.public || to.meta.public === false;
-  //
-  // const userToken = localStorage.getItem('user_token');
-  // const tokenValida = !isEmpty(obterInformacoesJWT(userToken));
+  const authRequired = !to.meta.public || to.meta.public === false;
+  const userToken = localStorage.getItem('user_token');
 
-  // try {
-  //   if (!userToken && authRequired && to.path !== '/conta/autenticar') {
-  //     return next('/conta/autenticar');
-  //   }
-  //
-  //   if (userToken && authRequired && !tokenValida) {
-  //     const error = 'Acesso expirado!';
-  //     localStorage.removeItem('user_token');
-  //     throw error;
-  //   }
-  //   return next();
-  // } catch (Exception) {
-  //   store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
-  //   return next('/conta/autenticar');
-  // }
+  try {
+    if (authRequired && !tokenValida(userToken)) {
+      const error = 'Acesso expirado!';
+      localStorage.removeItem('user_token');
+      throw error;
+    }
+
+    return next();
+  } catch (Exception) {
+    store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
+    return next('/conta/autenticar');
+  }
 });
 
 router.afterEach(() => {

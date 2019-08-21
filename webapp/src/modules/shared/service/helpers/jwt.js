@@ -14,7 +14,7 @@ export function obterInformacoesJWT(token) {
     return finalToken != null ? jsonwebtoken.verify(finalToken, process.env.VUE_APP_JWT_SECRET) : '';
   } catch (Exception) {
     console.log(Exception);
-    return '';
+    return {};
     // throw Exception;
   }
 }
@@ -32,4 +32,8 @@ export function obterCabecalhoComToken(token) {
     };
   }
   return {};
+}
+
+export function tokenValida(token) {
+  return Object.keys(obterInformacoesJWT(token)).length > 0;
 }

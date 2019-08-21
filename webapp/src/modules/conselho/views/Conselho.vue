@@ -113,7 +113,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm2>
+                        sm2
+                      >
                         <v-text-field
                           v-model="conselho.nu_telefone"
                           label="*Telefone do Conselho"
@@ -157,7 +158,14 @@
                           placeholder="email@exemplo.com"
                           counter
                           maxlength="100"
-                          :rules="[rules.required, rules.email, rules.emailMatch(conselho.ds_email, conselho.ds_email_confirmacao)]"
+                          :rules="[
+                            rules.required,
+                            rules.email,
+                            rules.emailMatch(
+                              conselho.ds_email,
+                              conselho.ds_email_confirmacao
+                            )
+                          ]"
                           required
                         />
                       </v-flex>
@@ -384,7 +392,14 @@
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
-                          :rules="[rules.required, rules.email, rules.emailMatch(conselho.representante.ds_email, conselho.representante.ds_email_confirmation)]"
+                          :rules="[
+                            rules.required,
+                            rules.email,
+                            rules.emailMatch(
+                              conselho.representante.ds_email,
+                              conselho.representante.ds_email_confirmation
+                            )
+                          ]"
                           required
                         />
                       </v-flex>
@@ -611,7 +626,7 @@ export default {
         if (v) return pattern.test(v) || 'Sítio invalido';
         return true;
       },
-      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
+      emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
     },
   }),
   watch: {

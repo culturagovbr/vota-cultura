@@ -40,15 +40,15 @@ Route::group([
 
     Route::put('recuperacao/alterar-senha/{codigo_alteracao}', 'RecuperacaoSenhaController@update');
 
-//    Route::group([
+    Route::group([
 //        'middleware' => 'api',
-//        'prefix' => 'auth'
-//    ], function () {
-//        Route::post('login', 'AuthController@login');
-//        Route::get('logout', 'AuthController@logout');
-//        Route::post('refresh', 'AuthController@refresh');
-//        Route::get('me', 'AuthController@me');
-//    });
+        'prefix' => 'auth'
+    ], function () {
+        Route::post('login', 'AuthController@login');
+        Route::get('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::get('me', 'AuthController@me');
+    });
 
 //    Route::apiResource('ativacao', 'AtivacaoApiResourceController',
 //        ['only' => ['update']]);

@@ -90,6 +90,7 @@ export default {
           click: this.handleLogut,
         },
       ],
+      usuarioLogado: {},
     };
   },
   methods: {

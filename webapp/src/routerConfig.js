@@ -19,7 +19,10 @@ export default [
         path: '/inicio',
         name: 'Inicio',
         meta: {
-          title: 'Início', group: 'apps', icon: 'dashboard',
+          title: 'Início',
+          group: 'apps',
+          icon: 'dashboard',
+          public: true,
         },
         component: () => import(/* webpackChunkName: "inicio" */ '@/core/views/Inicio.vue'),
       },

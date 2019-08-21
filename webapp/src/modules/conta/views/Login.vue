@@ -13,7 +13,7 @@
         @submit.prevent="login"
       >
         <v-text-field
-          v-model="model.no_cpf"
+          v-model="model.nu_cpf"
           append-icon="person"
           name="login"
           label="CPF"
@@ -21,7 +21,7 @@
           validate-on-blur
           type="text"
           :rules="[rules.required, rules.validarCPF]"
-          autocomplete="no_cpf"
+          autocomplete="nu_cpf"
         />
         <v-text-field
           id="password"
@@ -75,7 +75,7 @@ export default {
     mostrarSenha: false,
     valid: true,
     model: {
-      no_cpf: '',
+      nu_cpf: '',
       ds_senha: '',
     },
     rules: {
@@ -88,9 +88,9 @@ export default {
       autenticarUsuario: 'conta/autenticarUsuario',
     }),
     login() {
-      // if (!this.$refs.form.validate()) {
-      //   return;
-      // }
+      if (!this.$refs.form.validate()) {
+        return;
+      }
       this.loading = true;
       this.autenticarUsuario(this.model).then(() => {
         this.$router.push('/');
