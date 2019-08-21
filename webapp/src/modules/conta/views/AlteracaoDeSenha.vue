@@ -85,7 +85,7 @@ export default {
       this.loading = true;
       this.alterarSenha({ codigoAlteracao: this.$route.params.ds_codigo_ativacao, usuario: this.usuario }).then(() => {
         this.mensagemSucesso('Senha alterada com sucesso');
-        this.$router.push('/');
+        this.$router.push('/conta/autenticar');
       }).catch((error) => {
         this.loading = false;
         this.mensagemErro(error.response.data.message);
