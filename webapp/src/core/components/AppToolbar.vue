@@ -18,11 +18,6 @@
       <span class="flex headline font-weight-medium">{{ appTitle }}</span>
     </v-toolbar-title>
     <v-spacer />
-    <span
-      @click=""
-      class="subheading font-weight-medium">
-      Olá Fulano
-    </span>
     <v-toolbar-items>
       <v-menu
         offset-y
@@ -32,17 +27,14 @@
       >
         <v-btn
           slot="activator"
-          icon
-          large
+          text
           flat
         >
+          <span>
+            {{ usuarioLogado.no_nome }}
+          </span>
           <v-avatar size="30px">
             <v-icon>account_circle</v-icon>
-
-            <!--<img-->
-              <!--src="/static/avatar/avatar_mds.png"-->
-              <!--alt="Michael Wang"-->
-            <!--&gt;-->
           </v-avatar>
         </v-btn>
         <v-list class="pa-0">
@@ -69,6 +61,7 @@
   </v-toolbar>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AppToolbar',
@@ -87,11 +80,21 @@ export default {
           icon: 'exit_to_app',
           href: '',
           title: 'Logout',
-          click: this.handleLogut,
+          click: this.handleLogout,
         },
       ],
       usuarioLogado: {},
     };
+  },
+  computed: {
+    ...mapGetters({
+      usuario: 'conta/usuario',
+    }),
+  },
+  watch: {
+    usuario(valor) {
+      this.usuarioLogado = valor;
+    },
   },
   methods: {
     handleDrawerToggle() {
@@ -102,7 +105,7 @@ export default {
     handleChangePassword() {
       this.$router.push({ name: 'conta-usuario-alterar-senha' });
     },
-    handleLogut() {
+    handleLogout() {
       this.$router.push({ name: 'conta-sair' });
     },
   },
