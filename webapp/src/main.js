@@ -12,8 +12,6 @@ Vue.config.productionTip = false;
 
 sync(store, router);
 
-store.dispatch('')
-
 new Vue({
   router,
   store,

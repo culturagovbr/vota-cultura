@@ -109,6 +109,9 @@ export default {
       this.usuarioLogado = valor;
     },
   },
+  mounted() {
+    this.usuarioLogado = this.usuario;
+  },
   methods: {
     handleDrawerToggle() {
       this.drawer = !this.drawer;
