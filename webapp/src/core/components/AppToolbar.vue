@@ -20,6 +20,7 @@
     <v-spacer />
     <v-toolbar-items>
       <v-menu
+        v-if="Object.keys(usuarioLogado).length > 0"
         offset-y
         origin="center center"
         :nudge-bottom="10"
@@ -30,12 +31,12 @@
           text
           flat
         >
-          <span>
-            {{ usuarioLogado.no_nome }}
-          </span>
           <v-avatar size="30px">
             <v-icon>account_circle</v-icon>
           </v-avatar>
+          <span>
+            {{ usuarioLogado.no_nome }}
+          </span>
         </v-btn>
         <v-list class="pa-0">
           <v-list-tile
@@ -57,6 +58,18 @@
           </v-list-tile>
         </v-list>
       </v-menu>
+      <v-btn
+        v-else
+        slot="activator"
+        text
+        flat
+        to="/conta/autenticar"
+      >
+        Login
+        <v-avatar size="30px">
+          <v-icon>account_circle</v-icon>
+        </v-avatar>
+      </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>

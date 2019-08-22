@@ -19,22 +19,18 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   NProgress.start();
-
   const authRequired = !to.meta.public || to.meta.public === false;
-  const userToken = localStorage.getItem('token_usuario');
-
-  try {
-    if (authRequired && !tokenValida(userToken)) {
-      const error = 'Acesso expirado!';
-      localStorage.removeItem('token_usuario');
+  store.dispatch('conta/tratarUsuarioLogado').then((response) => {
+    if (authRequired && Object.keys(store.state.conta.usuario).length < 1) {
+      const error = 'Autenticação requerida para acessar essa funcionalidade.';
       throw error;
     }
-
-    return next();
-  } catch (Exception) {
+    next();
+  }).catch((Exception) => {
+    console.log(Exception)
     store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
     return next('/conta/autenticar');
-  }
+  });
 });
 
 router.afterEach(() => {
