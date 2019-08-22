@@ -10,7 +10,7 @@ export const ativarUsuario = ativacao => service.putRequest('/conta/ativar-usuar
 export const cadastrarUsuario = usuario => service.postRequest('/conta/usuario', usuario);
 
 export const alterarSenha = (codigoAlteracao, payload) => service.putRequest(
-  '/conta/recuperacao/alterar-senha',
+  '/conta/alterar-senha-recuperada',
   codigoAlteracao,
     payload,
 );

@@ -134,6 +134,43 @@ class Usuario extends AbstractService
             throw $queryException;
         }
     }
+
+    public function alterarSenha(Request $request, int $co_usuario)
+    {
+        try {
+            DB::beginTransaction();
+            $dados = $request->all();
+            if (!$dados || !isset($dados['ds_senha_atual'])) {
+                throw new \Exception(
+                    'Senha não informada.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+            $usuario = $this->getModel()->find($co_usuario);
+
+            if (!$usuario || !$usuario->validarSenha($dados['ds_senha_atual']) ) {
+                throw new \Exception(
+                    'Dados inválidos.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            if($usuario->validarSenha($dados['ds_senha'])) {
+                throw new \Exception(
+                    'A nova senha é igual a atual.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            $usuario->setSenha($dados['ds_senha']);
+            $usuario->save();
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+    }
+
 //
 //    public function atualizar(Request $request, int $co_usuario) : ?Model
 //    {
@@ -196,32 +233,5 @@ class Usuario extends AbstractService
 //
 //    }
 //
-//    public function alterarSenha(Request $request, int $co_usuario)
-//    {
-//        try {
-//            DB::beginTransaction();
-//            $dados = $request->all();
-//            if (!$dados || !isset($dados['ds_senha_atual'])) {
-//                throw new ValidacaoCustomizadaException(
-//                    'Senha não informada.',
-//                    Response::HTTP_NOT_ACCEPTABLE
-//                );
-//            }
-//            $usuario = $this->getModel()->find($co_usuario);
-//
-//            if (!$usuario || !$usuario->validarSenha($dados['ds_senha_atual'])) {
-//                throw new ValidacaoCustomizadaException(
-//                    'Dados inválidos.',
-//                    Response::HTTP_NOT_ACCEPTABLE
-//                );
-//            }
-//
-//            $usuario->setSenha($dados['ds_senha']);
-//            $usuario->save();
-//            DB::commit();
-//        } catch (\Exception $exception) {
-//            DB::rollBack();
-//            throw $exception;
-//        }
-//    }
+
 }

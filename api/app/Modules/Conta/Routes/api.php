@@ -38,7 +38,8 @@ Route::group([
 
     Route::post('recuperar-senha', 'RecuperacaoSenhaController@store');
 
-    Route::put('recuperacao/alterar-senha/{codigo_alteracao}', 'RecuperacaoSenhaController@update');
+    Route::put('alterar-senha-recuperada/{codigo_alteracao}', 'RecuperacaoSenhaController@update');
+
 
     Route::group([
 //        'middleware' => 'api',
@@ -50,10 +51,11 @@ Route::group([
         Route::get('me', 'AuthController@me');
     });
 
+    Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
+
 //    Route::apiResource('ativacao', 'AtivacaoApiResourceController',
 //        ['only' => ['update']]);
 
 //    Route::apiResource('usuario', 'UsuarioApiResourceController');
-//    Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
 //    Route::apiResource('recuperacao/senha', 'RecuperacaoSenhaApiResourceController', ['only' => ['store','update']]);
 });
