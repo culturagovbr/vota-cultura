@@ -1,42 +1,81 @@
 import * as usuarioService from '../service/usuario';
+import * as types from './types';
+import { obterInformacoesJWT } from '../../shared/service/helpers/jwt';
 
 /* eslint-disable import/prefer-default-export */
-export const autenticarUsuario = async ({ dispatch }, usuario) => usuarioService.login(usuario)
-  .then((response) => {
-    const { data } = response;
-    if (data && data.access_token) {
-      localStorage.setItem('user_token', data.access_token);
-    }
+export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
+  commit(types.AUTENTICAR_USUARIO);
+  usuarioService.login(usuario)
+    .then((response) => {
+      const { data } = response;
+      if (data && data.access_token) {
+        localStorage.setItem('token_usuario', data.access_token);
+      }
 
-    dispatch(
-      'app/setMensagemSucesso',
-      'Login efetuado com sucesso!',
-      { root: true },
-    );
-    return data;
-  }).catch((error) => {
-    dispatch(
-      'app/setMensagemErro',
-      error.response.data.error,
-      { root: true },
-    );
-    throw new TypeError(error, 'autenticarUsuario', 10);
+      dispatch(
+        'app/setMensagemSucesso',
+        'Login efetuado com sucesso!',
+        { root: true },
+      );
+      dispatch('conta/tratarUsuarioLogado', null, { root: true });
+
+      return data;
+    }).catch((error) => {
+      dispatch(
+        'app/setMensagemErro',
+        error.response.data.error,
+        { root: true },
+      );
+      throw new TypeError(error, 'autenticarUsuario', 10);
+    });
+};
+
+export const tratarUsuarioLogado = async ({ commit }) => {
+  commit(types.TRATAR_USUARIO, localStorage.getItem('token_usuario'));
+  const informacoesToken = obterInformacoesJWT(localStorage.getItem('token_usuario'));
+  if (informacoesToken.user) {
+    commit(types.DEFINIR_USUARIO, informacoesToken.user);
+  }
+};
+
+export const ativarUsuario = async ({ commit }, ativacao) => {
+  commit(types.ATIVAR_USUARIO, ativacao);
+  usuarioService.ativarUsuario(ativacao);
+};
+
+export const cadastrarUsuario = async ({ commit }, usuario) => {
+  commit(types.CADASTRAR_USUARIO, usuario);
+  usuarioService.cadastrarUsuario(usuario);
+};
+
+export const recuperarSenha = async ({ commit }, payload) => {
+  commit(types.RECUPERAR_SENHA, payload);
+  usuarioService.recuperarSenha(payload);
+};
+
+export const alterarSenha = async ({ commit }, { codigoAlteracao, usuario }) => {
+  commit(types.ALTERAR_SENHA_INICIAL, { codigoAlteracao, usuario });
+  usuarioService.alterarSenha(
+    codigoAlteracao,
+    usuario,
+  );
+};
+
+export const usuarioAlterarSenha = async ({ commit }, { coUsuario, usuario }) => {
+  commit(types.ALTERAR_SENHA, { coUsuario, usuario });
+  usuarioService.usuarioAlterarSenha(
+    coUsuario,
+    usuario,
+  );
+};
+export const logout = async ({ commit }) => {
+  commit(types.LOGOUT, {});
+  usuarioService.logout({}).then(() => {
+    localStorage.removeItem('token_usuario');
   });
+};
 
-// eslint-disable-next-line no-empty-pattern
-export const ativarUsuario = async ({}, ativacao) => usuarioService.ativarUsuario(ativacao);
-
-// eslint-disable-next-line no-empty-pattern
-export const cadastrarUsuario = async ({}, usuario) => usuarioService.cadastrarUsuario(usuario);
-
-export const recuperarSenha = async ({}, payload) => usuarioService.recuperarSenha(payload);
-
-export const alterarSenha = async (state, { codigoAlteracao, usuario }) => usuarioService.alterarSenha(codigoAlteracao, usuario);
-
-export const usuarioAlterarSenha = async (state, { coUsuario, usuario }) => usuarioService.usuarioAlterarSenha(coUsuario, usuario);
-
-export const logout = async () => usuarioService.logout({}).then(() => {
-  localStorage.removeItem('user_token');
-});
-
-export const solicitarPrimeiroAcesso = async (state, payload) => usuarioService.solicitarPrimeiroAcesso(payload);
+export const solicitarPrimeiroAcesso = async ({ commit }, payload) => {
+  commit(types.SOLICITAR_PRIMEIRO_ACESSO, payload);
+  usuarioService.solicitarPrimeiroAcesso(payload);
+};

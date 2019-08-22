@@ -144,7 +144,7 @@ export default {
       }
       // this.loading = true;
 
-      const usuarioLogado = obterInformacoesJWT(localStorage.getItem('user_token')).user;
+      const usuarioLogado = obterInformacoesJWT(localStorage.getItem('token_usuario')).user;
 
       this.alterarSenha({
         // usuario: this.usuario,

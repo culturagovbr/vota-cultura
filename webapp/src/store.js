@@ -23,8 +23,5 @@ export default new Vuex.Store({
     cronograma,
     pessoa,
   },
-  getters: {
-    route: state => state.route,
-  },
   strict: process.env.NODE_ENV !== 'production',
 });

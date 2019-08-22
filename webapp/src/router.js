@@ -21,12 +21,12 @@ router.beforeEach((to, from, next) => {
   NProgress.start();
 
   const authRequired = !to.meta.public || to.meta.public === false;
-  const userToken = localStorage.getItem('user_token');
+  const userToken = localStorage.getItem('token_usuario');
 
   try {
     if (authRequired && !tokenValida(userToken)) {
       const error = 'Acesso expirado!';
-      localStorage.removeItem('user_token');
+      localStorage.removeItem('token_usuario');
       throw error;
     }
 

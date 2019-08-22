@@ -44,7 +44,7 @@ const isEmpty = string => (!string || string.length === 0);
 
 // request
 instance.interceptors.request.use((config) => {
-  const userToken = localStorage.getItem('user_token');
+  const userToken = localStorage.getItem('token_usuario');
   const conf = config;
 
   const tokenValida = !isEmpty(obterInformacoesJWT(userToken));
