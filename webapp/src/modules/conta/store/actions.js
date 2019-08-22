@@ -30,7 +30,7 @@ export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
     });
 };
 
-export const tratarUsuarioLogado = async ({ commit, state }) => {
+export const tratarUsuarioLogado = ({ commit, state }) => {
   commit(types.TRATAR_USUARIO, localStorage.getItem('token_usuario'));
   const informacoesToken = obterInformacoesJWT(localStorage.getItem('token_usuario'));
   if (informacoesToken.user && Object.keys(state.usuario).length < 1) {

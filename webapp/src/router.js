@@ -19,15 +19,25 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   NProgress.start();
+
   const authRequired = !to.meta.public || to.meta.public === false;
+
   store.dispatch('conta/tratarUsuarioLogado').then((response) => {
-    if (authRequired && Object.keys(store.state.conta.usuario).length < 1) {
+    let proximaPagina = true;
+    const { conta } = store.state;
+    const usuarioLogado = Object.keys(conta.usuario).length > 0;
+
+    if (authRequired && !usuarioLogado) {
       const error = 'Autenticação requerida para acessar essa funcionalidade.';
       throw error;
     }
-    next();
+
+    if ( usuarioLogado && to.fullPath === '/conta/autenticar') {
+      proximaPagina = '/inicio';
+    }
+
+    next(proximaPagina);
   }).catch((Exception) => {
-    console.log(Exception)
     store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
     return next('/conta/autenticar');
   });
