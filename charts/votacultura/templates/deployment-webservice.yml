@@ -19,33 +19,37 @@ spec:
         app: {{ template "votacultura.webservice.fullname" . }}
         version: "1.0"
     spec:
+      volumes:
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-config
+            items:
+            - key: nginx.conf
+            - path: default.conf
       initContainers:
-        - name: init-ds
-          image: busybox
+        - name: php-artisan
+          image: php:7.3-fpm
           command:
-            - '/bin/sh'
-            - '-c'
-            - |
-                while true
-                do
-                  if [ $? -eq 0 ]; then
-                    echo "DB is UP"
-                    break
-                  fi
-                  echo "DB is not yet reachable;sleep for 10s before retry"
-                  sleep 10
-                done
+            - 'php artisan migrate:refresh --seed'
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:
       - name: {{ .Values.imagePullSecret }}
       {{- end }}
       containers:
+      - name: {{ template "votacultura.webservice.fullname" . }}-nginx
+        image: nginx:stable
+        ports:
+        - name: http
+          containerPort: {{ .Values.webservice.service.servicePort }}
+        volumeMounts:
+        - name: nginx-proxy-config
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
       - name: {{ template "votacultura.webservice.fullname" . }}
         image: "{{ .Values.webservice.image.repository }}:{{ .Values.webservice.image.tag }}"
         imagePullPolicy: Always
-        env:
-        - name: EXPOSE_PORT
-          value: {{ .Values.webservice.service.servicePort }}
+        command:
+          - 'set -- php-fpm'
         resources:
           requests:
             memory: "256Mi"
@@ -53,6 +57,3 @@ spec:
           limits:
             memory: "1024Mi"
             cpu: "2"
-        ports:
-        - name: http
-          containerPort: {{ .Values.webservice.service.servicePort }}
