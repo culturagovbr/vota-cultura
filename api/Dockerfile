@@ -21,19 +21,19 @@ RUN apt-get update --fix-missing \
     && docker-php-ext-configure pdo_pgsql --with-pgsql \
     && docker-php-ext-install pgsql pdo_pgsql
 
-WORKDIR "/tmp"
+#WORKDIR "/tmp"
 
-RUN ls -la /tmp \
-    && curl --silent --show-error https://getcomposer.org/installer | php \
-    && ls -la /tmp/composer.phar \
-    && mv /tmp/composer.phar /usr/local/bin/ \
-    && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+#RUN ls -la /tmp \
+#    && curl --silent --show-error https://getcomposer.org/installer | php \
+#    && ls -la /tmp/composer.phar \
+#    && mv /tmp/composer.phar /usr/local/bin/ \
+#    && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-WORKDIR "/application"
+#WORKDIR "/application"
 
 COPY . /application
-COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+%COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
+#ENTRYPOINT ["docker-entrypoint.sh"]
 
-RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
-    && ln -s /usr/local/bin/docker-entrypoint.sh /
+#RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
+#    && ln -s /usr/local/bin/docker-entrypoint.sh /

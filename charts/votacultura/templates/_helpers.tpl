@@ -19,15 +19,15 @@ Expand the name of the chart.
   {{- end -}}
 {{- end -}}
 
-{{- define "votacultura.webservice.fullname" -}}
-  {{- if .Values.webservice.fullnameOverride -}}
-    {{- .Values.webservice.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- define "votacultura.webserver.fullname" -}}
+  {{- if .Values.webserver.fullnameOverride -}}
+    {{- .Values.webserver.fullnameOverride | trunc 63 | trimSuffix "-" -}}
   {{- else -}}
     {{- $name := default .Chart.Name .Values.nameOverride -}}
     {{- if contains $name .Release.Name -}}
-      {{- printf "%s-%s" .Release.Name .Values.webservice.name | trunc 63 | trimSuffix "-" -}}
+      {{- printf "%s-%s" .Release.Name .Values.webserver.name | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
-      {{- printf "%s-%s-%s" .Release.Name $name .Values.webservice.name | trunc 63 | trimSuffix "-" -}}
+      {{- printf "%s-%s-%s" .Release.Name $name .Values.webserver.name | trunc 63 | trimSuffix "-" -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

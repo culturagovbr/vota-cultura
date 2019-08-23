@@ -12,12 +12,12 @@ spec:
   selector:
     matchLabels:
       app: {{ template "votacultura.webapp.fullname" . }}
-      version: "1.0"
+      version: {{ .Chart.Version }}
   template:
     metadata:
       labels:
         app: {{ template "votacultura.webapp.fullname" . }}
-        version: "1.0"
+        version: {{ .Chart.Version }}
     spec:
       initContainers:
         - name: init-ds
@@ -45,7 +45,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: ENDERECO_API
-          value: {{ template "votacultura.webservice.fullname" . }}
+          value: {{ template "votacultura.webserver.fullname" . }}
         resources:
           requests:
             memory: "256Mi"

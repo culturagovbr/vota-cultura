@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "votacultura.webservice.fullname" . }}
+  name: {{ template "votacultura.webserver.fullname" . }}
   labels:
     app: {{ template "votacultura.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -9,9 +9,9 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   selector:
-    app: {{ template "votacultura.webservice.fullname" . }}
+    app: {{ template "votacultura.webserver.fullname" . }}
   ports:
-  - name: webservicehttp
-    port: {{ .Values.webservice.service.servicePort }}
+  - name: webserverhttp
+    port: {{ .Values.webserver.service.servicePort }}
     targetPort: 80
-  type: {{ .Values.webservice.service.type }}
+  type: {{ .Values.webserver.service.type }}

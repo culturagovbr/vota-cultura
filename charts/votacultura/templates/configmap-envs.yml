@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: votacultura-envs
+data:
+  DB_CONNECTION: {{ .Values.webserver.database.type }}
+  DATABASE_URL: {{ .Values.webserver.database.host }}
+  DB_HOST: {{ .Values.webserver.database.host }}
+  DB_PORT: {{ .Values.webserver.database.port | quote }}
+  DB_DATABASE: {{ .Values.webserver.database.db }}
+  DB_USERNAME: {{ .Values.webserver.database.username }}
+#  APP_BASE_PATH: xxxx
+#  APP_NAME: zzzz
+#  REDIS_CLIENT: zzzz
+#  REDIS_CLUSTER: zzzz
+#  REDIS_HOST: zzzz
+#  REDIS_PASSWORD: zzzz
+#  REDIS_PORT: zzzz
+#  REDIS_DB: zzzz
+#  REDIS_CACHE_DB: zzzz

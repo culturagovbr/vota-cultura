@@ -3,28 +3,32 @@ imagePullSecret: regcred
 webapp:
   name: webapp
   image:
-    repository: registry:5000/vota-cultura/webapp
+    repository: docker-registry.default.svc:5000/vota-cultura/webapp
     tag: desenvolvimento
   replicaCount: 1
   ingress:
     enabled: true
-    url: "vota-cultura.apps.cidadania.gov.br"
+    url: "vota-cultura-des.apps.cidadania.gov.br"
   service:
     servicePort: 80
     type: NodePort
 
 
-webservice:
-  name: webservice
+webserver:
+  name: webserver
   image:
-    repository: registry:5000/vota-cultura/webservice
+    repository: docker-registry.default.svc:5000/vota-cultura/webserver
     tag: desenvolvimento
   replicaCount: 1
   ingress:
     enabled: true
-    url: "vota-cultura-api.apps.cidadania.gov.br"
+    url: "vota-cultura-des-api.apps.cidadania.gov.br"
   database:
-    jdbc: "jdbc:postgresql://pgsql-votacultura:5432/votacultura"
+    artisan: true
+    type: pgsql
+    host: pgsql-votacultura
+    port: 5432
+    db: votacultura
     username: votacultura
     password: votacultura
   service:
@@ -38,6 +42,8 @@ postgresql:
   postgresqlUsername: votacultura
   postgresqlPassword: votacultura
   postgresqlDatabase: votacultura
+  service:
+    type: NodePort
   persistence:
     storageClass: nfs-des
-    size: 10Gi
+    size: 5Gi
