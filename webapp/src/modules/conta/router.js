@@ -74,7 +74,7 @@ export default [
         name: 'conta-primeiro-acesso',
         meta: {
           title: 'Primeiro Acesso',
-          public: false,
+          public: true,
         },
         component: () => import(/* webpackChunkName: "conta-primeiro-acesso" */ '@/modules/conta/views/PrimeiroAcesso.vue'),
       },
