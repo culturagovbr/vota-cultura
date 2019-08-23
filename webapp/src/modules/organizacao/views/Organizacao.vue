@@ -160,7 +160,7 @@
                           append-icon="my_location"
                           placeholder="99999-999"
                           mask="#####-###"
-                          :rules="[rules.required]"
+                          :rules="[rules.required, rules.cepMin]"
                           required
                         />
                       </v-flex>
