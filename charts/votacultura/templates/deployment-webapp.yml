@@ -19,22 +19,6 @@ spec:
         app: {{ template "votacultura.webapp.fullname" . }}
         version: {{ .Chart.Version }}
     spec:
-      initContainers:
-        - name: init-ds
-          image: busybox
-          command:
-            - '/bin/sh'
-            - '-c'
-            - |
-                while true
-                do
-                  if [ $? -eq 0 ]; then
-                    echo "DB is UP"
-                    break
-                  fi
-                  echo "DB is not yet reachable;sleep for 10s before retry"
-                  sleep 10
-                done
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:
       - name: {{ .Values.imagePullSecret }}
@@ -43,6 +27,9 @@ spec:
       - name: {{ template "votacultura.webapp.fullname" . }}
         image: "{{ .Values.webapp.image.repository }}:{{ .Values.webapp.image.tag }}"
         imagePullPolicy: Always
+        #securityContext:
+        #  runAsUser: 33
+        #  runAsGroup: 33
         env:
         - name: ENDERECO_API
           value: {{ template "votacultura.webserver.fullname" . }}

@@ -47,6 +47,9 @@ spec:
       containers:
       - name: {{ template "votacultura.webserver.fullname" . }}-nginx
         image: nginx:stable
+        #securityContext:
+        #  runAsUser: 33
+        #  runAsGroup: 33
         ports:
         - name: http
           containerPort: {{ .Values.webserver.service.servicePort }}
@@ -55,6 +58,9 @@ spec:
           mountPath: /etc/nginx/conf.d
       - name: {{ template "votacultura.webserver.fullname" . }}
         image: "{{ .Values.webserver.image.repository }}:{{ .Values.webserver.image.tag }}"
+        #securityContext:
+        #  runAsUser: 33
+        #  runAsGroup: 33
         imagePullPolicy: Always
         command: ["/bin/sh","-c","{{ if .Values.webserver.database.artisan }}php artisan migrate:refresh --seed && {{ end }}docker-php-entrypoint php-fpm"]
         envFrom:

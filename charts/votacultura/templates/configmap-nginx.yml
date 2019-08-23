@@ -12,7 +12,7 @@ data:
         access_log /var/log/nginx/application.access.log;
         
         
-        root /application/public;
+        root /var/www/html/public;
         index index.php;
         
         if (!-e $request_filename) {
@@ -20,7 +20,7 @@ data:
         }
         
         location ~ \.php$ {
-            fastcgi_pass {{ template "votacultura.webserver.fullname" . }}:9000;
+            fastcgi_pass localhost:9000;
             fastcgi_index index.php;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_param PHP_VALUE "error_log=/var/log/nginx/application_php_errors.log";

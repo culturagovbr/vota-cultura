@@ -24,7 +24,7 @@ webserver:
     enabled: true
     url: "vota-cultura-des-api.apps.cidadania.gov.br"
   database:
-    artisan: true
+    artisan: false
     type: pgsql
     host: pgsql-votacultura
     port: 5432
