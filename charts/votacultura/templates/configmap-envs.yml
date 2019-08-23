@@ -1,14 +1,56 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: votacultura-envs
+    name: votacultura-envs
 data:
-  DB_CONNECTION: {{ .Values.webserver.database.type }}
-  DATABASE_URL: {{ .Values.webserver.database.host }}
-  DB_HOST: {{ .Values.webserver.database.host }}
-  DB_PORT: {{ .Values.webserver.database.port | quote }}
-  DB_DATABASE: {{ .Values.webserver.database.db }}
-  DB_USERNAME: {{ .Values.webserver.database.username }}
+    #BACKEND
+    DB_CONNECTION: {{ .Values.webserver.database.type }}
+    DATABASE_URL: {{ .Values.webserver.database.host }}
+    DB_HOST: {{ .Values.webserver.database.host }}
+    DB_PORT: {{ .Values.webserver.database.port | quote }}
+    DB_DATABASE: {{ .Values.webserver.database.db }}
+    DB_USERNAME: {{ .Values.webserver.database.username }}
+
+    APP_NAME: {{ .Values.webserver.envs.appName }}
+    APP_ENV: {{ .Values.webserver.envs.appEnv }}
+    APP_KEY: {{ .Values.webserver.envs.appKey | quote }}
+    APP_DEBUG: {{ .Values.webserver.envs.appDebug | quote }}
+    APP_URL: {{ .Values.webserver.envs.appUrl }}
+    LOG_CHANNEL: {{ .Values.webserver.envs.logChannel }}
+
+    BROADCAST_DRIVER: {{ .Values.webserver.envs.broadcastDriver }}
+    CACHE_DRIVER: {{ .Values.webserver.envs.cacheDriver }}
+    QUEUE_CONNECTION: {{ .Values.webserver.envs.queueConnection }}
+    SESSION_DRIVER: {{ .Values.webserver.envs.sessionDriver }}
+    SESSION_LIFETIME: {{ .Values.webserver.envs.sessionLifetime | quote }}
+
+    MAIL_DRIVER: {{ .Values.webserver.envs.mailDriver }}
+    MAIL_HOST: {{ .Values.webserver.envs.mailHost }}
+    #MAIL_PORT: {{ .Values.webserver.envs.mailPort | quote }}
+    MAIL_USERNAME: {{ .Values.webserver.envs.mailUsername }}
+    MAIL_PASSWORD: {{ .Values.webserver.envs.mailPassword }}
+    MAIL_ENCRYPTION: {{ .Values.webserver.envs.mailEncryption }}
+    MAIL_FROM_ADDRESS: {{ .Values.webserver.envs.mailFromAddress }}
+    MAIL_FROM_NAME: {{ .Values.webserver.envs.mailFromName }}
+
+    JWT_SECRET: {{ .Values.webserver.envs.jwtSecret }}
+
+    WEB_APP_HOST: {{ .Values.webserver.envs.webAppHost }}
+
+    RECEITA_HOST: {{ .Values.webserver.envs.receitaHost }}
+    RECEITA_USER: {{ .Values.webserver.envs.receitaUser }}
+    RECEITA_PASSWORD: {{ .Values.webserver.envs.receitaPassword }}
+    EMAIL_ACOMPANHAMENTO: {{ .Values.webserver.envs.emailAcompanhamento }}
+    
+    #FRONTEND
+    ENDERECO_API: {{ template "votacultura.webserver.fullname" . }}
+    VUE_APP_TITLE: {{ .Values.webapp.envs.vueAppTitle }}
+    NODE_ENV: {{ .Values.webapp.envs.nodeEnv }}
+    VUE_APP_SECRET: {{ .Values.webapp.envs.vueAppSecret }}
+    VUE_APP_JWT_SECRET: {{ .Values.webapp.envs.vueAppJwtSecret }}
+    VUE_APP_THEME_DEFAULT: {{ .Values.webapp.envs.vueAppThemeDefault }}
+    VUE_APP_API_HOST: http://{{ template "votacultura.webserver.fullname" . }}/api
+
 #  APP_BASE_PATH: xxxx
 #  APP_NAME: zzzz
 #  REDIS_CLIENT: zzzz

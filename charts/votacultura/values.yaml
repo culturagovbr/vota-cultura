@@ -12,6 +12,12 @@ webapp:
   service:
     servicePort: 80
     type: NodePort
+  envs:
+    vueAppTitle: Vota Cultura
+    nodeEnv: production
+    vueAppSecret: secret
+    vueAppJwtSecret: MLcfHzdEWKEiSK4mCFpNIgKkbg713IpCGDkIXNsfvSlYUafgwUwnAOdx1KHr6hre
+    vueAppThemeDefault: pink
 
 
 webserver:
@@ -31,12 +37,38 @@ webserver:
     db: votacultura
     username: votacultura
     password: votacultura
+  envs:
+    appName: Laravel
+    appEnv: local
+    appKey: "base64:TQbfL7IIR0bqA2C24L7PLoKOZB/nbn5NRNu4c1LFy/0:"
+    appDebug: true
+    appUrl: http://localhost
+    logChannel: stack
+    broadcastDriver: log
+    cacheDriver: file
+    queueConnection: sync
+    sessionDriver: file
+    sessionLifetime: 120
+    mailDriver: smtp
+    mailHost: mailapp.cultura.gov.br
+    mailPort: 25
+    mailUsername: srv_salic
+    mailPassword: emailSalic
+    mailEncryption: null
+    mailFromAddress: no-reply@cidadania.gov.br
+    mailFromName: "Ministério da Cidadania"
+    jwtSecret: MLcfHzdEWKEiSK4mCFpNIgKkbg713IpCGDkIXNsfvSlYUafgwUwnAOdx1KHr6hre
+    webAppHost: http://localhost
+    receitaHost: http://sistemasweb.cultura.gov.br/minc-pessoa/servicos
+    receitaUser: '3bf410091bddf5e2092be862aa25fe34'
+    receitaPassword: 'ou8557787eRN9Dr'
+    emailAcompanhamento: "felipe.teles@cidadania.gov.br"
   service:
     servicePort: 80
     type: NodePort
 
 postgresql:
-  install: true
+  install: false
   imageTag: 11.4.0
   fullnameOverride: pgsql-votacultura
   postgresqlUsername: votacultura

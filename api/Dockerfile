@@ -30,6 +30,7 @@ RUN apt-get update --fix-missing \
 #WORKDIR "/application"
 
 COPY . /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 #COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
 #ENTRYPOINT ["docker-entrypoint.sh"]
 

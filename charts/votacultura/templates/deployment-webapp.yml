@@ -30,9 +30,9 @@ spec:
         #securityContext:
         #  runAsUser: 33
         #  runAsGroup: 33
-        env:
-        - name: ENDERECO_API
-          value: {{ template "votacultura.webserver.fullname" . }}
+        envFrom:
+        - configMapRef:
+            name: votacultura-envs
         resources:
           requests:
             memory: "256Mi"
