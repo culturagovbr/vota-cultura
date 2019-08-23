@@ -30,7 +30,7 @@ RUN apt-get update --fix-missing \
 #WORKDIR "/application"
 
 COPY . /var/www/html
-%COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
+#COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
 #ENTRYPOINT ["docker-entrypoint.sh"]
 
 #RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
