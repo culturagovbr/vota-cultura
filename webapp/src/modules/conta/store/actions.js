@@ -53,13 +53,7 @@ export const recuperarSenha = async ({ commit }, payload) => {
   usuarioService.recuperarSenha(payload);
 };
 
-export const alterarSenha = async ({ commit }, { codigoAlteracao, usuario }) => {
-  commit(types.ALTERAR_SENHA_INICIAL, { codigoAlteracao, usuario });
-  usuarioService.alterarSenha(
-    codigoAlteracao,
-    usuario,
-  );
-};
+export const usuarioAlterarSenha = async ({}, { coUsuario, usuario }) => usuarioService.usuarioAlterarSenha(coUsuario, usuario);
 
 export const usuarioAlterarSenha = async ({ commit }, { coUsuario, usuario }) => {
   commit(types.ALTERAR_SENHA, { coUsuario, usuario });

@@ -115,6 +115,7 @@ import Validate from '@/modules/shared/util/validate';
 import { obterInformacoesJWT } from '@/modules/shared/service/helpers/jwt';
 
 export default {
+  name: 'AlteracaoDeSenha',
   data: () => ({
     loading: false,
     mostrarSenha: false,
@@ -142,13 +143,16 @@ export default {
       if (!this.$refs.form.validate()) {
         return;
       }
-      // this.loading = true;
+      this.loading = true;
 
       const usuarioLogado = obterInformacoesJWT(localStorage.getItem('token_usuario')).user;
 
-      this.alterarSenha({
-        // usuario: this.usuario,
-      })
+      this.alterarSenha(
+        {
+          coUsuario: usuarioLogado.co_usuario,
+          usuario: this.usuario,
+        },
+      )
         .then(() => {
           this.mensagemSucesso('Senha alterada com sucesso');
           this.$router.push('/conta/sair');
