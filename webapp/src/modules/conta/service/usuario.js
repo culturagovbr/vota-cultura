@@ -12,7 +12,7 @@ export const cadastrarUsuario = usuario => service.postRequest('/conta/usuario',
 export const alterarSenha = (codigoAlteracao, payload) => service.putRequest(
   '/conta/alterar-senha-recuperada',
   codigoAlteracao,
-    payload,
+  payload,
 );
 
 export const usuarioAlterarSenha = (coUsuario, usuario) => service.putRequest(
@@ -27,6 +27,6 @@ export const solicitarPrimeiroAcesso = payload => service.postRequest(
 );
 
 export const recuperarSenha = payload => service.postRequest(
-    '/conta/recuperar-senha',
-    payload,
+  '/conta/recuperar-senha',
+  payload,
 );
