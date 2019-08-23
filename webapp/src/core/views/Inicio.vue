@@ -196,7 +196,7 @@
                 dark
                 large
                 target="_blank"
-                href="EDITAL_01_12_08_2019-CNPC.pdf"
+                href="http://cnpc.cultura.gov.br/editalcnpc2019-2022/"
               >
                 Acesse o Edital
               </v-btn>
