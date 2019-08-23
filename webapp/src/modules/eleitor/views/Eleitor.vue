@@ -154,6 +154,7 @@
                       append-icon="place"
                       :rules="[rules.required]"
                       required
+                      box
                     />
                   </v-flex>
                   <v-flex sm4>
@@ -166,6 +167,9 @@
                       item-text="no_uf"
                       :rules="[rules.required]"
                       required
+                      box
+                      hint="UF da região que deseja votar."
+                      persistent-hint
                     />
                   </v-flex>
                 </v-layout>
