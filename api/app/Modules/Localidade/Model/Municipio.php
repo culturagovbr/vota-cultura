@@ -20,7 +20,7 @@ class Municipio extends Model
 
     public function uf()
     {
-        return $this->belongsTo(
+        return $this->hasOne(
             ModelUF::class,
             'co_uf',
             'co_ibge'

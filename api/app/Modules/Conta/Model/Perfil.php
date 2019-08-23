@@ -27,8 +27,7 @@ class Perfil extends Model
         return $this->belongsTo(
             \App\Modules\Conta\Model\Usuario::class,
             'co_usuario',
-            'co_usuario',
-            'rl_usuario_perfil'
+            'co_usuario'
         );
     }
 

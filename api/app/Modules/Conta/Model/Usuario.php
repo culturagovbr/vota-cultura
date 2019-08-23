@@ -39,15 +39,14 @@ class Usuario extends Authenticatable implements JWTSubject
 
     public $timestamps = false;
 
-//    public function perfis()
-//    {
-//        return $this->belongsToMany(
-//            \App\Modules\Conta\Model\Perfil::class,
-//            'rl_usuario_perfil',
-//            'co_usuario',
-//            'co_perfil'
-//        );
-//    }
+    public function perfil()
+    {
+        return $this->hasOne(
+            Perfil::class,
+            'co_perfil',
+            'co_perfil'
+        );
+    }
 
     public function organizacoes()
     {
