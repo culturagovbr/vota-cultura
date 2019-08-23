@@ -1,6 +1,6 @@
 <h1>Vota Cultura</h1>
 <p>
-    Seu cadastro foi realizado com sucesso!
+    Seu cadastro como eleitor foi realizado com sucesso!
 </p>
 <p>
     <b>
@@ -19,12 +19,6 @@
         RG:
     </b>
     {{ $eleitor->nu_rg }}
-</p>
-<p>
-    <b>
-        CPF:
-    </b>
-    {{ $eleitor->nu_cpf }}
 </p>
 <p>
     <b>
@@ -53,3 +47,8 @@
 
 <p>Atenciosamente,</p>
 <p>Minist&eacute;rio da Cidadania</p>
+
+
+
+
+(Mensagem automática, não responder)
