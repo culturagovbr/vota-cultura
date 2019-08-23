@@ -656,7 +656,6 @@ export default {
       this.listaSegmentos = this.segmentosGetter;
     },
     'organizacao.endereco.co_ibge': function (coIBGE) {
-      this.organizacao.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
     },
     'organizacao.nu_cnpj': function (value) {

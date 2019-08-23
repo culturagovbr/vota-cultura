@@ -637,7 +637,6 @@ export default {
       this.listaMunicipios = this.municipiosGetter;
     },
     'conselho.endereco.co_ibge': function (coIBGE) {
-      this.conselho.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
     },
     'conselho.nu_cnpj': function (value) {
