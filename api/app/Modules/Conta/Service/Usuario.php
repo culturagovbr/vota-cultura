@@ -32,22 +32,45 @@ class Usuario extends AbstractService
             switch ($request->tp_inscricao) {
                 case 'eleitor':
                     $eleitorModel = app()->makeWith(EleitorModel::class);
-                    $model = $eleitorModel->where('nu_cpf', $request->nu_cpf)->whereNull('co_usuario')->firstOrFail();
+                    $model = $eleitorModel->where('nu_cpf', $request->nu_cpf)->firstOrFail();
+                    if(!empty($model->co_usuario)) {
+                        throw new \Exception('O CPF não está inscrito como eleitor.');
+                    }
                     $dadosUsuario = $model->toArray();
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ELEITOR;
                     break;
                 case 'conselho':
-                    $conselhoModel = app()->makeWith(ConselhoModel::class, $request->post());
-                    $model = $conselhoModel->whereNull('co_usuario')->firstOrFail();
+                    $conselhoModel = app()->makeWith(ConselhoModel::class);
+                    $model = $conselhoModel->where('nu_cnpj', $request->nu_cnpj)->firstOrFail();
+                    if(!empty($model->co_usuario)) {
+                        throw new \Exception('O CNPJ do conselho de cultura não está inscrito.');
+                    }
                     $representante = $model->representante;
                     $dadosUsuario = $representante->toArray();
+
+                    if($dadosUsuario['nu_cpf'] !== $request->nu_cpf) {
+                        throw new \Exception(
+                            'O CPF informado não corresponde ao CPF do representante.'
+                        );
+                    }
+
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_CONSELHO;
                     break;
                 case 'organizacao':
                     $organizacaoModel = app()->makeWith(OrganizacaoModel::class, $request->post());
-                    $model = $organizacaoModel->whereNull('co_usuario')->firstOrFail()->representante;
+                    $model = $organizacaoModel->where('nu_cnpj', $request->nu_cnpj)->firstOrFail();
+                    if(!empty($model->co_usuario)) {
+                        throw new \Exception('O CNPJ da organização ou entidade cultural não está inscrito.');
+                    }
                     $representante = $model->representante;
                     $dadosUsuario = $representante->toArray();
+
+                    if($dadosUsuario['nu_cpf'] !== $request->nu_cpf) {
+                        throw new \Exception(
+                            'O CPF informado não corresponde ao CPF do representante.'
+                        );
+                    }
+
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ORGANIZACAO;
                     break;
                 default:
