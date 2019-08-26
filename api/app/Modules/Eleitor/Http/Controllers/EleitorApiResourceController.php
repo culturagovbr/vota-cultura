@@ -2,13 +2,11 @@
 
 namespace App\Modules\Eleitor\Http\Controllers;
 
-use App\Modules\Eleitor\Model\Eleitor;
-use App\Modules\Eleitor\Service\Eleitor as EleitorService;
+use App\Modules\Eleitor\Http\Resources\Eleitor as EleitorResource;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
-use App\Modules\Organizacao\Model\Organizacao;
-use Illuminate\Http\Request;
+use App\Modules\Eleitor\Service\Eleitor as EleitorService;
 
 class EleitorApiResourceController extends AApiResourceController
 {
@@ -22,7 +20,16 @@ class EleitorApiResourceController extends AApiResourceController
 
     public function show($identificador): \Illuminate\Http\JsonResponse
     {
-        throw new \Exception("Método não disponível");
+        $eleitor = $this->service->obterUm($identificador);
+        if(!$eleitor) {
+            throw new \Exception('Eleitor não encontrado');
+        }
+
+        if($eleitor->nu_cpf !== auth()->user()->nu_cpf) {
+            throw new \Exception('O Eleitor precisa ser o mesmo que o usuário logado.');
+        }
+//parent::genericShow($eleitor)'
+       return EleitorResource::collection($eleitor);
     }
 
     public function index(): \Illuminate\Http\JsonResponse

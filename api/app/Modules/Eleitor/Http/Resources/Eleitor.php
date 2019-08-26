@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Conselho\Http\Resources;
+namespace App\Modules\Eleitor\Http\Resources;
 
 use App\Modules\Conta\Http\Resources\Usuario;
 use App\Modules\Localidade\Http\Resources\Endereco;

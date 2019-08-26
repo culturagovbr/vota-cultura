@@ -72,6 +72,7 @@ class Usuario extends Authenticatable implements JWTSubject
                 'dh_cadastro' => $this->dh_cadastro->format('Y-m-d H:i:s'),
                 'dh_ultima_atualizacao' => $this->dh_ultima_atualizacao->format('Y-m-d H:i:s'),
                 'st_ativo' => $this->st_ativo,
+                'nu_cpf' => $this->nu_cpf,
             ]
         ];
 

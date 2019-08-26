@@ -12,6 +12,8 @@
 </p>
 <p>
     <b>CPF:</b> {{$usuario->nu_cpf}}
+</p>
+<p>
     <b>E-mail:</b> {{$usuario->ds_email}}
 </p>
 

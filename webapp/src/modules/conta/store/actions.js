@@ -60,6 +60,7 @@ export const usuarioAlterarSenha = async ({ commit }, { coUsuario, usuario }) =>
     usuario,
   );
 };
+
 export const logout = async ({ commit }) => {
   commit(types.LOGOUT, {});
   usuarioService.logout({}).then(() => {
@@ -67,6 +68,9 @@ export const logout = async ({ commit }) => {
   });
 };
 
+export const alterarSenha = async (state, { codigoAlteracao, usuario }) => {
+  usuarioService.alterarSenha(codigoAlteracao, usuario);
+}
 export const solicitarPrimeiroAcesso = async ({ commit }, payload) => {
   commit(types.SOLICITAR_PRIMEIRO_ACESSO, payload);
   usuarioService.solicitarPrimeiroAcesso(payload);

@@ -185,9 +185,9 @@ export default {
       mensagemErro: 'app/setMensagemErro',
     }),
     solicitarAcesso() {
-      if (!this.$refs.form.validate()) {
-        return;
-      }
+      // if (!this.$refs.form.validate()) {
+      //   return;
+      // }
       this.loading = true;
 
       this.solicitarPrimeiroAcesso(this.dadosPrimeiroAcesso)

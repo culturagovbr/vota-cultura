@@ -31,8 +31,8 @@ class Usuario extends AbstractService
 
             switch ($request->tp_inscricao) {
                 case 'eleitor':
-                    $eleitorModel = app()->makeWith(EleitorModel::class, $request->post());
-                    $model = $eleitorModel->whereNull('co_usuario')->firstOrFail();
+                    $eleitorModel = app()->makeWith(EleitorModel::class);
+                    $model = $eleitorModel->where('nu_cpf', $request->nu_cpf)->whereNull('co_usuario')->firstOrFail();
                     $dadosUsuario = $model->toArray();
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ELEITOR;
                     break;
