@@ -42,7 +42,7 @@ Route::group([
 
 
     Route::group([
-//        'middleware' => 'api',
+        'middleware' => 'api',
         'prefix' => 'auth'
     ], function () {
         Route::post('login', 'AuthController@login');

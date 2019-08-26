@@ -22,10 +22,10 @@ class AutenticacaoUserProvider implements UserProvider
     {
         $dadosUsuario = auth()->payload()->toArray();
 
-        $usuario = new Usuario($dadosUsuario);
-//        $usuario->ds_email = $dadosUsuario['email'];
-//        $usuario->nu_cpf = $dadosUsuario['cpf'];
-        return $usuario;
+        if(!empty($dadosUsuario['user'])) {
+            return new Usuario((array)$dadosUsuario['user']);
+        }
+        return null;
     }
 
     /**

@@ -61,6 +61,7 @@ return [
 
     'providers' => [
         'autenticacao' => [
+            ///vota-cultura/api/app/Modules/Conta/Providers/AutenticacaoServiceProvider.php
             'driver' => 'autenticacao',
         ],
     ],
