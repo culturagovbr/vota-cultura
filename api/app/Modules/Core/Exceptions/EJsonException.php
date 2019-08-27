@@ -14,7 +14,10 @@ abstract class EJsonException extends Exception
 
     public function render($request)
     {
-        $retorno = ['message' => $this->getMessage()];
+        $retorno = [
+            'message' => $this->getMessage(),
+            'data' => NULL
+        ];
         $codigo = $this->getCode();
         if($codigo === 0) {
             $codigo = \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR;
