@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Modules\Eleitor\Http\Controllers;
 
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Eleitor\Http\Resources\Eleitor as EleitorResource;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
@@ -19,15 +21,15 @@ class EleitorApiResourceController extends AApiResourceController
         return parent::__construct($service);
     }
 
-    public function show($identificador)
+    public function show($identificador): \Illuminate\Http\JsonResponse
     {
         $eleitor = $this->service->obterUm($identificador);
         if(!$eleitor) {
-            throw new \Exception('Eleitor não encontrado');
+            throw new EParametrosInvalidos('Eleitor não encontrado');
         }
 
         if($eleitor->nu_cpf !== auth()->user()->nu_cpf) {
-            throw new \Exception('O Eleitor precisa ser o mesmo que o usuário logado.');
+            throw new EParametrosInvalidos('O Eleitor precisa ser o mesmo que o usuário logado.');
         }
 
         return $this->sendResponse(
@@ -37,8 +39,4 @@ class EleitorApiResourceController extends AApiResourceController
         );
     }
 
-//    public function index(): \Illuminate\Http\JsonResponse
-//    {
-//        throw new \Exception("Método não disponível");
-//    }
 }

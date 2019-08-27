@@ -25,8 +25,9 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $exception) : \Illuminate\Http\Response
+    public function render($request, Exception $exception)
     {
         if ($exception instanceof EJsonException)
         {
