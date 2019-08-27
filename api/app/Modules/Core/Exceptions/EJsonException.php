@@ -1,9 +1,10 @@
 <?php
-namespace App\Exceptions;
+
+namespace App\Modules\Core\Exceptions;
 
 use Exception;
 
-class ValidacaoCustomizadaException extends Exception
+abstract class EJsonException extends Exception
 {
     public function report()
     {
@@ -14,6 +15,6 @@ class ValidacaoCustomizadaException extends Exception
     {
         $retorno = ['message' => $this->getMessage()];
         $codigo = $this->getCode();
-        return response()->json($retorno,$codigo);
+        return response()->json($retorno, $codigo);
     }
 }
