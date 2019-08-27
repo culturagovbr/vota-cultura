@@ -6,6 +6,7 @@ use App\Exceptions\ValidacaoCustomizadaException;
 use App\Modules\Conta\Mail\Usuario\RecuperacaoSenha as RecuperacaoSenhaMail;
 use App\Core\Service\IService;
 use App\Modules\Conta\Service\Usuario as UsuarioService;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
@@ -33,7 +34,7 @@ class RecuperacaoSenha implements IService
             )->first();
 
             if (!$usuario) {
-                throw new ValidacaoCustomizadaException(
+                throw new EParametrosInvalidos(
                     'Usuario não encontrado',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -52,6 +53,9 @@ class RecuperacaoSenha implements IService
             DB::commit();
 
             return $usuario->toArray();
+        } catch (EParametrosInvalidos $exception) {
+            DB::rollBack();
+            throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -65,7 +69,7 @@ class RecuperacaoSenha implements IService
                 'ds_codigo_ativacao' => $ds_codigo_ativacao
             ])->first();
             if (!$usuario) {
-                throw new ValidacaoCustomizadaException(
+                throw new EParametrosInvalidos(
                     'Código inválido ou já utilizado!',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -79,10 +83,12 @@ class RecuperacaoSenha implements IService
 
             return $usuario->toArray();
 
+        } catch (EParametrosInvalidos $exception) {
+            DB::rollBack();
+            throw $exception;
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
         }
-
     }
 }

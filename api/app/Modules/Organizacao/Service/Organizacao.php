@@ -3,6 +3,7 @@
 namespace App\Modules\Organizacao\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Organizacao\Mail\Organizacao\CadastroComSucesso;
 use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
@@ -36,7 +37,7 @@ class Organizacao extends AbstractService
             ])->first();
 
             if ($organizacao) {
-                throw new \Exception(
+                throw new EParametrosInvalidos(
                     'Organizacao já cadastrada.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -46,7 +47,7 @@ class Organizacao extends AbstractService
             $representante = $serviceRepresentante->cadastrar($dados['representante']);
 
             if (!$representante) {
-                throw new \Exception('Não foi possível cadastrar o representante.');
+                throw new EParametrosInvalidos('Não foi possível cadastrar o representante.');
             }
             $dados['co_representante'] = $representante->co_representante;
 
@@ -54,7 +55,7 @@ class Organizacao extends AbstractService
             $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
             if (!$endereco) {
-                throw new \Exception('Não foi possível cadastrar o endereço.');
+                throw new EParametrosInvalidos('Não foi possível cadastrar o endereço.');
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;
@@ -72,7 +73,7 @@ class Organizacao extends AbstractService
 
             DB::commit();
             return $organizacao;
-        } catch (\Exception $queryException) {
+        } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
         }

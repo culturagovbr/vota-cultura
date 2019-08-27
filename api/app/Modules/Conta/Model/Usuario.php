@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conta\Model;
 
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -64,7 +65,7 @@ class Usuario extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims(): array
     {
-        $dadosPayload = [
+        return [
             'user' => [
                 'co_usuario' => $this->co_usuario,
                 'no_nome' => $this->no_nome,
@@ -75,8 +76,6 @@ class Usuario extends Authenticatable implements JWTSubject
                 'nu_cpf' => $this->nu_cpf,
             ]
         ];
-
-        return $dadosPayload;
     }
 
     public function setSenha($ds_senha)
@@ -96,7 +95,7 @@ class Usuario extends Authenticatable implements JWTSubject
     public function gerarCodigoAtivacao() : void
     {
         if(empty($this->ds_email)) {
-            throw new \Exception("E-mail não definido.");
+            throw new EParametrosInvalidos("E-mail não definido.");
         }
         $this->ds_codigo_ativacao = $this->gerarCodigo($this->ds_email);
     }

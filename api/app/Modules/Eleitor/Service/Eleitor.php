@@ -5,16 +5,11 @@ namespace App\Modules\Eleitor\Service;
 use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
-use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
-use App\Modules\Representacao\Service\Representante;
-use App\Modules\Upload\Service\Upload;
-use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 
 class Eleitor extends AbstractService
@@ -53,7 +48,7 @@ class Eleitor extends AbstractService
 
             DB::commit();
             return $eleitor;
-        } catch (\Exception $exception) {
+        } catch (EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
         }

@@ -3,6 +3,7 @@
 namespace App\Modules\Representacao\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
@@ -27,13 +28,16 @@ class Representante extends AbstractService
             ])->first();
 
             if ($representante) {
-                throw new \Exception(
+                throw new EParametrosInvalidos(
                     'Representante já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
 
             return parent::cadastrar($dados);
+        } catch (EParametrosInvalidos $queryException) {
+            DB::rollBack();
+            throw $queryException;
         } catch (\Exception $queryException) {
             DB::rollBack();
             throw $queryException;

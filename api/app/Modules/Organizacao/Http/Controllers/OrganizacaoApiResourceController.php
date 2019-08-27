@@ -2,12 +2,11 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
-use App\Modules\Organizacao\Model\Criterio;
-use App\Modules\Organizacao\Model\Organizacao;
-use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
+use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
 
 class OrganizacaoApiResourceController extends AApiResourceController
 {
@@ -21,11 +20,11 @@ class OrganizacaoApiResourceController extends AApiResourceController
 
     public function show($identificador): \Illuminate\Http\JsonResponse
     {
-        throw new \Exception("Método não disponível");
+        throw new EParametrosInvalidos("Método não disponível");
     }
 
     public function index(): \Illuminate\Http\JsonResponse
     {
-        throw new \Exception("Método não disponível");
+        throw new EParametrosInvalidos("Método não disponível");
     }
 }

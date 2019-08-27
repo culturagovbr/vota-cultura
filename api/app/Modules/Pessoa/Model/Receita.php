@@ -3,6 +3,8 @@
 namespace App\Modules\Pessoa\Model;
 
 
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
+
 class Receita
 {
     const SERVICO_PESSOA_FISICA = 'pessoa_fisica';
@@ -59,7 +61,7 @@ class Receita
     public function converterResultadoParaArray()
     {
         if (empty($this->resultadoConsulta)) {
-            throw new \Exception("Resultado não definido.");
+            throw new EParametrosInvalidos("Resultado não definido.");
         }
 
         $resultArray = json_decode(
@@ -67,7 +69,7 @@ class Receita
             true
         );
         if (!is_array($resultArray)) {
-            throw new \Exception("Não foi possível converter o resultado para Array.");
+            throw new EParametrosInvalidos("Não foi possível converter o resultado para Array.");
         }
         $this->resultadoConsulta = $resultArray;
     }

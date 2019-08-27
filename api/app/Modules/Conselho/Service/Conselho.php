@@ -5,6 +5,7 @@ namespace App\Modules\Conselho\Service;
 use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Mail\Conselho\CadastroComSucesso;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Representacao\Service\Representante;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
@@ -40,7 +41,7 @@ class Conselho extends AbstractService
 
 
             if ($conselho) {
-                throw new \Exception(
+                throw new EParametrosInvalidos(
                     'Conselho já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -50,7 +51,7 @@ class Conselho extends AbstractService
             $representante = $serviceRepresentante->cadastrar($dados['representante']);
 
             if (!$representante) {
-                throw new \Exception('Não foi possível cadastrar o representante.');
+                throw new EParametrosInvalidos('Não foi possível cadastrar o representante.');
             }
 
             $dados['co_representante'] = $representante->co_representante;
@@ -58,7 +59,7 @@ class Conselho extends AbstractService
             $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
             if (!$endereco) {
-                throw new \Exception('Não foi possível cadastrar o endereço.');
+                throw new EParametrosInvalidos('Não foi possível cadastrar o endereço.');
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;
@@ -89,7 +90,7 @@ class Conselho extends AbstractService
 
             DB::commit();
             return $conselho;
-        } catch (\Exception $queryException) {
+        } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
         }

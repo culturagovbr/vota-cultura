@@ -3,6 +3,7 @@
 namespace App\Modules\Conta\Service;
 
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil as PerfilModel;
@@ -34,7 +35,7 @@ class Usuario extends AbstractService
                     $eleitorModel = app()->makeWith(EleitorModel::class);
                     $model = $eleitorModel->where('nu_cpf', $request->nu_cpf)->firstOrFail();
                     if(!empty($model->co_usuario)) {
-                        throw new \Exception('O CPF não está inscrito como eleitor.');
+                        throw new EParametrosInvalidos('O CPF não está inscrito como eleitor.');
                     }
                     $dadosUsuario = $model->toArray();
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ELEITOR;
@@ -43,13 +44,13 @@ class Usuario extends AbstractService
                     $conselhoModel = app()->makeWith(ConselhoModel::class);
                     $model = $conselhoModel->where('nu_cnpj', $request->nu_cnpj)->firstOrFail();
                     if(!empty($model->co_usuario)) {
-                        throw new \Exception('O CNPJ do conselho de cultura não está inscrito.');
+                        throw new EParametrosInvalidos('O CNPJ do conselho de cultura não está inscrito.');
                     }
                     $representante = $model->representante;
                     $dadosUsuario = $representante->toArray();
 
                     if($dadosUsuario['nu_cpf'] !== $request->nu_cpf) {
-                        throw new \Exception(
+                        throw new EParametrosInvalidos(
                             'O CPF informado não corresponde ao CPF do representante.'
                         );
                     }
@@ -60,13 +61,13 @@ class Usuario extends AbstractService
                     $organizacaoModel = app()->makeWith(OrganizacaoModel::class, $request->post());
                     $model = $organizacaoModel->where('nu_cnpj', $request->nu_cnpj)->firstOrFail();
                     if(!empty($model->co_usuario)) {
-                        throw new \Exception('O CNPJ da organização ou entidade cultural não está inscrito.');
+                        throw new EParametrosInvalidos('O CNPJ da organização ou entidade cultural não está inscrito.');
                     }
                     $representante = $model->representante;
                     $dadosUsuario = $representante->toArray();
 
                     if($dadosUsuario['nu_cpf'] !== $request->nu_cpf) {
-                        throw new \Exception(
+                        throw new EParametrosInvalidos(
                             'O CPF informado não corresponde ao CPF do representante.'
                         );
                     }
@@ -74,7 +75,7 @@ class Usuario extends AbstractService
                     $dadosUsuario['co_perfil'] = PerfilModel::CODIGO_ORGANIZACAO;
                     break;
                 default:
-                    throw new \Exception("Tipo de inscrição desconhecido.");
+                    throw new EParametrosInvalidos("Tipo de inscrição desconhecido.");
                     break;
             }
 
@@ -84,7 +85,7 @@ class Usuario extends AbstractService
 
             DB::commit();
             return $usuarioModel;
-        } catch (\Exception $exception) {
+        } catch (EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
         }
@@ -99,7 +100,7 @@ class Usuario extends AbstractService
                 'st_ativo' => false
             ])->first();
             if (!$usuario) {
-                throw new \Exception('Usuario não encontrado', 422);
+                throw new EParametrosInvalidos('Usuario não encontrado', 422);
             }
 
             DB::beginTransaction();
@@ -110,7 +111,7 @@ class Usuario extends AbstractService
 
             return $usuario;
 
-        } catch (\Exception $exception) {
+        } catch (EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
         }
@@ -125,7 +126,7 @@ class Usuario extends AbstractService
             ])->first();
 
             if ($usuario) {
-                throw new \Exception(
+                throw new EParametrosInvalidos(
                     'Usuario já cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -152,7 +153,7 @@ class Usuario extends AbstractService
             );
             DB::commit();
             return $usuario;
-        } catch (\Exception $queryException) {
+        } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
         }
@@ -164,7 +165,7 @@ class Usuario extends AbstractService
             DB::beginTransaction();
             $dados = $request->all();
             if (!$dados || !isset($dados['ds_senha_atual'])) {
-                throw new \Exception(
+                throw new EParametrosInvalidos(
                     'Senha não informada.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -172,14 +173,14 @@ class Usuario extends AbstractService
             $usuario = $this->getModel()->find($co_usuario);
 
             if (!$usuario || !$usuario->validarSenha($dados['ds_senha_atual']) ) {
-                throw new \Exception(
+                throw new EParametrosInvalidos(
                     'Dados inválidos.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
 
             if($usuario->validarSenha($dados['ds_senha'])) {
-                throw new \Exception(
+                throw new EParametrosInvalidos(
                     'A nova senha é igual a atual.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
@@ -188,73 +189,10 @@ class Usuario extends AbstractService
             $usuario->setSenha($dados['ds_senha']);
             $usuario->save();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
         }
     }
-
-//
-//    public function atualizar(Request $request, int $co_usuario) : ?Model
-//    {
-//        try {
-//            $usuario = $this->getModel()->find($co_usuario);
-//            if (!$usuario) {
-//                throw new ValidacaoCustomizadaException(
-//                    'Usuário não encontrado.',
-//                    Response::HTTP_NOT_ACCEPTABLE
-//                );
-//            }
-//
-//            if ($request->user()->co_usuario !== $usuario->co_usuario) {
-//                return response()->json(
-//                    ['error' => 'Operação não permitida.'],
-//                    Response::HTTP_UNAUTHORIZED
-//                );
-//            }
-//            DB::beginTransaction();
-//
-//            $horarioAtual = Carbon::now();
-//            $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
-//            $usuario->setSenha($request->post('ds_senha'));
-//            $usuario->dt_nascimento = $request->post('dt_nascimento');
-//            $usuario->no_nome = $request->post('no_nome');
-//            $usuario->save();
-//
-//            DB::commit();
-//            return $usuario->toArray();
-//        } catch (\Exception $queryException) {
-//            DB::rollBack();
-//            throw $queryException;
-//        }
-//    }
-//
-//    public function remover(Request $request, int $identificador)
-//    {
-//        try {
-//            if ($request->user()->co_usuario !== $identificador) {
-//                return response()->json(
-//                    ['error' => 'Operação não permitida.'],
-//                    Response::HTTP_UNAUTHORIZED
-//                );
-//            }
-//            DB::beginTransaction();
-//
-//            $usuario = $this->getModel()->find($identificador);
-//            $horarioAtual = Carbon::now();
-//            $usuario->dt_ultima_atualizacao = $horarioAtual->toDateTimeString();
-//            $usuario->st_ativo = false;
-//            $usuario->save();
-//
-//            ## $usuario->delete();
-//
-//            DB::commit();
-//        } catch (\Exception $queryException) {
-//            DB::rollBack();
-//            throw $queryException;
-//        }
-//
-//    }
-//
 
 }
