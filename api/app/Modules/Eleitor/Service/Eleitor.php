@@ -3,6 +3,7 @@
 namespace App\Modules\Eleitor\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
@@ -10,6 +11,7 @@ use App\Modules\Representacao\Service\Representante;
 use App\Modules\Upload\Service\Upload;
 use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
@@ -35,9 +37,9 @@ class Eleitor extends AbstractService
             ])->first();
 
             if ($eleitor) {
-                throw new \Exception(
-                    Response::HTTP_NOT_ACCEPTABLE,
-                    'Eleitor já cadastrado.'
+                throw new EParametrosInvalidos(
+                    'Eleitor já cadastrado.',
+                    Response::HTTP_NOT_ACCEPTABLE
                 );
             }
 
@@ -57,4 +59,17 @@ class Eleitor extends AbstractService
         }
     }
 
+    public function obterUm($identificador) : ?Model
+    {
+        $eleitor = parent::obterUm($identificador);
+        if(!$eleitor) {
+            throw new EParametrosInvalidos('Eleitor não encontrado');
+        }
+
+        if($eleitor->nu_cpf !== Auth::user()->nu_cpf) {
+            throw new EParametrosInvalidos('O Eleitor precisa ser o mesmo que o usuário logado.');
+        }
+
+        return $eleitor;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Modules\Core\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\Response;
 
 abstract class EJsonException extends Exception
 {
@@ -15,6 +16,10 @@ abstract class EJsonException extends Exception
     {
         $retorno = ['message' => $this->getMessage()];
         $codigo = $this->getCode();
-        return response()->json($retorno, $codigo);
+        if($codigo === 0) {
+            $codigo = \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        return Response::json($retorno, $codigo);
     }
 }
