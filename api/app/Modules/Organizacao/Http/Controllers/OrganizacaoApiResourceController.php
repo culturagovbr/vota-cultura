@@ -15,6 +15,7 @@ class OrganizacaoApiResourceController extends AApiResourceController
 
     public function __construct(OrganizacaoService $service)
     {
+        $this->middleware('auth:api')->except('store');
         parent::__construct($service);
     }
 

@@ -17,6 +17,7 @@ class EleitorApiResourceController extends AApiResourceController
 
     public function __construct(EleitorService $service)
     {
+        $this->middleware('auth:api')->except('store');
         return parent::__construct($service);
     }
 

@@ -34,7 +34,7 @@
         "name": "Cronograma",
         "slug": "cronograma",
         "version": "1.0",
-        "description": "This is the description for the Cronograma module.",
+        "description": "Modulo de cronograma para trabalhar com datas do edital.",
         "id": 1698177551,
         "enabled": true,
         "order": 9001

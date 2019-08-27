@@ -51,6 +51,9 @@ class Eleitor extends AbstractService
         } catch (EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
         }
     }
 

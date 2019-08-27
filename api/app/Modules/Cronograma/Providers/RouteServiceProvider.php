@@ -19,22 +19,13 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
     }
 
-    protected function mapWebRoutes()
-    {
-        Route::group([
-            'middleware' => 'web',
-            'namespace'  => $this->namespace,
-        ], function ($router) {
-            require module_path('cronograma', 'Routes/web.php', 'app');
-        });
-    }
     protected function mapApiRoutes()
     {
         Route::group([
             'middleware' => 'api',
             'namespace'  => $this->namespace,
             'prefix'     => 'api',
-        ], function ($router) {
+        ], function () {
             require module_path('cronograma', 'Routes/api.php', 'app');
         });
     }
