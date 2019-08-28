@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import NProgress from 'nprogress';
 import store from './store';
 import appRoutes from './routerConfig';
-import { tokenValida } from '@/modules/shared/service/helpers/jwt';
 import 'nprogress/nprogress.css';
 import coreRoutes from '@/core/router';
 
@@ -32,7 +31,7 @@ router.beforeEach((to, from, next) => {
       throw error;
     }
 
-    if ( usuarioLogado && to.fullPath === '/conta/autenticar') {
+    if (usuarioLogado && to.fullPath === '/conta/autenticar') {
       proximaPagina = '/inicio';
     }
 

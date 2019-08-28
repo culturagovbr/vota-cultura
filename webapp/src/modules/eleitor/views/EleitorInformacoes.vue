@@ -135,6 +135,9 @@ export default {
     eleitorGetter(value) {
       this.eleitor = value;
     },
+    estadosGetter() {
+      this.listaUF = this.estadosGetter;
+    },
   },
   mounted() {
     this.listaUF = this.estadosGetter;
@@ -145,9 +148,10 @@ export default {
   },
   methods: {
     formatarDataCarbon(data) {
-      const dia = data.split('/')[0];
-      const mes = data.split('/')[1];
-      const ano = data.split('/')[2];
+      if (data.length === 0 || !data.trim()) {
+        return false;
+      }
+      const [dia, mes, ano] = data.split('/');
 
       return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },

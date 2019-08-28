@@ -239,14 +239,14 @@ export default {
     email: '',
     emailConfirmation: '',
     rules: {
-      required: v => !!v || 'Campo não preenchido',
-      cpfInvalido: v => !!v || 'CPF não encontrado',
-      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-      email: (v) => {
+      required: value => !!value || 'Campo não preenchido',
+      cpfInvalido: value => !!value || 'CPF não encontrado',
+      phoneMin: value => (value && value.length >= 9) || 'Mínimo de 9 caracteres',
+      cpfMin: value => (value && value.length === 11) || 'Mínimo de 11 caracteres',
+      email: (value) => {
         // eslint-disable-next-line
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'E-mail invalido';
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || 'E-mail invalido';
       },
       emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
       dataAniversario: (value) => {
@@ -257,7 +257,7 @@ export default {
 
         const hoje = new Date();
         const dataAniversario = new Date(ano, mes - 1, dia);
-        const validDate = dataAniversario && ((dataAniversario.getMonth() + 1) === mes);
+        const validDate = (dataAniversario.getMonth() + 1) === mes;
 
         if (!validDate) {
           return 'Data inválida';
