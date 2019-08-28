@@ -114,7 +114,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'EleitorInformacoes',
+  name: 'EleitorDetalhesInscricaoVisualizacao',
   data: () => ({
     listaUF: [],
     eleitor: {},

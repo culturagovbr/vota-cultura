@@ -16,7 +16,7 @@
           </v-toolbar>
           <v-card-text>
             <v-container v-if="Object.keys(eleitorGetter).length > 0">
-              <eleitor-dados-cadastrais-visualizacao />
+              <eleitor-detalhes-inscricao-visualizacao />
               <v-layout
                 wrap
                 align-center
@@ -121,12 +121,12 @@
 import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
 import { eventHub } from '@/event';
-import EleitorDadosCadastraisVisualizacao from './EleitorDadosCadastraisVisualizacao';
+import EleitorDetalhesInscricaoVisualizacao from './EleitorDetalhesInscricaoVisualizacao';
 
 export default {
   name: 'RevisaoEleitor',
   components: {
-    EleitorDadosCadastraisVisualizacao,
+    EleitorDetalhesInscricaoVisualizacao,
   },
   data: () => ({
     formEnviado: false,
@@ -191,11 +191,6 @@ export default {
   mounted() {
     this.listaUF = this.estadosGetter;
     this.eleitor = this.eleitorGetter;
-
-
-    // apagar
-    this.obterDadosEleitor(1);
   },
-
 };
 </script>

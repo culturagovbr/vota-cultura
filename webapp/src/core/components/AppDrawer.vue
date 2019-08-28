@@ -193,7 +193,7 @@ export default {
         this.definirItemMenu({
           title: 'Dados do Eleitor',
           group: 'apps',
-          name: 'InscricaoEleitorRevisao',
+          name: 'EleitorDetalheInscricaoRoute',
           icon: 'group',
         }, 'Eleitor');
 
@@ -220,15 +220,14 @@ export default {
       }
     },
     obterRotaFilha(item, subItem) {
-console.log(123);
       if (subItem.href) {
         return {};
       }
-      let child = { name: `${item.group}/${subItem.name}` };
+      let filho = { name: `${item.group}/${subItem.name}` };
       if (subItem.component) {
-        child = { name: subItem.component };
+        filho = { name: subItem.component };
       }
-      return child;
+      return filho;
     },
   },
 };

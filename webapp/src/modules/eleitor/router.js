@@ -1,4 +1,4 @@
-import { AuthLayout, DefaultLayout } from '@/core/components/layouts';
+import { DefaultLayout } from '@/core/components/layouts';
 
 export default [
   {
@@ -33,6 +33,17 @@ export default [
           public: true,
         },
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/eleitor/views/RevisaoEleitor.vue'),
+      },
+      {
+        path: '/eleitor/detalhe-inscricao',
+        name: 'EleitorDetalheInscricaoRoute',
+        meta: {
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          icon: 'dashboard',
+          public: true,
+        },
+        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/eleitor/views/EleitorDetalhesInscricao.vue'),
       },
     ],
   },
