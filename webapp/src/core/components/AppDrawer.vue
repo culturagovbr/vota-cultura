@@ -52,7 +52,7 @@
                 <v-list-tile
                   v-for="grand in subItem.children"
                   :key="grand.name"
-                  :to="genChildTarget(item, grand)"
+                  :to="obterRotaFilha(item, grand)"
                   :href="grand.href"
                   ripple="ripple"
                 >
@@ -65,7 +65,7 @@
               <v-list-tile
                 v-else
                 :key="subItem.name"
-                :to="genChildTarget(item, subItem)"
+                :to="obterRotaFilha(item, subItem)"
                 :href="subItem.href"
                 :disabled="subItem.disabled"
                 :target="subItem.target"
@@ -125,7 +125,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import menuAPI from '@/core/api/menu';
 
 export default {
   name: 'AppDrawer',
@@ -155,6 +154,15 @@ export default {
       },
       showDrawer: false,
       menuInscrivaseAtivo: false,
+      usuarioLogado: {},
+      menuAPI: [
+        {
+          title: 'Início',
+          group: 'apps',
+          icon: 'home',
+          name: 'Inicio',
+        },
+      ],
     };
   },
   computed: {
@@ -162,6 +170,7 @@ export default {
       ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
       ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
       ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
+      usuario: 'conta/usuario',
     }),
     computeGroupActive() {
       return true;
@@ -174,68 +183,44 @@ export default {
     value(val) {
       this.showDrawer = val;
     },
-    ativarInscricaoConselho(value) {
-      let objetoMenu = {};
-      if (value === true) {
-        objetoMenu = {
-          title: 'Conselhos de Cultura',
+    usuario(valor) {
+      this.usuarioLogado = valor;
+    },
+    usuarioLogado(usuario) {
+      this.menus = this.menuAPI;
+
+      if (Object.keys(usuario).length > 0) {
+        this.definirItemMenu({
+          title: 'Dados do Eleitor',
           group: 'apps',
-          name: 'Conselho',
+          name: 'InscricaoEleitorRevisao',
           icon: 'group',
-        };
+        }, 'Eleitor');
+
       }
-      this.definirItemMenuInscricao('Conselho', objetoMenu);
-    },
-    ativarInscricaoOrganizacao(value) {
-      let objetoMenu = {};
-      if (value === true) {
-        objetoMenu = {
-          title: 'Organização ou Entidade Cultural',
-          group: 'apps',
-          name: 'Organizacao',
-          icon: 'color_lens',
-        };
-      }
-      this.definirItemMenuInscricao('Organizacao', objetoMenu);
-    },
-    ativarInscricaoEleitor(value) {
-      let objetoMenu = {};
-      if (value === true) {
-        objetoMenu = {
-          title: 'Eleitor',
-          group: 'apps',
-          name: 'Eleitor',
-          icon: 'thumbs_up_down',
-        };
-      }
-      this.definirItemMenuInscricao('Eleitor', objetoMenu);
     },
   },
   mounted() {
     this.obterCronogramas();
-    this.menus = menuAPI;
+    this.usuarioLogado = this.usuario;
   },
   methods: {
     ...mapActions({
       obterCronogramas: 'cronograma/obterCronogramas',
     }),
 
-    definirItemMenuInscricao(nomeMenu, objetoMenu) {
-      const nomeAgrupadorInscricoes = 'AgrupadorInscricao';
-      const indiceAgrupadorInscricaoDeMenus = this.menus.findIndex(indice => indice.name === nomeAgrupadorInscricoes);
+    definirItemMenu(objetoMenu, nomeAgrupador) {
+      this.definirAgrupadorMenu(nomeAgrupador);
+      this.menus.push(objetoMenu);
+    },
+    definirAgrupadorMenu(nomeAgrupador) {
+      const indiceAgrupadorInscricaoDeMenus = this.menus.findIndex(indice => indice.name === nomeAgrupador);
       if (indiceAgrupadorInscricaoDeMenus === -1) {
-        this.menus.push({ header: 'Inscreva-se', name: nomeAgrupadorInscricoes });
-      }
-      const indiceItemDeMenus = this.menus.findIndex(indice => indice.name === nomeMenu);
-      if (Object.keys(objetoMenu).length < 1 && indiceItemDeMenus > -1) {
-        this.menus.splice(indiceItemDeMenus);
-      }
-      if (Object.keys(objetoMenu).length > 1 && indiceItemDeMenus === -1) {
-        this.menus.push(objetoMenu);
+        this.menus.push({ header: nomeAgrupador, name: nomeAgrupador });
       }
     },
-
-    genChildTarget(item, subItem) {
+    obterRotaFilha(item, subItem) {
+console.log(123);
       if (subItem.href) {
         return {};
       }

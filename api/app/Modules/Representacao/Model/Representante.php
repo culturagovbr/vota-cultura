@@ -13,7 +13,6 @@ class Representante extends Model
 
     protected $table = 'tb_representante';
     protected $primaryKey = 'co_representante';
-
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $dates = [

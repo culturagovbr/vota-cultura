@@ -146,8 +146,8 @@
                   <v-flex sm4>
                     <v-select
                       v-model="eleitor.st_estrangeiro"
-                      :items="[{ st_estrangeiro: '0' , nome: 'Brasileiro'},
-                               { st_estrangeiro: '1' , nome: 'Estrangeiro'}]"
+                      :items="[{ st_estrangeiro: 0 , nome: 'Brasileiro'},
+                               { st_estrangeiro: 1 , nome: 'Estrangeiro'}]"
                       item-value="st_estrangeiro"
                       item-text="nome"
                       label="*Nacionalidade"
@@ -196,9 +196,9 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
 import File from '@/core/components/upload/File';
-import { eventHub } from '@/event';
 import Validate from '../../shared/util/validate';
 
 export default {
@@ -248,20 +248,23 @@ export default {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(v) || 'E-mail invalido';
       },
-      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
-      dataAniversario: (v) => {
-        const bits = v.split('/');
-        const hoje = new Date();
-        const dataAniversario = new Date(bits[2], bits[1] - 1, bits[0]);
+      emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
+      dataAniversario: (value) => {
+        if (value.length === 0 || !value.trim()) {
+          return false;
+        }
+        let [dia, mes, ano] = value.split('/');
 
-        const validDate = dataAniversario && (dataAniversario.getMonth() + 1) == bits[1];
+        const hoje = new Date();
+        const dataAniversario = new Date(ano, mes - 1, dia);
+        const validDate = dataAniversario && ((dataAniversario.getMonth() + 1) === mes);
 
         if (!validDate) {
           return 'Data inválida';
         }
 
-        let ano = hoje.getFullYear() - dataAniversario.getFullYear();
-        const mes = hoje.getMonth() - dataAniversario.getMonth();
+        ano = hoje.getFullYear() - dataAniversario.getFullYear();
+        mes = hoje.getMonth() - dataAniversario.getMonth();
         if (mes < 0 || (mes === 0 && hoje.getDate() < dataAniversario.getDate())) {
           ano--;
         }
