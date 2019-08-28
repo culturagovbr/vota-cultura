@@ -16,7 +16,7 @@
           </v-toolbar>
           <v-card-text>
             <v-container v-if="Object.keys(eleitorGetter).length > 0">
-              <eleitor-informacoes />
+              <eleitor-dados-cadastrais-visualizacao />
               <v-layout
                 wrap
                 align-center
@@ -121,12 +121,12 @@
 import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
 import { eventHub } from '@/event';
-import EleitorInformacoes from './EleitorInformacoes';
+import EleitorDadosCadastraisVisualizacao from './EleitorDadosCadastraisVisualizacao';
 
 export default {
   name: 'RevisaoEleitor',
   components: {
-    EleitorInformacoes,
+    EleitorDadosCadastraisVisualizacao,
   },
   data: () => ({
     formEnviado: false,
@@ -183,9 +183,7 @@ export default {
       this.dialog = false;
     },
     formatarDataCarbon(data) {
-      const dia = data.split('/')[0];
-      const mes = data.split('/')[1];
-      const ano = data.split('/')[2];
+      const [dia, mes, ano] = data.split('/');
 
       return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },
