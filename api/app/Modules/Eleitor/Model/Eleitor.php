@@ -2,6 +2,7 @@
 
 namespace App\Modules\Eleitor\Model;
 
+use App\Modules\Conta\Model\Usuario;
 use Illuminate\Database\Eloquent\Model;
 
 class Eleitor extends Model
@@ -50,5 +51,14 @@ class Eleitor extends Model
     public function getNacionalidadeAttribute()
     {
         return ($this->st_estrangeiro === true) ? 'Estrangeiro' : 'Brasileiro';
+    }
+
+    public function usuario()
+    {
+        return $this->hasOne(
+            Usuario::class,
+            'co_usuario',
+            'co_usuario'
+        );
     }
 }

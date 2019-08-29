@@ -41,7 +41,7 @@ export default [
           title: 'Detalhes da inscrição',
           group: 'apps',
           icon: 'dashboard',
-          public: true,
+          public: false,
         },
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/eleitor/views/EleitorDetalhesInscricao.vue'),
       },

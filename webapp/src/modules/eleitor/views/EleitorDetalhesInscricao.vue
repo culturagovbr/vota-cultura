@@ -16,7 +16,7 @@
           </v-toolbar>
           <v-card-text>
             <v-container v-if="Object.keys(eleitorGetter).length > 0">
-              <eleitor-detalhes-inscricao-visualizacao/>
+              <eleitor-detalhes-inscricao-visualizacao />
             </v-container>
           </v-card-text>
         </v-card>
@@ -41,16 +41,26 @@ export default {
     dialog: false,
     confirmacaoDadosDeInscricao: false,
     eleitor: {},
+    usuarioLogado: {},
   }),
   computed: {
     ...mapGetters({
       eleitorGetter: 'eleitor/eleitor',
       estadosGetter: 'localidade/estados',
+      usuario: 'conta/usuario',
     }),
   },
   watch: {
     eleitorGetter(value) {
       this.eleitor = value;
+    },
+    usuario(valor) {
+      this.usuarioLogado = valor;
+    },
+    usuarioLogado(usuario) {
+      if (usuario.co_eleitor) {
+        this.obterDadosEleitor(usuario.co_eleitor);
+      }
     },
   },
   methods: {
@@ -97,10 +107,7 @@ export default {
   },
   mounted() {
     this.eleitor = this.eleitorGetter;
-
-
-    // apagar
-    this.obterDadosEleitor(1);
+    this.usuarioLogado = this.usuario;
   },
 
 };

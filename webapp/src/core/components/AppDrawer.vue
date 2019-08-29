@@ -196,7 +196,6 @@ export default {
           name: 'EleitorDetalheInscricaoRoute',
           icon: 'group',
         }, 'Eleitor');
-
       }
     },
   },

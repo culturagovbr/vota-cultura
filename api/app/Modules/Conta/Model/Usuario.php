@@ -3,6 +3,8 @@
 namespace App\Modules\Conta\Model;
 
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Eleitor\Model\Eleitor;
+use App\Modules\Organizacao\Model\Organizacao;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -52,7 +54,16 @@ class Usuario extends Authenticatable implements JWTSubject
     public function organizacoes()
     {
         return $this->hasMany(
-            \App\Modules\Organizacao\Model\Organizacao::class,
+            Organizacao::class,
+            'co_usuario',
+            'co_usuario'
+        );
+    }
+
+    public function eleitor()
+    {
+        return $this->hasOne(
+            Eleitor::class,
             'co_usuario',
             'co_usuario'
         );
@@ -74,6 +85,8 @@ class Usuario extends Authenticatable implements JWTSubject
                 'dh_ultima_atualizacao' => $this->dh_ultima_atualizacao->format('Y-m-d H:i:s'),
                 'st_ativo' => $this->st_ativo,
                 'nu_cpf' => $this->nu_cpf,
+//                'perfil' => $this->perfil,
+                'co_eleitor' => ($this->eleitor) ? $this->eleitor->co_eleitor : null,
             ]
         ];
     }

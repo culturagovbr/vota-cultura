@@ -22,6 +22,14 @@
           >
             Fazer login novamente
           </v-btn>
+          <v-btn
+            class="mt-2"
+            block
+            color="primary"
+            to="/inicio"
+          >
+            Início
+          </v-btn>
         </div>
       </div>
     </v-card-text>
