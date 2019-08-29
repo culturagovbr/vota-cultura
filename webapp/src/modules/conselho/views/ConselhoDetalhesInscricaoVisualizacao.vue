@@ -232,6 +232,9 @@ export default {
   watch: {
     conselhoGetter(value) {
       this.conselho = value;
+      if (this.listaMunicipios.length < 1 && Object.keys(this.conselhoGetter).length > 0) {
+        this.obterMunicipios(value.endereco.co_ibge);
+      }
     },
     estadosGetter(value) {
       this.listaUF = value;
@@ -247,9 +250,7 @@ export default {
     }
     this.conselho = this.conselhoGetter;
     this.listaMunicipios = this.municipiosGetter;
-    if (this.listaMunicipios.length < 1) {
-      this.obterMunicipios(this.conselho.endereco.co_ibge);
-    }
+
   },
   methods: {
     formatarDataCarbon(data) {

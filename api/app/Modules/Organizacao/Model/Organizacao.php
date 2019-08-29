@@ -81,8 +81,8 @@ class Organizacao extends Model
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
 
-    public function obterCriteriosCostumizados() {
-
+    public function obterCriteriosCostumizados()
+    {
         $criteriosCostumizados = new \stdClass();
         foreach ($this->criterios()->get() as $criterio) {
             $criteriosCostumizados->{$criterio->tp_criterio} = $criterio->co_criterio;
@@ -90,7 +90,8 @@ class Organizacao extends Model
         return $criteriosCostumizados;
     }
 
-    public function obterPontuacao() {
+    public function obterPontuacao()
+    {
         $pontuacao = 0;
         foreach ($this->criterios()->get() as $criterio) {
             $pontuacao += $criterio->qt_pontuacao * $criterio->qt_peso;
