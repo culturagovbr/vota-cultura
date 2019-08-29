@@ -28,14 +28,20 @@ class RecuperacaoSenha implements IService
             $usuario = $this->usuarioService->getModel()->where(
                 [
                     'nu_cpf' => $dados['nu_cpf'],
-                    'ds_email' => $dados['ds_email'],
                     'st_ativo' => true
                 ]
             )->first();
 
             if (!$usuario) {
+               throw new EParametrosInvalidos(
+                   'Usuario não encontrado',
+                   Response::HTTP_NOT_ACCEPTABLE
+               );
+            }
+
+            if ($usuario->ds_email !== $dados['ds_email']) {
                 throw new EParametrosInvalidos(
-                    'Usuario não encontrado',
+                    'O e-mail não corresponde ao e-mail cadastrado.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }

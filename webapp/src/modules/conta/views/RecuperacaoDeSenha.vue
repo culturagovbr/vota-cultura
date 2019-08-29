@@ -137,8 +137,9 @@ export default {
           this.step = 2;
         })
         .catch((error) => {
-          this.loading = false;
           this.mensagemErro(error.response.data.message);
+        }).finally(() => {
+          this.loading = false;
         });
     },
   },

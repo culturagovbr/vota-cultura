@@ -55,7 +55,7 @@ export const cadastrarUsuario = async ({ commit }, usuario) => {
 
 export const recuperarSenha = async ({ commit }, payload) => {
   commit(types.RECUPERAR_SENHA, payload);
-  usuarioService.recuperarSenha(payload);
+  return usuarioService.recuperarSenha(payload);
 };
 
 export const usuarioAlterarSenha = async ({ commit }, { coUsuario, usuario }) => {
