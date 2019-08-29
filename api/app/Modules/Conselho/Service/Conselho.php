@@ -10,6 +10,7 @@ use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Representacao\Service\Representante;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use App\Modules\Upload\Service\Upload;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
@@ -94,5 +95,21 @@ class Conselho extends AbstractService
             DB::rollBack();
             throw $queryException;
         }
+    }
+
+    public function obterUm($identificador) : ?Model
+    {
+        $conselho = parent::obterUm($identificador);
+        if(!$conselho) {
+            throw new EParametrosInvalidos('Conselho não encontrado');
+        }
+
+
+        $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
+        if($conselho->co_conselho !== $usuarioAutenticado['co_conselho']) {
+            throw new EParametrosInvalidos('O Conselho precisa ser o mesmo que o usuário logado.');
+        }
+
+        return $conselho;
     }
 }

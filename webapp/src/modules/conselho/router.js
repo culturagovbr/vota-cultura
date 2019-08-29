@@ -35,6 +35,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/RevisaoConselho.vue'),
       },
+      {
+        path: '/conselho/detalhes-inscricao',
+        name: 'ConselhoDetalhesInscricaoRoute',
+        meta: {
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoDetalhesInscricao.vue'),
+      },
     ],
   },
 ];

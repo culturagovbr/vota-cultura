@@ -171,6 +171,7 @@ export default {
       ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
       ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
       usuario: 'conta/usuario',
+      perfil: 'conta/perfil',
     }),
     computeGroupActive() {
       return true;
@@ -186,17 +187,9 @@ export default {
     usuario(valor) {
       this.usuarioLogado = valor;
     },
-    usuarioLogado(usuario) {
+    usuarioLogado() {
       this.menus = this.menuAPI;
-
-      if (Object.keys(usuario).length > 0) {
-        this.definirItemMenu({
-          title: 'Dados do Eleitor',
-          group: 'apps',
-          name: 'EleitorDetalheInscricaoRoute',
-          icon: 'group',
-        }, 'Eleitor');
-      }
+      this.carregarMenusUsuarioLogado();
     },
   },
   mounted() {
@@ -208,6 +201,36 @@ export default {
       obterCronogramas: 'cronograma/obterCronogramas',
     }),
 
+    carregarMenusUsuarioLogado() {
+      if (Object.keys(this.usuario).length < 1) {
+        return false;
+      }
+
+      this.carregarMenusConselho();
+      this.carregarMenusEleitor();
+
+      return true;
+    },
+    carregarMenusEleitor() {
+      if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'EleitorDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Eleitor');
+      }
+    },
+    carregarMenusConselho() {
+      if (this.perfil.no_perfil === 'conselho') {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'ConselhoDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Conselho');
+      }
+    },
     definirItemMenu(objetoMenu, nomeAgrupador) {
       this.definirAgrupadorMenu(nomeAgrupador);
       this.menus.push(objetoMenu);

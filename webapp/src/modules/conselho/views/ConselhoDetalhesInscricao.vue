@@ -15,8 +15,8 @@
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container v-if="Object.keys(eleitorGetter).length > 0">
-              <eleitor-detalhes-inscricao-visualizacao />
+            <v-container v-if="Object.keys(conselhoGetter).length > 0">
+              <conselho-detalhes-inscricao-visualizacao />
             </v-container>
           </v-card-text>
         </v-card>
@@ -28,40 +28,39 @@
 <script>
 import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
-import EleitorDetalhesInscricaoVisualizacao from './EleitorDetalhesInscricaoVisualizacao';
+import ConselhoDetalhesInscricaoVisualizacao from './ConselhoDetalhesInscricaoVisualizacao';
 
 export default {
-  name: 'EleitorDetalhesInscricao',
+  name: 'ConselhoDetalhesInscricao',
   components: {
-    EleitorDetalhesInscricaoVisualizacao,
+    ConselhoDetalhesInscricaoVisualizacao,
   },
   data: () => ({
-    eleitor: {},
+    conselho: {},
     usuarioLogado: {},
   }),
   computed: {
     ...mapGetters({
-      eleitorGetter: 'eleitor/eleitor',
-      estadosGetter: 'localidade/estados',
+      conselhoGetter: 'conselho/conselho',
       usuario: 'conta/usuario',
     }),
   },
   watch: {
-    eleitorGetter(value) {
-      this.eleitor = value;
+    conselhoGetter(value) {
+      this.conselho = value;
     },
     usuario(valor) {
       this.usuarioLogado = valor;
     },
     usuarioLogado(usuario) {
-      if (usuario.co_eleitor) {
-        this.obterDadosEleitor(usuario.co_eleitor);
+      if (usuario.co_conselho) {
+        this.obterDadosConselho(usuario.co_conselho);
       }
     },
   },
   methods: {
     ...mapActions({
-      obterDadosEleitor: 'eleitor/obterDadosEleitor',
+      obterDadosConselho: 'conselho/obterDadosConselho',
     }),
     formatarDataCarbon(data) {
       const [dia, mes, ano] = data.split('/');
@@ -70,7 +69,7 @@ export default {
     },
   },
   mounted() {
-    this.eleitor = this.eleitorGetter;
+    this.conselho = this.conselhoGetter;
     this.usuarioLogado = this.usuario;
   },
 

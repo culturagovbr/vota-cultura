@@ -12,7 +12,7 @@ class Conselho extends JsonResource
     public function toArray($request): array
     {
         return [
-            'co_conselho' => $this->co_agente,
+            'co_conselho' => $this->co_conselho,
             'no_orgao_gestor' => $this->no_orgao_gestor,
             'no_conselho' => $this->no_conselho,
             'ds_email' => $this->ds_email,

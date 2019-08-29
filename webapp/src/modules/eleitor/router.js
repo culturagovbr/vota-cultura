@@ -35,8 +35,8 @@ export default [
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/eleitor/views/RevisaoEleitor.vue'),
       },
       {
-        path: '/eleitor/detalhe-inscricao',
-        name: 'EleitorDetalheInscricaoRoute',
+        path: '/eleitor/detalhes-inscricao',
+        name: 'EleitorDetalhesInscricaoRoute',
         meta: {
           title: 'Detalhes da inscrição',
           group: 'apps',
