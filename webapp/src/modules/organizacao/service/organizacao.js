@@ -6,3 +6,5 @@ export const enviarDadosOrganizacao = organizacao => service.postRequest('/organ
 export const obterSegmentos = () => service.getRequest('/organizacao/segmento');
 
 export const obterCriterios = () => service.getRequest('/organizacao/criterio');
+
+export const obterDadosOrganizacao = coOrganizacao => service.getRequest(`/organizacao/${coOrganizacao}`);

@@ -15,7 +15,7 @@
             <v-toolbar-title>Confirmação dos dados</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container v-if="Object.keys(eleitorGetter).length > 0">
+            <v-container>
               <eleitor-detalhes-inscricao-visualizacao />
               <v-layout
                 wrap
@@ -50,23 +50,6 @@
                   >
                     Confirmar
                   </v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
-            <v-container v-else>
-              <v-layout>
-                <v-flex>
-                  <v-alert
-                    type="error"
-                    :value="true"
-                  >
-                    É necessário preencher as informações do cadastro.
-                  </v-alert>
-                  <div class="mb-6">
-                    <v-btn @click="voltar">
-                      Voltar
-                    </v-btn>
-                  </div>
                 </v-flex>
               </v-layout>
             </v-container>

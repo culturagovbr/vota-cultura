@@ -2,8 +2,7 @@
   <v-container>
     <v-layout wrap>
       <v-flex
-        offset-xs3
-        xs6
+        offset-xs1
       >
         <v-card
           max-width="900"
@@ -15,7 +14,7 @@
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container v-if="Object.keys(conselhoGetter).length > 0">
+            <v-container>
               <conselho-detalhes-inscricao-visualizacao />
             </v-container>
           </v-card-text>
@@ -36,19 +35,14 @@ export default {
     ConselhoDetalhesInscricaoVisualizacao,
   },
   data: () => ({
-    conselho: {},
     usuarioLogado: {},
   }),
   computed: {
     ...mapGetters({
-      conselhoGetter: 'conselho/conselho',
       usuario: 'conta/usuario',
     }),
   },
   watch: {
-    conselhoGetter(value) {
-      this.conselho = value;
-    },
     usuario(valor) {
       this.usuarioLogado = valor;
     },
@@ -62,14 +56,8 @@ export default {
     ...mapActions({
       obterDadosConselho: 'conselho/obterDadosConselho',
     }),
-    formatarDataCarbon(data) {
-      const [dia, mes, ano] = data.split('/');
-
-      return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
-    },
   },
   mounted() {
-    this.conselho = this.conselhoGetter;
     this.usuarioLogado = this.usuario;
   },
 
