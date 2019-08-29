@@ -22,8 +22,8 @@ class Municipio extends Model
     {
         return $this->hasOne(
             ModelUF::class,
-            'co_uf',
-            'co_ibge'
+            'co_ibge',
+            'co_uf'
         );
     }
 }
