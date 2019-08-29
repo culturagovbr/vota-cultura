@@ -2,11 +2,13 @@
 
 namespace App\Modules\Conta\Model;
 
+use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Eleitor\Model\Eleitor;
 use App\Modules\Organizacao\Model\Organizacao;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Usuario extends Authenticatable implements JWTSubject
@@ -51,10 +53,19 @@ class Usuario extends Authenticatable implements JWTSubject
         );
     }
 
-    public function organizacoes()
+    public function organizacao()
     {
-        return $this->hasMany(
+        return $this->hasOne(
             Organizacao::class,
+            'co_usuario',
+            'co_usuario'
+        );
+    }
+
+    public function conselho()
+    {
+        return $this->hasOne(
+            Conselho::class,
             'co_usuario',
             'co_usuario'
         );
@@ -87,6 +98,8 @@ class Usuario extends Authenticatable implements JWTSubject
                 'perfil' => $this->perfil,
                 'co_usuario' => $this->co_usuario,
                 'co_eleitor' => ($this->eleitor) ? $this->eleitor->co_eleitor : null,
+                'co_conselho' => ($this->conselho) ? $this->conselho->co_conselho : null,
+                'co_organizacao' => ($this->organizacao) ? $this->organizacao->co_organizacao : null,
             ]
         ];
     }
@@ -105,16 +118,25 @@ class Usuario extends Authenticatable implements JWTSubject
         return password_verify($ds_senha, $this->ds_senha);
     }
 
-    public function gerarCodigoAtivacao() : void
+    public function gerarCodigoAtivacao(): void
     {
-        if(empty($this->ds_email)) {
+        if (empty($this->ds_email)) {
             throw new EParametrosInvalidos("E-mail não definido.");
         }
         $this->ds_codigo_ativacao = $this->gerarCodigo($this->ds_email);
     }
 
-    private function gerarCodigo(string $string) : string
+    private function gerarCodigo(string $string): string
     {
         return sha1(mt_rand(1, 999) . time() . $string);
+    }
+
+    public function dadosUsuarioAutenticado(): array
+    {
+        $payload = Auth::payload();
+        if (empty($payload)) {
+            return [];
+        }
+        return (array)$payload->get('user');
     }
 }

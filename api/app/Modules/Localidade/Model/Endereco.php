@@ -18,18 +18,13 @@ class Endereco extends Model
 
     public $timestamps = false;
 
-//    public function organizacoes()
-//    {
-//        return $this->hasMany(
-//            \App\Modules\Organizacao\Model\Organizacao::class,
-//            'co_endereco',
-//            'co_endereco'
-//        );
-//    }
-
     public function municipio()
     {
-        return $this->hasOne(\App\Modules\Localidade\Model\Municipio::class);
+        return $this->hasOne(
+            Municipio::class,
+            'co_municipio',
+            'co_municipio'
+        );
     }
 
 }

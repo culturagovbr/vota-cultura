@@ -44,7 +44,7 @@ export default [
           icon: 'dashboard',
           public: false,
         },
-        // component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoDetalhesInscricao.vue'),
+        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoDetalhesInscricao.vue'),
       },
     ],
   },
