@@ -10,6 +10,7 @@ use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Representacao\Service\Representante;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -76,4 +77,18 @@ class Organizacao extends AbstractService
         }
     }
 
+    public function obterUm($identificador) : ?Model
+    {
+        $organizacao = parent::obterUm($identificador);
+        if(!$organizacao) {
+            throw new EParametrosInvalidos('Organização não encontrado');
+        }
+
+        $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
+        if($organizacao->co_organizacao !== $usuarioAutenticado['co_organizacao']) {
+            throw new EParametrosInvalidos('O Organização precisa ser o mesmo que o usuário logado.');
+        }
+
+        return $organizacao;
+    }
 }

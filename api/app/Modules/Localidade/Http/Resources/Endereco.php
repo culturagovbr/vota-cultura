@@ -15,7 +15,7 @@ class Endereco extends JsonResource
             'ds_logradouro' => $this->ds_logradouro,
             'municipio' => (new Municipio($this->municipio)),
             'co_ibge' => $this->municipio->co_uf,
-            'co_municipio' => $this->municipio->co_municipio,
+            'co_municipio' => $this->co_municipio,
         ];
     }
 }

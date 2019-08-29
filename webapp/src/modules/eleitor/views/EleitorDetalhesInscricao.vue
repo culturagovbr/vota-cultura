@@ -15,7 +15,7 @@
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container v-if="Object.keys(eleitorGetter).length > 0">
+            <v-container>
               <eleitor-detalhes-inscricao-visualizacao />
             </v-container>
           </v-card-text>
@@ -36,20 +36,14 @@ export default {
     EleitorDetalhesInscricaoVisualizacao,
   },
   data: () => ({
-    eleitor: {},
     usuarioLogado: {},
   }),
   computed: {
     ...mapGetters({
-      eleitorGetter: 'eleitor/eleitor',
-      estadosGetter: 'localidade/estados',
       usuario: 'conta/usuario',
     }),
   },
   watch: {
-    eleitorGetter(value) {
-      this.eleitor = value;
-    },
     usuario(valor) {
       this.usuarioLogado = valor;
     },
@@ -63,14 +57,8 @@ export default {
     ...mapActions({
       obterDadosEleitor: 'eleitor/obterDadosEleitor',
     }),
-    formatarDataCarbon(data) {
-      const [dia, mes, ano] = data.split('/');
-
-      return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
-    },
   },
   mounted() {
-    this.eleitor = this.eleitorGetter;
     this.usuarioLogado = this.usuario;
   },
 

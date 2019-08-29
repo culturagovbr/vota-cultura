@@ -16,7 +16,7 @@
           </v-toolbar>
           <v-card-text>
             <v-container>
-              <conselho-detalhes-inscricao-visualizacao />
+              <organizacao-detalhes-inscricao-visualizacao />
             </v-container>
           </v-card-text>
         </v-card>
@@ -28,12 +28,12 @@
 <script>
 import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
-import ConselhoDetalhesInscricaoVisualizacao from './ConselhoDetalhesInscricaoVisualizacao';
+import OrganizacaoDetalhesInscricaoVisualizacao from './OrganizacaoDetalhesInscricaoVisualizacao';
 
 export default {
-  name: 'ConselhoDetalhesInscricao',
+  name: 'OrganizacaoDetalhesInscricao',
   components: {
-    ConselhoDetalhesInscricaoVisualizacao,
+    OrganizacaoDetalhesInscricaoVisualizacao,
   },
   data: () => ({
     usuarioLogado: {},
@@ -48,14 +48,14 @@ export default {
       this.usuarioLogado = valor;
     },
     usuarioLogado(usuario) {
-      if (usuario.co_conselho) {
-        this.obterDadosConselho(usuario.co_conselho);
+      if (usuario.co_organizacao) {
+        this.obterDadosOrganizacao(usuario.co_organizacao);
       }
     },
   },
   methods: {
     ...mapActions({
-      obterDadosConselho: 'conselho/obterDadosConselho',
+      obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
     }),
   },
   mounted() {

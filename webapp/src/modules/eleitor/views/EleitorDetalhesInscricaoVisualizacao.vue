@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap>
-    <v-flex>
+    <v-flex v-if="Object.keys(eleitorGetter).length > 0">
       <v-layout
         wrap
         align-center

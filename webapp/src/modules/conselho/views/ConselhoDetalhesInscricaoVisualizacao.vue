@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap>
-    <v-flex>
+    <v-flex v-if="Object.keys(conselhoGetter).length > 0">
       <v-layout>
         <v-flex>
           <v-radio-group
@@ -235,7 +235,6 @@ export default {
     },
     estadosGetter(value) {
       this.listaUF = value;
-
     },
     municipiosGetter(value) {
       this.listaMunicipios = value;

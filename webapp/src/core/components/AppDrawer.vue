@@ -207,6 +207,7 @@ export default {
       }
 
       this.carregarMenusConselho();
+      this.carregarMenusOrganizacao();
       this.carregarMenusEleitor();
 
       return true;
@@ -229,6 +230,16 @@ export default {
           name: 'ConselhoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Conselho');
+      }
+    },
+    carregarMenusOrganizacao() {
+      if (this.perfil.no_perfil === 'organizacao') {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'OrganizacaoDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Organizacao');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {
