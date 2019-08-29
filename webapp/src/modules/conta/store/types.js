@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const DEFINIR_USUARIO = 'DEFINIR_USUARIO';
+export const DEFINIR_PERFIL = 'DEFINIR_PERFIL';
 export const AUTENTICAR_USUARIO = 'AUTENTICAR_USUARIO';
 export const TRATAR_USUARIO = 'TRATAR_USUARIO';
 export const DEFINIR_DADOS_PRIMEIRO_ACESSO = 'DEFINIR_DADOS_PRIMEIRO_ACESSO';

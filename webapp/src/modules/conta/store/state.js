@@ -2,5 +2,6 @@
 
 export const state = {
   usuario: {},
+  perfil: {},
   tokenUsuario: '',
 };

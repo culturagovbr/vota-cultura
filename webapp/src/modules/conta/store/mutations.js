@@ -4,6 +4,9 @@ export const mutations = {
   [types.DEFINIR_USUARIO](state, dados) {
     state.usuario = dados;
   },
+  [types.DEFINIR_PERFIL](state, perfil) {
+    state.perfil = perfil;
+  },
   [types.AUTENTICAR_USUARIO]() {},
   [types.TRATAR_USUARIO](state, token) {
     state.tokenUsuario = token;

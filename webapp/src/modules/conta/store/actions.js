@@ -34,6 +34,11 @@ export const tratarUsuarioLogado = ({ commit, state }) => {
   commit(types.TRATAR_USUARIO, localStorage.getItem('token_usuario'));
   const informacoesToken = obterInformacoesJWT(localStorage.getItem('token_usuario'));
   if (informacoesToken.user && Object.keys(state.usuario).length < 1) {
+    const { perfil } = informacoesToken.user;
+    if (Object.keys(perfil).length > 0) {
+      commit(types.DEFINIR_PERFIL, perfil);
+      delete informacoesToken.user.perfil;
+    }
     commit(types.DEFINIR_USUARIO, informacoesToken.user);
   }
 };
