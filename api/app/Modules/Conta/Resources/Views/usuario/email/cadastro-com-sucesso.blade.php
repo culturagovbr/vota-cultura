@@ -18,4 +18,4 @@
 </p>
 
 <p>Atenciosamente,</p>
-<p>Minist&eacute;rio do Desenvolvimento Social</p>
+<p>Minist&eacute;rio da Cidadania</p>
