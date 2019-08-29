@@ -219,20 +219,26 @@ export default {
   name: 'ConselhoDetalhesInscricaoVisualizacao',
   data: () => ({
     listaUF: [],
+    listaMunicipios: [],
     conselho: {},
   }),
   computed: {
     ...mapGetters({
       conselhoGetter: 'conselho/conselho',
       estadosGetter: 'localidade/estados',
+      municipiosGetter: 'localidade/municipios',
     }),
   },
   watch: {
     conselhoGetter(value) {
       this.conselho = value;
     },
-    estadosGetter() {
-      this.listaUF = this.estadosGetter;
+    estadosGetter(value) {
+      this.listaUF = value;
+
+    },
+    municipiosGetter(value) {
+      this.listaMunicipios = value;
     },
   },
   mounted() {
@@ -241,6 +247,10 @@ export default {
       this.obterEstados();
     }
     this.conselho = this.conselhoGetter;
+    this.listaMunicipios = this.municipiosGetter;
+    if (this.listaMunicipios.length < 1) {
+      this.obterMunicipios(this.conselho.endereco.co_ibge);
+    }
   },
   methods: {
     formatarDataCarbon(data) {
@@ -253,7 +263,9 @@ export default {
     },
     ...mapActions({
       obterEstados: 'localidade/obterEstados',
+      obterMunicipios: 'localidade/obterMunicipios',
     }),
+
   },
 
 };

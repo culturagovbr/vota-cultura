@@ -42,7 +42,6 @@ export default {
   computed: {
     ...mapGetters({
       conselhoGetter: 'conselho/conselho',
-      estadosGetter: 'localidade/estados',
       usuario: 'conta/usuario',
     }),
   },
@@ -55,7 +54,6 @@ export default {
     },
     usuarioLogado(usuario) {
       if (usuario.co_conselho) {
-        console.log(usuario.co_conselho);
         this.obterDadosConselho(usuario.co_conselho);
       }
     },
