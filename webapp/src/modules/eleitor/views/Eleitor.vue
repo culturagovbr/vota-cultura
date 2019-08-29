@@ -146,8 +146,8 @@
                   <v-flex sm4>
                     <v-select
                       v-model="eleitor.st_estrangeiro"
-                      :items="[{ st_estrangeiro: 0 , nome: 'Brasileiro'},
-                               { st_estrangeiro: 1 , nome: 'Estrangeiro'}]"
+                      :items="[{ st_estrangeiro: '0' , nome: 'Brasileiro'},
+                               { st_estrangeiro: '1' , nome: 'Estrangeiro'}]"
                       item-value="st_estrangeiro"
                       item-text="nome"
                       label="*Nacionalidade"
@@ -196,14 +196,11 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
-import File from '@/core/components/upload/File';
 import Validate from '../../shared/util/validate';
 
 export default {
   name: 'Eleitor',
-  components: { File },
   data: () => ({
     nomeEleitorError: '',
     valid: false,
@@ -253,15 +250,17 @@ export default {
         if (value.length === 0 || !value.trim()) {
           return false;
         }
+        // eslint-disable-next-line
+        var padraoDataValida = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])      [\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+
+        if (!value.match(padraoDataValida)) {
+          return 'Data inválida';
+        }
+
         let [dia, mes, ano] = value.split('/');
 
         const hoje = new Date();
         const dataAniversario = new Date(ano, mes - 1, dia);
-        const validDate = (dataAniversario.getMonth() + 1) === mes;
-
-        if (!validDate) {
-          return 'Data inválida';
-        }
 
         ano = hoje.getFullYear() - dataAniversario.getFullYear();
         mes = hoje.getMonth() - dataAniversario.getMonth();
@@ -272,7 +271,6 @@ export default {
         if (ano > 100 || ano < 18) {
           return 'É necessário ter entre 18 e 100 anos';
         }
-
         return true;
       },
     },
