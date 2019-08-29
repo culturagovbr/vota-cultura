@@ -171,6 +171,7 @@ export default {
       ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
       ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
       usuario: 'conta/usuario',
+      perfil: 'conta/perfil',
     }),
     computeGroupActive() {
       return true;
@@ -190,12 +191,15 @@ export default {
       this.menus = this.menuAPI;
 
       if (Object.keys(usuario).length > 0) {
-        this.definirItemMenu({
-          title: 'Dados do Eleitor',
-          group: 'apps',
-          name: 'EleitorDetalheInscricaoRoute',
-          icon: 'group',
-        }, 'Eleitor');
+        // console.log(this.perfil.no_perfil === 'conselho');
+        if(usuario.co_eleitor.length === 0 || !usuario.co_eleitor.trim()) {
+          this.definirItemMenu({
+            title: 'Dados do Eleitor',
+            group: 'apps',
+            name: 'EleitorDetalheInscricaoRoute',
+            icon: 'group',
+          }, 'Eleitor');
+        }
       }
     },
   },
