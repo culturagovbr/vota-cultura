@@ -46,7 +46,7 @@ class RecuperacaoSenha implements IService
             $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
 
             $usuario->fill($dados);
-            $usuario->gerarCodigoAlteracao();
+            $usuario->gerarCodigoAtivacao();
             $usuario->save();
 
             Mail::to($usuario->ds_email)->send(new RecuperacaoSenhaMail($usuario));
@@ -78,6 +78,8 @@ class RecuperacaoSenha implements IService
             $usuario->ds_codigo_ativacao = null;
             $usuario->setSenha($dados['ds_senha']);
             $usuario->st_ativo = true;
+            $horarioAtual = Carbon::now();
+            $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
             $usuario->save();
             DB::commit();
 
