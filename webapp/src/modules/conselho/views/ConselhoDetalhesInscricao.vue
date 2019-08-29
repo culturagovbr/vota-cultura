@@ -2,8 +2,7 @@
   <v-container>
     <v-layout wrap>
       <v-flex
-        offset-xs3
-        xs6
+        offset-xs1
       >
         <v-card
           max-width="900"

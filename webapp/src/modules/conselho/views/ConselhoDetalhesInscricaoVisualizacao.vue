@@ -250,7 +250,6 @@ export default {
     }
     this.conselho = this.conselhoGetter;
     this.listaMunicipios = this.municipiosGetter;
-
   },
   methods: {
     formatarDataCarbon(data) {
