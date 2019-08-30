@@ -2,7 +2,10 @@
 
 namespace App\Modules\Representacao\Model;
 
+use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Core\Helper\Telefone as TelefoneHelper;
+use App\Modules\Organizacao\Model\Organizacao;
+use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -30,10 +33,19 @@ class Representante extends Model
 
     public $timestamps = false;
 
-    public function organizacoes()
+    public function organizacao()
     {
-        return $this->hasMany(
-            \App\Modules\Organizacao\Model\Organizacao::class,
+        return $this->hasOne(
+            Organizacao::class,
+            'co_representante',
+            'co_representante'
+        );
+    }
+
+    public function conselho()
+    {
+        return $this->hasOne(
+            Conselho::class,
             'co_representante',
             'co_representante'
         );
@@ -42,7 +54,7 @@ class Representante extends Model
     public function arquivos()
     {
         return $this->belongsToMany(
-            \App\Modules\Upload\Model\Arquivo::class,
+            Arquivo::class,
             'rl_representante_arquivo',
             'co_representante',
             'co_arquivo'
