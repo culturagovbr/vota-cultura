@@ -64,7 +64,7 @@ export default [
         path: 'alterar-senha/:ds_codigo_ativacao',
         name: 'conta-alterar-senha',
         meta: {
-          title: 'Alterar Senha',
+          title: 'Definir Senha',
           public: true,
         },
         component: () => import(/* webpackChunkName: "conta-alterar-senha" */ '@/modules/conta/views/AlteracaoDeSenha.vue'),
