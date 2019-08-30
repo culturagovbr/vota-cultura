@@ -51,6 +51,8 @@
                     <v-text-field
                       v-model="eleitor.nu_rg"
                       label="*RG"
+                      counter
+                      maxlength="11"
                       append-icon="account_circle"
                       :rules="[rules.required]"
                       mask="###########"

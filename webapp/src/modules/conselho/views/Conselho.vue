@@ -355,7 +355,7 @@
                           v-model="conselho.representante.nu_rg"
                           label="*RG do representante"
                           append-icon="person"
-                          mask="#########"
+                          mask="###########"
                           counter
                           maxlength="11"
                           :rules="[rules.required]"
