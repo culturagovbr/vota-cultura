@@ -95,9 +95,13 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
 import { mapActions, mapGetters } from 'vuex';
 import _ from 'lodash';
 import { eventHub } from '@/event';
+import OrganizacaoDetalhesInscricaoVisualizacao from './OrganizacaoDetalhesInscricaoVisualizacao';
 
 export default {
   name: 'RevisaoOrganizacao',
+  components: {
+    OrganizacaoDetalhesInscricaoVisualizacao,
+  },
   data: () => ({
     confirmacaoDadosDeInscricao: false,
     dialog: false,
