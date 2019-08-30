@@ -46,7 +46,7 @@
                     <v-card-text>
                       <v-text-field
                         v-model="dadosPrimeiroAcesso.nu_cnpj"
-                        label="CNPJ"
+                        label="CNPJ do Órgão Gestor do Conselho"
                         prepend-icon="people"
                         mask="##.###.###/####-##"
                         :rules="[rules.CNPJValido]"
@@ -55,7 +55,7 @@
                         v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
-                        label="CPF do representante"
+                        label="CPF do representante do conselho"
                         mask="###.###.###-##"
                         validate-on-blur
                         type="text"
