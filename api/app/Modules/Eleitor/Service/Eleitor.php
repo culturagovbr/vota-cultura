@@ -6,6 +6,7 @@ use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
+use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -38,10 +39,15 @@ class Eleitor extends AbstractService
                 );
             }
 
+            $representante = app()->make(Representante::class, [
+                'ds_email' => $dados['ds_email'],
+                'nu_cpf' => $dados['nu_cpf'],
+            ])->first();
+
+            $dados['co_usuario'] = $this->_obterCodigoUsuario($representante);
             $eleitor = parent::cadastrar($dados);
 
             Mail::to($eleitor->ds_email)
-                ->bcc(env('EMAIL_ACOMPANHAMENTO'))
                 ->send(
                 new CadastroComSucesso($eleitor)
             );
@@ -55,6 +61,22 @@ class Eleitor extends AbstractService
             DB::rollBack();
             throw $exception;
         }
+    }
+
+    private function _obterCodigoUsuario(Representante $representante) : int
+    {
+        $organizacao = $representante->organizacao;
+        $conselho = $representante->conselho;
+
+        if (!is_null($organizacao) && $organizacao->co_usuario) {
+            return $organizacao->co_usuario;
+        }
+
+        if (!is_null($conselho) && $conselho->co_usuario) {
+            return $conselho->co_usuario;
+        }
+
+        return NULL;
     }
 
     public function obterUm($identificador) : ?Model
