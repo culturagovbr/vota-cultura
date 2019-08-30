@@ -170,7 +170,7 @@
                       :rules="[rules.required]"
                       required
                       box
-                      hint="UF da região que deseja votar."
+                      hint="UF da região que reside."
                       persistent-hint
                     />
                   </v-flex>
