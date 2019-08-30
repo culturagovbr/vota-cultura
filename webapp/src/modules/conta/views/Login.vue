@@ -54,9 +54,9 @@
           <v-btn
             block
             color="default"
-            :to="{ name: 'conta-cadastrar' }"
+            to="/conta/primeiro-acesso"
           >
-            Cadastrar-se
+            Criar login de Acesso
           </v-btn>
         </div>
       </v-form>
