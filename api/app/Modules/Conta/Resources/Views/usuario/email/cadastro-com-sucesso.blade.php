@@ -3,9 +3,6 @@
         {{ $usuario->no_nome }}
     </b>
     , seu cadastro foi realizado com sucesso!
-    <p>
-    Sua senha é <b>{{$usuario->ds_senha}}</b>.
-    </p>
 </p>
 <p>
     Clique <a href="{{ $linkAtivacao }}">aqui</a> para ativar o seu cadastro.

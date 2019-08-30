@@ -59,7 +59,19 @@
         </v-list>
       </v-menu>
       <v-btn
-        v-else
+        v-if="Object.keys(usuarioLogado).length < 1"
+        slot="activator"
+        text
+        flat
+        to="/conta/primeiro-acesso"
+      >
+        Primeiro Acesso
+        <v-avatar size="30px">
+          <v-icon>info</v-icon>
+        </v-avatar>
+      </v-btn>
+      <v-btn
+        v-if="Object.keys(usuarioLogado).length < 1"
         slot="activator"
         text
         flat
