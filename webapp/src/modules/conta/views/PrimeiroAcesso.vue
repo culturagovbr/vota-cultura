@@ -55,7 +55,7 @@
                         v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
-                        label="CPF do responsável"
+                        label="CPF do representante"
                         mask="###.###.###-##"
                         validate-on-blur
                         type="text"
