@@ -170,7 +170,7 @@
                       :rules="[rules.required]"
                       required
                       box
-                      hint="UF da região que reside."
+                      hint="UF de residência."
                       persistent-hint
                     />
                   </v-flex>
@@ -271,7 +271,7 @@ export default {
         }
 
         if (ano > 100 || ano < 18) {
-          return 'É necessário ter entre 18 e 100 anos';
+          return 'É necessário ser maior de 18 anos';
         }
         return true;
       },
