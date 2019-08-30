@@ -80,8 +80,8 @@
         <v-flex>
           <v-select
             v-model="eleitorGetter.st_estrangeiro"
-            :items="[{ st_estrangeiro: 0 , nome: 'Brasileiro'},
-                     { st_estrangeiro: 1 , nome: 'Outros'}]"
+            :items="[{ st_estrangeiro: '0' , nome: 'Brasileiro'},
+                     { st_estrangeiro: '1' , nome: 'Outros'}]"
             item-value="st_estrangeiro"
             item-text="nome"
             label="Nacionalidade"

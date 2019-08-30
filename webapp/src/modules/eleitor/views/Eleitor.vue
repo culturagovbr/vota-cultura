@@ -53,7 +53,7 @@
                       label="*RG"
                       append-icon="account_circle"
                       :rules="[rules.required]"
-                      mask="#########"
+                      mask="###########"
                       required
                     />
                   </v-flex>

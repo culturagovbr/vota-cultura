@@ -16,7 +16,7 @@ class Eleitor extends JsonResource
             'no_nome' => $this->no_nome,
             'nu_rg' => $this->nu_rg,
             'dt_nascimento' => $this->dt_nascimento->format('d/m/Y'),
-            'st_estrangeiro' => (int)$this->st_estrangeiro,
+            'st_estrangeiro' => (string)(int)$this->st_estrangeiro,
             'ds_email' => $this->ds_email,
             'dh_cadastro' => $this->dh_cadastro->format('d/m/Y H:i:s'),
             'co_ibge' => $this->co_ibge,
