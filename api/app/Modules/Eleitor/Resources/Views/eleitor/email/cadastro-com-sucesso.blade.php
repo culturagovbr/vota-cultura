@@ -10,7 +10,7 @@
 </p>
 <p>
     <b>
-        Nome Completo:
+        Nome completo:
     </b>
     {{ $eleitor->no_nome }}
 </p>
@@ -22,7 +22,7 @@
 </p>
 <p>
     <b>
-        Data de Nascimento:
+        Data de nascimento:
     </b>
     {{ $eleitor->dt_nascimento->format('d/m/Y') }}
 </p>
@@ -40,7 +40,7 @@
 </p>
 <p>
     <b>
-        Unidade da Federação:
+        Unidade da federação:
     </b>
     {{ $eleitor->uf->no_uf }}
 </p>

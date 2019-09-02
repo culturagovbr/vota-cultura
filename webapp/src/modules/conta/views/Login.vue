@@ -60,6 +60,10 @@
           </v-btn>
         </div>
       </v-form>
+      <div class="text-xs-center font-weight-medium blue-grey--text mt-5">
+        Assistência ao usuário envie um e-mail para <a href="mailto:votacultura@cidadania.gov.br">votacultura@cidadania.gov.br</a>
+      </div>
+
     </v-card-text>
   </v-card>
 </template>

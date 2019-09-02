@@ -240,7 +240,7 @@
                         <v-select
                           v-model="conselho.endereco.co_ibge"
                           :items="listaUF"
-                          label="*Unidade da Federação da sede"
+                          label="*Unidade da federação da sede"
                           append-icon="place"
                           item-value="co_ibge"
                           item-text="no_uf"

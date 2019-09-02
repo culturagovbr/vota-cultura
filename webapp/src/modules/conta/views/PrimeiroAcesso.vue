@@ -25,7 +25,7 @@
                 <v-tabs-slider />
 
                 <v-tab href="#organizacao">
-                  Organização e Entidade
+                  Organização ou Entidade
                   <v-icon>color_lens</v-icon>
                 </v-tab>
 
@@ -46,7 +46,7 @@
                     <v-card-text>
                       <v-text-field
                         v-model="dadosPrimeiroAcesso.nu_cnpj"
-                        label="CNPJ do Órgão Gestor do Conselho"
+                        label="CNPJ da organização ou entidade"
                         prepend-icon="people"
                         mask="##.###.###/####-##"
                         :rules="[rules.CNPJValido]"
@@ -55,7 +55,7 @@
                         v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
-                        label="CPF do representante do conselho"
+                        label="CPF do representante"
                         mask="###.###.###-##"
                         validate-on-blur
                         type="text"
@@ -69,7 +69,7 @@
                     <v-card-text>
                       <v-text-field
                         v-model="dadosPrimeiroAcesso.nu_cnpj"
-                        label="CNPJ"
+                        label="CNPJ do órgao gestor do conselho"
                         prepend-icon="people"
                         mask="##.###.###/####-##"
                         :rules="[rules.CNPJValido]"
@@ -78,7 +78,7 @@
                         v-model="dadosPrimeiroAcesso.nu_cpf"
                         prepend-icon="account_circle"
                         name="login"
-                        label="CPF do responsável"
+                        label="CPF do representante do conselho"
                         mask="###.###.###-##"
                         validate-on-blur
                         type="text"
@@ -185,9 +185,6 @@ export default {
       mensagemErro: 'app/setMensagemErro',
     }),
     solicitarAcesso() {
-      // if (!this.$refs.form.validate()) {
-      //   return;
-      // }
       this.loading = true;
 
       this.solicitarPrimeiroAcesso(this.dadosPrimeiroAcesso)

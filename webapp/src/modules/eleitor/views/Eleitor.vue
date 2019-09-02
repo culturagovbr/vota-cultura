@@ -163,15 +163,13 @@
                     <v-select
                       v-model="eleitor.co_ibge"
                       :items="listaUF"
-                      label="*Unidade da Federação"
+                      label="*Unidade da federação em que reside"
                       append-icon="place"
                       item-value="co_ibge"
                       item-text="no_uf"
                       :rules="[rules.required]"
                       required
                       box
-                      hint="UF de residência."
-                      persistent-hint
                     />
                   </v-flex>
                 </v-layout>

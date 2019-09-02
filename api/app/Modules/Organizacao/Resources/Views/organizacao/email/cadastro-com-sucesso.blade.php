@@ -10,7 +10,7 @@
 </p>
 <p>
     <b>
-        Nome da Organização/Entidade:
+        Nome da organização/entidade:
     </b>
     {{ $organizacao->no_organizacao }}
 </p>
@@ -28,7 +28,7 @@
 </p>
 <p>
     <b>
-        Sítio eletrônico da Organização/Entidade:
+        Sítio eletrônico da organização/entidade:
     </b>
     {{ $organizacao->ds_sitio_eletronico }}
 </p>
@@ -52,7 +52,7 @@
 </p>
 <p>
     <b>
-        Unidade da Federação da sede:
+        Unidade da federação da sede:
     </b>
     {{ $organizacao->endereco->municipio->uf->no_uf }}
 </p>
@@ -112,7 +112,4 @@
 
 <p>Atenciosamente,</p>
 <p>Minist&eacute;rio da Cidadania</p>
-
-
-
-(Mensagem automática, não responder)
+<p>(Mensagem automática, não responder)</p>

@@ -44,7 +44,7 @@ class Usuario extends AbstractService
                     $conselhoModel = app()->makeWith(ConselhoModel::class);
                     $model = $conselhoModel->where('nu_cnpj', $request->nu_cnpj)->firstOrFail();
                     if(!empty($model->co_usuario)) {
-                        throw new EParametrosInvalidos('O CNPJ do conselho de cultura não está inscrito.');
+                        throw new EParametrosInvalidos('O CNPJ não está inscrito no Vota Cultura.');
                     }
                     $representante = $model->representante;
                     $dadosUsuario = $representante->toArray();
@@ -61,7 +61,7 @@ class Usuario extends AbstractService
                     $organizacaoModel = app()->makeWith(OrganizacaoModel::class, $request->post());
                     $model = $organizacaoModel->where('nu_cnpj', $request->nu_cnpj)->firstOrFail();
                     if(!empty($model->co_usuario)) {
-                        throw new EParametrosInvalidos('O CNPJ da organização ou entidade cultural não está inscrito.');
+                        throw new EParametrosInvalidos('O CNPJ não está inscrito no Vota Cultura.');
                     }
                     $representante = $model->representante;
                     $dadosUsuario = $representante->toArray();

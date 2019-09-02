@@ -73,7 +73,7 @@ export default [
         path: 'primeiro-acesso',
         name: 'conta-primeiro-acesso',
         meta: {
-          title: 'Primeiro Acesso',
+          title: 'Criar login de acesso',
           public: true,
         },
         component: () => import(/* webpackChunkName: "conta-primeiro-acesso" */ '@/modules/conta/views/PrimeiroAcesso.vue'),

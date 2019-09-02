@@ -98,7 +98,7 @@
           <v-select
             v-model="eleitorGetter.co_ibge"
             :items="listaUF"
-            label="Unidade da Federação"
+            label="Unidade da federação em que reside"
             append-icon="place"
             item-value="co_ibge"
             item-text="no_uf"
