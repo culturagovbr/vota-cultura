@@ -441,3 +441,7 @@ ALTER TABLE public.tb_representante rename column no_pessoa to no_nome;
 ALTER TABLE public.tb_usuario ALTER COLUMN ds_codigo_ativacao DROP NOT NULL;
 
 ALTER TABLE public.tb_eleitor ALTER COLUMN nu_rg TYPE varchar(11) USING nu_rg::varchar(11);
+
+ALTER TABLE public.tb_usuario
+ADD CONSTRAINT fk_usuario_perfil_coperfil
+FOREIGN KEY (co_perfil) REFERENCES public.tb_perfil (co_perfil);

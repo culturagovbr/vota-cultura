@@ -242,6 +242,18 @@ export default {
         }, 'Organizacao');
       }
     },
+    carregarMenuAdministrador() {
+      if (this.perfil.no_perfil === 'administrador') {
+
+        this.definirItemMenu({
+          title: 'Lista de usuários',
+          group: 'apps',
+          name: 'administrador-lista-usuarios-route',
+          icon: 'group',
+        }, 'Usuario');
+      }
+
+    },
     definirItemMenu(objetoMenu, nomeAgrupador) {
       this.definirAgrupadorMenu(nomeAgrupador);
       this.menus.push(objetoMenu);

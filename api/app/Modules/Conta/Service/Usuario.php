@@ -195,4 +195,11 @@ class Usuario extends AbstractService
         }
     }
 
+    public function obterTodosComPerfis()
+    {
+        return $this
+            ->getModel()
+            ->get();
+    }
+
 }

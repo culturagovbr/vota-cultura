@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 Route::group([
     'prefix' => 'conta'
 ], function () {
@@ -19,6 +17,9 @@ Route::group([
         Route::post('refresh', 'AuthController@refresh');
         Route::get('me', 'AuthController@me');
     });
+
+    // @todo: Criar middleware p/ administrador.
+    Route::get('administrador/usuario', 'UsuarioController@listarUsuarios');
 
     Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
 });

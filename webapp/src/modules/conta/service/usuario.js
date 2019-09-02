@@ -30,3 +30,5 @@ export const recuperarSenha = payload => service.postRequest(
   '/conta/recuperar-senha',
   payload,
 );
+
+export const obterUsuarios = () => service.getRequest('/conta/administrador/usuario');

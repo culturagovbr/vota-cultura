@@ -2,3 +2,4 @@
 export const usuario = state => state.usuario;
 export const perfil = state => state.perfil;
 export const tokenUsuario = state => state.tokenUsuario;
+export const usuarios = state => state.usuarios;

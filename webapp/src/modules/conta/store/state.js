@@ -2,6 +2,7 @@
 
 export const state = {
   usuario: {},
+  usuarios: [],
   perfil: {},
   tokenUsuario: '',
 };

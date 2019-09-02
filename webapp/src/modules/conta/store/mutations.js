@@ -24,4 +24,7 @@ export const mutations = {
     state.tokenUsuario = '';
   },
   [types.SOLICITAR_PRIMEIRO_ACESSO]() {},
+  [types.LISTAR_USUARIOS](state, usuarios) {
+    state.usuarios = usuarios;
+  },
 };

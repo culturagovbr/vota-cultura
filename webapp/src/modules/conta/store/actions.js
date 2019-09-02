@@ -81,3 +81,10 @@ export const solicitarPrimeiroAcesso = async ({ commit }, payload) => {
   commit(types.SOLICITAR_PRIMEIRO_ACESSO, payload);
   usuarioService.solicitarPrimeiroAcesso(payload);
 };
+
+export const buscarUsuariosPerfis = async ({ commit }) => {
+  usuarioService.obterUsuarios().then((response) => {
+    const {data} = response.data;
+    commit(types.LISTAR_USUARIOS, data);
+  });
+};
