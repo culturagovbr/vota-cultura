@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Cronograma\Model;
+namespace App\Modules\Fase\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cronograma extends Model
+class Fase extends Model
 {
-    protected $table = 'tb_cronograma';
-    protected $primaryKey = 'co_cronograma';
+    protected $table = 'tb_fase';
+    protected $primaryKey = 'co_fase';
 
     protected $dates = [
         'dh_inicio',
@@ -15,7 +15,7 @@ class Cronograma extends Model
     ];
 
     protected $fillable = [
-        'tp_cronograma',
+        'tp_fase',
         'dh_inicio',
         'dh_fim',
     ];

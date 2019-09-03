@@ -428,20 +428,22 @@ COMMENT ON COLUMN rl_eleitor_arquivo.co_arquivo IS 'chave estrangeira ligando a 
 COMMENT ON COLUMN rl_eleitor_arquivo.tp_arquivo IS 'opcoes:\n\ndeclaracao_eleitor\ndocumento_identificacao\ndocumento_cpf\nato_normativo\nata_reuniao\ndeclaracao_ciencia';
 
 
-ALTER TABLE public.tb_eleitor ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
-ALTER TABLE public.tb_conselho ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
-ALTER TABLE public.tb_organizacao ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
-ALTER TABLE public.tb_representante ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
-ALTER TABLE public.tb_usuario ALTER COLUMN dh_cadastro TYPE timestamp USING dh_cadastro::timestamp;
-ALTER TABLE public.tb_usuario ALTER COLUMN dh_cadastro SET DEFAULT current_timestamp;
-ALTER TABLE public.tb_usuario ALTER COLUMN dh_ultima_atualizacao TYPE timestamp USING dh_ultima_atualizacao::timestamp;
-ALTER TABLE public.tb_usuario ALTER COLUMN dh_ultima_atualizacao SET DEFAULT current_timestamp;
-ALTER TABLE public.tb_representante rename column no_pessoa to no_nome;
-
-ALTER TABLE public.tb_usuario ALTER COLUMN ds_codigo_ativacao DROP NOT NULL;
-
-ALTER TABLE public.tb_eleitor ALTER COLUMN nu_rg TYPE varchar(11) USING nu_rg::varchar(11);
-
-ALTER TABLE public.tb_usuario
+ALTER TABLE tb_eleitor ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE tb_conselho ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE tb_organizacao ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE tb_representante ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
+ALTER TABLE tb_usuario ALTER COLUMN dh_cadastro TYPE timestamp USING dh_cadastro::timestamp;
+ALTER TABLE tb_usuario ALTER COLUMN dh_cadastro SET DEFAULT current_timestamp;
+ALTER TABLE tb_usuario ALTER COLUMN dh_ultima_atualizacao TYPE timestamp USING dh_ultima_atualizacao::timestamp;
+ALTER TABLE tb_usuario ALTER COLUMN dh_ultima_atualizacao SET DEFAULT current_timestamp;
+ALTER TABLE tb_representante rename column no_pessoa to no_nome;
+ALTER TABLE tb_usuario ALTER COLUMN ds_codigo_ativacao DROP NOT NULL;
+ALTER TABLE tb_eleitor ALTER COLUMN nu_rg TYPE varchar(11) USING nu_rg::varchar(11);
+ALTER TABLE tb_usuario
 ADD CONSTRAINT fk_usuario_perfil_coperfil
-FOREIGN KEY (co_perfil) REFERENCES public.tb_perfil (co_perfil);
+FOREIGN KEY (co_perfil) REFERENCES tb_perfil (co_perfil);
+
+ALTER TABLE tb_cronograma rename TO tb_fase;
+ALTER TABLE tb_fase rename COLUMN co_cronograma TO co_fase;
+ALTER TABLE tb_fase rename COLUMN tp_cronograma TO tp_fase;
+ALTER TABLE tb_fase ADD ds_detalhamento varchar(255) NULL;

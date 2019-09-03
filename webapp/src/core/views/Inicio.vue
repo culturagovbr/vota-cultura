@@ -306,9 +306,9 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
-      ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
-      ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
+      ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
+      ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
+      ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
     }),
   },
   methods: {

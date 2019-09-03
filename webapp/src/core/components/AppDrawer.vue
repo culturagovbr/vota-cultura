@@ -167,9 +167,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
-      ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
-      ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
+      ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
+      ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
+      ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
       usuario: 'conta/usuario',
       perfil: 'conta/perfil',
     }),
@@ -193,12 +193,12 @@ export default {
     },
   },
   mounted() {
-    this.obterCronogramas();
+    this.obterFases();
     this.usuarioLogado = this.usuario;
   },
   methods: {
     ...mapActions({
-      obterCronogramas: 'cronograma/obterCronogramas',
+      obterFases: 'fase/obterFases',
     }),
 
     carregarMenusUsuarioLogado() {

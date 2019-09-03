@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Cronograma\Providers;
+namespace App\Modules\Fase\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected $namespace = 'App\Modules\Cronograma\Http\Controllers';
+    protected $namespace = 'App\Modules\Fase\Http\Controllers';
 
     public function boot()
     {
@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace'  => $this->namespace,
             'prefix'     => 'api',
         ], function () {
-            require module_path('cronograma', 'Routes/api.php', 'app');
+            require module_path('fase', 'Routes/api.php', 'app');
         });
     }
 }

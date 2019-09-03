@@ -29,12 +29,12 @@
         "enabled": true,
         "order": 9001
     },
-    "Cronograma": {
-        "basename": "Cronograma",
-        "name": "Cronograma",
-        "slug": "cronograma",
+    "Fase": {
+        "basename": "Fase",
+        "name": "Fase",
+        "slug": "fase",
         "version": "1.0",
-        "description": "Modulo de cronograma para trabalhar com datas do edital.",
+        "description": "Modulo de fase para trabalhar com datas do edital.",
         "id": 1698177551,
         "enabled": true,
         "order": 9001
