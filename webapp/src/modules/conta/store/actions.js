@@ -3,6 +3,7 @@ import * as usuarioService from '../service/usuario';
 import * as types from './types';
 import { obterInformacoesJWT } from '../../shared/service/helpers/jwt';
 
+
 /* eslint-disable import/prefer-default-export */
 export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
   commit(types.AUTENTICAR_USUARIO);
@@ -99,17 +100,10 @@ export const buscarPerfis = async ({ commit }) => {
   });
 };
 
-export const buscarPerfisAlteracao = async ({ commit, dispatch }) => {
-
+export const buscarPerfisAlteracao = async ({ state, commit, dispatch }) => {
   return dispatch('buscarPerfis').then((response) => {
-    const {data} = response.data;
-    const elementosRemover = [
-        'conselho',
-        'organizacao',
-        'eleitor',
-    ];
-
-    const novoResultado = remove(data, perfil => !includes(elementosRemover, perfil.no_perfil));
+    const { data } = response.data;
+    const novoResultado = remove(data, perfil => !includes(state.perfisInscricao, perfil.no_perfil));
     commit(types.DEFINIR_PERFIS_ALTERACAO, novoResultado);
     return response;
   });

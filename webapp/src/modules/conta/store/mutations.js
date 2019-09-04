@@ -33,5 +33,5 @@ export const mutations = {
   },
   [types.DEFINIR_PERFIS_ALTERACAO](state, perfis) {
     state.perfis = perfis;
-  }
+  },
 };

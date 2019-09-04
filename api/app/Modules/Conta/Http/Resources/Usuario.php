@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conta\Http\Resources;
 
+use App\Modules\Core\Helper\CPF;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Usuario extends JsonResource
@@ -19,6 +20,7 @@ class Usuario extends JsonResource
             'ds_codigo_ativacao' => $this->ds_codigo_ativacao,
             'perfil' => (new Perfil($this->perfil)),
             'nu_cpf' => $this->nu_cpf,
+            'nu_cpf_mascarado' => CPF::adicionarMascara($this->nu_cpf),
         ];
     }
 }

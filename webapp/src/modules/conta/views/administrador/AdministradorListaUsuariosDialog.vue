@@ -25,6 +25,7 @@
           <v-card>
             <v-card-text>
               <v-form
+                v-if="Object.keys(formulario).length > 0"
                 v-show="true"
                 ref="form"
                 v-model="valid"
@@ -91,6 +92,7 @@
                       <v-select
                         v-model="formulario.perfil.co_perfil"
                         :items="perfis"
+                        :disabled="rules.podeAlterarPerfil()"
                         item-text="ds_perfil"
                         item-value="co_perfil"
                         label="Perfil"
@@ -141,6 +143,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { includes } from "lodash";
 import Validate from '@/modules/shared/util/validate';
 
 export default {
@@ -161,17 +164,22 @@ export default {
       loading: false,
       showDatePicker: false,
       valid: false,
+      perfilPodeSerAlterado: false,
       formulario: {},
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         emailValido: value => Validate.isEmailValido(value) || 'O endereço de e-mail é inválido',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
+        podeAlterarPerfil: () => {
+          return !includes(this.perfisInscricao, this.usuario.perfil);
+        },
       },
     };
   },
   computed: {
     ...mapGetters({
       perfis: 'conta/perfis',
+      perfisInscricao: 'conta/perfisInscricao',
     }),
   },
   watch: {
@@ -179,8 +187,8 @@ export default {
       this.dialog = val;
     },
     dialog(val) {
-      this.resetarValidacao();
       this.$emit('input', val);
+
     },
     usuario(val) {
       this.formulario = Object.assign({}, val);
@@ -192,14 +200,13 @@ export default {
       buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
     }),
     salvarUsuario() {
-      console.log('saved');
     },
-    resetarValidacao() {
-      this.$refs.form.resetValidation();
+    habilitaAlteracaoPerfil() {
+      if(this.formulario.perfi){
+
+      }
     },
   },
-  // created() {
-  // },
   mounted() {
     this.buscarPerfisAlteracao();
   },

@@ -36,7 +36,7 @@
                   slot="items"
                   slot-scope="props"
                 >
-                  <td>{{ props.item.nu_cpf }}</td>
+                  <td>{{ props.item.nu_cpf_mascarado }}</td>
                   <td>{{ props.item.no_nome }}</td>
                   <td>
                     <v-chip>
@@ -101,7 +101,7 @@ export default {
       headers: [
         {
           text: 'CPF',
-          value: 'no_cpf',
+          value: 'nu_cpf_mascarado',
         },
         {
           text: 'Nome',
