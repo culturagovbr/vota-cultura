@@ -10,6 +10,17 @@
       >
         <v-flex lg12>
           <v-card>
+            <v-card-title>
+              <v-spacer />
+              <v-spacer />
+              <v-text-field
+                v-model="pesquisar"
+                append-icon="search"
+                label="Pesquisar"
+                single-line
+                hide-details
+              />
+            </v-card-title>
             <v-card-text class="pa-0">
               <v-data-table
                 :headers="headers"
@@ -17,6 +28,7 @@
                 :pagination.sync="pagination"
                 :total-items="totalItems"
                 :loading="loading"
+                :search="pesquisar"
                 item-key="co_usuario"
                 class="elevation-1"
               >
@@ -36,7 +48,7 @@
                       :color="props.item.st_ativo ? 'green' : 'red'"
                       text-color="white"
                     >
-                      {{ props.item.st_ativo ? 'Ativo' : 'Inativo' }}
+                      {{ props.item.situacao }}
                     </v-chip>
                   </td>
                   <td>
@@ -57,7 +69,8 @@
               </v-data-table>
               <administrador-lista-usuarios-dialog
                 v-model="mostrarModalEdicao"
-                :usuario="itemEditado"/>
+                :usuario="itemEditado"
+              />
             </v-card-text>
           </v-card>
         </v-flex>
@@ -71,8 +84,8 @@ import { mapActions, mapGetters } from 'vuex';
 import AdministradorListaUsuariosDialog from './AdministradorListaUsuariosDialog';
 
 export default {
-  components: { AdministradorListaUsuariosDialog },
   name: 'AdministradorListaUsuarios',
+  components: { AdministradorListaUsuariosDialog },
   data() {
     return {
       loading: true,
@@ -80,6 +93,7 @@ export default {
         page: 1,
         rowsPerPage: 10,
       },
+      pesquisar: '',
       mostrarModalEdicao: false,
       totalItems: 0,
       filtros: {},
@@ -95,12 +109,12 @@ export default {
         },
         {
           text: 'Perfil',
-          value: 'perfis',
+          value: 'perfil.ds_perfil',
           sortable: false,
         },
         {
           text: 'Status',
-          value: 'st_ativo',
+          value: 'situacao',
         },
         {
           text: 'Ações',
@@ -125,8 +139,10 @@ export default {
       this.itemEditado = item;
       this.mostrarModalEdicao = true;
     },
-    excluirItem() {
-      // return this.excluirItemAction(item.co_usuario);
+  },
+  watch: {
+    usuariosGetter(usuarios){
+      this.usuariosFiltrados = this.usuariosGetter;
     },
   },
   mounted() {

@@ -244,7 +244,6 @@ export default {
       }
     },
     carregarMenuAdministrador() {
-      console.log(this.perfil.no_perfil);
       if (this.perfil.no_perfil === 'administrador') {
 
         this.definirItemMenu({
