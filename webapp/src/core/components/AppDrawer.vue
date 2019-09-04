@@ -209,6 +209,7 @@ export default {
       this.carregarMenusConselho();
       this.carregarMenusOrganizacao();
       this.carregarMenusEleitor();
+      this.carregarMenuAdministrador();
 
       return true;
     },
@@ -243,14 +244,15 @@ export default {
       }
     },
     carregarMenuAdministrador() {
+      console.log(this.perfil.no_perfil);
       if (this.perfil.no_perfil === 'administrador') {
 
         this.definirItemMenu({
-          title: 'Lista de usuários',
+          title: 'Usuários',
           group: 'apps',
           name: 'administrador-lista-usuarios-route',
           icon: 'group',
-        }, 'Usuario');
+        }, 'Administração');
       }
 
     },
