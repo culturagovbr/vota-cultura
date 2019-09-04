@@ -92,7 +92,6 @@ export default {
       }).catch((error) => {
         this.loading = false;
         this.mensagemErro(error.response.data.message);
-        this.$router.push('/');
       });
     },
   },

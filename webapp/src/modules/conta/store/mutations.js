@@ -20,6 +20,7 @@ export const mutations = {
   [types.ALTERAR_SENHA_INICIAL]() {},
   [types.ALTERAR_SENHA]() {},
   [types.LOGOUT](state) {
+    localStorage.removeItem('token_usuario');
     state.usuario = Object.assign({});
     state.tokenUsuario = String();
   },

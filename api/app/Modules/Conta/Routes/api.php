@@ -19,10 +19,17 @@ Route::group([
 
 
     });
+    Route::group([
+        'middleware' => 'api',
+        'prefix' => 'administrador'
+    ], function () {
+        Route::patch('usuario/{co_usuario}', 'UsuarioController@update');
+        Route::post('usuario', 'UsuarioController@store');
+        Route::get('usuario', 'UsuarioController@listarUsuarios');
+    });
 
     //@TODO Alterar pra só o adm ver isso
     Route::apiResource('perfil', 'PerfilApiResourceController');
 
-    Route::get('administrador/usuario', 'UsuarioController@listarUsuarios');
     Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');
 });

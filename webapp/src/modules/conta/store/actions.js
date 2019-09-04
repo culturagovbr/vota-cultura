@@ -50,31 +50,39 @@ export const ativarUsuario = async ({ commit }, ativacao) => {
   usuarioService.ativarUsuario(ativacao);
 };
 
-export const cadastrarUsuario = async ({ commit }, usuario) => {
+export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => {
   commit(types.CADASTRAR_USUARIO, usuario);
   return usuarioService.cadastrarUsuario(usuario).then((response) => {
     const { data } = response.data;
     commit(types.DEFINIR_USUARIO, data);
-
+    dispatch(
+      'app/setMensagemSucesso',
+      'Usuário cadastrado com sucesso!',
+      { root: true },
+    );
     return response;
   });
 };
 
-export const atualizarUsuario = async ({ commit }, usuario) => {
+export const atualizarUsuario = async ({ commit, dispatch }, usuario) => {
   commit(types.ATUALIZAR_USUARIO);
   return usuarioService.atualizarUsuario(usuario).then((response) => {
     const { data } = response.data;
     commit(types.DEFINIR_USUARIO, data);
-
+    dispatch(
+      'app/setMensagemSucesso',
+      'Usuário atualizado com sucesso.',
+      { root: true },
+    );
     return response;
   });
 };
 
-export const salvarUsuario = async ({ commit }, usuario) => {
-  if(!!usuario.co_usuario) {
-    this.atualizarUsuario(commit, usuario);
+export const salvarUsuario = async ({ dispatch, commit }, usuario) => {
+  if (usuario.co_usuario) {
+    dispatch('atualizarUsuario', usuario);
   } else {
-    this.cadastrarUsuario(commit, usuario);
+    dispatch('cadastrarUsuario', usuario);
   }
 };
 
@@ -93,13 +101,14 @@ export const usuarioAlterarSenha = async ({ commit }, { coUsuario, usuario }) =>
 
 export const logout = async ({ commit }) => {
   commit(types.LOGOUT, {});
-  usuarioService.logout({}).then(() => {
-    localStorage.removeItem('token_usuario');
-  });
+  usuarioService.logout({});
 };
 
-export const alterarSenha = async (state, { codigoAlteracao, usuario }) => {
-  usuarioService.alterarSenha(codigoAlteracao, usuario);
+export const alterarSenha = async ({ commit }, { codigoAlteracao, usuario }) => {
+  return usuarioService.alterarSenha(codigoAlteracao, usuario).then((response) => {
+    commit(types.LOGOUT);
+    return response;
+  });
 };
 
 export const solicitarPrimeiroAcesso = async ({ commit }, payload) => {

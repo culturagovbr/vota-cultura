@@ -133,7 +133,6 @@ class Usuario extends AbstractService
             }
 
             $dados['ds_senha'] = substr(sha1(time()), 0, 8);
-
             DB::beginTransaction();
             $usuario = $this->getModel();
             unset($dados['dh_cadastro']);
