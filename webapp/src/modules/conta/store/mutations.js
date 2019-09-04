@@ -34,4 +34,5 @@ export const mutations = {
   [types.DEFINIR_PERFIS_ALTERACAO](state, perfis) {
     state.perfis = perfis;
   },
+  [types.ATUALIZAR_USUARIO](state) {},
 };

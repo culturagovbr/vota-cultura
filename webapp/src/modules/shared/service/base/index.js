@@ -81,4 +81,6 @@ export const postRequest = (path, payload) => instance.post(path, payload);
 
 export const putRequest = (path, id, payload) => instance.put(`${path}/${id}`, payload);
 
+export const patchRequest = (path, id, payload) => instance.patch(`${path}/${id}`, payload);
+
 export const deleteRequest = (path, id) => instance.delete(`${path}/${id}`);

@@ -33,4 +33,6 @@ export const recuperarSenha = payload => service.postRequest(
 
 export const obterUsuarios = () => service.getRequest('/conta/administrador/usuario');
 
-export const obterPerfis = () => service.getRequest('/conta/perfil')
+export const obterPerfis = () => service.getRequest('/conta/perfil');
+
+export const atualizarUsuario = (usuario) => service.patchRequest(`/conta/administrador/usuario/${usuario.coUsuario}`, usuario)

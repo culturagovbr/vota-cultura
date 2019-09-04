@@ -220,10 +220,18 @@ export default {
   methods: {
     ...mapActions({
       atualizarUsuario: 'conta/atualizarUsuario',
+      cadastrarUsuario: 'conta/cadastrarUsuario',
       buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
       consultarCPF: 'pessoa/consultarCPF',
     }),
     salvarUsuario() {
+      const self = this;
+      self.carregando = true;
+      this.salvarUsuario(self.formulario).finally(() => {
+        self.carregando = false;
+        // @todo: colocar mensagem >:¬( utilizando state....
+        // this.$emit('update:dialog', false);
+      });
     },
     carregarCPF(valor) {
       const self = this;

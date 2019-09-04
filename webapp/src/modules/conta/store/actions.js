@@ -52,7 +52,30 @@ export const ativarUsuario = async ({ commit }, ativacao) => {
 
 export const cadastrarUsuario = async ({ commit }, usuario) => {
   commit(types.CADASTRAR_USUARIO, usuario);
-  usuarioService.cadastrarUsuario(usuario);
+  return usuarioService.cadastrarUsuario(usuario).then((response) => {
+    const { data } = response.data;
+    commit(types.DEFINIR_USUARIO, data);
+
+    return response;
+  });
+};
+
+export const atualizarUsuario = async ({ commit }, usuario) => {
+  commit(types.ATUALIZAR_USUARIO);
+  return usuarioService.atualizarUsuario(usuario).then((response) => {
+    const { data } = response.data;
+    commit(types.DEFINIR_USUARIO, data);
+
+    return response;
+  });
+};
+
+export const salvarUsuario = async ({ commit }, usuario) => {
+  if(!!usuario.co_usuario) {
+    this.atualizarUsuario(commit, usuario);
+  } else {
+    this.cadastrarUsuario(commit, usuario);
+  }
 };
 
 export const recuperarSenha = async ({ commit }, payload) => {
@@ -86,7 +109,7 @@ export const solicitarPrimeiroAcesso = async ({ commit }, payload) => {
 
 export const buscarUsuariosPerfis = async ({ commit }) => {
   usuarioService.obterUsuarios().then((response) => {
-    const {data} = response.data;
+    const { data } = response.data;
     commit(types.LISTAR_USUARIOS, data);
   });
 };
@@ -94,17 +117,15 @@ export const buscarUsuariosPerfis = async ({ commit }) => {
 export const buscarPerfis = async ({ commit }) => {
   commit(types.BUSCAR_PERFIS);
   return usuarioService.obterPerfis().then((response) => {
-    const {data} = response.data;
+    const { data } = response.data;
     commit(types.DEFINIR_PERFIS, data);
     return response;
   });
 };
 
-export const buscarPerfisAlteracao = async ({ state, commit, dispatch }) => {
-  return dispatch('buscarPerfis').then((response) => {
-    const { data } = response.data;
-    const novoResultado = remove(data, perfil => !includes(state.perfisInscricao, perfil.no_perfil));
-    commit(types.DEFINIR_PERFIS_ALTERACAO, novoResultado);
-    return response;
-  });
-};
+export const buscarPerfisAlteracao = async ({ state, commit, dispatch }) => dispatch('buscarPerfis').then((response) => {
+  const { data } = response.data;
+  const novoResultado = remove(data, perfil => !includes(state.perfisInscricao, perfil.no_perfil));
+  commit(types.DEFINIR_PERFIS_ALTERACAO, novoResultado);
+  return response;
+});
