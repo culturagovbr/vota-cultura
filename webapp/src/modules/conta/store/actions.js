@@ -1,3 +1,4 @@
+import { remove, includes } from 'lodash';
 import * as usuarioService from '../service/usuario';
 import * as types from './types';
 import { obterInformacoesJWT } from '../../shared/service/helpers/jwt';
@@ -86,5 +87,30 @@ export const buscarUsuariosPerfis = async ({ commit }) => {
   usuarioService.obterUsuarios().then((response) => {
     const {data} = response.data;
     commit(types.LISTAR_USUARIOS, data);
+  });
+};
+
+export const buscarPerfis = async ({ commit }) => {
+  commit(types.BUSCAR_PERFIS);
+  return usuarioService.obterPerfis().then((response) => {
+    const {data} = response.data;
+    commit(types.DEFINIR_PERFIS, data);
+    return response;
+  });
+};
+
+export const buscarPerfisAlteracao = async ({ commit, dispatch }) => {
+
+  return dispatch('buscarPerfis').then((response) => {
+    const {data} = response.data;
+    const elementosRemover = [
+        'conselho',
+        'organizacao',
+        'eleitor',
+    ];
+
+    const novoResultado = remove(data, perfil => !includes(elementosRemover, perfil.no_perfil));
+    commit(types.DEFINIR_PERFIS_ALTERACAO, novoResultado);
+    return response;
   });
 };

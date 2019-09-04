@@ -21,10 +21,17 @@ export const mutations = {
   [types.ALTERAR_SENHA]() {},
   [types.LOGOUT](state) {
     state.usuario = Object.assign({});
-    state.tokenUsuario = '';
+    state.tokenUsuario = String();
   },
   [types.SOLICITAR_PRIMEIRO_ACESSO]() {},
   [types.LISTAR_USUARIOS](state, usuarios) {
     state.usuarios = usuarios;
   },
+  [types.BUSCAR_PERFIS]() {},
+  [types.DEFINIR_PERFIS](state, perfis) {
+    state.perfis = perfis;
+  },
+  [types.DEFINIR_PERFIS_ALTERACAO](state, perfis) {
+    state.perfis = perfis;
+  }
 };

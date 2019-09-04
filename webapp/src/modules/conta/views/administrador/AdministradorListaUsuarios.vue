@@ -52,33 +52,12 @@
                     >
                       <v-icon>edit</v-icon>
                     </v-btn>
-                    <v-btn
-                      depressed
-                      outline
-                      icon
-                      fab
-                      dark
-                      color="secondary"
-                      small
-                      @click="atualizarStatus(props.item)"
-                    >
-                      <v-icon>{{ props.item.st_ativo ? 'lock' : 'lock_open' }}</v-icon>
-                    </v-btn>
-                    <v-btn
-                      depressed
-                      outline
-                      icon
-                      fab
-                      dark
-                      color="pink"
-                      small
-                      @click="excluirItem(props.item)"
-                    >
-                      <v-icon>delete</v-icon>
-                    </v-btn>
                   </td>
                 </template>
               </v-data-table>
+              <administrador-lista-usuarios-dialog
+                v-model="mostrarModalEdicao"
+                :usuario="itemEditado"/>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -89,8 +68,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import AdministradorListaUsuariosDialog from './AdministradorListaUsuariosDialog';
 
 export default {
+  components: { AdministradorListaUsuariosDialog },
+  name: 'AdministradorListaUsuarios',
   data() {
     return {
       loading: true,
@@ -98,6 +80,7 @@ export default {
         page: 1,
         rowsPerPage: 10,
       },
+      mostrarModalEdicao: false,
       totalItems: 0,
       filtros: {},
       itemEditado: {},

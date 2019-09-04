@@ -16,7 +16,12 @@ Route::group([
         Route::get('logout', 'AuthController@logout');
         Route::post('refresh', 'AuthController@refresh');
         Route::get('me', 'AuthController@me');
+
+
     });
+
+    //@TODO Alterar pra só o adm ver isso
+    Route::apiResource('perfil', 'PerfilApiResourceController');
 
     Route::get('administrador/usuario', 'UsuarioController@listarUsuarios');
     Route::put('usuario/alteracao/senha/{co_usuario}', 'UsuarioController@alterarSenha');

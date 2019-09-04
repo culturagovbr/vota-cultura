@@ -25,7 +25,7 @@
           <v-card>
             <v-card-text>
               <v-form
-                v-show="Object.keys(formulario).length > 0"
+                v-show="true"
                 ref="form"
                 v-model="valid"
                 lazy-validation
@@ -45,7 +45,7 @@
                       sm12
                     >
                       <v-text-field
-                        :value="formulario.no_cpf"
+                        :value="formulario.nu_cpf"
                         name="cpf"
                         label="CPF"
                         mask="###.###.###-##"
@@ -64,28 +64,19 @@
                         label="Nome completo"
                         validate-on-blur
                         type="text"
+                        disabled
                         maxlength="100"
                         :rules="[rules.required]"
                       />
                     </v-flex>
                     <v-flex
-                      xs4
-                      md4
-                      sm12
-                    >
-                      <s-data-picker
-                        v-model="formulario.dt_nascimento"
-                        :rules="[rules.required, rules.dataValida]"
-                      />
-                    </v-flex>
-                    <v-flex
-                      xs8
-                      md8
+                      xs6
+                      md6
                       sm12
                     >
                       <v-text-field
-                        v-model="formulario.no_email"
-                        name="no_email"
+                        v-model="formulario.ds_email"
+                        name="ds_email"
                         label="E-mail"
                         validate-on-blur
                         type="text"
@@ -93,39 +84,18 @@
                         :rules="[rules.required, rules.emailValido]"
                       />
                     </v-flex>
-
                     <v-flex
-                      xs12
-                      sm12
-                    >
+                      xs4
+                      md4
+                      sm12>
                       <v-select
-                        v-model="formulario.perfis"
+                        v-model="formulario.perfil.co_perfil"
                         :items="perfis"
-                        item-text="no_perfil"
+                        item-text="ds_perfil"
                         item-value="co_perfil"
-                        :rules="[rules.required, rules.minimoDePerfis]"
-                        label="Selecione os perfis"
-                        multiple
-                        chips
-                        return-object
-                      >
-                        <template v-slot:prepend-item>
-                          <v-list-tile
-                            ripple
-                            @click="toggleSelecionarTodos"
-                          >
-                            <v-list-tile-action>
-                              <v-icon :color="perfis.length > 0 ? 'indigo darken-4' : ''">
-                                {{ iconeSelecao }}
-                              </v-icon>
-                            </v-list-tile-action>
-                            <v-list-tile-content>
-                              <v-list-tile-title>Selecionar Todos</v-list-tile-title>
-                            </v-list-tile-content>
-                          </v-list-tile>
-                          <v-divider class="mt-2" />
-                        </template>
-                      </v-select>
+                        label="Perfil"
+                        validate-on-blur
+                      />
                     </v-flex>
                     <v-flex
                       xs12
@@ -133,7 +103,7 @@
                     >
                       <v-switch
                         v-model="formulario.st_ativo"
-                        :label="`${$options.filters.filtroLabelStatus(formulario.st_ativo)}`"
+                        :label="formulario.st_ativo ? 'Ativo' : 'Inativo'"
                         color="primary"
                       />
                     </v-flex>
@@ -172,16 +142,9 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Validate from '@/modules/shared/util/validate';
-import SDataPicker from '../../../shared/components/DatePicker';
 
 export default {
-  name: 'ListaEditarDialog',
-  filters: {
-    filtroLabelStatus(status) {
-      return status ? 'Ativo' : 'Inativo';
-    },
-  },
-  components: { SDataPicker },
+  name: 'AdministradorListaUsuariosDialog',
   props: {
     value: {
       type: Boolean,
@@ -202,9 +165,7 @@ export default {
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         emailValido: value => Validate.isEmailValido(value) || 'O endereço de e-mail é inválido',
-        dataValida: value => Validate.isDataValida(value) || 'Data inválida',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
-        minimoDePerfis: value => value.length > 0 || 'Selecione pelo menos um perfil',
       },
     };
   },
@@ -212,25 +173,6 @@ export default {
     ...mapGetters({
       perfis: 'conta/perfis',
     }),
-    todosPerfisSelecionados() {
-      if (Object.keys(this.formulario).length === 0) {
-        return 0;
-      }
-
-      return this.formulario.perfis.length === this.perfis.length;
-    },
-    algumPerfilSelecionado() {
-      if (Object.keys(this.formulario).length === 0) {
-        return 0;
-      }
-
-      return this.formulario.perfis.length > 0 && !this.todosPerfisSelecionados;
-    },
-    iconeSelecao() {
-      if (this.todosPerfisSelecionados) return 'check_box';
-      if (this.algumPerfilSelecionado) return 'indeterminate_check_box';
-      return 'check_box_outline_blank';
-    },
   },
   watch: {
     value(val) {
@@ -244,47 +186,22 @@ export default {
       this.formulario = Object.assign({}, val);
     },
   },
-  created() {
-    this.buscarPerfis();
-  },
   methods: {
     ...mapActions({
       atualizarUsuario: 'conta/atualizarUsuario',
-      buscarPerfis: 'conta/buscarPerfis',
+      buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
     }),
-    toggleSelecionarTodos() {
-      this.$nextTick(() => {
-        if (this.todosPerfisSelecionados) {
-          this.formulario.perfis = [];
-        } else {
-          this.formulario.perfis = this.perfis.slice();
-        }
-      });
-    },
     salvarUsuario() {
-      if (!this.$refs.form.validate()) {
-        return;
-      }
-
-      const perfis = this.obterArrayIdPerfis(this.formulario);
-      const usuario = Object.assign({}, this.formulario, { perfis });
-
-      this.loading = true;
-      this.atualizarUsuario({
-        coUsuario: this.formulario.co_usuario,
-        usuario,
-      }).then(() => {
-        this.dialog = false;
-      }).finally(() => {
-        this.loading = false;
-      });
-    },
-    obterArrayIdPerfis(form) {
-      return form.perfis.map(item => item.co_perfil);
+      console.log('saved');
     },
     resetarValidacao() {
       this.$refs.form.resetValidation();
     },
+  },
+  // created() {
+  // },
+  mounted() {
+    this.buscarPerfisAlteracao();
   },
 };
 </script>
