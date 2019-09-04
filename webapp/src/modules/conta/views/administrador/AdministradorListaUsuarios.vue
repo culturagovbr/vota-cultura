@@ -11,6 +11,15 @@
         <v-flex lg12>
           <v-card>
             <v-card-title>
+              <v-btn
+                tiny
+                round
+                outline
+                color="indigo"
+                @click="editarItemModal()">
+                <v-icon>add</v-icon>
+                Usuario
+              </v-btn>
               <v-spacer />
               <v-spacer />
               <v-text-field

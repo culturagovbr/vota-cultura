@@ -17,7 +17,8 @@
         >
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title>Editar Perfil do Usuário</v-toolbar-title>
+        <v-toolbar-title v-if="false">Editar Usuário</v-toolbar-title>
+        <v-toolbar-title v-else>Cadastrar Usuário</v-toolbar-title>
         <v-spacer />
       </v-toolbar>
       <v-card-text>
@@ -25,7 +26,6 @@
           <v-card>
             <v-card-text>
               <v-form
-                v-if="Object.keys(formulario).length > 0"
                 v-show="true"
                 ref="form"
                 v-model="valid"
@@ -46,12 +46,13 @@
                       sm12
                     >
                       <v-text-field
-                        :value="formulario.nu_cpf"
-                        name="cpf"
-                        label="CPF"
+                        v-model="formulario.nu_cpf"
+                        label="*CPF"
+                        append-icon="account_circle"
+                        :rules="[rules.required, rules.cpfMin]"
+                        :error-messages="nomeFormularioError"
                         mask="###.###.###-##"
-                        disabled
-                        type="text"
+                        required
                       />
                     </v-flex>
                     <v-flex
@@ -61,13 +62,12 @@
                     >
                       <v-text-field
                         v-model="formulario.no_nome"
-                        name="nome"
-                        label="Nome completo"
-                        validate-on-blur
-                        type="text"
-                        disabled
-                        maxlength="100"
-                        :rules="[rules.required]"
+                        :disabled="true"
+                        label="*Nome completo"
+                        append-icon="perm_identity"
+                        :error-messages="nomeFormularioError"
+                        :rules="[rules.cpfInvalido]"
+                        required
                       />
                     </v-flex>
                     <v-flex
@@ -90,7 +90,6 @@
                       md4
                       sm12>
                       <v-select
-                        v-model="formulario.perfil.co_perfil"
                         :items="perfis"
                         :disabled="rules.podeAlterarPerfil()"
                         item-text="ds_perfil"
@@ -160,18 +159,34 @@ export default {
   },
   data() {
     return {
+      nomeFormularioError: '',
       dialog: false,
       loading: false,
       showDatePicker: false,
       valid: false,
       perfilPodeSerAlterado: false,
       formulario: {},
+      formularioInicial: {
+        no_nome: '',
+        st_ativo: false,
+        situacao: '',
+        ds_email: '',
+        nu_cpf: '',
+        perfil: {
+          co_perfil: 0,
+          no_perfil: '',
+          ds_perfil: '',
+          st_ativo: false,
+        },
+      },
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
+        cpfMin: value => (value && value.length === 11) || 'Mínimo de 11 caracteres',
+        cpfInvalido: value => !!value || 'CPF não encontrado',
         emailValido: value => Validate.isEmailValido(value) || 'O endereço de e-mail é inválido',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
-        podeAlterarPerfil: () => {
-          return !includes(this.perfisInscricao, this.usuario.perfil);
+        podeAlterarPerfil: (value) => {
+          return !!value && !includes(this.perfisInscricao, this.usuario.perfil);
         },
       },
     };
@@ -187,24 +202,35 @@ export default {
       this.dialog = val;
     },
     dialog(val) {
+      this.$refs.form.reset()
       this.$emit('input', val);
-
     },
     usuario(val) {
-      this.formulario = Object.assign({}, val);
+      this.formulario = Object.assign(this.formularioInicial);
+      if(!!val) {
+        this.formulario = Object.assign({}, val);
+      }
+    },
+    'formulario.nu_cpf': function (valor) {
+      if (!!valor && valor.length === 11 && Validate.isCpfValido(valor)) {
+        this.carregarCPF(valor);
+      }
     },
   },
   methods: {
     ...mapActions({
       atualizarUsuario: 'conta/atualizarUsuario',
       buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
+      consultarCPF: 'pessoa/consultarCPF',
     }),
     salvarUsuario() {
     },
-    habilitaAlteracaoPerfil() {
-      if(this.formulario.perfi){
-
-      }
+    carregarCPF(valor) {
+      const self = this;
+      this.consultarCPF(valor).then((response) => {
+        const { data } = response.data;
+        self.formulario.no_nome = data.nmPessoaFisica;
+      });
     },
   },
   mounted() {
