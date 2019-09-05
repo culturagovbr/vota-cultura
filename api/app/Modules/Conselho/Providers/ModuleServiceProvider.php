@@ -4,8 +4,8 @@ namespace App\Modules\Conselho\Providers;
 
 use App\Modules\Conselho\Mail\Conselho\CadastroComSucesso;
 use Caffeinated\Modules\Support\ServiceProvider;
-use App\Modules\Organizacao\Service\Conselho as ConselhoService;
-use App\Modules\Representacao\Model\Conselho as ConselhoModel;
+use App\Modules\Conselho\Service\Conselho as ConselhoService;
+use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 
 class ModuleServiceProvider extends ServiceProvider
 {
