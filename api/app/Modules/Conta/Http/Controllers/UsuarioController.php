@@ -46,7 +46,7 @@ class UsuarioController extends Controller
 
     public function store(Request $request) : \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->usuarioService->cadastrar($request->all()),
+        return $this->sendResponse($this->usuarioService->cadastrar(collect($request->all())),
             "Operação Realizada com Sucesso",
             Response::HTTP_CREATED
         );

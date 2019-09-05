@@ -1,5 +1,5 @@
+import moment from 'moment';
 import * as types from './types';
-import moment from 'moment'
 
 // eslint-disable-next-line import/prefer-default-export
 export const mutations = {
@@ -10,7 +10,7 @@ export const mutations = {
     if (dados.data.length > 0) {
       dados.data.forEach((element) => {
         if (element.dh_inicio) {
-          const dataInicio = moment(element.dh_inicio).toDate().getTime()
+          const dataInicio = moment(element.dh_inicio).toDate().getTime();
           const dataAtual = moment().toDate().getTime();
           if (element.tp_fase === 'abertura_inscricoes_conselho'
               && dataAtual >= dataInicio) {

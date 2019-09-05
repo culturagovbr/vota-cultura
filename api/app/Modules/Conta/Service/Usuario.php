@@ -80,7 +80,7 @@ class Usuario extends AbstractService
                     break;
             }
 
-            $usuarioModel = $this->cadastrar($dadosUsuario);
+            $usuarioModel = $this->cadastrar(collect($dadosUsuario));
             $model->co_usuario = $usuarioModel->co_usuario;
             $model->save();
 

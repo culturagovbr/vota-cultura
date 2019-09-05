@@ -24,7 +24,10 @@ class EleitorApiResourceController extends AApiResourceController
     public function show($identificador): \Illuminate\Http\JsonResponse
     {
         return $this->sendResponse(
-            new EleitorResource($this->service->obterUm($identificador)),
+            app()->make(
+                EleitorResource::class,
+                $this->service->obterUm($identificador)
+            ),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );

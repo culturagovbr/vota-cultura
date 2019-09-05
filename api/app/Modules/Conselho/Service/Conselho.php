@@ -58,7 +58,7 @@ class Conselho extends AbstractService
             }
 
             $serviceRepresentante = app()->make(Representante::class);
-            $representante = $serviceRepresentante->cadastrar($dados['representante']);
+            $representante = $serviceRepresentante->cadastrar(collect($dados['representante']));
 
             if (!$representante) {
                 throw new EParametrosInvalidos('Não foi possível cadastrar o representante.');
@@ -66,7 +66,7 @@ class Conselho extends AbstractService
 
             $dados['co_representante'] = $representante->co_representante;
             $serviceEndereco = app()->make(Endereco::class);
-            $endereco = $serviceEndereco->cadastrar($dados['endereco']);
+            $endereco = $serviceEndereco->cadastrar(collect($dados['endereco']));
 
             if (!$endereco) {
                 throw new EParametrosInvalidos('Não foi possível cadastrar o endereço.');
