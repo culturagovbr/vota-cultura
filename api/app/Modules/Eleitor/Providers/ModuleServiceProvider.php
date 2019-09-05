@@ -31,9 +31,15 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
+            if($parametros instanceof Eleitor) {
+                return new CadastroComSucesso($parametros);
+            }
             return new CadastroComSucesso($app->make(Eleitor::class, $parametros));
         });
         $this->app->bind(Eleitor::class, function ($app, $parametros) {
+            if($parametros instanceof Eleitor) {
+                return $parametros;
+            }
             return new Eleitor($parametros);
         });
     }

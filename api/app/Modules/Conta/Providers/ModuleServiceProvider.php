@@ -24,6 +24,7 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
             return new CadastroComSucesso($app->make(Usuario::class, $parametros));
         });
+
         $this->app->bind(Usuario::class, function ($app, $parametros) {
             return new Usuario($parametros);
         });

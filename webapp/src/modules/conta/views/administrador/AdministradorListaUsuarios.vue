@@ -140,9 +140,6 @@ export default {
   methods: {
     ...mapActions({
       buscarUsuariosPerfis: 'conta/buscarUsuariosPerfis',
-      // atualizarItemAction: 'conta/atualizarUsuario',
-      // excluirItemAction: 'conta/excluirUsuario',
-      // mensagemSucesso: 'app/setMensagemSucesso',
     }),
     editarItemModal(item) {
       this.itemEditado = item;
@@ -150,9 +147,6 @@ export default {
     },
   },
   watch: {
-    usuariosGetter(usuarios){
-      this.usuariosFiltrados = this.usuariosGetter;
-    },
   },
   mounted() {
     const self = this;

@@ -21,7 +21,7 @@ class RecuperacaoSenhaController extends Controller
 
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->recuperacaoSenhaService->recuperarSenha($request->all()),
+        return $this->sendResponse($this->recuperacaoSenhaService->recuperarSenha(collect($request->all())),
             "Operação Realizada com Sucesso",
             Response::HTTP_CREATED
         );

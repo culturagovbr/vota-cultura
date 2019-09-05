@@ -13,9 +13,6 @@ export const mutations = {
   },
   [types.DEFINIR_DADOS_PRIMEIRO_ACESSO]() {},
   [types.ATIVAR_USUARIO]() {},
-  [types.CADASTRAR_USUARIO](state, dados) {
-    state.usuario = dados;
-  },
   [types.RECUPERAR_SENHA]() {},
   [types.ALTERAR_SENHA_INICIAL]() {},
   [types.ALTERAR_SENHA]() {},
@@ -35,5 +32,8 @@ export const mutations = {
   [types.DEFINIR_PERFIS_ALTERACAO](state, perfis) {
     state.perfis = perfis;
   },
-  [types.ATUALIZAR_USUARIO](state) {},
+  [types.ATUALIZAR_USUARIO]() {},
+  [types.ATRIBUIR_USUARIO_CADASTRADO_LISTA](state, usuario){
+    state.usuarios.push(usuario);
+  },
 };

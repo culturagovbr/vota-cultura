@@ -2,7 +2,7 @@
 
 namespace App\Modules\Conta\Http\Controllers;
 
-use App\Modules\Conta\Http\Resources\Usuario;
+use App\Modules\Conta\Http\Resources\Usuario as UsuarioResource;
 use App\Modules\Conta\Service\Usuario as UsuarioService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,7 +46,10 @@ class UsuarioController extends Controller
 
     public function store(Request $request) : \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->usuarioService->cadastrar(collect($request->all())),
+        return $this->sendResponse(
+            new UsuarioResource(
+                $this->usuarioService->cadastrar(collect($request->all()))
+            ),
             "Operação Realizada com Sucesso",
             Response::HTTP_CREATED
         );
@@ -80,7 +83,7 @@ class UsuarioController extends Controller
     public function listarUsuarios(Request $request): \Illuminate\Http\JsonResponse
     {
         return $this->sendResponse(
-            Usuario::collection($this->usuarioService->obterTodosComPerfis($request)),
+            UsuarioResource::collection($this->usuarioService->obterTodosComPerfis($request)),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
