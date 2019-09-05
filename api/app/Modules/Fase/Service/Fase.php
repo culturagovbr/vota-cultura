@@ -12,4 +12,9 @@ class Fase extends AbstractService
         parent::__construct($model);
     }
 
+
+    public function obterPorTipo(string $tipoFase) : ?FaseModel
+    {
+        return $this->model->where('tp_fase', '=', $tipoFase)->first();
+    }
 }

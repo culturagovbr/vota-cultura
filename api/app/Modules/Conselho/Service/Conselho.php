@@ -6,15 +6,19 @@ use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Mail\Conselho\CadastroComSucesso;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Core\Exceptions\EValidacaoCampo;
+use App\Modules\Fase\Model\Fase as FaseModel;
+use App\Modules\Fase\Service\Fase;
 use App\Modules\Localidade\Service\Endereco;
-use App\Modules\Representacao\Service\Representante;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
+use App\Modules\Representacao\Service\Representante;
+use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
-use App\Modules\Upload\Model\Arquivo;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class Conselho extends AbstractService
@@ -24,22 +28,26 @@ class Conselho extends AbstractService
         parent::__construct($model);
     }
 
-    public function cadastrar(array $dados): ?Model
+    public function cadastrar(Collection $dados): ?Model
     {
         try {
+            DB::beginTransaction();
+            $serviceFase = app()->make(Fase::class);
+            $fase = $serviceFase->obterPorTipo(FaseModel::ABERTURA_INSCRICOES_CONSELHO);
+
+            if ($fase->faseFinalizada()) {
+                throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
+            }
+
             $anexos = $dados['anexos'];
             unset($dados['anexos']);
 
-            DB::beginTransaction();
 
-            $conselho = $this->getModel()->where([
-                'ds_email' => $dados['ds_email']
-            ])->orWhere([
-                'no_orgao_gestor' => $dados['no_orgao_gestor']
-            ])->orWhere([
-                'nu_cnpj' => $dados['nu_cnpj']
-            ])->first();
-
+            $conselho = $this->getModel()->fill($dados->only([
+                'ds_email',
+                'no_orgao_gestor',
+                'nu_cnpj',
+            ]))->first();
 
             if ($conselho) {
                 throw new EParametrosInvalidos(
@@ -64,9 +72,9 @@ class Conselho extends AbstractService
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;
-            $conselho = parent::cadastrar($dados);
+            $conselhoCriado = parent::cadastrar($dados);
 
-            foreach($anexos as $dadosArquivo) {
+            foreach ($anexos as $dadosArquivo) {
                 $modeloArquivo = app()->make(Arquivo::class);
                 $modeloArquivo->fill($dadosArquivo);
                 $serviceUpload = new Upload($modeloArquivo);
@@ -86,27 +94,27 @@ class Conselho extends AbstractService
             Mail::to($representante->ds_email)
                 ->bcc(env('EMAIL_ACOMPANHAMENTO'))
                 ->send(
-                new CadastroComSucesso($conselho)
-            );
+                    new CadastroComSucesso($conselhoCriado)
+                );
 
             DB::commit();
-            return $conselho;
+            return $conselhoCriado;
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
         }
     }
 
-    public function obterUm($identificador) : ?Model
+    public function obterUm($identificador): ?Model
     {
         $conselho = parent::obterUm($identificador);
-        if(!$conselho) {
+        if (!$conselho) {
             throw new EParametrosInvalidos('Conselho não encontrado');
         }
 
 
         $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
-        if($conselho->co_conselho !== $usuarioAutenticado['co_conselho']) {
+        if ($conselho->co_conselho !== $usuarioAutenticado['co_conselho']) {
             throw new EParametrosInvalidos('O Conselho precisa ser o mesmo que o usuário logado.');
         }
 

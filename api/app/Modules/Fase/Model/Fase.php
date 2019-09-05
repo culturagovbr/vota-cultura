@@ -2,10 +2,14 @@
 
 namespace App\Modules\Fase\Model;
 
+use App\Modules\Core\Exceptions\EPropriedadeNaoDefinida;
 use Illuminate\Database\Eloquent\Model;
 
 class Fase extends Model
 {
+    const ABERTURA_INSCRICOES_CONSELHO = 'abertura_inscricoes_conselho';
+    const ABERTURA_INSCRICOES_ORGANIZACAO = 'abertura_inscricoes_organizacao';
+
     protected $table = 'tb_fase';
     protected $primaryKey = 'co_fase';
 
@@ -21,4 +25,13 @@ class Fase extends Model
     ];
 
     public $timestamps = false;
+
+    public function faseFinalizada() : bool
+    {
+        if(empty($this->dh_fim)) {
+            throw new EPropriedadeNaoDefinida('Propriedade `dh_fim` não definida.');
+        }
+        $dataAtual = \Illuminate\Support\Carbon::now();
+        return $dataAtual->greaterThan($this->dh_fim);
+    }
 }

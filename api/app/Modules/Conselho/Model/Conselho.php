@@ -7,6 +7,7 @@ use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Conselho extends Model
 {
@@ -58,5 +59,14 @@ class Conselho extends Model
     public function getTelefoneFormatadoAttribute()
     {
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
+    }
+
+    public function conselhoJaCadastrado(Collection $dados)
+    {
+        return $this->getModel()->where($dados->only([
+            'ds_email',
+            'no_orgao_gestor',
+            'nu_cnpj',
+        ]))->first();
     }
 }

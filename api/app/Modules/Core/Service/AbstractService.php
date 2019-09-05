@@ -2,9 +2,9 @@
 
 namespace App\Core\Service;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 abstract class AbstractService implements IServiceApiResource
@@ -72,11 +72,11 @@ abstract class AbstractService implements IServiceApiResource
         }
     }
 
-    public function cadastrar(array $dados): ?Model
+    public function cadastrar(Collection $dados): ?Model
     {
         try {
             DB::beginTransaction();
-            $modelPesquisada = $this->getModel()->fill($dados);
+            $modelPesquisada = $this->getModel()->fill($dados->toArray());
             $modelPesquisada->save();
             DB::commit();
             return $modelPesquisada;

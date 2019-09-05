@@ -9,6 +9,7 @@ use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
 use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -20,7 +21,7 @@ class Eleitor extends AbstractService
         parent::__construct($model);
     }
 
-    public function cadastrar(array $dados): ?Model
+    public function cadastrar(Collection $dados): ?Model
     {
         try {
             DB::beginTransaction();
@@ -47,10 +48,7 @@ class Eleitor extends AbstractService
             $dados['co_usuario'] = $this->_obterCodigoUsuario($representante);
             $eleitor = parent::cadastrar($dados);
 
-            Mail::to($eleitor->ds_email)
-                ->send(
-                new CadastroComSucesso($eleitor)
-            );
+            Mail::to($eleitor->ds_email)->send(new CadastroComSucesso($eleitor));
 
             DB::commit();
             return $eleitor;
