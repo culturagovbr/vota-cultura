@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organizacao\Providers;
 
+use App\Modules\Organizacao\Mail\Organizacao\CadastroComSucesso;
 use Caffeinated\Modules\Support\ServiceProvider;
 
 use App\Modules\Organizacao\Service\Criterio as CriterioService;
@@ -40,6 +41,12 @@ class ModuleServiceProvider extends ServiceProvider
             return new SegmentoService(
                 $app->make(SegmentoModel::class)
             );
+        });
+        $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
+            return new CadastroComSucesso($app->make(OrganizacaoModel::class, $parametros));
+        });
+        $this->app->bind(OrganizacaoModel::class, function ($app, $parametros) {
+            return new OrganizacaoModel($parametros);
         });
     }
 }

@@ -42,7 +42,7 @@ class Conselho extends AbstractService
             $anexos = $dados['anexos'];
             unset($dados['anexos']);
 
-            $conselho = $this->getModel()->fill(
+            $conselho = $this->getModel()->where(
                 $dados->only([
                     'ds_email',
                     'no_orgao_gestor',
@@ -95,7 +95,7 @@ class Conselho extends AbstractService
             Mail::to($representante->ds_email)
                 ->bcc(env('EMAIL_ACOMPANHAMENTO'))
                 ->send(
-                    app()->make(CadastroComSucesso::class, $conselhoCriado)
+                    app()->make(CadastroComSucesso::class, $conselhoCriado->toArray())
                 );
 
             DB::commit();

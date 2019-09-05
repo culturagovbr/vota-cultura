@@ -37,7 +37,7 @@ class Organizacao extends AbstractService
                 throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
             }
 
-            $organizacao = $this->getModel()->fill(
+            $organizacao = $this->getModel()->where(
                 $dados->only([
                     'ds_email',
                     'no_organizacao',
@@ -77,7 +77,7 @@ class Organizacao extends AbstractService
             Mail::to($representante->ds_email)
                 ->bcc(env('EMAIL_ACOMPANHAMENTO'))
                 ->send(
-                    app()->make(CadastroComSucesso::class, $novaOrganizacao)
+                    app()->make(CadastroComSucesso::class, $novaOrganizacao->toArray())
                 );
 
             DB::commit();

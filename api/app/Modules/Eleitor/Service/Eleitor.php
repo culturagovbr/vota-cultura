@@ -36,7 +36,7 @@ class Eleitor extends AbstractService
                 throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
             }
 
-            $eleitor = $this->getModel()->fill(
+            $eleitor = $this->getModel()->where(
                 $dados->only([
                     'nu_cpf',
                     'nu_rg',
@@ -57,14 +57,14 @@ class Eleitor extends AbstractService
             ])->first();
 
             $dados['co_usuario'] = $this->_obterCodigoUsuario($representante);
-            $eleitor = parent::cadastrar($dados);
+            $eleitorCriado = parent::cadastrar($dados);
 
-            Mail::to($eleitor->ds_email)->send(
-                app()->make(CadastroComSucesso::class, $eleitor)
+            Mail::to($eleitorCriado->ds_email)->send(
+                app()->make(CadastroComSucesso::class, $eleitorCriado->toArray())
             );
 
             DB::commit();
-            return $eleitor;
+            return $eleitorCriado;
         } catch (EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
