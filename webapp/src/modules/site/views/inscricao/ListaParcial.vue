@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-card class="elevation-1 pa-4 login-card">
       <v-card-title>
         <div class="layout column align-center">
@@ -86,7 +86,7 @@
         </v-form>
       </v-card-text>
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 <script>

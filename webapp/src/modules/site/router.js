@@ -24,14 +24,14 @@ export default [
       },
       {
         path: 'inscricao/lista-parcial',
+        name: 'inscricao-lista-parcial-route',
         meta: {
-          name: 'inscricao-lista-parcial',
           title: 'Lista Parcial de Inscritos',
           group: 'apps',
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "inscricao-lista-parcial" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
+        component: () => import(/* webpackChunkName: "inscricao-lista-parcial-route" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
       },
     ],
   },

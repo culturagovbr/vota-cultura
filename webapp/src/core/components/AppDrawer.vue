@@ -166,7 +166,7 @@ export default {
           title: 'Inscritos - Lista Parcial',
           group: 'apps',
           icon: 'list',
-          name: 'inscricao-lista-parcial',
+          name: 'inscricao-lista-parcial-route',
         },
       ],
     };
