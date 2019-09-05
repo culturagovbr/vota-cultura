@@ -61,6 +61,12 @@ export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => {
       { root: true },
     );
     return response;
+  }).catch((error) => {
+    dispatch(
+        'app/setMensagemErro',
+        error.response.data.message,
+        { root: true },
+    );
   });
 };
 

@@ -17,8 +17,12 @@
         >
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title v-if="false">Editar Usuário</v-toolbar-title>
-        <v-toolbar-title v-else>Cadastrar Usuário</v-toolbar-title>
+        <v-toolbar-title v-if="!!formulario.hasOwnProperty('co_usuario')">
+          Editar Usuário
+        </v-toolbar-title>
+        <v-toolbar-title v-else>
+          Cadastrar Usuário
+        </v-toolbar-title>
         <v-spacer />
       </v-toolbar>
       <v-card-text>
@@ -49,10 +53,11 @@
                         v-model="formulario.nu_cpf"
                         label="*CPF"
                         append-icon="account_circle"
-                        :rules="[rules.required, rules.cpfMin]"
+                        :rules="[rules.required, rules.cpfMin, rules.cpfInvalido]"
                         :error-messages="nomeFormularioError"
                         mask="###.###.###-##"
                         required
+                        :disabled="!!formulario.hasOwnProperty('co_usuario')"
                       />
                     </v-flex>
                     <v-flex
@@ -88,8 +93,10 @@
                     <v-flex
                       xs4
                       md4
-                      sm12>
+                      sm12
+                    >
                       <v-select
+                        v-model="formulario.co_perfil"
                         :items="perfis"
                         :disabled="rules.podeAlterarPerfil()"
                         item-text="ds_perfil"
@@ -105,6 +112,7 @@
                       <v-switch
                         v-model="formulario.st_ativo"
                         :label="formulario.st_ativo ? 'Ativo' : 'Inativo'"
+                        :disabled="!formulario.hasOwnProperty('co_usuario')"
                         color="primary"
                       />
                     </v-flex>
@@ -125,7 +133,7 @@
                 :loading="loading"
                 :disabled="!valid || loading"
                 color="primary"
-                @click.native="salvarUsuario()"
+                @click.native="salvar"
               >
                 <v-icon left>
                   send
@@ -142,7 +150,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { includes } from "lodash";
+import { includes } from 'lodash';
 import Validate from '@/modules/shared/util/validate';
 
 export default {
@@ -172,12 +180,7 @@ export default {
         situacao: '',
         ds_email: '',
         nu_cpf: '',
-        perfil: {
-          co_perfil: 0,
-          no_perfil: '',
-          ds_perfil: '',
-          st_ativo: false,
-        },
+        co_perfil: 0,
       },
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
@@ -185,9 +188,7 @@ export default {
         cpfInvalido: value => !!value || 'CPF não encontrado',
         emailValido: value => Validate.isEmailValido(value) || 'O endereço de e-mail é inválido',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
-        podeAlterarPerfil: (value) => {
-          return !!value && !includes(this.perfisInscricao, this.usuario.perfil);
-        },
+        podeAlterarPerfil: value => !!value && !includes(this.perfisInscricao, this.usuario.perfil),
       },
     };
   },
@@ -201,37 +202,48 @@ export default {
     value(val) {
       this.dialog = val;
     },
-    dialog(val) {
-      this.$refs.form.reset()
-      this.$emit('input', val);
+    dialog(valor) {
+      this.$refs.form.reset();
+      this.$emit('input', valor);
     },
     usuario(val) {
       this.formulario = Object.assign(this.formularioInicial);
-      if(!!val) {
+      if (val) {
         this.formulario = Object.assign({}, val);
       }
     },
     'formulario.nu_cpf': function (valor) {
-      if (!!valor && valor.length === 11 && Validate.isCpfValido(valor)) {
+      this.formulario.no_nome = String();
+      this.nomeFormularioError = String();
+      if (!!valor && valor.length === 11) {
+        if (!Validate.isCpfValido(valor)) {
+          this.nomeFormularioError = 'CPF inválido';
+          return false;
+        }
         this.carregarCPF(valor);
       }
     },
   },
   methods: {
     ...mapActions({
-      atualizarUsuario: 'conta/atualizarUsuario',
-      cadastrarUsuario: 'conta/cadastrarUsuario',
+      salvarUsuario: 'conta/salvarUsuario',
       buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
       consultarCPF: 'pessoa/consultarCPF',
     }),
-    salvarUsuario() {
+    salvar() {
+      if (!this.$refs.form.validate()) {
+        return false;
+      }
+
       const self = this;
       self.carregando = true;
-      this.salvarUsuario(self.formulario).finally(() => {
-        self.carregando = false;
-        // @todo: colocar mensagem >:¬( utilizando state....
-        // this.$emit('update:dialog', false);
-      });
+      this.salvarUsuario(self.formulario)
+        .then(() => {
+          self.dialog = false;
+        })
+        .finally(() => {
+          self.carregando = false;
+        });
     },
     carregarCPF(valor) {
       const self = this;
