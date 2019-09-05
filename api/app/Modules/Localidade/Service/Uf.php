@@ -4,7 +4,7 @@ namespace App\Modules\Localidade\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Localidade\Model\Uf as UfModel;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class Uf extends AbstractService
 {

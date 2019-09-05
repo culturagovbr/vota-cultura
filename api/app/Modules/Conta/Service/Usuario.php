@@ -2,20 +2,21 @@
 
 namespace App\Modules\Conta\Service;
 
+use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
-use App\Modules\Core\Exceptions\EParametrosInvalidos;
-use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil as PerfilModel;
-use App\Core\Service\AbstractService;
+use App\Modules\Conta\Model\Usuario as UsuarioModel;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
+use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
-use App\Modules\Conta\Model\Usuario as UsuarioModel;
 
 
 class Usuario extends AbstractService
@@ -79,7 +80,7 @@ class Usuario extends AbstractService
                     break;
             }
 
-            $usuarioModel = $this->cadastrar($dadosUsuario);
+            $usuarioModel = $this->cadastrar(collect($dadosUsuario));
             $model->co_usuario = $usuarioModel->co_usuario;
             $model->save();
 
@@ -118,7 +119,7 @@ class Usuario extends AbstractService
 
     }
 
-    public function cadastrar(array $dados): ?Model
+    public function cadastrar(Collection $dados): ?Model
     {
         try {
             $usuario = $this->getModel()->where([
@@ -148,7 +149,7 @@ class Usuario extends AbstractService
             $usuario->ds_senha = $dados['ds_senha'];
 
             Mail::to($usuario->ds_email)->send(
-                new CadastroComSucesso($usuario)
+                app()->make(CadastroComSucesso::class, $usuario)
             );
             DB::commit();
             return $usuario;

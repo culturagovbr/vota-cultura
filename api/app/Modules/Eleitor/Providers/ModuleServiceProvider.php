@@ -2,6 +2,8 @@
 
 namespace App\Modules\Eleitor\Providers;
 
+use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
+use App\Modules\Eleitor\Model\Eleitor;
 use Caffeinated\Modules\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -28,5 +30,11 @@ class ModuleServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
+            return new CadastroComSucesso($app->make(Eleitor::class, $parametros));
+        });
+        $this->app->bind(Eleitor::class, function ($app, $parametros) {
+            return new Eleitor($parametros);
+        });
     }
 }

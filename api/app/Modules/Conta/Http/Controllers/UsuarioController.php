@@ -48,7 +48,7 @@ class UsuarioController extends Controller
     {
         return $this->sendResponse(
             new UsuarioResource(
-                $this->usuarioService->cadastrar($request->all())
+                $this->usuarioService->cadastrar(collect($request->all()))
             ),
             "Operação Realizada com Sucesso",
             Response::HTTP_CREATED

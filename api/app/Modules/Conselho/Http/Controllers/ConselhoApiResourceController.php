@@ -9,6 +9,7 @@ use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ConselhoApiResourceController extends AApiResourceController
@@ -35,4 +36,15 @@ class ConselhoApiResourceController extends AApiResourceController
     {
         throw new EParametrosInvalidos("Método não disponível");
     }
+
+    public function store(Request $request): JsonResponse
+    {
+        return $this->sendResponse(
+            $this->service->cadastrarConselho($request->all()),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_CREATED
+        );
+    }
+
+    //cadastrar
 }

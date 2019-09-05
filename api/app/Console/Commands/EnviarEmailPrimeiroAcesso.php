@@ -51,7 +51,7 @@ class EnviarEmailPrimeiroAcesso extends Command
         );
 
         foreach ($listaEmailsGeral as $email) {
-            Mail::to($email)->send(new CadastroPrimeiroAcesso());
+            Mail::to($email)->send(app()->make(CadastroPrimeiroAcesso::class));
         }
 
     }

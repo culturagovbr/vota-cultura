@@ -55,7 +55,9 @@ class RecuperacaoSenha implements IService
             $usuario->gerarCodigoAtivacao();
             $usuario->save();
 
-            Mail::to($usuario->ds_email)->send(new RecuperacaoSenhaMail($usuario));
+            Mail::to($usuario->ds_email)->send(
+                app()->make(RecuperacaoSenhaMail::class, $usuario)
+            );
             DB::commit();
 
             return $usuario->toArray();

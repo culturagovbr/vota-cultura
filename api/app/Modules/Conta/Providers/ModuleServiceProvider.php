@@ -2,6 +2,8 @@
 
 namespace App\Modules\Conta\Providers;
 
+use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
+use App\Modules\Conta\Model\Usuario;
 use Caffeinated\Modules\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -19,5 +21,11 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(AutenticacaoServiceProvider::class);
+        $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
+            return new CadastroComSucesso($app->make(Usuario::class, $parametros));
+        });
+        $this->app->bind(Usuario::class, function ($app, $parametros) {
+            return new Usuario($parametros);
+        });
     }
 }

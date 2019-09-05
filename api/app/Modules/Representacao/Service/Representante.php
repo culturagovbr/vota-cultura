@@ -7,6 +7,7 @@ use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Representante extends AbstractService
@@ -16,7 +17,7 @@ class Representante extends AbstractService
         parent::__construct($model);
     }
 
-    public function cadastrar(array $dados): ?Model
+    public function cadastrar(Collection $dados): ?Model
     {
         try {
             $representante = $this->getModel()->where([
