@@ -66,7 +66,7 @@
                       sm12
                     >
                       <v-text-field
-                        v-model="formulario.no_nome"
+                        v-model="nmPessoaFisica"
                         :disabled="true"
                         label="*Nome completo"
                         append-icon="perm_identity"
@@ -96,14 +96,19 @@
                       sm12
                     >
                       <v-select
-                        v-model="formulario.co_perfil"
+                        v-model="formulario.perfil.co_perfil"
                         :items="perfis"
-                        :disabled="rules.podeAlterarPerfil()"
                         item-text="ds_perfil"
                         item-value="co_perfil"
+                        :rules="[rules.required]"
                         label="Perfil"
+                        :disabled="
+                          this.formulario.perfil.co_perfil !== 777 &&
+                          this.formulario.perfil.co_perfil !== 1 &&
+                          formulario.hasOwnProperty('co_usuario')"
                         validate-on-blur
                       />
+
                     </v-flex>
                     <v-flex
                       xs12
@@ -112,7 +117,9 @@
                       <v-switch
                         v-model="formulario.st_ativo"
                         :label="formulario.st_ativo ? 'Ativo' : 'Inativo'"
-                        :disabled="!formulario.hasOwnProperty('co_usuario')"
+                        :disabled="
+                          !formulario.hasOwnProperty('co_usuario') ||
+                          !!formulario.ds_codigo_ativacao"
                         color="primary"
                       />
                     </v-flex>
@@ -150,7 +157,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { includes } from 'lodash';
 import Validate from '@/modules/shared/util/validate';
 
 export default {
@@ -167,28 +173,26 @@ export default {
   },
   data() {
     return {
+      co_perfil: '',
       nomeFormularioError: '',
       dialog: false,
       loading: false,
-      showDatePicker: false,
       valid: false,
       perfilPodeSerAlterado: false,
-      formulario: {},
-      formularioInicial: {
+      formulario: {
         no_nome: '',
-        st_ativo: false,
-        situacao: '',
-        ds_email: '',
         nu_cpf: '',
-        co_perfil: 0,
+        perfil: {
+          co_perfil: '',
+        },
       },
+      nmPessoaFisica: '',
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         cpfMin: value => (value && value.length === 11) || 'Mínimo de 11 caracteres',
         cpfInvalido: value => !!value || 'CPF não encontrado',
         emailValido: value => Validate.isEmailValido(value) || 'O endereço de e-mail é inválido',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
-        podeAlterarPerfil: value => !!value && !includes(this.perfisInscricao, this.usuario.perfil),
       },
     };
   },
@@ -203,18 +207,30 @@ export default {
       this.dialog = val;
     },
     dialog(valor) {
-      this.$refs.form.reset();
       this.$emit('input', valor);
-    },
-    usuario(val) {
-      this.formulario = Object.assign(this.formularioInicial);
-      if (val) {
-        this.formulario = Object.assign({}, val);
+      this.formulario = Object.assign({
+        no_nome: '',
+        nu_cpf: '',
+        perfil: {
+          co_perfil: '',
+        },
+      });
+      this.$refs.form.reset();
+
+      if (!!valor) {
+        this.formulario = Object.assign(this.formulario, this.usuario);
       }
+    },
+    nmPessoaFisica(nome) {
+      this.formulario.no_nome = nome;
+    },
+    usuario(usuario) {
+      this.formulario = Object.assign(this.formulario, usuario);
     },
     'formulario.nu_cpf': function (valor) {
       this.formulario.no_nome = String();
       this.nomeFormularioError = String();
+      this.nmPessoaFisica = String();
       if (!!valor && valor.length === 11) {
         if (!Validate.isCpfValido(valor)) {
           this.nomeFormularioError = 'CPF inválido';
@@ -246,11 +262,21 @@ export default {
         });
     },
     carregarCPF(valor) {
-      const self = this;
       this.consultarCPF(valor).then((response) => {
         const { data } = response.data;
-        self.formulario.no_nome = data.nmPessoaFisica;
+        this.formulario.no_nome = data.nmPessoaFisica;
+        this.nmPessoaFisica = data.nmPessoaFisica;
       });
+    },
+    checarUsuarioPodeEditarPerfil(){
+      if(this.formulario.perfil.co_perfil !== 777 && this.formulario.perfil.co_perfil !== 1 ){
+        this.perfilPodeSerAlterado = false;
+      }
+
+      if (!this.formulario.hasOwnProperty('co_usuario')) {
+        this.perfilPodeSerAlterado = true;
+      }
+      return this.perfilPodeSerAlterado;
     },
   },
   mounted() {

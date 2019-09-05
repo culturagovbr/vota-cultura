@@ -51,10 +51,9 @@ export const ativarUsuario = async ({ commit }, ativacao) => {
 };
 
 export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => {
-  commit(types.CADASTRAR_USUARIO, usuario);
   return usuarioService.cadastrarUsuario(usuario).then((response) => {
     const { data } = response.data;
-    commit(types.DEFINIR_USUARIO, data);
+    commit(types.ATRIBUIR_USUARIO_CADASTRADO_LISTA, data);
     dispatch(
       'app/setMensagemSucesso',
       'Usuário cadastrado com sucesso!',
@@ -67,6 +66,7 @@ export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => {
         error.response.data.message,
         { root: true },
     );
+    throw new TypeError(error);
   });
 };
 
@@ -74,7 +74,6 @@ export const atualizarUsuario = async ({ commit, dispatch }, usuario) => {
   commit(types.ATUALIZAR_USUARIO);
   return usuarioService.atualizarUsuario(usuario).then((response) => {
     const { data } = response.data;
-    commit(types.DEFINIR_USUARIO, data);
     dispatch(
       'app/setMensagemSucesso',
       'Usuário atualizado com sucesso.',
@@ -86,9 +85,9 @@ export const atualizarUsuario = async ({ commit, dispatch }, usuario) => {
 
 export const salvarUsuario = async ({ dispatch, commit }, usuario) => {
   if (usuario.co_usuario) {
-    dispatch('atualizarUsuario', usuario);
+    return dispatch('atualizarUsuario', usuario);
   } else {
-    dispatch('cadastrarUsuario', usuario);
+    return dispatch('cadastrarUsuario', usuario);
   }
 };
 
@@ -140,7 +139,11 @@ export const buscarPerfis = async ({ commit }) => {
 
 export const buscarPerfisAlteracao = async ({ state, commit, dispatch }) => dispatch('buscarPerfis').then((response) => {
   const { data } = response.data;
-  const novoResultado = remove(data, perfil => !includes(state.perfisInscricao, perfil.no_perfil));
-  commit(types.DEFINIR_PERFIS_ALTERACAO, novoResultado);
+  data.map(function(perfil){
+    if (perfil.no_perfil !== 'administrador' && perfil.no_perfil !== 'avaliador') {
+      perfil.disabled = true;
+    }
+  });
+  commit(types.DEFINIR_PERFIS_ALTERACAO, data);
   return response;
 });
