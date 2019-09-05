@@ -21,9 +21,10 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->bind(RepresentanteService::class, function($app, $parametros) {
-            return new RepresentanteService(
-                $app->make(RepresentanteModel::class, $parametros)
-            );
+            if($parametros instanceof RepresentanteModel) {
+                return new RepresentanteService($parametros);
+            }
+            return new RepresentanteService($app->make(RepresentanteModel::class, $parametros));
         });
     }
 }

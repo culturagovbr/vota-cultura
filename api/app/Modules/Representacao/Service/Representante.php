@@ -20,13 +20,13 @@ class Representante extends AbstractService
     public function cadastrar(Collection $dados): ?Model
     {
         try {
-            $representante = $this->getModel()->where([
-                'ds_email' => $dados['ds_email']
-            ])->orWhere([
-                'nu_rg' => $dados['nu_rg']
-            ])->orWhere([
-                'nu_cpf' => $dados['nu_cpf']
-            ])->first();
+            $representante = $this->getModel()->where(
+                $dados->only([
+                    'ds_email',
+                    'nu_rg',
+                    'nu_cpf',
+                ])->toArray()
+            )->first();
 
             if ($representante) {
                 throw new EParametrosInvalidos(

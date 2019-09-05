@@ -137,7 +137,7 @@ class Usuario extends AbstractService
             DB::beginTransaction();
             $usuario = $this->getModel();
             unset($dados['dh_cadastro']);
-            $usuario->fill($dados);
+            $usuario->fill($dados->toArray());
             $usuario->gerarCodigoAtivacao();
             $horarioAtual = Carbon::now();
             $usuario->dh_cadastro = $horarioAtual->toDateTimeString();

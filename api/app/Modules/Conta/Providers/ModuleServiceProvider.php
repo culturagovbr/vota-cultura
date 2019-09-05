@@ -22,9 +22,16 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(AutenticacaoServiceProvider::class);
         $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
+            if($parametros instanceof Usuario) {
+                return new CadastroComSucesso($parametros);
+            }
             return new CadastroComSucesso($app->make(Usuario::class, $parametros));
         });
+
         $this->app->bind(Usuario::class, function ($app, $parametros) {
+            if($parametros instanceof Usuario) {
+                return $parametros;
+            }
             return new Usuario($parametros);
         });
     }

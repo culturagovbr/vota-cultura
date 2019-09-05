@@ -43,9 +43,15 @@ class ModuleServiceProvider extends ServiceProvider
             );
         });
         $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
+            if($parametros instanceof OrganizacaoModel) {
+                return new CadastroComSucesso($parametros);
+            }
             return new CadastroComSucesso($app->make(OrganizacaoModel::class, $parametros));
         });
         $this->app->bind(OrganizacaoModel::class, function ($app, $parametros) {
+            if($parametros instanceof OrganizacaoModel) {
+                return $parametros;
+            }
             return new OrganizacaoModel($parametros);
         });
     }

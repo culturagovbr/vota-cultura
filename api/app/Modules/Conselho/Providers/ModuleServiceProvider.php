@@ -27,9 +27,15 @@ class ModuleServiceProvider extends ServiceProvider
             );
         });
         $this->app->bind(CadastroComSucesso::class, function ($app, $parametros) {
+            if($parametros instanceof ConselhoModel) {
+                return new CadastroComSucesso($parametros);
+            }
             return new CadastroComSucesso($app->make(ConselhoModel::class, $parametros));
         });
         $this->app->bind(ConselhoModel::class, function ($app, $parametros) {
+            if($parametros instanceof ConselhoModel) {
+                return $parametros;
+            }
             return new ConselhoModel($parametros);
         });
     }
