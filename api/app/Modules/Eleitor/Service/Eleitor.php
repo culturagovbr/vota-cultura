@@ -59,7 +59,9 @@ class Eleitor extends AbstractService
             $dados['co_usuario'] = $this->_obterCodigoUsuario($representante);
             $eleitor = parent::cadastrar($dados);
 
-            Mail::to($eleitor->ds_email)->send(new CadastroComSucesso($eleitor));
+            Mail::to($eleitor->ds_email)->send(
+                app()->make(CadastroComSucesso::class, $eleitor)
+            );
 
             DB::commit();
             return $eleitor;

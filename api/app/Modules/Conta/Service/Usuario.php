@@ -149,7 +149,7 @@ class Usuario extends AbstractService
             $usuario->ds_senha = $dados['ds_senha'];
 
             Mail::to($usuario->ds_email)->send(
-                new CadastroComSucesso($usuario)
+                app()->make(CadastroComSucesso::class, $usuario)
             );
             DB::commit();
             return $usuario;

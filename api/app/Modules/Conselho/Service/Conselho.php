@@ -95,7 +95,7 @@ class Conselho extends AbstractService
             Mail::to($representante->ds_email)
                 ->bcc(env('EMAIL_ACOMPANHAMENTO'))
                 ->send(
-                    new CadastroComSucesso($conselhoCriado)
+                    app()->make(CadastroComSucesso::class, $conselhoCriado)
                 );
 
             DB::commit();

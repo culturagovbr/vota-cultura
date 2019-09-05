@@ -68,20 +68,20 @@ class Organizacao extends AbstractService
             }
 
             $dados['co_endereco'] = $endereco->co_endereco;
-            $organizacao = parent::cadastrar($dados);
+            $novaOrganizacao = parent::cadastrar($dados);
 
             foreach (array_values($dados['criterios']) as $criterioId) {
-                $organizacao->criterios()->attach($criterioId);
+                $novaOrganizacao->criterios()->attach($criterioId);
             }
 
             Mail::to($representante->ds_email)
                 ->bcc(env('EMAIL_ACOMPANHAMENTO'))
                 ->send(
-                    new CadastroComSucesso($organizacao)
+                    app()->make(CadastroComSucesso::class, $novaOrganizacao)
                 );
 
             DB::commit();
-            return $organizacao;
+            return $novaOrganizacao;
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
