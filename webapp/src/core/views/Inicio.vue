@@ -40,6 +40,7 @@
               <v-flex
                 xs12
                 md4
+                v-if="ativarInscricaoOrganizacao"
               >
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
@@ -66,7 +67,7 @@
                 </v-card>
                 <div class="text-xs-center">
                   <v-btn
-                    v-if="ativarInscricaoOrganizacao"
+
                     color="green darken-4"
                     to="/organizacao/inscricao"
                     dark
@@ -80,6 +81,7 @@
               <v-flex
                 xs12
                 md4
+                v-if="ativarInscricaoConselho"
               >
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
@@ -106,7 +108,6 @@
                 </v-card>
                 <div class="text-xs-center">
                   <v-btn
-                    v-if="ativarInscricaoConselho"
                     color="green darken-4"
                     to="/conselho/inscricao"
                     dark
@@ -120,6 +121,7 @@
               <v-flex
                 xs12
                 md4
+                v-if="ativarInscricaoEleitor"
               >
                 <v-card class="elevation-0 transparent">
                   <v-card-text class="text-xs-center">
@@ -143,7 +145,7 @@
                   </v-card-text>
                   <div class="text-xs-center">
                     <v-btn
-                      v-if="ativarInscricaoEleitor"
+
                       color="green darken-4"
                       to="/eleitor/inscricao"
                       dark

@@ -11,18 +11,20 @@ export const mutations = {
       dados.data.forEach((element) => {
         if (element.dh_inicio) {
           const dataInicio = moment(element.dh_inicio).toDate().getTime();
+          const dataFim = moment(element.dh_fim).toDate().getTime();
           const dataAtual = moment().toDate().getTime();
-          if (element.tp_fase === 'abertura_inscricoes_conselho'
-              && dataAtual >= dataInicio) {
-            state.ativarInscricaoConselho = true;
-          }
-          if (element.tp_fase === 'abertura_inscricoes_organizacao'
-              && dataAtual >= dataInicio) {
-            state.ativarInscricaoOrganizacao = true;
-          }
-          if (element.tp_fase === 'abertura_inscricoes_eleitor'
-              && dataAtual >= dataInicio) {
-            state.ativarInscricaoEleitor = true;
+          switch (element.tp_fase) {
+            case 'abertura_inscricoes_conselho':
+              state.ativarInscricaoConselho = (dataAtual >= dataInicio && dataAtual <= dataFim);
+              break;
+            case 'abertura_inscricoes_organizacao':
+              state.ativarInscricaoOrganizacao = (dataAtual >= dataInicio && dataAtual <= dataFim);
+              break;
+            case 'abertura_inscricoes_eleitor':
+              state.ativarInscricaoEleitor = (dataAtual >= dataInicio && dataAtual <= dataFim);
+              break;
+            default:
+              break;
           }
         }
       });
