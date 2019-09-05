@@ -9,10 +9,10 @@ export default [
       group: 'apps',
       icon: '',
     },
-    redirect: '/inicio',
+    redirect: 'inicio',
     children: [
       {
-        path: '/inicio',
+        path: 'inicio',
         name: 'Inicio',
         meta: {
           title: 'Início',
