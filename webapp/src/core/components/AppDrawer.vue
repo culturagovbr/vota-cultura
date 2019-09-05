@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    :value="showDrawer"
+    :value="exibirGaveta"
     class="app--drawer"
     :mini-variant.sync="mini"
     app
@@ -152,7 +152,7 @@ export default {
       scrollSettings: {
         maxScrollbarLength: 160,
       },
-      showDrawer: false,
+      exibirGaveta: false,
       menuInscrivaseAtivo: false,
       usuarioLogado: {},
       menuAPI: [
@@ -161,6 +161,12 @@ export default {
           group: 'apps',
           icon: 'home',
           name: 'Inicio',
+        },
+        {
+          title: 'Inscritos - Lista Parcial',
+          group: 'apps',
+          icon: 'list',
+          name: 'inscricao-lista-parcial',
         },
       ],
     };
@@ -173,16 +179,10 @@ export default {
       usuario: 'conta/usuario',
       perfil: 'conta/perfil',
     }),
-    computeGroupActive() {
-      return true;
-    },
-    sideToolbarColor() {
-      return this.$vuetify.options.extra.sideNav;
-    },
   },
   watch: {
     value(val) {
-      this.showDrawer = val;
+      this.exibirGaveta = val;
     },
     usuario(valor) {
       this.usuarioLogado = valor;

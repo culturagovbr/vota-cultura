@@ -22,6 +22,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "inicio" */ '@/modules/site/views/Inicio.vue'),
       },
+      {
+        path: 'inscricao/lista-parcial',
+        meta: {
+          name: 'inscricao-lista-parcial',
+          title: 'Lista Parcial de Inscritos',
+          group: 'apps',
+          icon: 'dashboard',
+          public: true,
+        },
+        component: () => import(/* webpackChunkName: "inscricao-lista-parcial" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
+      },
     ],
   },
 ];
