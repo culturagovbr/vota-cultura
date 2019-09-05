@@ -42,12 +42,13 @@ class Conselho extends AbstractService
             $anexos = $dados['anexos'];
             unset($dados['anexos']);
 
-
-            $conselho = $this->getModel()->fill($dados->only([
-                'ds_email',
-                'no_orgao_gestor',
-                'nu_cnpj',
-            ]))->first();
+            $conselho = $this->getModel()->fill(
+                $dados->only([
+                    'ds_email',
+                    'no_orgao_gestor',
+                    'nu_cnpj',
+                ])
+            )->first();
 
             if ($conselho) {
                 throw new EParametrosInvalidos(
@@ -111,7 +112,6 @@ class Conselho extends AbstractService
         if (!$conselho) {
             throw new EParametrosInvalidos('Conselho não encontrado');
         }
-
 
         $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
         if ($conselho->co_conselho !== $usuarioAutenticado['co_conselho']) {

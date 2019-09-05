@@ -61,12 +61,4 @@ class Conselho extends Model
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
 
-    public function conselhoJaCadastrado(Collection $dados)
-    {
-        return $this->getModel()->where($dados->only([
-            'ds_email',
-            'no_orgao_gestor',
-            'nu_cnpj',
-        ]))->first();
-    }
 }
