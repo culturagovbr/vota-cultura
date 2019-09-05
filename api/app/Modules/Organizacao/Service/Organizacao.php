@@ -4,12 +4,16 @@ namespace App\Modules\Organizacao\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Core\Exceptions\EValidacaoCampo;
+use App\Modules\Fase\Model\Fase as FaseModel;
+use App\Modules\Fase\Service\Fase as FaseService;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Organizacao\Mail\Organizacao\CadastroComSucesso;
 use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Representacao\Service\Representante;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -21,18 +25,25 @@ class Organizacao extends AbstractService
         parent::__construct($model);
     }
 
-    public function cadastrar(array $dados): ?Model
+    public function cadastrar(Collection $dados): ?Model
     {
         try {
-
             DB::beginTransaction();
-            $organizacao = $this->getModel()->where([
-                'ds_email' => $dados['ds_email']
-            ])->orWhere([
-                'no_organizacao' => $dados['no_organizacao']
-            ])->orWhere([
-                'nu_cnpj' => $dados['nu_cnpj']
-            ])->first();
+
+            $serviceFase = app()->make(FaseService::class);
+            $fase = $serviceFase->obterPorTipo(FaseModel::ABERTURA_INSCRICOES_ORGANIZACAO);
+
+            if ($fase->faseFinalizada()) {
+                throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
+            }
+
+            $organizacao = $this->getModel()->fill(
+                $dados->only([
+                    'ds_email',
+                    'no_organizacao',
+                    'nu_cnpj',
+                ])
+            )->first();
 
             if ($organizacao) {
                 throw new EParametrosInvalidos(
@@ -77,15 +88,15 @@ class Organizacao extends AbstractService
         }
     }
 
-    public function obterUm($identificador) : ?Model
+    public function obterUm($identificador): ?Model
     {
         $organizacao = parent::obterUm($identificador);
-        if(!$organizacao) {
+        if (!$organizacao) {
             throw new EParametrosInvalidos('Organização não encontrado');
         }
 
         $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
-        if($organizacao->co_organizacao !== $usuarioAutenticado['co_organizacao']) {
+        if ($organizacao->co_organizacao !== $usuarioAutenticado['co_organizacao']) {
             throw new EParametrosInvalidos('O Organização precisa ser o mesmo que o usuário logado.');
         }
 
