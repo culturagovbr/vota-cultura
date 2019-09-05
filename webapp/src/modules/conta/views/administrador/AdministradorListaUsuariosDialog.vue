@@ -247,18 +247,17 @@ export default {
       consultarCPF: 'pessoa/consultarCPF',
     }),
     salvar() {
-      if (!this.$refs.form.validate()) {
+      const self = this;
+      if (!self.$refs.form.validate()) {
         return false;
       }
-
-      const self = this;
-      self.carregando = true;
+      self.loading = true;
       this.salvarUsuario(self.formulario)
         .then(() => {
           self.dialog = false;
         })
         .finally(() => {
-          self.carregando = false;
+          self.loading = false;
         });
     },
     carregarCPF(valor) {

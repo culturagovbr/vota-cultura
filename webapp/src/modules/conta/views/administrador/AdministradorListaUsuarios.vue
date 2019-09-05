@@ -16,7 +16,7 @@
                 round
                 outline
                 color="indigo"
-                @click="editarItemModal({})">
+                @click="editarItemModal()">
                 <v-icon>add</v-icon>
                 Usuario
               </v-btn>

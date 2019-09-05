@@ -122,9 +122,9 @@ class Usuario extends AbstractService
     public function cadastrar(Collection $dados): ?Model
     {
         try {
-            $usuario = $this->getModel()->where([
-                'nu_cpf' => $dados['nu_cpf']
-            ])->first();
+            $usuario = $this->getModel()->where(
+                $dados->only(['nu_cpf'])->toArray()
+            )->first();
 
             if ($usuario) {
                 throw new EParametrosInvalidos(
@@ -140,6 +140,9 @@ class Usuario extends AbstractService
             $usuario->fill($dados->toArray());
             $usuario->gerarCodigoAtivacao();
             $horarioAtual = Carbon::now();
+            if(!empty($dados['perfil'])) {
+                $usuario->co_perfil = $dados['perfil']['co_perfil'];
+            }
             $usuario->dh_cadastro = $horarioAtual->toDateTimeString();
             $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
             $usuario->st_ativo = false;
@@ -149,7 +152,7 @@ class Usuario extends AbstractService
             $usuario->ds_senha = $dados['ds_senha'];
 
             Mail::to($usuario->ds_email)->send(
-                app()->make(CadastroComSucesso::class, $usuario)
+                app()->make(CadastroComSucesso::class, $usuario->toArray())
             );
             DB::commit();
             return $usuario;
