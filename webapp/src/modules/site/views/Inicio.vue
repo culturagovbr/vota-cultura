@@ -175,19 +175,6 @@
           row
           fill-height
         >
-          <!--<v-layout-->
-          <!--row-->
-          <!--align-center-->
-          <!--justify-center-->
-          <!--&gt;-->
-          <!--<v-flex>-->
-          <!--<div class="headline white&#45;&#45;text mb-3 text-xs-center">-->
-          <!--Leia o Edital na integra-->
-          <!--</div>-->
-          <!--<em>Se informe sobre a chamada publica para composição do conselho nacional de política-->
-          <!--cultural</em>-->
-          <!--</v-flex>-->
-          <!--</v-layout>-->
           <v-layout
             row
             align-center
