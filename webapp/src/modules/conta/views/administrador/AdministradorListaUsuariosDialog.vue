@@ -267,16 +267,6 @@ export default {
         this.nmPessoaFisica = data.nmPessoaFisica;
       });
     },
-    checarUsuarioPodeEditarPerfil(){
-      if(this.formulario.perfil.co_perfil !== 777 && this.formulario.perfil.co_perfil !== 1 ){
-        this.perfilPodeSerAlterado = false;
-      }
-
-      if (!this.formulario.hasOwnProperty('co_usuario')) {
-        this.perfilPodeSerAlterado = true;
-      }
-      return this.perfilPodeSerAlterado;
-    },
   },
   mounted() {
     this.buscarPerfisAlteracao();
