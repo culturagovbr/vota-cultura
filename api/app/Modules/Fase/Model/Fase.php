@@ -9,6 +9,7 @@ class Fase extends Model
 {
     const ABERTURA_INSCRICOES_CONSELHO = 'abertura_inscricoes_conselho';
     const ABERTURA_INSCRICOES_ORGANIZACAO = 'abertura_inscricoes_organizacao';
+    const ABERTURA_INSCRICOES_ELEITOR = 'abertura_inscricoes_eleitor';
 
     protected $table = 'tb_fase';
     protected $primaryKey = 'co_fase';

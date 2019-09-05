@@ -4,8 +4,11 @@ namespace App\Modules\Eleitor\Service;
 
 use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Core\Exceptions\EValidacaoCampo;
 use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
 use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
+use App\Modules\Fase\Model\Fase as FaseModel;
+use App\Modules\Fase\Service\Fase as FaseService;
 use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
@@ -25,13 +28,21 @@ class Eleitor extends AbstractService
     {
         try {
             DB::beginTransaction();
-            $eleitor = $this->getModel()->where([
-                'nu_cpf' => $dados['nu_cpf']
-            ])->orWhere([
-                'nu_rg' => $dados['nu_rg']
-            ])->orWhere([
-                'ds_email' => $dados['ds_email']
-            ])->first();
+
+            $serviceFase = app()->make(FaseService::class);
+            $fase = $serviceFase->obterPorTipo(FaseModel::ABERTURA_INSCRICOES_ELEITOR);
+
+            if ($fase->faseFinalizada()) {
+                throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
+            }
+
+            $eleitor = $this->getModel()->fill(
+                $dados->only([
+                    'nu_cpf',
+                    'nu_rg',
+                    'ds_email',
+                ])
+            )->first();
 
             if ($eleitor) {
                 throw new EParametrosInvalidos(
