@@ -47,7 +47,7 @@ class Conselho extends AbstractService
                     'ds_email',
                     'no_orgao_gestor',
                     'nu_cnpj',
-                ])
+                ])->toArray()
             )->first();
 
             if ($conselho) {

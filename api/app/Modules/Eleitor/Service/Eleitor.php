@@ -41,7 +41,7 @@ class Eleitor extends AbstractService
                     'nu_cpf',
                     'nu_rg',
                     'ds_email',
-                ])
+                ])->toArray()
             )->first();
 
             if ($eleitor) {

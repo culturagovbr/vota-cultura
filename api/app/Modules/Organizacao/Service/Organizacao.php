@@ -42,7 +42,7 @@ class Organizacao extends AbstractService
                     'ds_email',
                     'no_organizacao',
                     'nu_cnpj',
-                ])
+                ])->toArray()
             )->first();
 
             if ($organizacao) {
