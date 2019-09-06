@@ -4,7 +4,6 @@ namespace App\Modules\Conselho\Http\Controllers;
 
 use App\Modules\Conselho\Http\Resources\Conselho;
 use App\Modules\Conselho\Service\Conselho as ConselhoService;
-use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
@@ -19,7 +18,7 @@ class ConselhoApiResourceController extends AApiResourceController
 
     public function __construct(ConselhoService $service)
     {
-        $this->middleware('auth:api')->except('store');
+        $this->middleware('auth:api')->except(['store', 'index']);
         $this->service = $service;
     }
 
@@ -32,11 +31,6 @@ class ConselhoApiResourceController extends AApiResourceController
         );
     }
 
-    public function index(): JsonResponse
-    {
-        throw new EParametrosInvalidos("Método não disponível");
-    }
-
     public function store(Request $request): JsonResponse
     {
         return $this->sendResponse(
@@ -46,5 +40,12 @@ class ConselhoApiResourceController extends AApiResourceController
         );
     }
 
-    //cadastrar
+    public function index(): JsonResponse
+    {
+        return $this->sendResponse(
+            Conselho::collection($this->service->obterTodos()),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_OK
+        );
+    }
 }

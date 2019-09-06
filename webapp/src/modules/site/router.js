@@ -9,10 +9,10 @@ export default [
       group: 'apps',
       icon: '',
     },
-    redirect: '/inicio',
+    redirect: 'inicio',
     children: [
       {
-        path: '/inicio',
+        path: 'inicio',
         name: 'Inicio',
         meta: {
           title: 'Início',
@@ -21,6 +21,17 @@ export default [
           public: true,
         },
         component: () => import(/* webpackChunkName: "inicio" */ '@/modules/site/views/Inicio.vue'),
+      },
+      {
+        path: 'inscricao/lista-parcial',
+        name: 'inscricao-lista-parcial-route',
+        meta: {
+          title: 'Lista Parcial de Inscritos',
+          group: 'apps',
+          icon: 'dashboard',
+          public: true,
+        },
+        component: () => import(/* webpackChunkName: "inscricao-lista-parcial-route" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
       },
     ],
   },
