@@ -32,8 +32,11 @@ export const mutations = {
   [types.DEFINIR_PERFIS_ALTERACAO](state, perfis) {
     state.perfis = perfis;
   },
-  [types.ATUALIZAR_USUARIO]() {},
-  [types.ATRIBUIR_USUARIO_CADASTRADO_LISTA](state, usuario){
+  [types.ATRIBUIR_USUARIO_CADASTRADO_LISTA](state, usuario) {
     state.usuarios.push(usuario);
+  },
+  [types.ATUALIZAR_USUARIO_LISTA](state, usuarioEditado) {
+    const index = state.usuarios.findIndex(usuario => usuario.co_usuario === usuarioEditado.co_usuario);
+    Object.assign(state.usuarios[index], usuarioEditado);
   },
 };

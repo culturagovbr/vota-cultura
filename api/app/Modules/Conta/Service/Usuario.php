@@ -205,4 +205,84 @@ class Usuario extends AbstractService
             ->get();
     }
 
+    public function atualizar(Request $request, int $identificador) : ?Model
+    {
+        $dados = collect(
+            $request->only([
+                'co_usuario',
+                'perfil',
+                'st_ativo',
+                'ds_email'
+        ]));
+
+        try {
+            $usuario = $this->getModel()->where(
+                $dados->only([
+                    'co_usuario'
+                ])->toArray()
+            )->first();
+
+
+
+            if (empty($usuario)) {
+                throw new EParametrosInvalidos(
+                    'Usuario não encontrado.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            $usuarioMesmoEmail = $this->getModel()
+                ->where(
+                    $dados->only([
+                        'ds_email',
+                    ])->toArray())
+                ->where(
+                    'co_usuario',
+                    '!=',
+                    $dados->only(['co_usuario']))
+                ->first();
+
+            if ($usuarioMesmoEmail) {
+                throw new EParametrosInvalidos(
+                 'E-mail já cadastrado.',
+                 Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+            DB::beginTransaction();
+            $usuario->fill($dados->toArray());
+            $horarioAtual = Carbon::now();
+            if(!empty($dados['perfil'])) {
+                $usuario->co_perfil = $dados['perfil']['co_perfil'];
+            }
+            $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
+            $usuario->save();
+
+
+            DB::commit();
+            return $usuario;
+        } catch (EParametrosInvalidos $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
+
+
+        try {
+            $modelPesquisada = $this->getModel()->find($identificador);
+            if (!$modelPesquisada) {
+                throw new \HttpException(
+                    'Dados não encontrados.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+            DB::beginTransaction();
+            $modelPesquisada->fill($request->all());
+            $modelPesquisada->save();
+            DB::commit();
+            return $modelPesquisada->toArray();
+        } catch (\HttpException $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
+    }
+
 }
