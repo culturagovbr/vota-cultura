@@ -163,7 +163,7 @@ export default {
           name: 'Inicio',
         },
         {
-          title: 'Resultado - Lista Parcial',
+          title: 'Inscritos - Lista Parcial',
           group: 'apps',
           icon: 'list',
           name: 'inscricao-lista-parcial-route',

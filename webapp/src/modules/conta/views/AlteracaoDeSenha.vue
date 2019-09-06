@@ -44,7 +44,7 @@
         :loading="loading"
         @click="alterar"
       >
-        Alterar senha
+        Criar senha
       </v-btn>
       <v-spacer />
     </div>

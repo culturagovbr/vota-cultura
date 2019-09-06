@@ -179,17 +179,22 @@ export default {
   computed: {
     ...mapGetters({
       conselhosGetter: 'conselho/conselhos',
+      organizacoesGetter: 'conselho/organizacoes',
     }),
   },
   methods: {
     ...mapActions({
       obterConselhos: 'conselho/obterConselhos',
+      obterOrganizacao: 'organizacao/obterOrganizacao',
     }),
   },
   mounted() {
     const self = this;
     self.loading = true;
     self.obterConselhos().finally(() => {
+      self.loading = false;
+    });
+    self.obterOrganizacao().finally(() => {
       self.loading = false;
     });
   },
