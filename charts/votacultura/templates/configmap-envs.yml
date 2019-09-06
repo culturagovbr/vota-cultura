@@ -10,6 +10,7 @@ data:
     DB_PORT: {{ .Values.webserver.database.port | quote }}
     DB_DATABASE: {{ .Values.webserver.database.db }}
     DB_USERNAME: {{ .Values.webserver.database.username }}
+    SCHEMA: {{ .Values.webserver.database.schema }}
 
     APP_NAME: {{ .Values.webserver.envs.appName }}
     APP_ENV: {{ .Values.webserver.envs.appEnv }}
