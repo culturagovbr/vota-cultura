@@ -71,15 +71,23 @@ export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => {
 };
 
 export const atualizarUsuario = async ({ commit, dispatch }, usuario) => {
-  commit(types.ATUALIZAR_USUARIO);
   return usuarioService.atualizarUsuario(usuario).then((response) => {
     const { data } = response.data;
+    commit(types.ATUALIZAR_USUARIO_LISTA, data);
+
     dispatch(
       'app/setMensagemSucesso',
       'Usuário atualizado com sucesso.',
       { root: true },
     );
     return response;
+  }).catch((error) => {
+    dispatch(
+        'app/setMensagemErro',
+        error.response.data.message,
+        { root: true },
+    );
+    throw new TypeError(error);
   });
 };
 
