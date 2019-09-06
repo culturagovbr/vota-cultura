@@ -63,7 +63,7 @@
                         slot-scope="props"
                       >
                         <td></td>
-                        <td>{{ props.item.nu_cnpj }}</td>
+                        <td>{{ props.item.nu_cnpj_mascarado }}</td>
                         <td>{{ props.item.no_orgao_gestor }}</td>
                         <td>
                           <v-chip dark color="primary">
@@ -109,7 +109,7 @@
                         slot-scope="props"
                       >
                         <td></td>
-                        <td>{{ props.item.nu_cnpj }}</td>
+                        <td>{{ props.item.nu_cnpj_mascarado }}</td>
                         <td>{{ props.item.no_organizacao }}</td>
                         <td>
                           <v-chip dark color="primary">
@@ -152,7 +152,7 @@ export default {
       },
       {
         text: 'CNPJ',
-        value: 'nu_cnpj',
+        value: 'nu_cnpj_mascarado',
       },
       {
         text: 'Nome Conselho',
@@ -164,7 +164,7 @@ export default {
       },
       {
         text: 'Região',
-        value: 'endereco.municipio.uf.regiao',
+        value: 'endereco.municipio.uf.regiao.no_regiao',
       },
     ],
     headers_organizacao: [
@@ -174,7 +174,7 @@ export default {
       },
       {
         text: 'CNPJ',
-        value: 'nu_cnpj',
+        value: 'nu_cnpj_mascarado',
       },
       {
         text: 'Nome da Organização ou Entidade',
