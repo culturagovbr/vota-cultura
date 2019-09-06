@@ -63,6 +63,7 @@
                         slot-scope="props"
                       >
                         <td></td>
+                        <td>{{ props.item.nu_cnpj }}</td>
                         <td>{{ props.item.no_orgao_gestor }}</td>
                         <td>
                           <v-chip dark color="primary">
@@ -71,7 +72,7 @@
                         </td>
                         <td>
                           <v-chip>
-                            {{ props.item.endereco.municipio.uf.regiao }}
+                            {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
                           </v-chip>
                         </td>
                       </template>
@@ -94,8 +95,8 @@
                   </v-card-title>
                   <v-card-text class="pa-0">
                     <v-data-table
-                      :headers="headers"
-                      :items="conselhosGetter"
+                      :headers="headers_organizacao"
+                      :items="organizacoesGetter"
                       :pagination.sync="pagination"
                       :total-items="totalItems"
                       :loading="loading"
@@ -108,6 +109,7 @@
                         slot-scope="props"
                       >
                         <td></td>
+                        <td>{{ props.item.nu_cnpj }}</td>
                         <td>{{ props.item.no_organizacao }}</td>
                         <td>
                           <v-chip dark color="primary">
@@ -149,6 +151,10 @@ export default {
         sortable: false,
       },
       {
+        text: 'CNPJ',
+        value: 'nu_cnpj',
+      },
+      {
         text: 'Nome Conselho',
         value: 'no_orgao_gestor',
       },
@@ -167,6 +173,10 @@ export default {
         sortable: false,
       },
       {
+        text: 'CNPJ',
+        value: 'nu_cnpj',
+      },
+      {
         text: 'Nome da Organização ou Entidade',
         value: 'no_organizacao',
       },
@@ -179,13 +189,13 @@ export default {
   computed: {
     ...mapGetters({
       conselhosGetter: 'conselho/conselhos',
-      organizacoesGetter: 'conselho/organizacoes',
+      organizacoesGetter: 'organizacao/organizacoes',
     }),
   },
   methods: {
     ...mapActions({
       obterConselhos: 'conselho/obterConselhos',
-      obterOrganizacao: 'organizacao/obterOrganizacao',
+      obterOrganizacoes: 'organizacao/obterOrganizacoes',
     }),
   },
   mounted() {
@@ -194,7 +204,7 @@ export default {
     self.obterConselhos().finally(() => {
       self.loading = false;
     });
-    self.obterOrganizacao().finally(() => {
+    self.obterOrganizacoes().finally(() => {
       self.loading = false;
     });
   },

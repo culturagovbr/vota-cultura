@@ -26,7 +26,7 @@ export default [
         path: 'inscricao/lista-parcial',
         name: 'inscricao-lista-parcial-route',
         meta: {
-          title: 'Lista Parcial de Inscritos',
+          title: 'Lista parcial de inscritos',
           group: 'apps',
           icon: 'dashboard',
           public: true,

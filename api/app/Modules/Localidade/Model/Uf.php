@@ -12,8 +12,18 @@ class Uf extends Model
     protected $fillable = [
         'sg_uf',
         'no_uf',
+        'co_regiao',
     ];
 
     public $timestamps = false;
+
+    public function regiao()
+    {
+        return $this->hasOne(
+            Regiao::class,
+            'co_regiao',
+            'co_regiao'
+        );
+    }
 
 }

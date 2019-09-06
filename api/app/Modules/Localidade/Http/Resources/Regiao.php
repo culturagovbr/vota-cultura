@@ -4,15 +4,13 @@ namespace App\Modules\Localidade\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UF extends JsonResource
+class Regiao extends JsonResource
 {
     public function toArray($request): array
     {
         return [
-            'co_ibge' => $this->co_ibge,
-            'sg_uf' => $this->sg_uf,
-            'no_uf' => $this->no_uf,
-            'regiao' => new Regiao($this->regiao),
+            'co_regiao' => $this->co_regiao,
+            'no_regiao' => $this->no_regiao,
         ];
     }
 }

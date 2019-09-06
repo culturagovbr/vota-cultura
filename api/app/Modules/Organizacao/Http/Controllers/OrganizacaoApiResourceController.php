@@ -18,7 +18,9 @@ class OrganizacaoApiResourceController extends AApiResourceController
 
     public function __construct(OrganizacaoService $service)
     {
-        $this->middleware('auth:api')->except('store');
+        $this->middleware('auth:api')->except(
+            ['store', 'index']
+        );
         parent::__construct($service);
     }
 
@@ -33,6 +35,10 @@ class OrganizacaoApiResourceController extends AApiResourceController
 
     public function index(): JsonResponse
     {
-        throw new EParametrosInvalidos("Método não disponível");
+        return $this->sendResponse(
+            Organizacao::collection($this->service->obterTodos()),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_OK
+        );
     }
 }

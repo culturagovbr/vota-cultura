@@ -11,4 +11,7 @@ export const mutations = {
     state.organizacao = dados;
   },
   [types.OBTER_DADOS_ORGANIZACAO]() {},
+  [types.DEFINIR_ORGANIZACOES](state, dados) {
+    state.organizacoes = dados.data;
+  },
 };

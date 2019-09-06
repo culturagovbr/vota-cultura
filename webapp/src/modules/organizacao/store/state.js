@@ -2,6 +2,7 @@
 
 export const state = {
   organizacao: {},
+  organizacoes: [],
   segmentos: [],
   criterios: [],
 };
