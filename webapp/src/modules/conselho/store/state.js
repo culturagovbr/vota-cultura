@@ -2,4 +2,5 @@
 
 export const state = {
   conselho: {},
+  conselhos: [],
 };

@@ -4,7 +4,8 @@ export const mutations = {
   [types.DEFINIR_CONSELHO](state, dados) {
     state.conselho = dados;
   },
-  // [types.CONFIRMAR_CONSELHO]() {},
   [types.OBTER_DADOS_CONSELHO]() {},
-  // [types.ENVIAR_DADOS_CONSELHO]() {},
+  [types.LISTAR_CONSELHOS](state, conselhos) {
+    state.conselhos = conselhos;
+  },
 };

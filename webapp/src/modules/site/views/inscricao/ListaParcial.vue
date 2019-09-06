@@ -16,8 +16,8 @@
         >
           <v-card>
             <v-tabs
-              v-model="dadosPrimeiroAcesso.tp_inscricao"
               color="white"
+              v-model="tp_inscricao"
               centered
               icons-and-text
             >
@@ -31,10 +31,9 @@
                 Organização ou Entidade
                 <v-icon>color_lens</v-icon>
               </v-tab>
-
             </v-tabs>
 
-            <v-tabs-items v-model="dadosPrimeiroAcesso.tp_inscricao">
+            <v-tabs-items v-model="tp_inscricao">
               <v-tab-item value="conselho">
                 <v-card>
                   <v-card-title>
@@ -51,7 +50,7 @@
                   <v-card-text class="pa-0">
                     <v-data-table
                       :headers="headers"
-                      :items="usuariosGetter"
+                      :items="conselhosGetter"
                       :pagination.sync="pagination"
                       :total-items="totalItems"
                       :loading="loading"
@@ -64,22 +63,62 @@
                         slot-scope="props"
                       >
                         <td></td>
-                        <td>{{ props.item.no_nome }}</td>
+                        <td>{{ props.item.no_orgao_gestor }}</td>
+                        <td>
+                          <v-chip dark color="primary">
+                            {{ props.item.endereco.municipio.uf.no_uf }}
+                          </v-chip>
+                        </td>
                         <td>
                           <v-chip>
-                            {{ props.item.perfil.ds_perfil }}
+                            {{ props.item.endereco.municipio.uf.regiao }}
                           </v-chip>
                         </td>
                       </template>
                     </v-data-table>
-                    <administrador-lista-usuarios-dialog
-                      v-model="mostrarModalEdicao"
-                      :usuario="itemEditado"
-                    />
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item value="organizacao" />
+              <v-tab-item value="organizacao">
+                <v-card>
+                  <v-card-title>
+                    <v-spacer />
+                    <v-text-field
+                      v-model="pesquisar"
+                      append-icon="search"
+                      label="Pesquisar"
+                      single-line
+                      hide-details
+                    />
+                    <v-spacer />
+                  </v-card-title>
+                  <v-card-text class="pa-0">
+                    <v-data-table
+                      :headers="headers"
+                      :items="conselhosGetter"
+                      :pagination.sync="pagination"
+                      :total-items="totalItems"
+                      :loading="loading"
+                      :search="pesquisar"
+                      item-key="co_usuario"
+                      class="elevation-1"
+                    >
+                      <template
+                        slot="items"
+                        slot-scope="props"
+                      >
+                        <td></td>
+                        <td>{{ props.item.no_organizacao }}</td>
+                        <td>
+                          <v-chip dark color="primary">
+                            {{ props.item.segmento.ds_detalhamento }}
+                          </v-chip>
+                        </td>
+                      </template>
+                    </v-data-table>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
             </v-tabs-items>
           </v-card>
         </v-form>
@@ -92,52 +131,65 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'PrimeiroAcesso',
+  name: 'ListaParcialInscritos',
   data: () => ({
     loading: false,
     formularioValido: true,
     step: 1,
-    dadosPrimeiroAcesso: {
-      nu_cpf: '',
-      nu_cnpj: '',
-      tp_inscricao: null,
+    pesquisar: '',
+    tp_inscricao: null,
+    pagination: {
+      page: 1,
+      rowsPerPage: 10,
     },
+    totalItems: 0,
     headers: [
       {
         text: '',
-        value: 'no_conselho',
         sortable: false,
       },
       {
         text: 'Nome Conselho',
-        value: 'no_conselho',
+        value: 'no_orgao_gestor',
+      },
+      {
+        text: 'UF',
+        value: 'endereco.municipio.uf.no_uf',
       },
       {
         text: 'Região',
-        value: 'regiao',
+        value: 'endereco.municipio.uf.regiao',
+      },
+    ],
+    headers_organizacao: [
+      {
+        text: '',
+        sortable: false,
+      },
+      {
+        text: 'Nome da Organização ou Entidade',
+        value: 'no_organizacao',
+      },
+      {
+        text: 'Segmento',
+        value: 'segmento.ds_detalhamento',
       },
     ],
   }),
   computed: {
     ...mapGetters({
-      usuariosGetter: 'conta/usuarios',
+      conselhosGetter: 'conselho/conselhos',
     }),
   },
   methods: {
     ...mapActions({
-      buscarUsuariosPerfis: 'conta/buscarUsuariosPerfis',
+      obterConselhos: 'conselho/obterConselhos',
     }),
-    editarItemModal(item) {
-      this.itemEditado = item;
-      this.mostrarModalEdicao = true;
-    },
-  },
-  watch: {
   },
   mounted() {
     const self = this;
     self.loading = true;
-    self.buscarUsuariosPerfis().finally(() => {
+    self.obterConselhos().finally(() => {
       self.loading = false;
     });
   },
