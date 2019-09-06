@@ -16,25 +16,57 @@ const isCpfValido = (strCPF) => {
 };
 
 const isCnpjValido = (strCnpj) => {
-  var cnpj = strCnpj;
-  var valida = new Array(6,5,4,3,2,9,8,7,6,5,4,3,2);
-  var dig1= new Number;
-  var dig2= new Number;
+  const stripped = strCnpj.replace(/[^\d]+/g, '');
 
-  let exp = /\.|\-|\//g
-  cnpj = cnpj.toString().replace( exp, "" );
-  var digito = new Number(eval(cnpj.charAt(12)+cnpj.charAt(13)));
+  if (stripped === '') return false;
 
-  for(let i = 0; i<valida.length; i++){
-    dig1 += (i>0? (cnpj.charAt(i-1)*valida[i]):0);
-    dig2 += cnpj.charAt(i)*valida[i];
+  if (stripped.length !== 14) return false;
+
+  const BLACKLIST = [
+    '00000000000000',
+    '11111111111111',
+    '22222222222222',
+    '33333333333333',
+    '44444444444444',
+    '55555555555555',
+    '66666666666666',
+    '77777777777777',
+    '88888888888888',
+    '99999999999999',
+  ];
+
+  if (BLACKLIST.includes(stripped)) return false;
+
+  let tamanho = stripped.length - 2;
+  let numeros = stripped.substring(0, tamanho);
+  const digitos = stripped.substring(tamanho);
+
+  let soma = 0;
+  let pos = tamanho - 7;
+
+  for (let i = tamanho; i >= 1; i -= 1) {
+    /* eslint-disable no-plusplus */
+    soma += numeros.charAt(tamanho - i) * pos--;
+    if (pos < 2) pos = 9;
   }
-  dig1 = (((dig1%11)<2)? 0:(11-(dig1%11)));
-  dig2 = (((dig2%11)<2)? 0:(11-(dig2%11)));
 
-  if(((dig1*10)+dig2) != digito)
-    return false;
-  return true;
+  /* eslint-disable no-mixed-operators */
+  let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+  if (parseInt(resultado, 10) !== parseInt(digitos.charAt(0), 10)) return false;
+
+  tamanho += 1;
+
+  numeros = stripped.substring(0, tamanho);
+  soma = 0;
+  pos = tamanho - 7;
+
+  for (let y = tamanho; y >= 1; y -= 1) {
+    soma += numeros.charAt(tamanho - y) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+
+  return parseInt(resultado, 10) === parseInt(digitos.charAt(1), 10);
 };
 
 
