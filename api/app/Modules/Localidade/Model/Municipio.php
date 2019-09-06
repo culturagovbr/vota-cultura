@@ -2,7 +2,7 @@
 
 namespace App\Modules\Localidade\Model;
 
-use App\Modules\Localidade\Model\Uf as ModelUF;
+use App\Modules\Localidade\Model\UF as ModelUF;
 use Illuminate\Database\Eloquent\Model;
 
 class Municipio extends Model

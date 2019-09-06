@@ -4,7 +4,7 @@ namespace App\Modules\Localidade\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Uf extends Model
+class UF extends Model
 {
     protected $table = 'tb_uf';
     protected $primaryKey = 'co_ibge';

@@ -3,12 +3,12 @@
 namespace App\Modules\Localidade\Service;
 
 use App\Core\Service\AbstractService;
-use App\Modules\Localidade\Model\Uf as UfModel;
+use App\Modules\Localidade\Model\UF as UFModel;
 use Illuminate\Support\Collection;
 
-class Uf extends AbstractService
+class UF extends AbstractService
 {
-    public function __construct(UfModel $model)
+    public function __construct(UFModel $model)
     {
         parent::__construct($model);
     }
