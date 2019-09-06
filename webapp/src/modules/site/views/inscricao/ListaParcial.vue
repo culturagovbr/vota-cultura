@@ -23,64 +23,63 @@
             >
               <v-tabs-slider />
 
+              <v-tab href="#conselho">
+                Conselho
+                <v-icon>group</v-icon>
+              </v-tab>
               <v-tab href="#organizacao">
                 Organização ou Entidade
                 <v-icon>color_lens</v-icon>
               </v-tab>
 
-              <v-tab href="#conselho">
-                Conselho
-                <v-icon>group</v-icon>
-              </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="dadosPrimeiroAcesso.tp_inscricao">
-              <v-tab-item value="organizacao">
-                <v-card flat>
-                  <v-card-text>
-                    <v-text-field
-                      v-model="dadosPrimeiroAcesso.nu_cnpj"
-                      label="CNPJ da organização ou entidade"
-                      prepend-icon="people"
-                      mask="##.###.###/####-##"
-                      :rules="[rules.CNPJValido]"
-                    />
-                    <v-text-field
-                      v-model="dadosPrimeiroAcesso.nu_cpf"
-                      prepend-icon="account_circle"
-                      name="login"
-                      label="CPF do representante"
-                      mask="###.###.###-##"
-                      validate-on-blur
-                      type="text"
-                      :rules="[rules.required, rules.CPFValido]"
-                    />
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
               <v-tab-item value="conselho">
-                <v-card flat>
-                  <v-card-text>
+                <v-card>
+                  <v-card-title>
+                    <v-spacer />
                     <v-text-field
-                      v-model="dadosPrimeiroAcesso.nu_cnpj"
-                      label="CNPJ do órgao gestor do conselho"
-                      prepend-icon="people"
-                      mask="##.###.###/####-##"
-                      :rules="[rules.CNPJValido]"
+                      v-model="pesquisar"
+                      append-icon="search"
+                      label="Pesquisar"
+                      single-line
+                      hide-details
                     />
-                    <v-text-field
-                      v-model="dadosPrimeiroAcesso.nu_cpf"
-                      prepend-icon="account_circle"
-                      name="login"
-                      label="CPF do representante do conselho"
-                      mask="###.###.###-##"
-                      validate-on-blur
-                      type="text"
-                      :rules="[rules.required, rules.CPFValido]"
+                    <v-spacer />
+                  </v-card-title>
+                  <v-card-text class="pa-0">
+                    <v-data-table
+                      :headers="headers"
+                      :items="usuariosGetter"
+                      :pagination.sync="pagination"
+                      :total-items="totalItems"
+                      :loading="loading"
+                      :search="pesquisar"
+                      item-key="co_usuario"
+                      class="elevation-1"
+                    >
+                      <template
+                        slot="items"
+                        slot-scope="props"
+                      >
+                        <td></td>
+                        <td>{{ props.item.no_nome }}</td>
+                        <td>
+                          <v-chip>
+                            {{ props.item.perfil.ds_perfil }}
+                          </v-chip>
+                        </td>
+                      </template>
+                    </v-data-table>
+                    <administrador-lista-usuarios-dialog
+                      v-model="mostrarModalEdicao"
+                      :usuario="itemEditado"
                     />
                   </v-card-text>
                 </v-card>
               </v-tab-item>
+              <v-tab-item value="organizacao" />
             </v-tabs-items>
           </v-card>
         </v-form>
@@ -90,8 +89,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import Validate from '@/modules/shared/util/validate';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'PrimeiroAcesso',
@@ -104,29 +102,44 @@ export default {
       nu_cnpj: '',
       tp_inscricao: null,
     },
-    rules: {
-      required: value => !!value || 'Este campo é obrigatório',
-      CPFValido: value => Validate.isCpfValido(value) || 'CPF inválido',
-      CNPJValido: value => Validate.isCnpjValido(value) || 'CNPJ inválido',
-    },
+    headers: [
+      {
+        text: '',
+        value: 'no_conselho',
+        sortable: false,
+      },
+      {
+        text: 'Nome Conselho',
+        value: 'no_conselho',
+      },
+      {
+        text: 'Região',
+        value: 'regiao',
+      },
+    ],
   }),
+  computed: {
+    ...mapGetters({
+      usuariosGetter: 'conta/usuarios',
+    }),
+  },
   methods: {
     ...mapActions({
-      solicitarPrimeiroAcesso: 'conta/solicitarPrimeiroAcesso',
-      mensagemErro: 'app/setMensagemErro',
+      buscarUsuariosPerfis: 'conta/buscarUsuariosPerfis',
     }),
-    solicitarAcesso() {
-      this.loading = true;
-
-      this.solicitarPrimeiroAcesso(this.dadosPrimeiroAcesso)
-        .then(() => {
-          this.step = 2;
-        })
-        .catch((error) => {
-          this.loading = false;
-          this.mensagemErro(error.response.data.message);
-        });
+    editarItemModal(item) {
+      this.itemEditado = item;
+      this.mostrarModalEdicao = true;
     },
+  },
+  watch: {
+  },
+  mounted() {
+    const self = this;
+    self.loading = true;
+    self.buscarUsuariosPerfis().finally(() => {
+      self.loading = false;
+    });
   },
 };
 </script>
