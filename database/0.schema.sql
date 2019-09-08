@@ -78,7 +78,7 @@ COMMENT ON COLUMN tb_perfil.st_ativo IS 'opções:\n\nTrue - Ativo\nFalse - Inat
 CREATE TABLE tb_representante (
 	co_representante     SERIAL,
 	ds_email             varchar(255)  NOT NULL ,
-	no_nome              varchar(100)  NOT NULL ,
+	no_pessoa              varchar(100)  NOT NULL ,
 	nu_rg                varchar(9)  NOT NULL ,
 	nu_cpf               varchar(11)  NOT NULL ,
 	nu_telefone          varchar(11)  NOT NULL ,
