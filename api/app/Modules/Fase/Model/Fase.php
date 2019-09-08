@@ -10,6 +10,8 @@ class Fase extends Model
     const ABERTURA_INSCRICOES_CONSELHO = 'abertura_inscricoes_conselho';
     const ABERTURA_INSCRICOES_ORGANIZACAO = 'abertura_inscricoes_organizacao';
     const ABERTURA_INSCRICOES_ELEITOR = 'abertura_inscricoes_eleitor';
+    const RECURSO_INSCRICOES_CONSELHO = 'recurso_inscricoes_conselho';
+    const RECURSO_INSCRICOES_ORGANIZACAO = 'recurso_inscricoes_organizacao';
 
     protected $table = 'tb_fase';
     protected $primaryKey = 'co_fase';
@@ -21,6 +23,7 @@ class Fase extends Model
 
     protected $fillable = [
         'tp_fase',
+        'ds_detalhamento',
         'dh_inicio',
         'dh_fim',
     ];
