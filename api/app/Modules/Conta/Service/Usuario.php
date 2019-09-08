@@ -175,14 +175,14 @@ class Usuario extends AbstractService
             }
             $usuario = $this->getModel()->find($co_usuario);
 
-            if (!$usuario || !$usuario->validarSenha($dados['ds_senha_atual']) ) {
+            if (!$usuario || !$usuario->senhaValida($dados['ds_senha_atual']) ) {
                 throw new EParametrosInvalidos(
                     'Dados inválidos.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
 
-            if($usuario->validarSenha($dados['ds_senha'])) {
+            if($usuario->senhaValida($dados['ds_senha'])) {
                 throw new EParametrosInvalidos(
                     'A nova senha é igual a atual.',
                     Response::HTTP_NOT_ACCEPTABLE
