@@ -428,6 +428,8 @@ COMMENT ON COLUMN rl_eleitor_arquivo.co_arquivo IS 'chave estrangeira ligando a 
 COMMENT ON COLUMN rl_eleitor_arquivo.tp_arquivo IS 'opcoes:\n\ndeclaracao_eleitor\ndocumento_identificacao\ndocumento_cpf\nato_normativo\nata_reuniao\ndeclaracao_ciencia';
 
 
+-- [ Executar abaixo : 10/09/2019] <-------------------------
+
 ALTER TABLE tb_eleitor ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
 ALTER TABLE tb_conselho ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
 ALTER TABLE tb_organizacao ADD dh_cadastro timestamp DEFAULT current_timestamp NULL;
@@ -447,3 +449,38 @@ ALTER TABLE tb_cronograma rename TO tb_fase;
 ALTER TABLE tb_fase rename COLUMN co_cronograma TO co_fase;
 ALTER TABLE tb_fase rename COLUMN tp_cronograma TO tp_fase;
 ALTER TABLE tb_fase ADD ds_detalhamento varchar(255) NULL;
+
+---- Recurso Inscrição
+create table tb_recurso_inscricao
+(
+    co_recurso_inscricao serial not null
+        constraint tb_recurso_inscricao_pk
+            primary key,
+    co_fase int not null
+        constraint tb_recurso_inscricao_fase_cofasefk
+            references tb_fase (co_fase),
+    ds_email varchar(100) not null,
+    nu_cnpj varchar(14) not null,
+    nu_cpf varchar(11) not null,
+    nu_telefone varchar(11) not null,
+    ds_recurso text not null,
+    dh_cadastro timestamp default current_timestamp not null,
+    co_usuario_parecer int
+        constraint tb_recurso_inscricao_tb_usuario_co_usuario_fk
+            references tb_usuario,
+    ds_parecer text,
+    dh_parecer timestamp,
+    st_parecer char(1)
+);
+
+comment on table tb_recurso_inscricao is 'Armazena recursos de inscricoes';
+
+comment on column tb_recurso_inscricao.st_parecer is ' 0 - Recusado | 1 - Aceito';
+
+
+--INSERT INTO tb_fase (co_fase, tp_fase, dh_inicio, dh_fim) VALUES (3, 'abertura_inscricoes_eleitor', '2019-09-15 00:00:01.000000', '2019-09-15 00:00:02.000000');
+UPDATE public.tb_fase SET tp_fase = 'abertura_inscricoes_conselho', dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-08-30 00:00:00.000000', ds_detalhamento = 'Inscrições - Conselho' WHERE co_fase = 1;
+UPDATE public.tb_fase SET tp_fase = 'abertura_inscricoes_organizacao', dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-08-30 00:00:00.000000', ds_detalhamento = 'Inscrições - Organização' WHERE co_fase = 2;
+UPDATE public.tb_fase SET tp_fase = 'abertura_inscricoes_eleitor', dh_inicio = '2019-09-15 00:00:01.000000', dh_fim = '2019-09-15 00:00:02.000000', ds_detalhamento = 'Inscrições - Eleitor' WHERE co_fase = 3;
+INSERT INTO public.tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (4, 'recurso_inscricoes_conselho', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Conselho');
+INSERT INTO public.tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (5, 'recurso_inscricoes_organizacao', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Organização');
