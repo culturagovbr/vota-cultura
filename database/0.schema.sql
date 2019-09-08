@@ -447,3 +447,30 @@ ALTER TABLE tb_cronograma rename TO tb_fase;
 ALTER TABLE tb_fase rename COLUMN co_cronograma TO co_fase;
 ALTER TABLE tb_fase rename COLUMN tp_cronograma TO tp_fase;
 ALTER TABLE tb_fase ADD ds_detalhamento varchar(255) NULL;
+
+---- Recurso Inscrição
+create table tb_recurso_inscricao
+(
+    co_recurso_inscricao serial not null
+        constraint tb_recurso_inscricao_pk
+            primary key,
+    co_fase int not null
+        constraint tb_recurso_inscricao_fase_cofasefk
+            references tb_fase (co_fase),
+    ds_email varchar(100) not null,
+    nu_cnpj varchar(14) not null,
+    nu_cpf varchar(11) not null,
+    nu_telefone varchar(11) not null,
+    ds_recurso text not null,
+    dh_cadastro timestamp default current_timestamp not null,
+    co_usuario_parecer int
+        constraint tb_recurso_inscricao_tb_usuario_co_usuario_fk
+            references tb_usuario,
+    ds_parecer text,
+    dh_parecer timestamp,
+    st_parecer char(1)
+);
+
+comment on table tb_recurso_inscricao is 'Armazena recursos de inscricoes';
+
+comment on column tb_recurso_inscricao.st_parecer is ' 0 - Recusado | 1 - Aceito';
