@@ -3,10 +3,10 @@
 namespace App\Modules\Organizacao\Http\Controllers;
 
 use App\Modules\Conselho\Http\Resources\Organizacao;
-use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
+use App\Modules\Organizacao\Http\Resources\Organizacao as OrganizacaoResource;
 use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -27,7 +27,7 @@ class OrganizacaoApiResourceController extends AApiResourceController
     public function show($identificador): JsonResponse
     {
         return $this->sendResponse(
-            new Organizacao($this->service->obterUm($identificador)),
+            new OrganizacaoResource($this->service->obterUm($identificador)),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
@@ -36,7 +36,7 @@ class OrganizacaoApiResourceController extends AApiResourceController
     public function index(): JsonResponse
     {
         return $this->sendResponse(
-            Organizacao::collection($this->service->obterTodos()),
+            OrganizacaoResource::collection($this->service->obterTodos()),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
