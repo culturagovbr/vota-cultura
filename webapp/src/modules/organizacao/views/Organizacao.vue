@@ -802,6 +802,13 @@ export default {
     },
   },
   mounted() {
+      this.validarDataDentroPrazoFasePorSlug('abertura_inscricoes_organizacao').then(function(response){
+        console.log(response);
+      });
+      this.mensagemErro('O prazo de inscrições expirou!');
+
+      this.$router.push('/');
+
     if (Object.keys(this.organizacaoGetter).length > 0) {
       this.organizacao = this.organizacaoGetter;
       this.obterMunicipios(this.organizacao.endereco.co_municipio);
@@ -821,6 +828,8 @@ export default {
   },
   methods: {
     ...mapActions({
+      validarDataDentroPrazoFasePorSlug: 'fase/validarDataDentroPrazoFasePorSlug',
+      mensagemErro: 'app/setMensagemErro',
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       obterCriterios: 'organizacao/obterCriterios',

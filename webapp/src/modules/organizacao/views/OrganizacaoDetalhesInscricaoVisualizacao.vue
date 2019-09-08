@@ -359,7 +359,6 @@ export default {
       obterCriterios: 'organizacao/obterCriterios',
       obterSegmentos: 'organizacao/obterSegmentos',
     }),
-
   },
 
 };
