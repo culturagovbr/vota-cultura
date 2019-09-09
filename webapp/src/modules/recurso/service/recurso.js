@@ -1,8 +1,8 @@
 import * as service from '../../shared/service/base/index';
 /* eslint-disable import/prefer-default-export */
 
-export const enviarDadosRecurso = recurso => service.postRequest('/recurso', recurso);
+export const enviarDadosRecursoInscricao = recurso => service.postRequest('/recurso/inscricao', recurso);
 
-export const obterDadosRecurso = coRecurso => service.getRequest(`/recurso/${coRecurso}`);
+export const obterDadosRecursoInscricao = coRecurso => service.getRequest(`/recurso/inscricao/${coRecurso}`);
 
-export const obterRecursos = () => service.getRequest('/recurso');
+export const obterRecursosInscricao = () => service.getRequest('/recurso/inscricao');

@@ -1,7 +1,5 @@
 import * as recursoService from '../service/recurso';
 import * as types from './types';
-import * as usuarioService from "../../conta/service/usuario";
-
 
 export const confirmarRecurso = async ({ commit }, recurso) => {
   commit(types.DEFINIR_RECURSO, recurso);

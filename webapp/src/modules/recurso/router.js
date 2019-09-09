@@ -15,14 +15,14 @@ export default [
     children: [
       {
         path: '/recurso/inscricao',
-        name: 'InscricaoRecurso',
+        name: 'recurso-inscricao-route',
         meta: {
           title: 'Inscrição Recurso',
           group: 'apps',
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/recurso/views/RecursoInscricao.vue'),
+        component: () => import(/* webpackChunkName: "recurso" */ '@/modules/recurso/views/RecursoInscricao.vue'),
       },
     ],
   },
