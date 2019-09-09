@@ -10,7 +10,7 @@ data:
     DB_PORT: {{ .Values.webserver.database.port | quote }}
     DB_DATABASE: {{ .Values.webserver.database.db }}
     DB_USERNAME: {{ .Values.webserver.database.username }}
-    SCHEMA: {{ .Values.webserver.database.schema }}
+    DATABASE_SCHEMA: {{ .Values.webserver.database.schema }}
 
     APP_NAME: {{ .Values.webserver.envs.appName }}
     APP_ENV: {{ .Values.webserver.envs.appEnv }}
@@ -42,7 +42,7 @@ data:
     RECEITA_USER: {{ .Values.webserver.envs.receitaUser }}
     RECEITA_PASSWORD: {{ .Values.webserver.envs.receitaPassword }}
     EMAIL_ACOMPANHAMENTO: {{ .Values.webserver.envs.emailAcompanhamento }}
-    
+
     #FRONTEND
     ENDERECO_API: {{ template "votacultura.webserver.fullname" . }}
     VUE_APP_TITLE: {{ .Values.webapp.envs.vueAppTitle }}
