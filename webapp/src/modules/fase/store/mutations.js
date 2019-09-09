@@ -3,7 +3,7 @@ import * as types from './types';
 
 // eslint-disable-next-line import/prefer-default-export
 export const mutations = {
-  [types.OBTER_CRONOGRAMAS](state, dados) {
+  [types.OBTER_FASES](state, dados) {
     state.fases = dados.data;
   },
   [types.DEFINIR_SITUACOES](state, dados) {

@@ -5,11 +5,11 @@ namespace App\Modules\Fase\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceIndex;
 use App\Modules\Fase\Service\Fase as FaseService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class FaseController extends Controller
 {
-    use TApiResourceIndex;
-
     /**
      * @var FaseService $service
      */
@@ -18,5 +18,14 @@ class FaseController extends Controller
     public function __construct(FaseService $service)
     {
         $this->service = $service;
+    }
+
+    public function index(): JsonResponse
+    {
+        return $this->sendResponse(
+            $this->service->obterDisponiveis(),
+            "Operação Realizada com Sucesso",
+            Response::HTTP_OK
+        );
     }
 }
