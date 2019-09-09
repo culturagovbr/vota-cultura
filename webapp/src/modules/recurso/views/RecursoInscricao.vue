@@ -8,190 +8,234 @@
         <v-toolbar-title>Recurso - Inscrição</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
-        <v-layout class="mt-1">
-          <v-flex
-            xs12
-            sm6
-          >
-            <v-radio-group
-              v-model="recursoInscricao.co_fase"
-              row
-              :rules="[rules.required]"
+        <v-form
+          ref="form_recurso"
+          v-model="valid"
+          lazy-validation>
+          <v-layout class="mt-1">
+            <v-flex
+              xs12
+              sm6
             >
-              <v-radio
-                label="Conselho de cultura"
-                value="4"
+              <v-radio-group
+                v-model="recursoInscricao.co_fase"
+                row
+                :rules="[rules.required]"
+              >
+                <v-radio
+                  label="Conselho de cultura"
+                  value="4"
+                />
+                <v-radio
+                  label="Organização ou entidade cultural"
+                  value="5"
+                />
+              </v-radio-group>
+            </v-flex>
+          </v-layout>
+          <v-layout
+            wrap
+            align-center
+            class="mt-1"
+          >
+            <v-flex
+              xs12
+              sm6
+            >
+              <v-text-field
+                v-model="recursoInscricao.nu_cnpj"
+                label="*CNPJ"
+                append-icon="people"
+                placeholder="99.999.999/9999-99"
+                :error-messages="nomeConselhoError"
+                mask="##.###.###/####-##"
+                :rules="[rules.required, rules.cnpjMin]"
+                required
               />
-              <v-radio
-                label="Organização ou entidade cultural"
-                value="5"
+            </v-flex>
+            <v-flex
+              xs12
+              sm6
+            >
+              <v-text-field
+                v-model="nomeConselho"
+                label="Razão social"
+                append-icon="people_outline"
+                :disabled="true"
+                :rules="[rules.cnpjInvalido]"
+                required
+                style="margin-left: 20px"
               />
-            </v-radio-group>
-          </v-flex>
-        </v-layout>
-        <v-layout
-          wrap
-          align-center
-          class="mt-1"
-        >
-          <v-flex
-            xs12
-            sm6
+            </v-flex>
+          </v-layout>
+          <v-layout
+            wrap
+            align-center
+            class="mt-1"
           >
-            <v-text-field
-              v-model="recursoInscricao.nu_cnpj"
-              label="*CNPJ"
-              append-icon="people"
-              placeholder="99.999.999/9999-99"
-              :error-messages="nomeConselhoError"
-              mask="##.###.###/####-##"
-              :rules="[rules.required, rules.cnpjMin]"
-              required
-            />
-          </v-flex>
-          <v-flex
-            xs12
-            sm6
-          >
-            <v-text-field
-              v-model="nomeConselho"
-              label="Razão social"
-              append-icon="people_outline"
-              :disabled="true"
-              :rules="[rules.cnpjInvalido]"
-              required
-              style="margin-left: 20px"
-            />
-          </v-flex>
-        </v-layout>
-        <v-layout
-          wrap
-          align-center
-          class="mt-1"
-        >
-          <v-flex
-            xs12
-            sm6
-          >
-            <v-text-field
-              v-model="recursoInscricao.nu_cpf"
-              label="*CPF do representante"
-              append-icon="person"
-              placeholder="999.999.999-99"
-              mask="###.###.###-##"
-              :error-messages="nomeRepresentanteError"
-              :rules="[rules.required, rules.cpfMin]"
-              required
-            />
-          </v-flex>
-          <v-flex
-            xs12
-            sm6
-          >
-            <v-text-field
-              v-model="nomeRepresentante"
-              :disabled="true"
-              label="*Nome do representante"
-              append-icon="perm_identity"
-              :error-messages="nomeRepresentanteError"
-              :rules="[rules.cpfInvalido]"
-              style="margin-left: 20px"
-              required
-            />
-          </v-flex>
-        </v-layout>
+            <v-flex
+              xs12
+              sm6
+            >
+              <v-text-field
+                v-model="recursoInscricao.nu_cpf"
+                label="*CPF do representante"
+                append-icon="person"
+                placeholder="999.999.999-99"
+                mask="###.###.###-##"
+                :error-messages="nomeRepresentanteError"
+                :rules="[rules.required, rules.cpfMin]"
+                required
+              />
+            </v-flex>
+            <v-flex
+              xs12
+              sm6
+            >
+              <v-text-field
+                v-model="nomeRepresentante"
+                :disabled="true"
+                label="*Nome do representante"
+                append-icon="perm_identity"
+                :error-messages="nomeRepresentanteError"
+                :rules="[rules.cpfInvalido]"
+                style="margin-left: 20px"
+                required
+              />
+            </v-flex>
+          </v-layout>
 
-        <v-layout
-          wrap
-          align-center
-          class="mt-1"
-        >
-          <v-flex
-            xs12
-            sm6
+          <v-layout
+            wrap
+            align-center
+            class="mt-1"
           >
-            <v-text-field
-              v-model="recursoInscricao.ds_email"
-              data-vv-name="email"
-              label="*E-mail do representante"
-              append-icon="mail"
-              placeholder="email@exemplo.com"
-              counter
-              maxlength="100"
-              :rules="[rules.required, rules.email]"
-              required
-            />
-          </v-flex>
-          <v-flex
-            xs12
-            sm6
+            <v-flex
+              xs12
+              sm6
+            >
+              <v-text-field
+                v-model="recursoInscricao.ds_email"
+                data-vv-name="email"
+                label="*E-mail do representante"
+                append-icon="mail"
+                placeholder="email@exemplo.com"
+                counter
+                maxlength="100"
+                :rules="[rules.required, rules.email]"
+                required
+              />
+            </v-flex>
+            <v-flex
+              xs12
+              sm6
+            >
+              <v-text-field
+                v-model="recursoInscricao.nu_telefone"
+                label="*Celular do representante"
+                append-icon="phone"
+                placeholder="(99) 99999-9999"
+                mask="(##) #####-####"
+                :rules="[rules.required, rules.phoneMin]"
+                required
+                style="margin-left: 20px"
+              />
+            </v-flex>
+          </v-layout>
+          <v-layout
+            wrap
+            align-center
           >
-            <v-text-field
-              v-model="recursoInscricao.nu_telefone"
-              label="*Celular do representante"
-              append-icon="phone"
-              placeholder="(99) 99999-9999"
-              mask="(##) #####-####"
-              :rules="[rules.required, rules.phoneMin]"
-              required
-              style="margin-left: 20px"
-            />
-          </v-flex>
-        </v-layout>
-        <v-layout
-          wrap
-          align-center
-        >
-          <v-flex
-            xs12
-            sm12
+            <v-flex
+              xs12
+              sm12
+            >
+              <div class="ma-4 text-justify subheading grey--text">
+                Ilmo Sr. Secretário da Diversidade Cultural,
+                Com base no <b>item 6</b> desta CHAMADA PÚBLICA PARA COMPOSIÇÃO DO
+                CONSELHO NACIONAL DE POLÍTICA CULTURAL (CNPC) NO TRIÊNIO 2019/2022,
+                venho interpor recurso em face do resultado na etapa de inscrição pelos motivos
+                abaixo descritos:
+              </div>
+            </v-flex>
+          </v-layout>
+          <v-layout
+            wrap
+            align-center
           >
-            <div class="ma-4 text-justify subheading grey--text">
-              Ilmo Sr. Secretário da Diversidade Cultural,
-              Com base no <b>item 6</b> desta CHAMADA PÚBLICA PARA COMPOSIÇÃO DO
-              CONSELHO NACIONAL DE POLÍTICA CULTURAL (CNPC) NO TRIÊNIO 2019/2022,
-              venho interpor recurso em face do resultado na etapa de inscrição pelos motivos
-              abaixo descritos:
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-layout
-          wrap
-          align-center
-        >
-          <v-flex
-            xs12
-            sm12
-            class="ma-3"
-          >
-            <v-textarea
-              v-model="recursoInscricao.ds_recurso"
-              name="input-7-1"
-              box
-              solo
-              label="Descrição do recurso"
-              auto-grow
-              :placeholder="'Digite seu recurso aqui.'"
-              :counter="3000"
-            />
-          </v-flex>
-        </v-layout>
-        {{ recursoInscricao }}
+            <v-flex
+              xs12
+              sm12
+              class="ma-3"
+            >
+              <v-textarea
+                v-model="recursoInscricao.ds_recurso"
+                name="input-7-1"
+                box
+                solo
+                label="Descrição do recurso"
+                auto-grow
+                :placeholder="'Digite seu recurso aqui.'"
+                :counter="3000"
+                :rules="[rules.required]"
+              />
+            </v-flex>
+          </v-layout>
+        </v-form>
       </v-card-text>
-      <v-card-action>
         <v-layout
           wrap
-          align-center
-        >
+          align-center>
           <v-flex offset-xs5>
             <v-btn>Cancelar</v-btn>
-            <v-btn color="primary">
+            <v-btn
+              :disabled="!valid"
+              @click="abrirDialogo"
+              color="primary">
               Enviar
             </v-btn>
           </v-flex>
         </v-layout>
-      </v-card-action>
     </v-card>
+
+    <v-layout justify-center>
+      <v-dialog
+        v-model="dialog"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">
+            Deseja realmente enviar?
+          </v-card-title>
+
+          <v-card-text>
+            Os dados enviados não poderão ser alterados posteriormente.
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer />
+
+            <v-btn
+              color="red darken-1"
+              text
+              flat
+              @click="fecharDialogo"
+            >
+              Não
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              flat
+              @click="salvar"
+            >
+              Sim
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </v-container>
 </template>
 
@@ -201,19 +245,19 @@ import Validate from '../../shared/util/validate';
 
 export default {
   data: () => ({
+    dialog: false,
+    valid: false,
     nomeConselho: '',
     nomeConselhoError: '',
     nomeRepresentante: '',
     nomeRepresentanteError: '',
     recursoInscricao: {
-      co_recurso_inscricao: '',
       co_fase: '',
       ds_email: '',
       nu_cnpj: '',
       nu_cpf: '',
       nu_telefone: '',
       ds_recurso: '',
-      dh_cadastro: '',
     },
     listaRecursos: [
       {
@@ -271,6 +315,7 @@ export default {
     ...mapActions({
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      enviarDadosRecursoInscricao: 'recurso/enviarDadosRecursoInscricao',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {
@@ -278,9 +323,16 @@ export default {
       }
     },
     salvar() {
-      // this.confirmarConselho(this.recursoInscricao).then(() => {
-      //   this.$router.push('/recursoInscricao/revisao-recursoInscricao');
-      // });
+      this.enviarDadosRecursoInscricao(this.recursoInscricao);
+    },
+    abrirDialogo() {
+      if (!this.$refs.form_recurso.validate()) {
+        return false;
+      }
+      this.dialog = true;
+    },
+    fecharDialogo() {
+      this.dialog = false;
     },
   },
 };

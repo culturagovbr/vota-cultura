@@ -9,6 +9,7 @@ import organizacao from '@/modules/organizacao/store/';
 import localidade from '@/modules/localidade/store/';
 import fase from '@/modules/fase/store/';
 import pessoa from '@/modules/pessoa/store/';
+import recurso from '@/modules/recurso/store/';
 
 Vue.use(Vuex);
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     localidade,
     fase,
     pessoa,
+    recurso,
   },
   strict: process.env.NODE_ENV !== 'production',
 });

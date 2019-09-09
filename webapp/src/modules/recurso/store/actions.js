@@ -10,6 +10,11 @@ export const enviarDadosRecurso = async ({ commit }, recurso) => {
   return recursoService.enviarDadosRecurso(recurso);
 };
 
+export const enviarDadosRecursoInscricao = async ({ commit }, recurso) => {
+  console.log(recurso);
+  // return recursoService.enviarDadosRecurso(recurso);
+};
+
 export const obterDadosRecurso = async ({ commit, dispatch }, coRecurso) => {
   commit(types.OBTER_DADOS_RECURSO, coRecurso);
   recursoService.obterDadosRecurso(coRecurso)
