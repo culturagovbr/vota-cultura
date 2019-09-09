@@ -84,9 +84,8 @@ class RecursoInscricao extends AbstractService
             throw new EParametrosInvalidos('Organização não encontrado');
         }
 
-        $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
-        if ($recursoInscricao->co_recurso_inscricao !== $usuarioAutenticado['co_recurso_inscricao']) {
-            throw new EParametrosInvalidos('O Recurso não coincide com o do usuário logado.');
+        if (!Auth::user()->souAdministrador()) {
+            throw new EParametrosInvalidos('Funcionalidade indisponível para seu perfil.');
         }
 
         return $recursoInscricao;

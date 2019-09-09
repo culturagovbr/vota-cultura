@@ -110,4 +110,9 @@ class Usuario extends AAutenticacao
         }
         return (array)$payload->get('user');
     }
+
+    public function souAdministrador() : bool
+    {
+        return ($this->perfil->no_perfil === 'administrador');
+    }
 }
