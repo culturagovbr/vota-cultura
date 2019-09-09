@@ -26,7 +26,7 @@ class RecursoInscricao extends JsonResource
             'cpf_formatado' => $this->cpf_formatado,
             'telefone_formatado' => $this->telefone_formatado,
             'usuario' => (new Usuario($this->usuario)),
-            'fase' => (new Usuario($this->fase)),
+            'fase' => (new Fase($this->fase)),
         ];
     }
 
