@@ -6,17 +6,5 @@ import * as types from './types';
 export const obterFases = async ({ commit }) => faseService.obterFases().then((response) => {
   commit(types.OBTER_FASES, response.data);
   commit(types.DEFINIR_SITUACOES, response.data);
+  return response;
 });
-
-export const validarDataDentroPrazoFasePorSlug = async ({ state }, slug) => {
-  const faseEncontrada = state.fases.find(fase => fase.tp_fase === slug);
-
-  if (faseEncontrada.dh_inicio) {
-    const dataInicio = moment(faseEncontrada.dh_inicio).toDate().getTime();
-    const dataFim = moment(faseEncontrada.dh_fim).toDate().getTime();
-    const dataAtual = moment().toDate().getTime();
-
-    return !(dataAtual >= dataInicio && dataAtual <= dataFim);
-  }
-  return true;
-};

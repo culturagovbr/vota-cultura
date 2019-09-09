@@ -51,7 +51,7 @@
                     <v-data-table
                       :headers="headers"
                       :items="conselhosGetter"
-                      :pagination.sync="pagination"
+                      :pagination.sync="pagination_conselho"
                       :total-items="totalItems"
                       :loading="loading"
                       :search="pesquisar"
@@ -97,7 +97,7 @@
                     <v-data-table
                       :headers="headers_organizacao"
                       :items="organizacoesGetter"
-                      :pagination.sync="pagination"
+                      :pagination.sync="pagination_organizacao"
                       :total-items="totalItems"
                       :loading="loading"
                       :search="pesquisar"
@@ -140,9 +140,17 @@ export default {
     step: 1,
     pesquisar: '',
     tp_inscricao: null,
-    pagination: {
+    pagination_organizacao: {
       page: 1,
       rowsPerPage: 10,
+      sortBy: 'no_organizacao',
+      descending: false,
+    },
+    pagination_conselho: {
+      page: 1,
+      rowsPerPage: 10,
+      sortBy: 'no_orgao_gestor',
+      descending: false,
     },
     totalItems: 0,
     headers: [
