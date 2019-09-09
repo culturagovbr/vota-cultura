@@ -9,7 +9,9 @@
       />
     </section>
 
-    <section>
+    <section
+      v-if="ativarInscricaoOrganizacao || ativarInscricaoConselho || ativarInscricaoEleitor"
+    >
       <v-layout
         column
         wrap
@@ -162,7 +164,6 @@
         </v-flex>
       </v-layout>
     </section>
-
     <section>
       <v-parallax
         :src="require('@/assets/banner_2.jpg')"
@@ -206,7 +207,34 @@
         </v-layout>
       </v-parallax>
     </section>
-
+    <section>
+      <v-parallax
+        dark
+        :src="require('@/assets/blue-gradient-background-debbie-lynn-grace.jpg')"
+      >
+        <v-layout
+          column
+          wrap
+          class="my-5"
+          align-center
+        >
+          <v-flex
+            xs12
+            sm4
+            class="my-3"
+          >
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/2ZII7C3clD0"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          </v-flex>
+        </v-layout>
+      </v-parallax>
+    </section>
     <section>
       <v-container grid-list-xl>
         <v-layout
