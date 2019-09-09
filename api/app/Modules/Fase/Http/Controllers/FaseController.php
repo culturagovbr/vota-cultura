@@ -3,7 +3,6 @@
 namespace App\Modules\Fase\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Core\Http\Controllers\Traits\TApiResourceIndex;
 use App\Modules\Fase\Service\Fase as FaseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;

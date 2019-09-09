@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card>
+    <v-card v-if="dataDentroPrazoInscricao">
       <v-toolbar
         dark
         color="primary"
@@ -653,6 +653,7 @@ import Validate from '../../shared/util/validate';
 export default {
   name: 'Organizacao',
   data: () => ({
+    dataDentroPrazoInscricao: false,
     nomeOrganizacaoError: '',
     nomeRepresentante: '',
     mascaraTelefone: '(##) #####-####',
@@ -802,12 +803,18 @@ export default {
     },
   },
   mounted() {
-      this.validarDataDentroPrazoFasePorSlug('abertura_inscricoes_organizacao').then(function(response){
-        console.log(response);
-      });
-      this.mensagemErro('O prazo de inscrições expirou!');
+    const self = this;
+    this.obterFases().then(function (response) {
+      const { data } = response.data;
+      const faseSlug = 'abertura_inscricoes_organizacao';
+      const faseOrganizacao = data.find((fase) => fase.tp_fase === faseSlug);
 
-      this.$router.push('/');
+      if (!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) {
+        self.mensagemErro('O prazo de inscrições expirou!');
+        self.$router.push('/');
+      }
+      self.dataDentroPrazoInscricao = true;
+    });
 
     if (Object.keys(this.organizacaoGetter).length > 0) {
       this.organizacao = this.organizacaoGetter;
@@ -837,6 +844,7 @@ export default {
       confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      obterFases: 'fase/obterFases',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {
