@@ -479,8 +479,8 @@ comment on column tb_recurso_inscricao.st_parecer is ' 0 - Recusado | 1 - Aceito
 
 
 --INSERT INTO tb_fase (co_fase, tp_fase, dh_inicio, dh_fim) VALUES (3, 'abertura_inscricoes_eleitor', '2019-09-15 00:00:01.000000', '2019-09-15 00:00:02.000000');
-UPDATE public.tb_fase SET tp_fase = 'abertura_inscricoes_conselho', dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-08-30 00:00:00.000000', ds_detalhamento = 'Inscrições - Conselho' WHERE co_fase = 1;
-UPDATE public.tb_fase SET tp_fase = 'abertura_inscricoes_organizacao', dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-08-30 00:00:00.000000', ds_detalhamento = 'Inscrições - Organização' WHERE co_fase = 2;
-UPDATE public.tb_fase SET tp_fase = 'abertura_inscricoes_eleitor', dh_inicio = '2019-09-15 00:00:01.000000', dh_fim = '2019-09-15 00:00:02.000000', ds_detalhamento = 'Inscrições - Eleitor' WHERE co_fase = 3;
-INSERT INTO public.tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (4, 'recurso_inscricoes_conselho', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Conselho');
-INSERT INTO public.tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (5, 'recurso_inscricoes_organizacao', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Organização');
+UPDATE tb_fase SET tp_fase = 'abertura_inscricoes_conselho', dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-08-30 00:00:00.000000', ds_detalhamento = 'Inscrições - Conselho' WHERE co_fase = 1;
+UPDATE tb_fase SET tp_fase = 'abertura_inscricoes_organizacao', dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-08-30 00:00:00.000000', ds_detalhamento = 'Inscrições - Organização' WHERE co_fase = 2;
+UPDATE tb_fase SET tp_fase = 'abertura_inscricoes_eleitor', dh_inicio = '2019-09-15 00:00:01.000000', dh_fim = '2019-09-15 00:00:02.000000', ds_detalhamento = 'Inscrições - Eleitor' WHERE co_fase = 3;
+INSERT INTO tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (4, 'recurso_inscricoes_conselho', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Conselho');
+INSERT INTO tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (5, 'recurso_inscricoes_organizacao', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Organização');
