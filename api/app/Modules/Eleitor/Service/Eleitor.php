@@ -3,6 +3,7 @@
 namespace App\Modules\Eleitor\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Conta\Model\Usuario;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Exceptions\EValidacaoCampo;
 use App\Modules\Eleitor\Mail\Eleitor\CadastroComSucesso;
@@ -51,12 +52,12 @@ class Eleitor extends AbstractService
                 );
             }
 
-            $representante = app()->make(Representante::class, [
-                'ds_email' => $dados['ds_email'],
+            $usuario = app()->make(Usuario::class)->where([
                 'nu_cpf' => $dados['nu_cpf'],
             ])->first();
 
-            $dados['co_usuario'] = $this->_obterCodigoUsuario($representante);
+            $dados['co_usuario'] = !empty($usuario) ? $usuario->co_usuario : null;
+
             $eleitorCriado = parent::cadastrar($dados);
 
             Mail::to($eleitorCriado->ds_email)->send(
@@ -74,7 +75,7 @@ class Eleitor extends AbstractService
         }
     }
 
-    private function _obterCodigoUsuario(Representante $representante) : int
+    private function _obterCodigoUsuario(Representante $representante) : ?int
     {
         $organizacao = $representante->organizacao;
         $conselho = $representante->conselho;

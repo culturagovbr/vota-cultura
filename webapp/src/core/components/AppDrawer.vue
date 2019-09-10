@@ -214,6 +214,7 @@ export default {
       return true;
     },
     carregarMenusEleitor() {
+      console.log(this.usuario);
       if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',

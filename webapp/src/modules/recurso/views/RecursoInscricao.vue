@@ -331,6 +331,7 @@ export default {
         return false;
       }
       this.dialog = true;
+      return true;
     },
     fecharDialogo() {
       this.dialog = false;
