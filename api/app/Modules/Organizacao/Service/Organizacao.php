@@ -6,6 +6,7 @@ use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Exceptions\EValidacaoCampo;
 use App\Modules\Fase\Model\Fase as FaseModel;
+use App\Modules\Fase\Model\Fase;
 use App\Modules\Fase\Service\Fase as FaseService;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Organizacao\Mail\Organizacao\CadastroComSucesso;

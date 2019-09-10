@@ -29,13 +29,12 @@ class RecursoInscricao extends AbstractService
             DB::beginTransaction();
 
             $serviceFase = app()->make(FaseService::class);
-            $fase = $serviceFase->obterPorTipo($dados['tp_fase']);
+            $fase = $serviceFase->getModel()->find($dados['co_fase']);
 
-            if ($fase->faseFinalizada()) {
+            if (empty($fase) || $fase->faseFinalizada()) {
                 throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
             }
 
-            $dados['co_fase'] = $fase->co_fase;
             $carbon = Carbon::now();
             $dados['dh_cadastro'] = $carbon->toDateTimeString();
             $dadosInclusao = $dados->only([
@@ -44,6 +43,7 @@ class RecursoInscricao extends AbstractService
                 'nu_cnpj',
                 'nu_cpf',
                 'nu_telefone',
+                'dh_cadastro',
                 'ds_recurso',
             ])->toArray();
 

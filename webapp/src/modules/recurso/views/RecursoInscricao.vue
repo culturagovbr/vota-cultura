@@ -323,7 +323,8 @@ export default {
       }
     },
     salvar() {
-      this.enviarDadosRecursoInscricao(this.recursoInscricao);
+      this.enviarDadosRecursoInscricao(this.recursoInscricao).then((res) =>{
+      });
     },
     abrirDialogo() {
       if (!this.$refs.form_recurso.validate()) {

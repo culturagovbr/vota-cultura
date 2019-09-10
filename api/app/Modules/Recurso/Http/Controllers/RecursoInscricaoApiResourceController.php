@@ -8,6 +8,7 @@ use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
 use App\Modules\Recurso\Http\Resources\RecursoInscricao;
 use App\Modules\Recurso\Service\RecursoInscricao as RecursoInscricaoService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class RecursoInscricaoApiResourceController extends AApiResourceController
