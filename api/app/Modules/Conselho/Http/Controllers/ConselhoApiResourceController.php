@@ -34,7 +34,7 @@ class ConselhoApiResourceController extends AApiResourceController
     public function store(Request $request): JsonResponse
     {
         return $this->sendResponse(
-            $this->service->cadastrarConselho($request->all()),
+            $this->service->cadastrar(collect($request->all())),
             "Operação Realizada com Sucesso",
             Response::HTTP_CREATED
         );
