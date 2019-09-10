@@ -14,11 +14,6 @@ class CadastroPrimeiroAcesso extends Mailable
 
     protected $listaRepresentantesNaoCadastrados;
 
-//    public function __construct(Array $listaRepresentantesNaoCadastrados)
-//    {
-//        $this->listaRepresentantesNaoCadastrados = $listaRepresentantesNaoCadastrados;
-//    }
-
     public function build()
     {
         $linkPrimeiroAcesso = env('WEB_APP_HOST')

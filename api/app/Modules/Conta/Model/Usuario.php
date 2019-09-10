@@ -38,7 +38,6 @@ class Usuario extends AAutenticacao
 
     protected $hidden = [
         'ds_senha',
-        'ds_codigo_ativacao',
         'pivot'
     ];
 
