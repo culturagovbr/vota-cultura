@@ -5,7 +5,7 @@ metadata:
 data:
     #BACKEND
     DB_CONNECTION: {{ .Values.webserver.database.type }}
-    DATABASE_URL: {{ .Values.webserver.database.host }}
+    #DATABASE_URL: {{ .Values.webserver.database.host }}
     DB_HOST: {{ .Values.webserver.database.host }}
     DB_PORT: {{ .Values.webserver.database.port | quote }}
     DB_DATABASE: {{ .Values.webserver.database.db }}
