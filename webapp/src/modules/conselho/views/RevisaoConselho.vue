@@ -81,6 +81,8 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                 color="green darken-1"
                 text
                 flat
+                :loading="loading"
+                :disabled="loading"
                 @click="salvar"
               >
                 Sim
@@ -104,6 +106,7 @@ export default {
     ConselhoDetalhesInscricaoVisualizacao,
   },
   data: () => ({
+    loading: false,
     confirmacaoDadosDeInscricao: false,
     dialog: false,
     conselho: {},
@@ -126,6 +129,7 @@ export default {
       this.$router.push({ name: 'Conselho' });
     },
     salvar() {
+      this.loading = true;
       this.enviarDadosConselho(this.conselhoGetter).then(() => {
         eventHub.$emit(
           'eventoSucesso',
@@ -140,6 +144,7 @@ export default {
         );
         this.$router.push('/');
       }).finally(() => {
+        this.loading = false;
         this.fecharDialogo();
       });
     },
