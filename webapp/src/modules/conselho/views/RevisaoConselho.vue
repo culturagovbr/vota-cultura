@@ -195,7 +195,7 @@
                     v-model="conselho.representante.nu_cpf"
                     label="CPF"
                     append-icon="person"
-                    mask="###.###.###.##"
+                    mask="###.###.###-##"
                     disabled
                   />
                 </v-flex>
@@ -254,23 +254,6 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                 </v-flex>
               </v-layout>
             </v-container>
-            <v-container v-else>
-              <v-layout>
-                <v-flex>
-                  <v-alert
-                    type="error"
-                    :value="true"
-                  >
-                    É necessário preencher as informações do cadastro.
-                  </v-alert>
-                  <div class="mb-6">
-                    <v-btn @click="voltar">
-                      Voltar
-                    </v-btn>
-                  </div>
-                </v-flex>
-              </v-layout>
-            </v-container>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -304,6 +287,8 @@ Declaro estar ciente de que qualquer inexatidão nos itens informados me sujeita
                 color="green darken-1"
                 text
                 flat
+                :loading="loading"
+                :disabled="loading"
                 @click="salvar"
               >
                 Sim
@@ -323,6 +308,7 @@ import { eventHub } from '@/event';
 export default {
   name: 'RevisaoConselho',
   data: () => ({
+    loading: false,
     confirmacaoDadosDeInscricao: false,
     dialog: false,
     listaUF: [],
@@ -354,6 +340,7 @@ export default {
       this.$router.push({ name: 'Conselho' });
     },
     salvar() {
+      this.loading = true;
       this.enviarDadosConselho(this.conselhoGetter).then(() => {
         eventHub.$emit(
           'eventoSucesso',
@@ -368,6 +355,7 @@ export default {
         );
         this.$router.push('/');
       }).finally(() => {
+        this.loading = false;
         this.fecharDialogo();
       });
     },
