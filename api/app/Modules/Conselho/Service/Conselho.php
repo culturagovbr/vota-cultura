@@ -48,7 +48,7 @@ class Conselho extends AbstractService
                 );
             }
 
-            $serviceRepresentante = app()->make(Representante::class);
+            $serviceRepresentante = app(Representante::class);
             $representante = $serviceRepresentante->cadastrar($dados['representante']);
 
             if (!$representante) {
@@ -56,7 +56,7 @@ class Conselho extends AbstractService
             }
 
             $dados['co_representante'] = $representante->co_representante;
-            $serviceEndereco = app()->make(Endereco::class);
+            $serviceEndereco = app(Endereco::class);
             $endereco = $serviceEndereco->cadastrar($dados['endereco']);
 
             if (!$endereco) {
@@ -67,7 +67,7 @@ class Conselho extends AbstractService
             $conselho = parent::cadastrar($dados);
 
             foreach($anexos as $dadosArquivo) {
-                $modeloArquivo = app()->make(Arquivo::class);
+                $modeloArquivo = app(Arquivo::class);
                 $modeloArquivo->fill($dadosArquivo);
                 $serviceUpload = new Upload($modeloArquivo);
                 $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
