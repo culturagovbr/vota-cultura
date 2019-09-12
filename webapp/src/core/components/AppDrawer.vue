@@ -214,7 +214,6 @@ export default {
       return true;
     },
     carregarMenusEleitor() {
-      console.log(this.usuario);
       if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
@@ -252,6 +251,13 @@ export default {
           group: 'apps',
           name: 'administrador-lista-usuarios-route',
           icon: 'group',
+        }, 'Administração');
+
+        this.definirItemMenu({
+          title: 'Recursos',
+          group: 'apps',
+          name: 'lista-recurso-route',
+          icon: 'gavel',
         }, 'Administração');
       }
 

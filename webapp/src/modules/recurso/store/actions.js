@@ -37,7 +37,7 @@ export const obterDadosRecurso = async ({ commit, dispatch }, coRecurso) => {
 };
 
 export const obterRecursos = async ({ commit }) => {
-  recursoService.obterRecursos().then((response) => {
+  recursoService.obterRecursosIncritos().then((response) => {
     const { data } = response.data;
     commit(types.LISTAR_RECURSOS, data);
   });

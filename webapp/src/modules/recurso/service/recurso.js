@@ -5,4 +5,4 @@ export const enviarDadosRecursoInscricao = recurso => service.postRequest('/recu
 
 export const obterDadosRecursoInscricao = coRecurso => service.getRequest(`/recurso/inscricao/${coRecurso}`);
 
-export const obterRecursosInscricao = () => service.getRequest('/recurso/inscricao');
+export const obterRecursosIncritos = () => service.getRequest('/recurso/inscricao');

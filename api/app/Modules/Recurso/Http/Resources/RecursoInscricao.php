@@ -18,14 +18,13 @@ class RecursoInscricao extends JsonResource
             'nu_telefone' => $this->nu_telefone,
             'ds_recurso' => $this->ds_recurso,
             'dh_cadastro' => $this->dh_cadastro,
-            'co_usuario_parecer' => $this->co_usuario_parecer,
             'ds_parecer' => $this->ds_parecer,
             'dh_parecer' => $this->dh_parecer,
             'st_parecer' => $this->st_parecer,
             'cnpj_formatado' => $this->cnpj_formatado,
             'cpf_formatado' => $this->cpf_formatado,
             'telefone_formatado' => $this->telefone_formatado,
-            'usuario' => (new Usuario($this->usuario)),
+            'co_usuario_parecer' => (new Usuario($this->usuario)),
             'fase' => (new Fase($this->fase)),
         ];
     }
