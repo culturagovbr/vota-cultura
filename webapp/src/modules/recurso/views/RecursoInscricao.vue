@@ -152,8 +152,8 @@
             >
               <div class="ma-4 text-justify subheading grey--text">
                 Ilmo Sr. Secretário da Diversidade Cultural,
-                Com base no <b>item 6</b> desta CHAMADA PÚBLICA PARA COMPOSIÇÃO DO
-                CONSELHO NACIONAL DE POLÍTICA CULTURAL (CNPC) NO TRIÊNIO 2019/2022,
+                com base no <b>item 6</b> deste edital de CHAMADA PÚBLICA PARA COMPOSIÇÃO DO
+                CONSELHO NACIONAL DE POLÍTICA CULTURAL (CNPC) no triênio 2019/2022,
                 venho interpor recurso em face do resultado na etapa de inscrição pelos motivos
                 abaixo descritos:
               </div>
