@@ -24,6 +24,23 @@ export default [
         },
         component: () => import(/* webpackChunkName: "recurso" */ '@/modules/recurso/views/RecursoInscricao.vue'),
       },
+      {
+        path: '/recurso/administrador',
+        component: DefaultLayout,
+        hidden: true,
+        redirect: '/recurso/administrador/recurso',
+        children: [
+          {
+            path: 'recurso',
+            name: 'lista-recurso-route',
+            meta: {
+              title: 'Recursos',
+              public: false,
+            },
+            component: () => import(/* webpackChunkName: "lista-recurso" */ '@/modules/recurso/views/administrador/AdministradorListaRecurso.vue'),
+          },
+        ],
+      },
     ],
   },
 ];

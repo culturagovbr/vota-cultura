@@ -65,4 +65,14 @@ class RecursoInscricao extends Model
     {
         return CNPJ::adicionarMascara($this->nu_cnpj);
     }
+
+    public function getDhCadastroFormatadoAttribute()
+    {
+        return !empty($this->dh_cadastro) ? $this->dh_cadastro->format('d/m/Y h:i:s') : null;
+    }
+
+    public function getDhParecerFormatadoAttribute()
+    {
+        return !empty($this->dh_parecer) ? $this->dh_parecer->format('d/m/Y h:i:s') : null;
+    }
 }

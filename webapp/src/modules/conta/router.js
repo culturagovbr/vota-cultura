@@ -113,21 +113,4 @@ export default [
       },
     ],
   },
-  {
-    path: '/conta/administrador',
-    component: DefaultLayout,
-    hidden: true,
-    redirect: '/conta/administrador/recurso',
-    children: [
-      {
-        path: 'recurso',
-        name: 'lista-recurso-route',
-        meta: {
-          title: 'Recursos',
-          public: false,
-        },
-        component: () => import(/* webpackChunkName: "lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaRecurso.vue'),
-      },
-    ],
-  },
 ];

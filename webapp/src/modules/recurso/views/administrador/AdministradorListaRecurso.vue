@@ -37,7 +37,7 @@
                 >
                   <td>{{ props.item.nu_cpf }}</td>
                   <td>{{ props.item.ds_email }}</td>
-                  <td>{{ props.item.dh_cadastro }}</td>
+                  <td>{{ props.item.dh_cadastro_formatado }}</td>
                   <td>
                     <v-btn
                       depressed
@@ -79,7 +79,7 @@ export default {
       headers: [
         {
           text: 'CPF',
-          value: 'nu_cpf_mascarado',
+          value: 'nu_cpf_formatado',
         },
         {
           text: 'Email',

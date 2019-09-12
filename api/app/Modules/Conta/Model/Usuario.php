@@ -4,6 +4,8 @@ namespace App\Modules\Conta\Model;
 
 use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Core\Helper\CPF;
+use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Eleitor\Model\Eleitor;
 use App\Modules\Organizacao\Model\Organizacao;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -110,8 +112,14 @@ class Usuario extends AAutenticacao
         return (array)$payload->get('user');
     }
 
-    public function souAdministrador() : bool
+    public function souAdministrador(): bool
     {
         return ($this->perfil->no_perfil === 'administrador');
     }
+
+    public function getNuCpfFormatadoAttribute(): string
+    {
+        return CPF::adicionarMascara($this->nu_cpf);
+    }
+
 }

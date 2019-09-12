@@ -18,9 +18,9 @@ class Usuario extends JsonResource
             'dh_cadastro' => $this->dh_cadastro,
             'dh_ultima_atualizacao' => $this->dh_ultima_atualizacao,
             'ds_codigo_ativacao' => $this->ds_codigo_ativacao,
-            'perfil' => (new Perfil($this->perfil)),
+            'perfil' => app(Perfil::class, $this->perfil),
             'nu_cpf' => $this->nu_cpf,
-            'nu_cpf_mascarado' => CPF::adicionarMascara($this->nu_cpf),
+            'nu_cpf_formatado' => $this->nu_cpf_formatado,
         ];
     }
 }
