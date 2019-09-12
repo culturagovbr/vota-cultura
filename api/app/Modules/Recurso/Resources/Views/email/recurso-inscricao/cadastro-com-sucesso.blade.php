@@ -1,6 +1,12 @@
 <h1>Vota Cultura</h1>
 <p>
-    Seu recurso foi realizado com sucesso!
+    Seu recurso foi enviado com sucesso!
+</p>
+<p>
+    <b>
+        Categoria:
+    </b>
+    {{ $recursoInscricao->nu_cnpj }}
 </p>
 <p>
     <b>
@@ -28,7 +34,7 @@
 </p>
 <p>
     <b>
-        E-mail do representante:
+        Recurso:
     </b>
     {{ $recursoInscricao->ds_recurso }}
 </p>
