@@ -126,7 +126,7 @@ export default [
           title: 'Recursos',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "lista-usuarios-route" */ '@/modules/conta/views/administrador/ListaRecurso.vue'),
+        component: () => import(/* webpackChunkName: "lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaRecurso.vue'),
       },
     ],
   },
