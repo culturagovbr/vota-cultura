@@ -96,7 +96,7 @@ export default {
         return;
       }
       this.loading = true;
-      this.autenticarUsuario(this.model).then(() => {
+      this.autenticarUsuario(this.model).then((response) => {
         this.$router.push('/');
       }).finally(() => {
         this.loading = false;

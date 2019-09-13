@@ -7,7 +7,7 @@ import { obterInformacoesJWT } from '../../shared/service/helpers/jwt';
 /* eslint-disable import/prefer-default-export */
 export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
   commit(types.AUTENTICAR_USUARIO);
-  usuarioService.login(usuario)
+  return usuarioService.login(usuario)
     .then((response) => {
       const { data } = response;
       if (data && data.access_token) {
@@ -21,7 +21,7 @@ export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
       );
       dispatch('conta/tratarUsuarioLogado', null, { root: true });
 
-      return data;
+      return response;
     }).catch((error) => {
       dispatch(
         'app/setMensagemErro',
@@ -50,53 +50,48 @@ export const ativarUsuario = async ({ commit }, ativacao) => {
   usuarioService.ativarUsuario(ativacao);
 };
 
-export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => {
-  return usuarioService.cadastrarUsuario(usuario).then((response) => {
-    const { data } = response.data;
-    commit(types.ATRIBUIR_USUARIO_CADASTRADO_LISTA, data);
-    dispatch(
-      'app/setMensagemSucesso',
-      'Usuário cadastrado com sucesso!',
-      { root: true },
-    );
-    return response;
-  }).catch((error) => {
-    dispatch(
-        'app/setMensagemErro',
-        error.response.data.message,
-        { root: true },
-    );
-    throw new TypeError(error);
-  });
-};
+export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => usuarioService.cadastrarUsuario(usuario).then((response) => {
+  const { data } = response.data;
+  commit(types.ATRIBUIR_USUARIO_CADASTRADO_LISTA, data);
+  dispatch(
+    'app/setMensagemSucesso',
+    'Usuário cadastrado com sucesso!',
+    { root: true },
+  );
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});
 
-export const atualizarUsuario = async ({ commit, dispatch }, usuario) => {
-  return usuarioService.atualizarUsuario(usuario).then((response) => {
-    const { data } = response.data;
-    commit(types.ATUALIZAR_USUARIO_LISTA, data);
+export const atualizarUsuario = async ({ commit, dispatch }, usuario) => usuarioService.atualizarUsuario(usuario).then((response) => {
+  const { data } = response.data;
+  commit(types.ATUALIZAR_USUARIO_LISTA, data);
 
-    dispatch(
-      'app/setMensagemSucesso',
-      'Usuário atualizado com sucesso.',
-      { root: true },
-    );
-    return response;
-  }).catch((error) => {
-    dispatch(
-        'app/setMensagemErro',
-        error.response.data.message,
-        { root: true },
-    );
-    throw new TypeError(error);
-  });
-};
+  dispatch(
+    'app/setMensagemSucesso',
+    'Usuário atualizado com sucesso.',
+    { root: true },
+  );
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});
 
 export const salvarUsuario = async ({ dispatch, commit }, usuario) => {
   if (usuario.co_usuario) {
     return dispatch('atualizarUsuario', usuario);
-  } else {
-    return dispatch('cadastrarUsuario', usuario);
   }
+  return dispatch('cadastrarUsuario', usuario);
 };
 
 export const recuperarSenha = async ({ commit }, payload) => {
@@ -117,12 +112,10 @@ export const logout = async ({ commit }) => {
   usuarioService.logout({});
 };
 
-export const alterarSenha = async ({ commit }, { codigoAlteracao, usuario }) => {
-  return usuarioService.alterarSenha(codigoAlteracao, usuario).then((response) => {
-    commit(types.LOGOUT);
-    return response;
-  });
-};
+export const alterarSenha = async ({ commit }, { codigoAlteracao, usuario }) => usuarioService.alterarSenha(codigoAlteracao, usuario).then((response) => {
+  commit(types.LOGOUT);
+  return response;
+});
 
 export const solicitarPrimeiroAcesso = async ({ commit }, payload) => {
   commit(types.SOLICITAR_PRIMEIRO_ACESSO, payload);
@@ -147,7 +140,7 @@ export const buscarPerfis = async ({ commit }) => {
 
 export const buscarPerfisAlteracao = async ({ state, commit, dispatch }) => dispatch('buscarPerfis').then((response) => {
   const { data } = response.data;
-  data.map(function(perfil){
+  data.map((perfil) => {
     if (perfil.no_perfil !== 'administrador' && perfil.no_perfil !== 'avaliador') {
       perfil.disabled = true;
     }
