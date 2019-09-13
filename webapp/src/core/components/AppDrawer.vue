@@ -245,7 +245,6 @@ export default {
     },
     carregarMenuAdministrador() {
       if (this.perfil.no_perfil === 'administrador') {
-
         this.definirItemMenu({
           title: 'Usuários',
           group: 'apps',
@@ -260,7 +259,6 @@ export default {
           icon: 'gavel',
         }, 'Administração');
       }
-
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {
       this.definirAgrupadorMenu(nomeAgrupador);

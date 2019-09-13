@@ -19,7 +19,7 @@ class RecursoInscricao extends JsonResource
         }
         return [
             'co_recurso_inscricao' => $this->co_recurso_inscricao,
-            'co_fase' => $this->co_fase,
+            'co_fase' => (string) $this->co_fase,
             'ds_email' => $this->ds_email,
             'nu_cnpj' => $this->nu_cnpj,
             'nu_cpf' => $this->nu_cpf,

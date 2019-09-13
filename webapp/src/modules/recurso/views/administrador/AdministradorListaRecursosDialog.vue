@@ -17,11 +17,8 @@
         >
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title v-if="!!formulario.hasOwnProperty('co_recurso_inscricao')">
-          Editar Recurso
-        </v-toolbar-title>
-        <v-toolbar-title v-else>
-          Cadastrar Recurso
+        <v-toolbar-title>
+          Avaliação de recurso
         </v-toolbar-title>
         <v-spacer />
       </v-toolbar>
@@ -42,7 +39,6 @@
                     <v-radio-group
                       v-model="formulario.co_fase"
                       row
-                      :rules="[rules.required]"
                       disabled
                     >
                       <v-radio
@@ -70,9 +66,7 @@
                       label="*CNPJ"
                       append-icon="people"
                       placeholder="99.999.999/9999-99"
-                      :error-messages="nomeConselhoError"
                       mask="##.###.###/####-##"
-                      :rules="[rules.required, rules.cnpjMin]"
                       required
                       disabled
                     />
@@ -82,10 +76,9 @@
                     sm6
                   >
                     <v-text-field
-                      v-model="nomeConselho"
+                      v-model="razao_social"
                       label="Razão social"
                       append-icon="people_outline"
-                      :rules="[rules.cnpjInvalido]"
                       required
                       style="margin-left: 20px"
                       disabled
@@ -105,11 +98,7 @@
                       v-model="formulario.nu_cpf"
                       label="*CPF do representante"
                       append-icon="person"
-                      placeholder="999.999.999-99"
                       mask="###.###.###-##"
-                      :error-messages="nomeRepresentanteError"
-                      :rules="[rules.required, rules.cpfMin]"
-                      required
                       disabled
                     />
                   </v-flex>
@@ -118,13 +107,10 @@
                     sm6
                   >
                     <v-text-field
-                      v-model="nomeRepresentante"
+                      v-model="nomePessoaFisica"
                       label="*Nome do representante"
                       append-icon="perm_identity"
-                      :error-messages="nomeRepresentanteError"
-                      :rules="[rules.cpfInvalido]"
                       style="margin-left: 20px"
-                      required
                       disabled
                     />
                   </v-flex>
@@ -146,7 +132,6 @@
                       append-icon="mail"
                       placeholder="email@exemplo.com"
                       maxlength="100"
-                      :rules="[rules.required, rules.email]"
                       required
                       disabled
                     />
@@ -161,7 +146,6 @@
                       append-icon="phone"
                       placeholder="(99) 99999-9999"
                       mask="(##) #####-####"
-                      :rules="[rules.required, rules.phoneMin]"
                       required
                       style="margin-left: 20px"
                       disabled
@@ -177,7 +161,7 @@
                     sm12
                   >
                     <div class="ma-4 text-justify subheading grey--text">
-                      <b>Descrição do Recurso:</b>
+                      <b>Descrição do recurso:</b>
                     </div>
                   </v-flex>
                 </v-layout>
@@ -199,12 +183,11 @@
                       auto-grow
                       :placeholder="'Digite seu recurso aqui.'"
                       :counter="3000"
-                      :rules="[rules.required]"
                       disabled
                     />
                   </v-flex>
                 </v-layout>
-                <v-divider></v-divider>
+                <v-divider />
 
                 <v-layout
                   wrap
@@ -228,7 +211,7 @@
                       :placeholder="'Digite seu recurso aqui.'"
                       :counter="3000"
                       :rules="[rules.required]"
-                      disabled
+                      required
                     />
                   </v-flex>
                 </v-layout>
@@ -241,16 +224,25 @@
                     sm12
                     class="ma-3"
                   >
-                    <v-radio-group v-model="formulario.st_parecer">
+                    <v-radio-group
+                      v-model="formulario.st_parecer"
+                      :rules="[rules.required]"
+                    >
                       <template v-slot:label>
                         <div><strong>Avaliação</strong></div>
                       </template>
-                      <v-radio value="1" color="success">
+                      <v-radio
+                        value="1"
+                        color="success"
+                      >
                         <template v-slot:label>
                           <div><strong class="success--text">Aceito</strong></div>
                         </template>
                       </v-radio>
-                      <v-radio value="0" color="error">
+                      <v-radio
+                        value="0"
+                        color="error"
+                      >
                         <template v-slot:label>
                           <div><strong class="error--text">Recusado</strong></div>
                         </template>
@@ -274,23 +266,64 @@
         </v-btn>
         <v-btn
           :loading="loading"
-          :disabled="!valid || loading"
+          :disabled="!valid || loading "
           color="primary"
-          @click.native="salvar"
+          @click.native="abrirDialogo"
         >
           <v-icon left>
             send
           </v-icon>
-          Salvar
+          Avaliar
         </v-btn>
       </v-card-actions>
     </v-card>
+
+
+    <v-layout justify-center>
+      <v-dialog
+        v-model="modalConfirmacao"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">
+            Deseja realmente enviar?
+          </v-card-title>
+
+          <v-card-text>
+            Os dados enviados não poderão ser alterados posteriormente.
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer />
+
+            <v-btn
+              color="red darken-1"
+              text
+              flat
+              @click="fecharDialogo"
+            >
+              Não
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              flat
+              :loading="loading"
+              :disabled="loading"
+              @click="salvar"
+            >
+              Sim
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </v-dialog>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Validate from '@/modules/shared/util/validate';
 
 export default {
   name: 'AdministradorListaRecursosDialog',
@@ -306,25 +339,19 @@ export default {
   },
   data() {
     return {
-      co_perfil: '',
-      nomeFormularioError: '',
+      confirmacaoDados: false,
+      modalConfirmacao: false,
+      razao_social: String(),
+      co_perfil: String(),
+      nomeFormularioError: String(),
+      nomePessoaFisica: String(),
       dialog: false,
       loading: false,
       valid: false,
       perfilPodeSerAlterado: false,
-      formulario: {
-        no_nome: '',
-        nu_cpf: '',
-        perfil: {
-          co_perfil: '',
-        },
-      },
-      nmPessoaFisica: '',
+      formulario: { no_nome: String() },
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
-        cpfMin: value => (value && value.length === 11) || 'Mínimo de 11 caracteres',
-        cpfInvalido: value => !!value || 'CPF não encontrado',
-        emailValido: value => Validate.isEmailValido(value) || 'O endereço de e-mail é inválido',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
       },
     };
@@ -341,47 +368,38 @@ export default {
     },
     dialog(valor) {
       this.$emit('input', valor);
-      this.formulario = Object.assign({
-        no_nome: '',
-        nu_cpf: '',
-        perfil: {
-          co_perfil: '',
-        },
-      });
-      this.$refs.form.reset();
-
+      this.formulario = Object.assign({});
+      this.$refs.form_recurso.reset();
       if (valor) {
         this.formulario = Object.assign(this.formulario, this.usuario);
       }
-    },
-    nmPessoaFisica(nome) {
-      this.formulario.no_nome = nome;
     },
     usuario(usuario) {
       this.formulario = Object.assign(this.formulario, usuario);
     },
     'formulario.nu_cpf': function (valor) {
-      this.formulario.no_nome = String();
-      this.nomeFormularioError = String();
-      this.nmPessoaFisica = String();
-      if (!!valor && valor.length === 11) {
-        if (!Validate.isCpfValido(valor)) {
-          this.nomeFormularioError = 'CPF inválido';
-          return false;
-        }
-        this.carregarCPF(valor);
-      }
+      this.carregarCPF(valor);
+    },
+    nomePessoaFisica(value) {
+      this.formulario.no_nome = value;
+    },
+    'formulario.nu_cnpj': function (value) {
+      const self = this;
+      this.consultarCNPJ(value).then((response) => {
+        const { data } = response.data;
+        self.razao_social = data.nmRazaoSocial;
+      });
     },
   },
   methods: {
     ...mapActions({
-      salvarUsuario: 'conta/salvarUsuario',
       buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
+      consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
     }),
     salvar() {
       const self = this;
-      if (!self.$refs.form.validate()) {
+      if (!self.$refs.form_recurso.validate()) {
         return false;
       }
       self.loading = true;
@@ -395,11 +413,17 @@ export default {
       return true;
     },
     carregarCPF(valor) {
+      const self = this;
       this.consultarCPF(valor).then((response) => {
         const { data } = response.data;
-        this.formulario.no_nome = data.nmPessoaFisica;
-        this.nmPessoaFisica = data.nmPessoaFisica;
+        self.nomePessoaFisica = data.nmPessoaFisica;
       });
+    },
+    abrirDialogo() {
+      this.modalConfirmacao = true;
+    },
+    fecharDialogo() {
+      this.modalConfirmacao = false;
     },
   },
   mounted() {

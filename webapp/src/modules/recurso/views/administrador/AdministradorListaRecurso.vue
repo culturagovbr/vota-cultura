@@ -122,7 +122,6 @@ export default {
   },
   watch: {
     recursosGetter(va) {
-      console.log(va);
     },
   },
   mounted() {
