@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conta\Providers;
 
+use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use App\Modules\Conta\Http\Resources\Perfil as PerfilResource;
 use App\Modules\Conta\Http\Resources\Usuario as UsuarioResource;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
@@ -37,10 +38,13 @@ class ModuleServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(PerfilModel::class, function ($app, $parametros) {
-            return new UsuarioModel($parametros);
+            return new PerfilModel($parametros);
         });
 
         $this->app->bind(PerfilResource::class, function ($app, $parametros) {
+            if($parametros instanceof PerfilModel) {
+                return new PerfilResource($parametros);
+            }
             return new PerfilResource(app(PerfilModel::class, $parametros));
         });
     }
