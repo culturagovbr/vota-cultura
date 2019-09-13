@@ -191,7 +191,7 @@ export default {
       },
         {
           text: 'Pontuação',
-          value: 'segmento.pontuacao',
+          value: 'pontuacao',
         },
       {
         text: 'Segmento',
