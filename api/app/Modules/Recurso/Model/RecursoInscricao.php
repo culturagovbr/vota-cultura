@@ -35,7 +35,7 @@ class RecursoInscricao extends Model
 
     public function fase()
     {
-        return $this->belongsTo(
+        return $this->hasOne(
             Fase::class,
             'co_fase',
             'co_fase'

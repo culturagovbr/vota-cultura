@@ -3,7 +3,7 @@
 namespace App\Modules\Fase\Providers;
 
 use App\Modules\Fase\Model\Fase as FaseModel;
-use App\Modules\Recurso\Http\Resources\Fase as FaseResource;
+use App\Modules\Fase\Http\Resources\Fase as FaseResource;
 use Caffeinated\Modules\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -31,6 +31,9 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
 
+        $this->app->bind(FaseModel::class, function ($app, $parametros) {
+            return new FaseModel($parametros);
+        });
         $this->app->bind(FaseResource::class, function ($app, $parametros) {
             if($parametros instanceof FaseModel) {
                 return new FaseResource($parametros);

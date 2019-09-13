@@ -2,6 +2,7 @@
 
 namespace App\Modules\Recurso\Http\Controllers;
 
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
@@ -10,6 +11,7 @@ use App\Modules\Recurso\Service\RecursoInscricao as RecursoInscricaoService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class RecursoInscricaoApiResourceController extends AApiResourceController
 {
@@ -35,6 +37,9 @@ class RecursoInscricaoApiResourceController extends AApiResourceController
 
     public function update(Request $request, $identificador)
     {
+        if (!Auth::user()->souAdministrador()) {
+            throw new EParametrosInvalidos('Funcionalidade indisponível para seu perfil.');
+        }
         return $this->sendResponse(
             new RecursoInscricaoResource(
                 $this->service->atualizar($request, $identificador)

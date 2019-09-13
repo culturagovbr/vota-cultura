@@ -35,22 +35,29 @@
                   slot="items"
                   slot-scope="props"
                 >
+                  <td> <v-chip color="primary" text-color="white">{{ props.item.fase.ds_detalhamento }}</v-chip></td>
                   <td>{{ props.item.cpf_formatado }}</td>
                   <td>{{ props.item.ds_email }}</td>
                   <td>{{ props.item.dh_cadastro_formatado }}</td>
                   <td>
-                    <v-btn
-                      depressed
-                      outline
-                      icon
-                      fab
-                      dark
-                      color="primary"
-                      small
-                      @click="editarItemModal(props.item)"
-                    >
-                      <v-icon>gavel</v-icon>
-                    </v-btn>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn
+                          depressed
+                          outline
+                          icon
+                          fab
+                          dark
+                          color="primary"
+                          small
+                          v-on="on"
+                          @click="editarItemModal(props.item)"
+                        >
+                          <v-icon>gavel</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Avaliar</span>
+                    </v-tooltip>
                   </td>
                 </template>
               </v-data-table>
@@ -88,6 +95,10 @@ export default {
       totalItems: 0,
       headers: [
         {
+          text: 'Tipo recurso',
+          value: 'fase.ds_detalhamento',
+        },
+        {
           text: 'CPF',
           value: 'nu_cpf_formatado',
         },
@@ -118,10 +129,6 @@ export default {
     editarItemModal(item) {
       this.itemEditado = item;
       this.mostrarModalEdicao = true;
-    },
-  },
-  watch: {
-    recursosGetter(va) {
     },
   },
   mounted() {

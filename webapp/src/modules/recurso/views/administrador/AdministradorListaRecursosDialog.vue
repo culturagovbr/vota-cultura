@@ -396,6 +396,7 @@ export default {
       buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      avaliarRecursoInscricao: 'recurso/avaliarRecursoInscricao',
     }),
     salvar() {
       const self = this;
@@ -403,7 +404,7 @@ export default {
         return false;
       }
       self.loading = true;
-      this.salvarUsuario(self.formulario)
+      this.avaliarRecursoInscricao(self.formulario)
         .then(() => {
           self.dialog = false;
         })
