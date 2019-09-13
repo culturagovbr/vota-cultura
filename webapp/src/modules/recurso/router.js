@@ -26,9 +26,9 @@ export default [
       },
       {
         path: '/recurso/administrador',
-        component: DefaultLayout,
         hidden: true,
         redirect: '/recurso/administrador/recurso',
+        component: DefaultLayout,
         children: [
           {
             path: 'recurso',

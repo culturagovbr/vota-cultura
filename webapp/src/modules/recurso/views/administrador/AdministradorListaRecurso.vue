@@ -35,7 +35,7 @@
                   slot="items"
                   slot-scope="props"
                 >
-                  <td>{{ props.item.nu_cpf }}</td>
+                  <td>{{ props.item.cpf_formatado }}</td>
                   <td>{{ props.item.ds_email }}</td>
                   <td>{{ props.item.dh_cadastro_formatado }}</td>
                   <td>
@@ -47,13 +47,17 @@
                       dark
                       color="primary"
                       small
-                      @click=""
+                      @click="editarItemModal(props.item)"
                     >
-                      <v-icon>zoom_in</v-icon>
+                      <v-icon>gavel</v-icon>
                     </v-btn>
                   </td>
                 </template>
               </v-data-table>
+              <administrador-lista-recursos-dialog
+                v-model="mostrarModalEdicao"
+                :usuario="itemEditado"
+              />
             </v-card-text>
           </v-card>
         </v-flex>
@@ -64,13 +68,19 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import AdministradorListaRecursosDialog from './AdministradorListaRecursosDialog';
 
 export default {
   name: 'ListaRecurso',
+  components: {
+    AdministradorListaRecursosDialog,
+  },
   data() {
     return {
       loading: true,
       pesquisar: '',
+      mostrarModalEdicao: false,
+      itemEditado: {},
       pagination: {
         page: 1,
         rowsPerPage: 10,
@@ -105,9 +115,13 @@ export default {
     ...mapActions({
       obterRecursos: 'recurso/obterRecursos',
     }),
+    editarItemModal(item) {
+      this.itemEditado = item;
+      this.mostrarModalEdicao = true;
+    },
   },
   watch: {
-    recursosGetter(va){
+    recursosGetter(va) {
       console.log(va);
     },
   },

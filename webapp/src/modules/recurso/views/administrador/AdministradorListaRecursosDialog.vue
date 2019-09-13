@@ -17,7 +17,7 @@
         >
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title v-if="!!formulario.hasOwnProperty('co_usuario')">
+        <v-toolbar-title v-if="!!formulario.hasOwnProperty('co_recurso_inscricao')">
           Editar Usuário
         </v-toolbar-title>
         <v-toolbar-title v-else>
@@ -57,7 +57,7 @@
                         :error-messages="nomeFormularioError"
                         mask="###.###.###-##"
                         required
-                        :disabled="!!formulario.hasOwnProperty('co_usuario')"
+                        :disabled="!!formulario.hasOwnProperty('co_recurso_inscricao')"
                       />
                     </v-flex>
                     <v-flex
@@ -95,20 +95,7 @@
                       md4
                       sm12
                     >
-                      <v-select
-                        v-model="formulario.perfil.co_perfil"
-                        :items="perfis"
-                        item-text="ds_perfil"
-                        item-value="co_perfil"
-                        :rules="[rules.required]"
-                        label="Perfil"
-                        :disabled="
-                          this.formulario.perfil.co_perfil !== 777 &&
-                          this.formulario.perfil.co_perfil !== 1 &&
-                          formulario.hasOwnProperty('co_usuario')"
-                        validate-on-blur
-                      />
-
+                      asdasdasdasds
                     </v-flex>
                     <v-flex
                       xs12
@@ -118,8 +105,8 @@
                         v-model="formulario.st_ativo"
                         :label="formulario.st_ativo ? 'Ativo' : 'Inativo'"
                         :disabled="
-                          !formulario.hasOwnProperty('co_usuario') ||
-                          !!formulario.ds_codigo_ativacao"
+                          !formulario.hasOwnProperty('co_recurso_inscricao') ||
+                            !!formulario.ds_codigo_ativacao"
                         color="primary"
                       />
                     </v-flex>
@@ -160,7 +147,7 @@ import { mapGetters, mapActions } from 'vuex';
 import Validate from '@/modules/shared/util/validate';
 
 export default {
-  name: 'AdministradorListaUsuariosDialog',
+  name: 'AdministradorListaRecursosDialog',
   props: {
     value: {
       type: Boolean,
@@ -217,7 +204,7 @@ export default {
       });
       this.$refs.form.reset();
 
-      if (!!valor) {
+      if (valor) {
         this.formulario = Object.assign(this.formulario, this.usuario);
       }
     },
