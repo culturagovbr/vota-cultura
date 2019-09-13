@@ -111,6 +111,7 @@
                         <td></td>
                         <td>{{ props.item.nu_cnpj_mascarado }}</td>
                         <td>{{ props.item.no_organizacao }}</td>
+                        <td>{{ props.item.pontuacao }}</td>
                         <td>
                           <v-chip dark color="primary">
                             {{ props.item.segmento.ds_detalhamento }}
@@ -188,10 +189,14 @@ export default {
         text: 'Nome da Organização ou Entidade',
         value: 'no_organizacao',
       },
+        {
+          text: 'Pontuação',
+          value: 'segmento.pontuacao',
+        },
       {
         text: 'Segmento',
         value: 'segmento.ds_detalhamento',
-      },
+      }
     ],
   }),
   computed: {

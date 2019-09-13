@@ -6,7 +6,7 @@
           <router-link
             tag="div"
             to="/"
-            style="cursor : pointer"
+            style="cursor: pointer"
             title="Voltar para o inicio"
           >
             {{ appTitle }}
