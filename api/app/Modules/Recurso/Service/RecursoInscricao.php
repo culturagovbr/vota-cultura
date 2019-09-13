@@ -10,6 +10,7 @@ use App\Modules\Recurso\Mail\RecursoInscricao\CadastroComSucesso;
 use App\Modules\Recurso\Model\RecursoInscricao as RecursoInscricaoModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -89,5 +90,43 @@ class RecursoInscricao extends AbstractService
         }
 
         return $recursoInscricao;
+    }
+
+    public function atualizar(Request $request, int $identificador) : ?Model
+    {
+        $dados = collect(
+            $request->only([
+                'ds_parecer',
+                'st_parecer',
+                'co_usuario_parecer',
+            ]));
+
+        try {
+            $recursoInscricao = $this->getModel()->where(
+                $dados->only([
+                    'co_recursoInscricao'
+                ])->toArray()
+            )->first();
+
+            if (empty($recursoInscricao)) {
+                throw new EParametrosInvalidos(
+                    'Recurso não encontrado.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            DB::beginTransaction();
+            $recursoInscricao->fill($dados->toArray());
+            $horarioAtual = Carbon::now();
+
+            $recursoInscricao->dh_parecer = $horarioAtual->toDateTimeString();
+            $recursoInscricao->save();
+
+            DB::commit();
+            return $recursoInscricao;
+        } catch (EParametrosInvalidos $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
     }
 }

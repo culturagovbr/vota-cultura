@@ -5,7 +5,7 @@ namespace App\Modules\Recurso\Http\Controllers;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
-use App\Modules\Recurso\Http\Resources\RecursoInscricao;
+use App\Modules\Recurso\Http\Resources\RecursoInscricao as RecursoInscricaoResource;
 use App\Modules\Recurso\Service\RecursoInscricao as RecursoInscricaoService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,19 +24,21 @@ class RecursoInscricaoApiResourceController extends AApiResourceController
         parent::__construct($service);
     }
 
-    public function show($identificador): JsonResponse
+    public function index(): JsonResponse
     {
         return $this->sendResponse(
-            new RecursoInscricaoService($this->service->obterUm($identificador)),
+            RecursoInscricaoResource::collection($this->service->obterTodos()),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
     }
 
-    public function index(): JsonResponse
+    public function update(Request $request, $identificador)
     {
         return $this->sendResponse(
-            RecursoInscricao::collection($this->service->obterTodos()),
+            new RecursoInscricaoResource(
+                $this->service->atualizar($request, $identificador)
+            ),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
