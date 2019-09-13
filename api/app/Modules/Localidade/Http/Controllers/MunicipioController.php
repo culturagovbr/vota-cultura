@@ -4,6 +4,7 @@ namespace App\Modules\Localidade\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Localidade\Service\Municipio as MunicipioService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class MunicipioController extends Controller
@@ -18,10 +19,10 @@ class MunicipioController extends Controller
         $this->service = $service;
     }
 
-    public function show($identificador): \Illuminate\Http\JsonResponse
+    public function show($identificador): JsonResponse
     {
         return $this->sendResponse(
-            $this->service->obterPorUF($identificador),
+            $this->service->obterPorUF((int)$identificador),
             "Operação Realizada com Sucesso",
             Response::HTTP_OK
         );
