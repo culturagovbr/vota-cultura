@@ -16,7 +16,6 @@
           </v-toolbar>
           <v-card-text>
             <v-container>
-              <!--<v-container>-->
               <organizacao-detalhes-inscricao-visualizacao />
               <v-checkbox
                 v-model="confirmacaoDadosDeInscricao"

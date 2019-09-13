@@ -9,122 +9,7 @@
         </div>
       </v-card-title>
       <v-card-text>
-        <v-form
-          ref="form"
-          v-model="formularioValido"
-          lazy-validation
-        >
-          <v-card>
-            <v-tabs
-              color="white"
-              v-model="tp_inscricao"
-              centered
-              icons-and-text
-            >
-              <v-tabs-slider />
-
-              <v-tab href="#conselho">
-                Conselho
-                <v-icon>group</v-icon>
-              </v-tab>
-              <v-tab href="#organizacao">
-                Organização ou Entidade
-                <v-icon>color_lens</v-icon>
-              </v-tab>
-            </v-tabs>
-
-            <v-tabs-items v-model="tp_inscricao">
-              <v-tab-item value="conselho">
-                <v-card>
-                  <v-card-title>
-                    <v-spacer />
-                    <v-text-field
-                      v-model="pesquisar"
-                      append-icon="search"
-                      label="Pesquisar"
-                      single-line
-                      hide-details
-                    />
-                    <v-spacer />
-                  </v-card-title>
-                  <v-card-text class="pa-0">
-                    <v-data-table
-                      :headers="headers"
-                      :items="conselhosGetter"
-                      :pagination.sync="pagination_conselho"
-                      :total-items="totalItems"
-                      :loading="loading"
-                      :search="pesquisar"
-                      item-key="co_usuario"
-                      class="elevation-1"
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="props"
-                      >
-                        <td></td>
-                        <td>{{ props.item.nu_cnpj_mascarado }}</td>
-                        <td>{{ props.item.no_orgao_gestor }}</td>
-                        <td>
-                          <v-chip dark color="primary">
-                            {{ props.item.endereco.municipio.uf.no_uf }}
-                          </v-chip>
-                        </td>
-                        <td>
-                          <v-chip>
-                            {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
-                          </v-chip>
-                        </td>
-                      </template>
-                    </v-data-table>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-              <v-tab-item value="organizacao">
-                <v-card>
-                  <v-card-title>
-                    <v-spacer />
-                    <v-text-field
-                      v-model="pesquisar"
-                      append-icon="search"
-                      label="Pesquisar"
-                      single-line
-                      hide-details
-                    />
-                    <v-spacer />
-                  </v-card-title>
-                  <v-card-text class="pa-0">
-                    <v-data-table
-                      :headers="headers_organizacao"
-                      :items="organizacoesGetter"
-                      :pagination.sync="pagination_organizacao"
-                      :total-items="totalItems"
-                      :loading="loading"
-                      :search="pesquisar"
-                      item-key="co_usuario"
-                      class="elevation-1"
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="props"
-                      >
-                        <td></td>
-                        <td>{{ props.item.nu_cnpj_mascarado }}</td>
-                        <td>{{ props.item.no_organizacao }}</td>
-                        <td>
-                          <v-chip dark color="primary">
-                            {{ props.item.segmento.ds_detalhamento }}
-                          </v-chip>
-                        </td>
-                        <td>{{ props.item.pontuacao }}</td>
-                      </template>
-                    </v-data-table>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-            </v-tabs-items>
-          </v-card>
-        </v-form>
+        <lista-inscritos :sou-administrador="souAdministrador"></lista-inscritos>
       </v-card-text>
     </v-card>
   </v-container>
@@ -132,12 +17,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import ListaInscritos from './ListaInscritos';
 
 export default {
-  name: 'ListaParcialInscritos',
+  components: { ListaInscritos },
+  name: 'ListaParcial',
   data: () => ({
+    souAdministrador: false,
     loading: false,
-    formularioValido: true,
     step: 1,
     pesquisar: '',
     tp_inscricao: null,
@@ -196,13 +83,14 @@ export default {
       {
         text: 'Pontuação',
         value: 'pontuacao',
-      }
+      },
     ],
   }),
   computed: {
     ...mapGetters({
       conselhosGetter: 'conselho/conselhos',
       organizacoesGetter: 'organizacao/organizacoes',
+      perfil: 'conta/perfil',
     }),
   },
   methods: {
@@ -220,6 +108,7 @@ export default {
     self.obterOrganizacoes().finally(() => {
       self.loading = false;
     });
+    this.souAdministrador = !!(this.perfil.no_perfil === 'administrador');
   },
 };
 </script>
