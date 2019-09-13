@@ -2,7 +2,6 @@
 
 namespace App\Modules\Conta\Providers;
 
-use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 use App\Modules\Conta\Http\Resources\Perfil as PerfilResource;
 use App\Modules\Conta\Http\Resources\Usuario as UsuarioResource;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;

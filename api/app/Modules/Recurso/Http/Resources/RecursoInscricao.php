@@ -2,13 +2,21 @@
 
 namespace App\Modules\Recurso\Http\Resources;
 
-use App\Modules\Conta\Http\Resources\Usuario;
+use App\Modules\Conta\Http\Resources\Usuario as UsuarioResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RecursoInscricao extends JsonResource
 {
     public function toArray($request): array
     {
+        $usuario = NULL;
+        if (!empty($this->usuario)) {
+            $usuario = app(UsuarioResource::class, $this->usuario->toArray());
+        }
+        $fase = NULL;
+        if (!empty($this->fase)) {
+            $fase = app(Fase::class, $this->fase->toArray());
+        }
         return [
             'co_recurso_inscricao' => $this->co_recurso_inscricao,
             'co_fase' => $this->co_fase,
@@ -26,8 +34,8 @@ class RecursoInscricao extends JsonResource
             'telefone_formatado' => $this->telefone_formatado,
             'dh_cadastro_formatado' => $this->dh_cadastro_formatado,
             'dh_parecer_formatado' => $this->dh_parecer_formatado,
-            'co_usuario_parecer' => app(Usuario::class, $this->usuario),
-            'fase' => app(Fase::class, $this->fase),
+            'co_usuario_parecer' => $usuario,
+            'fase' => $fase,
         ];
     }
 

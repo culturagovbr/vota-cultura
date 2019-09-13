@@ -37,9 +37,6 @@ class ModuleServiceProvider extends ServiceProvider
             return new CadastroComSucesso($app->make(RecursoInscricaoModel::class, $parametros));
         });
         $this->app->bind(RecursoInscricaoModel::class, function ($app, $parametros) {
-            if($parametros instanceof RecursoInscricaoModel) {
-                return $parametros;
-            }
             return new RecursoInscricaoModel($parametros);
         });
     }
