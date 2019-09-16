@@ -212,6 +212,7 @@
                       :counter="3000"
                       :rules="[rules.required]"
                       required
+                      :disabled="formulario.dh_parecer !== null"
                     />
                   </v-flex>
                 </v-layout>
@@ -227,6 +228,7 @@
                     <v-radio-group
                       v-model="formulario.st_parecer"
                       :rules="[rules.required]"
+                      :disabled="formulario.dh_parecer !== null"
                     >
                       <template v-slot:label>
                         <div><strong>Avaliação</strong></div>
@@ -266,7 +268,7 @@
         </v-btn>
         <v-btn
           :loading="loading"
-          :disabled="!valid || loading "
+          :disabled="!valid || loading || formulario.dh_parecer !== null"
           color="primary"
           @click.native="abrirDialogo"
         >
@@ -421,7 +423,12 @@ export default {
       });
     },
     abrirDialogo() {
+      const self = this;
+      if (!self.$refs.form_recurso.validate()) {
+        return false;
+      }
       this.modalConfirmacao = true;
+      return true;
     },
     fecharDialogo() {
       this.modalConfirmacao = false;
