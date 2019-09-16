@@ -1,9 +1,10 @@
 <template>
   <v-container fluid>
-    <v-card>
+    <v-card v-if="dataDentroPrazoInscricao">
       <v-toolbar
         dark
-        color="primary">
+        color="primary"
+      >
         <v-toolbar-title>Inscrição - Organização ou Entidade Cultural</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
@@ -11,40 +12,44 @@
           <v-stepper-header>
             <v-stepper-step
               :complete="etapaFormulario > 1"
-              step="1">
+              step="1"
+            >
               Organização ou Entidade Cultural
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
               :complete="etapaFormulario > 2"
-              step="2">
+              step="2"
+            >
               Representante
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
               :complete="etapaFormulario > 3"
-              step="3">
+              step="3"
+            >
               Segmento
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <v-stepper-step
               :complete="etapaFormulario > 4"
-              step="4">
+              step="4"
+            >
               Critérios
             </v-stepper-step>
 
-            <v-divider/>
+            <v-divider />
 
             <!--<v-stepper-step-->
-              <!--:complete="etapaFormulario > 5"-->
-              <!--step="5">-->
-              <!--Anexo-->
+            <!--:complete="etapaFormulario > 5"-->
+            <!--step="5">-->
+            <!--Anexo-->
             <!--</v-stepper-step>-->
           </v-stepper-header>
 
@@ -53,17 +58,21 @@
               <v-form
                 ref="form_dados_entidade"
                 v-model="valid_dados_entidade"
-                lazy-validation>
+                lazy-validation
+              >
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl>
+                    grid-list-xl
+                  >
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm5>
+                        sm5
+                      >
                         <v-text-field
                           v-model="organizacao.nu_cnpj"
                           label="*CNPJ"
@@ -72,11 +81,13 @@
                           :error-messages="nomeOrganizacaoError"
                           mask="##.###.###/####-##"
                           :rules="[rules.required, rules.cnpjMin]"
-                          required/>
+                          required
+                        />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm5>
+                        sm5
+                      >
                         <v-text-field
                           v-model="organizacao.no_organizacao"
                           label="*Nome da Organização/Entidade"
@@ -84,12 +95,14 @@
                           :disabled="true"
                           :error-messages="nomeOrganizacaoError"
                           :rules="[rules.cnpjInvalido]"
-                          required/>
+                          required
+                        />
                       </v-flex>
 
                       <v-flex
                         xs12
-                        sm2>
+                        sm2
+                      >
                         <v-text-field
                           v-model="organizacao.nu_telefone"
                           label="*Telefone"
@@ -97,17 +110,19 @@
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
-                          required/>
-
+                          required
+                        />
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm4>
+                        sm4
+                      >
                         <v-text-field
                           v-model="organizacao.ds_email"
                           data-vv-name="email"
@@ -122,13 +137,21 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4>
+                        sm4
+                      >
                         <v-text-field
                           v-model="organizacao.ds_email_confirmacao"
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
-                          :rules="[rules.required, rules.email, rules.emailMatch(organizacao.ds_email, organizacao.ds_email_confirmacao)]"
+                          :rules="[
+                            rules.required,
+                            rules.email,
+                            rules.emailMatch(
+                              organizacao.ds_email,
+                              organizacao.ds_email_confirmacao
+                            )
+                          ]"
                           counter
                           maxlength="100"
                           required
@@ -136,7 +159,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4>
+                        sm4
+                      >
                         <v-text-field
                           v-model="organizacao.ds_sitio_eletronico"
                           label="Sítio eletrônico da Organização/Entidade"
@@ -150,23 +174,26 @@
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm3>
+                        sm3
+                      >
                         <v-text-field
                           v-model="organizacao.endereco.nu_cep"
                           label="*CEP"
                           append-icon="my_location"
                           placeholder="99999-999"
                           mask="#####-###"
-                          :rules="[rules.required]"
+                          :rules="[rules.required, rules.cepMin]"
                           required
                         />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-text-field
                           v-model="organizacao.endereco.ds_logradouro"
                           label="*Logradouro"
@@ -179,7 +206,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm3>
+                        sm3
+                      >
                         <v-text-field
                           v-model="organizacao.endereco.ds_complemento"
                           counter
@@ -191,14 +219,16 @@
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm3>
+                        sm3
+                      >
                         <v-select
                           v-model="organizacao.endereco.co_ibge"
                           :items="listaUF"
-                          label="*Unidade da Federação da sede"
+                          label="*Unidade da federação da sede"
                           append-icon="place"
                           item-value="co_ibge"
                           item-text="no_uf"
@@ -208,7 +238,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm5>
+                        sm5
+                      >
                         <v-select
                           v-model="organizacao.endereco.co_municipio"
                           :items="listaMunicipios"
@@ -226,12 +257,14 @@
               </v-form>
               <v-btn
                 to="/inicio"
-                flat>
+                flat
+              >
                 Cancelar
               </v-btn>
               <v-btn
                 color="primary"
-                @click="validarIrProximaEtapa('form_dados_entidade')">
+                @click="validarIrProximaEtapa('form_dados_entidade')"
+              >
                 Próximo
               </v-btn>
             </v-stepper-content>
@@ -240,17 +273,21 @@
               <v-form
                 ref="form_representante"
                 v-model="valid_representante"
-                lazy-validation>
+                lazy-validation
+              >
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl>
+                    grid-list-xl
+                  >
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm3>
+                        sm3
+                      >
                         <v-text-field
                           v-model="organizacao.representante.nu_cpf"
                           label="*CPF do representante"
@@ -258,11 +295,13 @@
                           placeholder="999.999.999.99"
                           mask="###.###.###.##"
                           :rules="[rules.required, rules.cpfMin]"
-                          required/>
+                          required
+                        />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4>
+                        sm4
+                      >
                         <v-text-field
                           v-model="organizacao.representante.nu_telefone"
                           label="*Celular do representante"
@@ -270,33 +309,38 @@
                           placeholder="(99) 99999-9999"
                           mask="(##) #####-####"
                           :rules="[rules.required, rules.phoneMin]"
-                          required />
+                          required
+                        />
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm8>
+                        sm8
+                      >
                         <v-text-field
-                          v-model="organizacao.representante.no_pessoa"
+                          v-model="organizacao.representante.no_nome"
                           label="*Nome do representante"
                           :disabled="true"
                           :error-messages="nomeRepresentante"
                           append-icon="perm_identity"
                           :rules="[rules.cnpjInvalido]"
-                          required/>
+                          required
+                        />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm4>
+                        sm4
+                      >
                         <v-text-field
                           v-model="organizacao.representante.nu_rg"
                           label="*RG do representante"
                           append-icon="person"
-                          mask="#########"
+                          mask="###########"
                           counter
                           maxlength="11"
                           :rules="[rules.required]"
@@ -307,10 +351,12 @@
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-text-field
                           v-model="organizacao.representante.ds_email"
                           label="*E-mail do representante"
@@ -324,13 +370,21 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-text-field
                           v-model="organizacao.representante.ds_email_confirmation"
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
-                          :rules="[rules.required, rules.email, rules.emailMatch(organizacao.representante.ds_email, organizacao.representante.ds_email_confirmation)]"
+                          :rules="[
+                            rules.required,
+                            rules.email,
+                            rules.emailMatch(
+                              organizacao.representante.ds_email,
+                              organizacao.representante.ds_email_confirmation
+                            )
+                          ]"
                           counter
                           maxlength="250"
                           required
@@ -340,27 +394,44 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn flat @click="voltarEtapaAnterior">
+              <v-btn
+                flat
+                @click="voltarEtapaAnterior"
+              >
                 Anterior
               </v-btn>
-              <v-btn :disabled="!valid_representante"
-                     color="primary"
-                     @click="validarIrProximaEtapa('form_representante')">
+              <v-btn
+                :disabled="!valid_representante"
+                color="primary"
+                @click="validarIrProximaEtapa('form_representante')"
+              >
                 Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <v-form ref="form_segmento"
-                      v-model="valid_segmento"
-                      lazy-validation>
+              <v-form
+                ref="form_segmento"
+                v-model="valid_segmento"
+                lazy-validation
+              >
                 <v-card flat>
-                  <v-container fluid grid-list-xl>
-                    <v-layout wrap align-center>
-                      <v-flex xs12 sm6>
+                  <v-container
+                    fluid
+                    grid-list-xl
+                  >
+                    <v-layout
+                      wrap
+                      align-center
+                    >
+                      <v-flex
+                        xs12
+                        sm6
+                      >
                         <v-radio-group
                           v-model="organizacao.co_segmento"
-                          label="*Informe o segmento no qual pretende concorrer">
+                          label="*Informe o segmento no qual pretende concorrer"
+                        >
                           <v-radio
                             v-for="(segmento, i) in listaSegmentos"
                             :key="i"
@@ -373,52 +444,58 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn flat
-                     @click="voltarEtapaAnterior">
+              <v-btn
+                flat
+                @click="voltarEtapaAnterior"
+              >
                 Anterior
               </v-btn>
-              <v-btn :disabled="!valid_segmento"
-                     color="primary"
-                     @click="validarIrProximaEtapa('form_segmento')">
+              <v-btn
+                :disabled="!valid_segmento"
+                color="primary"
+                @click="validarIrProximaEtapa('form_segmento')"
+              >
                 Próximo
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="4">
-              <v-form ref="form_criterio"
-                      v-model="valid_criterio"
-                      lazy-validation>
+              <v-form
+                ref="form_criterio"
+                v-model="valid_criterio"
+                lazy-validation
+              >
                 <v-card flat>
                   <v-container
                     fluid
-                    grid-list-xl>
+                    grid-list-xl
+                  >
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm6>
-
-                          <v-select
-                            v-model="organizacao.criterios.abrangencia_nacional"
-                            :items="listaCriterios.abrangencia_nacional"
-                            item-value="co_criterio"
-                            item-text="ds_detalhamento"
-                            label="*Abrangência Nacional"
-                            :rules="[rules.required]"
-                            required
-                            box
-                            hint="Atividades ou projetos culturais em, no mínimo, 5 estados de 2
+                        sm6
+                      >
+                        <v-select
+                          v-model="organizacao.criterios.abrangencia_nacional"
+                          :items="listaCriterios.abrangencia_nacional"
+                          item-value="co_criterio"
+                          item-text="ds_detalhamento"
+                          label="*Abrangência Nacional"
+                          :rules="[rules.required]"
+                          required
+                          box
+                          hint="Atividades ou projetos culturais em, no mínimo, 5 estados de 2
                             macrorregiões brasileiras, a partir de 2016."
-                            persistent-hint
-                            >
-                          </v-select>
-
-
+                          persistent-hint
+                        />
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-select
                           v-model="organizacao.criterios.abrangencia_estadual"
                           :items="listaCriterios.abrangencia_estadual"
@@ -430,16 +507,19 @@
                           box
                           hint="Atividades ou projetos culturais em, no mínimo, 5 estados, a partir de 2016."
                           persistent-hint
-                          placeholder="Selecione"/>
+                          placeholder="Selecione"
+                        />
                       </v-flex>
                     </v-layout>
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-select
                           v-model="organizacao.criterios.tempo_funcionamento"
                           :items="listaCriterios.tempo_funcionamento"
@@ -456,7 +536,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-select
                           v-model="organizacao.criterios.nu_associados_filiados"
                           :items="listaCriterios.nu_associados_filiados"
@@ -467,7 +548,9 @@
                           required
                           placeholder="Selecione"
                           box
-                          hint="Lista de associados ou filiados atestada pelo dirigente da organização ou entidade cultural."
+                          hint="
+                          Lista de associados ou filiados atestada pelo dirigente da organização ou
+                          entidade cultural."
                           persistent-hint
                         />
                       </v-flex>
@@ -475,10 +558,12 @@
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-select
                           v-model="organizacao.criterios.nu_atividades"
                           :items="listaCriterios.nu_atividades"
@@ -495,7 +580,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-select
                           v-model="organizacao.criterios.participacao_instancias"
                           :items="listaCriterios.participacao_instancias"
@@ -504,7 +590,9 @@
                           label="Participação em instâncias de formulação de política cultural"
                           placeholder="Selecione"
                           box
-                          hint="Na qualidade de conselheiro ou membro, comprovado por documento de designação ou de posse."
+                          hint="
+                          Na qualidade de conselheiro ou membro, comprovado por documento de
+                          designação ou de posse."
                           persistent-hint
                         />
                       </v-flex>
@@ -512,16 +600,20 @@
 
                     <v-layout
                       wrap
-                      align-center>
+                      align-center
+                    >
                       <v-flex
                         xs12
-                        sm6>
+                        sm6
+                      >
                         <v-select
                           v-model="organizacao.criterios.pesquisa_producao"
                           :items="listaCriterios.pesquisa_producao"
                           item-value="co_criterio"
                           item-text="ds_detalhamento"
-                          label="Projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016"
+                          label="
+                          Projetos na área de pesquisa ou produção do conhecimento no campo da
+                          cultura a partir de 2016"
                           placeholder="Selecione"
                           box
                           hint="Publicações, pesquisa de campo, artigos científicos."
@@ -532,16 +624,20 @@
                   </v-container>
                 </v-card>
               </v-form>
-              <v-btn flat @click="voltarEtapaAnterior">
+              <v-btn
+                flat
+                @click="voltarEtapaAnterior"
+              >
                 Anterior
               </v-btn>
-              <v-btn :disabled="!valid_criterio"
-                     color="primary"
-                     @click="salvar">
+              <v-btn
+                :disabled="!valid_criterio"
+                color="primary"
+                @click="salvar"
+              >
                 Próximo
               </v-btn>
             </v-stepper-content>
-
           </v-stepper-items>
         </v-stepper>
       </v-card-text>
@@ -550,16 +646,14 @@
 </template>
 
 <script>
-  import {mapActions, mapGetters} from 'vuex';
-  import _ from 'lodash';
-  import File from '@/core/components/upload/File';
-  import {eventHub} from '@/event';
-  import Validate from '../../shared/util/validate';
+import { mapActions, mapGetters } from 'vuex';
+import _ from 'lodash';
+import Validate from '../../shared/util/validate';
 
 export default {
   name: 'Organizacao',
-  components: { File },
   data: () => ({
+    dataDentroPrazoInscricao: false,
     nomeOrganizacaoError: '',
     nomeRepresentante: '',
     mascaraTelefone: '(##) #####-####',
@@ -589,7 +683,7 @@ export default {
       },
       representante: {
         ds_email: '',
-        no_pessoa: '',
+        no_nome: '',
         nu_rg: '',
         nu_cpf: '',
         nu_telefone: '',
@@ -656,11 +750,10 @@ export default {
       this.listaSegmentos = this.segmentosGetter;
     },
     'organizacao.endereco.co_ibge': function (coIBGE) {
-      this.organizacao.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
     },
     'organizacao.nu_cnpj': function (value) {
-      let self = this;
+      const self = this;
       self.organizacao.no_organizacao = '';
       this.nomeOrganizacaoError = 'CNPJ inválido';
       if (value.length === 14 && Validate.isCnpjValido(value)) {
@@ -672,13 +765,13 @@ export default {
       }
     },
     'organizacao.representante.nu_cpf': function (value) {
-      let self = this;
-      self.organizacao.representante.no_pessoa = '';
+      const self = this;
+      self.organizacao.representante.no_nome = '';
       this.nomeRepresentante = 'CPF inválido';
       if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
-          const {data} = response.data;
-          self.organizacao.representante.no_pessoa = data.nmPessoaFisica;
+          const { data } = response.data;
+          self.organizacao.representante.no_nome = data.nmPessoaFisica;
         });
         this.nomeRepresentante = '';
       }
@@ -707,10 +800,22 @@ export default {
         pesquisaProducao.push(criterio);
       });
       this.listaCriterios.pesquisa_producao = pesquisaProducao;
-
     },
   },
   mounted() {
+    const self = this;
+    this.obterFases().then(function (response) {
+      const { data } = response.data;
+      const faseSlug = 'abertura_inscricoes_organizacao';
+      const faseOrganizacao = data.find((fase) => fase.tp_fase === faseSlug);
+
+      if (!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) {
+        self.mensagemErro('O prazo de inscrições expirou!');
+        self.$router.push('/');
+      }
+      self.dataDentroPrazoInscricao = true;
+    });
+
     if (Object.keys(this.organizacaoGetter).length > 0) {
       this.organizacao = this.organizacaoGetter;
       this.obterMunicipios(this.organizacao.endereco.co_municipio);
@@ -730,6 +835,8 @@ export default {
   },
   methods: {
     ...mapActions({
+      validarDataDentroPrazoFasePorSlug: 'fase/validarDataDentroPrazoFasePorSlug',
+      mensagemErro: 'app/setMensagemErro',
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       obterCriterios: 'organizacao/obterCriterios',
@@ -737,6 +844,7 @@ export default {
       confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      obterFases: 'fase/obterFases',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {

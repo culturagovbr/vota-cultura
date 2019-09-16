@@ -15,112 +15,8 @@
             <v-toolbar-title>Confirmação dos dados</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-container v-if="Object.keys(eleitorGetter).length > 0">
-              <v-layout
-                wrap
-                align-center
-              >
-                <v-flex>
-                  <v-text-field
-                    v-model="eleitorGetter.nu_cpf"
-                    disabled
-                    label="CPF"
-                    append-icon="account_circle"
-                    mask="###.###.###-##"
-                  />
-                </v-flex>
-              </v-layout>
-              <v-layout
-                wrap
-                align-center
-              >
-                <v-flex>
-                  <v-text-field
-                    v-model="eleitorGetter.no_eleitor"
-                    disabled
-                    label="Nome completo"
-                    append-icon="perm_identity"
-                  />
-                </v-flex>
-              </v-layout>
-              <v-layout
-                wrap
-                align-center
-              >
-                <v-flex>
-                  <v-text-field
-                    v-model="eleitorGetter.nu_rg"
-                    disabled
-                    label="RG"
-                    append-icon="account_circle"
-                    mask="#########"
-                  />
-                </v-flex>
-              </v-layout>
-
-              <v-layout
-                wrap
-                align-center
-              >
-                <v-flex>
-                  <v-text-field
-                    v-model="eleitorGetter.dt_nascimento"
-                    disabled
-                    label="Data de Nascimento"
-                    append-icon="event"
-                    mask="##/##/####"
-                  />
-                </v-flex>
-              </v-layout>
-
-              <v-layout
-                wrap
-                align-center
-              >
-                <v-flex>
-                  <v-text-field
-                    v-model="eleitorGetter.ds_email"
-                    disabled
-                    label="E-mail"
-                    append-icon="mail"
-                    placeholder="email@exemplo.com"
-                  />
-                </v-flex>
-              </v-layout>
-
-              <v-layout
-                wrap
-                align-center
-              >
-                <v-flex>
-                  <v-select
-                    v-model="eleitorGetter.st_estrangeiro"
-                    :items="[{ st_estrangeiro: '0' , nome: 'Brasileiro'},
-                             { st_estrangeiro: '1' , nome: 'Outros'}]"
-                    item-value="st_estrangeiro"
-                    item-text="nome"
-                    label="Nacionalidade"
-                    append-icon="place"
-                    disabled
-                  />
-                </v-flex>
-              </v-layout>
-              <v-layout
-                wrap
-                align-center
-              >
-                <v-flex>
-                  <v-select
-                    v-model="eleitorGetter.co_ibge"
-                    :items="listaUF"
-                    label="Unidade da Federação"
-                    append-icon="place"
-                    item-value="co_ibge"
-                    item-text="no_uf"
-                    disabled
-                  />
-                </v-flex>
-              </v-layout>
+            <v-container>
+              <eleitor-detalhes-inscricao-visualizacao />
               <v-layout
                 wrap
                 align-center
@@ -154,23 +50,6 @@
                   >
                     Confirmar
                   </v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
-            <v-container v-else>
-              <v-layout>
-                <v-flex>
-                  <v-alert
-                    type="error"
-                    :value="true"
-                  >
-                    É necessário preencher as informações do cadastro.
-                  </v-alert>
-                  <div class="mb-6">
-                    <v-btn @click="voltar">
-                      Voltar
-                    </v-btn>
-                  </div>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -222,13 +101,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
 import _ from 'lodash';
+import { mapActions, mapGetters } from 'vuex';
 import { eventHub } from '@/event';
-
+import EleitorDetalhesInscricaoVisualizacao from './EleitorDetalhesInscricaoVisualizacao';
 
 export default {
   name: 'RevisaoEleitor',
+  components: {
+    EleitorDetalhesInscricaoVisualizacao,
+  },
   data: () => ({
     formEnviado: false,
     dialog: false,
@@ -250,6 +132,7 @@ export default {
   methods: {
     ...mapActions({
       enviarDadosEleitor: 'eleitor/enviarDadosEleitor',
+      obterDadosEleitor: 'eleitor/obterDadosEleitor',
     }),
     voltar() {
       this.$router.push({ name: 'Eleitor' });
@@ -283,9 +166,7 @@ export default {
       this.dialog = false;
     },
     formatarDataCarbon(data) {
-      const dia = data.split('/')[0];
-      const mes = data.split('/')[1];
-      const ano = data.split('/')[2];
+      const [dia, mes, ano] = data.split('/');
 
       return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },
@@ -294,6 +175,5 @@ export default {
     this.listaUF = this.estadosGetter;
     this.eleitor = this.eleitorGetter;
   },
-
 };
 </script>

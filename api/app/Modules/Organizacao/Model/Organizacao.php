@@ -2,6 +2,11 @@
 
 namespace App\Modules\Organizacao\Model;
 
+use App\Modules\Conta\Model\Usuario;
+use App\Modules\Localidade\Model\Endereco;
+use App\Modules\Organizacao\Model\Criterio;
+use App\Modules\Organizacao\Model\Segmento;
+use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 
@@ -28,7 +33,7 @@ class Organizacao extends Model
     public function criterios()
     {
         return $this->belongsToMany(
-            \App\Modules\Organizacao\Model\Criterio::class,
+            Criterio::class,
             'rl_organizacao_criterio',
             'co_organizacao',
             'co_criterio'
@@ -38,7 +43,7 @@ class Organizacao extends Model
     public function segmento()
     {
         return $this->belongsTo(
-            \App\Modules\Organizacao\Model\Segmento::class,
+            Segmento::class,
             'co_segmento',
             'co_segmento'
         );
@@ -47,7 +52,7 @@ class Organizacao extends Model
     public function usuario()
     {
         return $this->belongsTo(
-            \App\Modules\Conta\Model\Usuario::class,
+            Usuario::class,
             'co_usuario',
             'co_usuario'
         );
@@ -56,7 +61,7 @@ class Organizacao extends Model
     public function endereco()
     {
         return $this->hasOne(
-            \App\Modules\Localidade\Model\Endereco::class,
+            Endereco::class,
             'co_endereco',
             'co_endereco'
         );
@@ -65,7 +70,7 @@ class Organizacao extends Model
     public function representante()
     {
         return $this->hasOne(
-            \App\Modules\Representacao\Model\Representante::class,
+            Representante::class,
             'co_representante',
             'co_representante'
         );
@@ -74,6 +79,24 @@ class Organizacao extends Model
     public function getTelefoneFormatadoAttribute()
     {
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
+    }
+
+    public function obterCriteriosCostumizados()
+    {
+        $criteriosCostumizados = new \stdClass();
+        foreach ($this->criterios()->get() as $criterio) {
+            $criteriosCostumizados->{$criterio->tp_criterio} = $criterio->co_criterio;
+        }
+        return $criteriosCostumizados;
+    }
+
+    public function obterPontuacao()
+    {
+        $pontuacao = 0;
+        foreach ($this->criterios()->get() as $criterio) {
+            $pontuacao += $criterio->qt_pontuacao * $criterio->qt_peso;
+        }
+        return $pontuacao;
     }
 
 }

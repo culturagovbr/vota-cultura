@@ -29,16 +29,6 @@
         "enabled": true,
         "order": 9001
     },
-    "Cronograma": {
-        "basename": "Cronograma",
-        "name": "Cronograma",
-        "slug": "cronograma",
-        "version": "1.0",
-        "description": "This is the description for the Cronograma module.",
-        "id": 1698177551,
-        "enabled": true,
-        "order": 9001
-    },
     "Eleitor": {
         "basename": "Eleitor",
         "name": "Eleitor",
@@ -46,6 +36,16 @@
         "version": "1.0",
         "description": "Modulo de eleitor para vota\u00e7\u00e3o",
         "id": 599692381,
+        "enabled": true,
+        "order": 9001
+    },
+    "Fase": {
+        "basename": "Fase",
+        "name": "Fase",
+        "slug": "fase",
+        "version": "1.0",
+        "description": "Modulo de fase para trabalhar com datas do edital.",
+        "id": 1339451702,
         "enabled": true,
         "order": 9001
     },
@@ -76,6 +76,16 @@
         "version": "1.0",
         "description": "Modulo destinado a pessoas f\u00edsica e jur\u00eddica.",
         "id": 484420482,
+        "enabled": true,
+        "order": 9001
+    },
+    "Recurso": {
+        "basename": "Recurso",
+        "name": "Recurso",
+        "slug": "recurso",
+        "version": "1.0",
+        "description": "M\u00f3dulo de recurso",
+        "id": 2998613860,
         "enabled": true,
         "order": 9001
     },

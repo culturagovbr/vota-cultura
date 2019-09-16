@@ -11,7 +11,7 @@ trait TApiResourceUpdate
     {
         return $this->sendResponse(
             $this->service->atualizar($request, $identificador),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

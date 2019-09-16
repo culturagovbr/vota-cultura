@@ -2,11 +2,10 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
-use App\Modules\Organizacao\Model\Criterio;
-use App\Modules\Organizacao\Service\Criterio as CriterioService;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Response;
+use App\Modules\Organizacao\Model\Criterio as CriterioModel;
+use App\Modules\Organizacao\Service\Criterio as CriterioService;
+use Illuminate\Http\JsonResponse;
 
 class CriterioApiResourceController extends AApiResourceController
 {
@@ -15,8 +14,8 @@ class CriterioApiResourceController extends AApiResourceController
         parent::__construct($service);
     }
 
-    public function show(Criterio $model): \Illuminate\Http\JsonResponse
+    public function show(CriterioModel $criterio): JsonResponse
     {
-        return parent::genericShow($model);
+        return parent::genericShow($criterio);
     }
 }

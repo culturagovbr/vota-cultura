@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import NProgress from 'nprogress';
-// import store from './store';
+import store from './store';
 import appRoutes from './routerConfig';
-// import { obterInformacoesJWT } from '@/modules/shared/service/helpers/jwt';
 import 'nprogress/nprogress.css';
 import coreRoutes from '@/core/router';
 
@@ -17,32 +16,30 @@ const router = new Router({
   routes,
 });
 
-// const isEmpty = string => (!string || string.length === 0);
-
 router.beforeEach((to, from, next) => {
   NProgress.start();
 
-  return next();
-  // const authRequired = !to.meta.public || to.meta.public === false;
-  //
-  // const userToken = localStorage.getItem('user_token');
-  // const tokenValida = !isEmpty(obterInformacoesJWT(userToken));
+  const authRequired = !to.meta.public || to.meta.public === false;
 
-  // try {
-  //   if (!userToken && authRequired && to.path !== '/conta/autenticar') {
-  //     return next('/conta/autenticar');
-  //   }
-  //
-  //   if (userToken && authRequired && !tokenValida) {
-  //     const error = 'Acesso expirado!';
-  //     localStorage.removeItem('user_token');
-  //     throw error;
-  //   }
-  //   return next();
-  // } catch (Exception) {
-  //   store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
-  //   return next('/conta/autenticar');
-  // }
+  store.dispatch('conta/tratarUsuarioLogado').then((response) => {
+    let proximaPagina = true;
+    const { conta } = store.state;
+    const usuarioLogado = Object.keys(conta.usuario).length > 0;
+
+    if (authRequired && !usuarioLogado) {
+      const error = 'Autenticação requerida para acessar essa funcionalidade.';
+      throw error;
+    }
+
+    if (usuarioLogado && to.fullPath === '/conta/autenticar') {
+      proximaPagina = '/inicio';
+    }
+
+    next(proximaPagina);
+  }).catch((Exception) => {
+    store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
+    return next('/conta/autenticar');
+  });
 });
 
 router.afterEach(() => {

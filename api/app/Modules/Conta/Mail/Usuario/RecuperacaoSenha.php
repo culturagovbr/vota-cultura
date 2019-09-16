@@ -24,7 +24,7 @@ class RecuperacaoSenha extends Mailable
     {
 
         $linkAlteracao = env('WEB_APP_HOST')
-            . "/conta/alterar-senha/{$this->usuario->ds_codigo_alteracao}";
+            . "/conta/alterar-senha/{$this->usuario->ds_codigo_ativacao}";
         return $this->subject('Ministério da Cidadania - Esqueceu a Senha')
             ->view('conta::usuario.email.recuperacao-senha')
             ->with([

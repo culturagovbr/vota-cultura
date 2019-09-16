@@ -2,11 +2,18 @@
 
 namespace App\Modules\Conta\Model;
 
+use App\Modules\Conselho\Model\Conselho;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Core\Helper\CPF;
+use App\Modules\Core\Helper\Telefone as TelefoneHelper;
+use App\Modules\Eleitor\Model\Eleitor;
+use App\Modules\Organizacao\Model\Organizacao;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Usuario extends Authenticatable implements JWTSubject
+class Usuario extends AAutenticacao
 {
     use Notifiable;
 
@@ -19,67 +26,59 @@ class Usuario extends Authenticatable implements JWTSubject
     ];
 
     protected $fillable = [
-        'no_pessoa',
+        'no_nome',
+        'st_ativo',
         'ds_email',
+        'ds_senha',
         'dh_cadastro',
         'dh_ultima_atualizacao',
-        'st_ativo',
+        'ds_codigo_ativacao',
+        'co_perfil',
+        'nu_cpf',
         'perfis',
     ];
 
     protected $hidden = [
         'ds_senha',
-        'ds_codigo_ativacao',
         'pivot'
     ];
 
     public $timestamps = false;
 
-    public function perfis()
+    public function perfil()
     {
-        return $this->belongsToMany(
-            \App\Modules\Conta\Model\Perfil::class,
-            'rl_usuario_perfil',
-            'co_usuario',
+        return $this->hasOne(
+            Perfil::class,
+            'co_perfil',
             'co_perfil'
         );
     }
 
-    public function organizacoes()
+    public function organizacao()
     {
-        return $this->hasMany(
-            \App\Modules\Organizacao\Model\Organizacao::class,
+        return $this->hasOne(
+            Organizacao::class,
             'co_usuario',
             'co_usuario'
         );
     }
 
-    public function getJWTIdentifier()
+    public function conselho()
     {
-        return $this->getKey();
+        return $this->hasOne(
+            Conselho::class,
+            'co_usuario',
+            'co_usuario'
+        );
     }
 
-    public function getJWTCustomClaims(): array
+    public function eleitor()
     {
-        $perfis = [];
-        if(!is_null($this->perfis)) {
-            $perfis = $this->perfis->toArray();
-        }
-
-        $dadosPayload = [
-            'user' => [
-                'co_usuario' => $this->co_usuario,
-                'no_pessoa' => $this->no_pessoa,
-                'ds_email' => $this->ds_email,
-                'dh_cadastro' => $this->dh_cadastro->format('Localizacao-m-d H:i:s'),
-                'dh_ultima_atualizacao' => $this->dh_ultima_atualizacao->format('Localizacao-m-d H:i:s'),
-                'st_ativo' => $this->st_ativo,
-                'perfis' => $perfis,
-            ]
-
-        ];
-
-        return $dadosPayload;
+        return $this->hasOne(
+            Eleitor::class,
+            'co_usuario',
+            'co_usuario'
+        );
     }
 
     public function setSenha($ds_senha)
@@ -91,8 +90,36 @@ class Usuario extends Authenticatable implements JWTSubject
         return $this;
     }
 
-    public function validarSenha($ds_senha)
+    public function senhaValida($ds_senha)
     {
         return password_verify($ds_senha, $this->ds_senha);
     }
+
+    public function gerarCodigoAtivacao(): void
+    {
+        if (empty($this->ds_email)) {
+            throw new EParametrosInvalidos("E-mail não definido.");
+        }
+        $this->ds_codigo_ativacao = parent::gerarCodigo($this->ds_email);
+    }
+
+    public function dadosUsuarioAutenticado(): array
+    {
+        $payload = Auth::payload();
+        if (empty($payload)) {
+            return [];
+        }
+        return (array)$payload->get('user');
+    }
+
+    public function souAdministrador(): bool
+    {
+        return ($this->perfil->no_perfil === 'administrador');
+    }
+
+    public function getNuCpfFormatadoAttribute(): string
+    {
+        return CPF::adicionarMascara($this->nu_cpf);
+    }
+
 }

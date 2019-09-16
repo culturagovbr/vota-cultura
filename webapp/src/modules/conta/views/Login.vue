@@ -3,7 +3,14 @@
     <v-card-text>
       <div class="layout column align-center">
         <h1 class="flex my-4 primary--text">
-          {{ appTitle }}
+          <router-link
+            tag="div"
+            to="/"
+            style="cursor: pointer"
+            title="Voltar para o inicio"
+          >
+            {{ appTitle }}
+          </router-link>
         </h1>
       </div>
       <v-form
@@ -13,7 +20,7 @@
         @submit.prevent="login"
       >
         <v-text-field
-          v-model="model.no_cpf"
+          v-model="model.nu_cpf"
           append-icon="person"
           name="login"
           label="CPF"
@@ -21,7 +28,7 @@
           validate-on-blur
           type="text"
           :rules="[rules.required, rules.validarCPF]"
-          autocomplete="no_cpf"
+          autocomplete="nu_cpf"
         />
         <v-text-field
           id="password"
@@ -54,12 +61,16 @@
           <v-btn
             block
             color="default"
-            :to="{ name: 'conta-cadastrar' }"
+            to="/conta/primeiro-acesso"
           >
-            Cadastrar-se
+            Criar login de Acesso
           </v-btn>
         </div>
       </v-form>
+      <div class="text-xs-center font-weight-medium blue-grey--text mt-5">
+        Assistência ao usuário envie um e-mail para <a href="mailto:votacultura@cidadania.gov.br">votacultura@cidadania.gov.br</a>
+      </div>
+
     </v-card-text>
   </v-card>
 </template>
@@ -75,7 +86,7 @@ export default {
     mostrarSenha: false,
     valid: true,
     model: {
-      no_cpf: '',
+      nu_cpf: '',
       ds_senha: '',
     },
     rules: {
@@ -88,9 +99,9 @@ export default {
       autenticarUsuario: 'conta/autenticarUsuario',
     }),
     login() {
-      // if (!this.$refs.form.validate()) {
-      //   return;
-      // }
+      if (!this.$refs.form.validate()) {
+        return;
+      }
       this.loading = true;
       this.autenticarUsuario(this.model).then(() => {
         this.$router.push('/');

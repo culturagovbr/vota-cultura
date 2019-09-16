@@ -10,7 +10,7 @@
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
             <v-text-field
-              v-model="usuario.no_cpf"
+              v-model="usuario.nu_cpf"
               prepend-icon="account_circle"
               name="login"
               label="CPF"
@@ -182,10 +182,10 @@ export default {
         return;
       }
       this.loading = true;
-      
+
       const [dia, mes, ano] = this.dataFormatada.split("/");
       this.usuario.dt_nascimento = `${ano}-${mes}-${dia}`;
-      
+
       this.cadastrarUsuario(this.usuario)
         .then(() => {
           this.loading = false;

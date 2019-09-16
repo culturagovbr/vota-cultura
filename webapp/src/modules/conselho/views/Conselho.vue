@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card v-if="dataDentroPrazoInscricao">
       <v-toolbar
         dark
         color="primary"
@@ -113,7 +113,8 @@
                       </v-flex>
                       <v-flex
                         xs12
-                        sm2>
+                        sm2
+                      >
                         <v-text-field
                           v-model="conselho.nu_telefone"
                           label="*Telefone do Conselho"
@@ -157,7 +158,14 @@
                           placeholder="email@exemplo.com"
                           counter
                           maxlength="100"
-                          :rules="[rules.required, rules.email, rules.emailMatch(conselho.ds_email, conselho.ds_email_confirmacao)]"
+                          :rules="[
+                            rules.required,
+                            rules.email,
+                            rules.emailMatch(
+                              conselho.ds_email,
+                              conselho.ds_email_confirmacao
+                            )
+                          ]"
                           required
                         />
                       </v-flex>
@@ -232,7 +240,7 @@
                         <v-select
                           v-model="conselho.endereco.co_ibge"
                           :items="listaUF"
-                          label="*Unidade da Federação da sede"
+                          label="*Unidade da federação da sede"
                           append-icon="place"
                           item-value="co_ibge"
                           item-text="no_uf"
@@ -330,7 +338,7 @@
                         sm8
                       >
                         <v-text-field
-                          v-model="conselho.representante.no_pessoa"
+                          v-model="conselho.representante.no_nome"
                           :disabled="true"
                           label="*Nome do representante"
                           append-icon="perm_identity"
@@ -347,7 +355,7 @@
                           v-model="conselho.representante.nu_rg"
                           label="*RG do representante"
                           append-icon="person"
-                          mask="#########"
+                          mask="###########"
                           counter
                           maxlength="11"
                           :rules="[rules.required]"
@@ -384,7 +392,14 @@
                           label="*Confirmar e-mail"
                           append-icon="mail"
                           placeholder="email@exemplo.com"
-                          :rules="[rules.required, rules.email, rules.emailMatch(conselho.representante.ds_email, conselho.representante.ds_email_confirmation)]"
+                          :rules="[
+                            rules.required,
+                            rules.email,
+                            rules.emailMatch(
+                              conselho.representante.ds_email,
+                              conselho.representante.ds_email_confirmation
+                            )
+                          ]"
                           required
                         />
                       </v-flex>
@@ -524,6 +539,7 @@ import Validate from '../../shared/util/validate';
 export default {
   components: { File },
   data: () => ({
+    dataDentroPrazoInscricao: false,
     nomeConselhoError: '',
     nomeRepresentante: '',
     etapaFormulario: 1,
@@ -550,7 +566,7 @@ export default {
       },
       representante: {
         ds_email: '',
-        no_pessoa: '',
+        no_nome: '',
         nu_rg: '',
         nu_cpf: '',
         nu_telefone: '',
@@ -611,7 +627,7 @@ export default {
         if (v) return pattern.test(v) || 'Sítio invalido';
         return true;
       },
-      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
+      emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
     },
   }),
   watch: {
@@ -622,7 +638,6 @@ export default {
       this.listaMunicipios = this.municipiosGetter;
     },
     'conselho.endereco.co_ibge': function (coIBGE) {
-      this.conselho.endereco.co_municipio = '';
       this.obterMunicipios(coIBGE);
     },
     'conselho.nu_cnpj': function (value) {
@@ -639,18 +654,31 @@ export default {
     },
     'conselho.representante.nu_cpf': function (value) {
       const self = this;
-      self.conselho.representante.no_pessoa = '';
+      self.conselho.representante.no_nome = '';
       this.nomeRepresentante = 'CPF inválido';
       if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
           const { data } = response.data;
-          self.conselho.representante.no_pessoa = data.nmPessoaFisica;
+          self.conselho.representante.no_nome = data.nmPessoaFisica;
         });
         this.nomeRepresentante = '';
       }
     },
   },
   mounted() {
+    const self = this;
+    this.obterFases().then(function (response) {
+      const { data } = response.data;
+      const faseSlug = 'abertura_inscricoes_conselho';
+      const faseOrganizacao = data.find((fase) => fase.tp_fase === faseSlug);
+
+      if (!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) {
+        self.mensagemErro('O prazo de inscrições expirou!');
+        self.$router.push('/');
+      }
+      self.dataDentroPrazoInscricao = true;
+    });
+
     if (Object.keys(this.conselhoGetter).length > 0) {
       this.conselho = this.conselhoGetter;
     }
@@ -665,11 +693,13 @@ export default {
   },
   methods: {
     ...mapActions({
+      mensagemErro: 'app/setMensagemErro',
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       confirmarConselho: 'conselho/confirmarConselho',
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      obterFases: 'fase/obterFases',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {

@@ -2,8 +2,12 @@
 
 namespace App\Modules\Conselho\Model;
 
+use App\Modules\Conta\Model\Usuario;
 use App\Modules\Core\Helper\Telefone as TelefoneHelper;
+use App\Modules\Localidade\Model\Endereco;
+use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Conselho extends Model
 {
@@ -29,7 +33,7 @@ class Conselho extends Model
     public function endereco()
     {
         return $this->hasOne(
-            \App\Modules\Localidade\Model\Endereco::class,
+            Endereco::class,
             'co_endereco',
             'co_endereco'
         );
@@ -38,7 +42,7 @@ class Conselho extends Model
     public function representante()
     {
         return $this->hasOne(
-            \App\Modules\Representacao\Model\Representante::class,
+            Representante::class,
             'co_representante',
             'co_representante'
         );
@@ -46,7 +50,7 @@ class Conselho extends Model
 
     public function usuario()
     {
-        return $this->hasOne(\App\Modules\Conta\Model\Usuario::class,
+        return $this->hasOne(Usuario::class,
             'co_usuario',
             'co_usuario'
         );
@@ -56,4 +60,5 @@ class Conselho extends Model
     {
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
+
 }

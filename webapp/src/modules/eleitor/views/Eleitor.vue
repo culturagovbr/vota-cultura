@@ -38,7 +38,7 @@
                   </v-flex>
                   <v-flex sm6>
                     <v-text-field
-                      v-model="eleitor.no_eleitor"
+                      v-model="eleitor.no_nome"
                       :disabled="true"
                       label="*Nome completo"
                       append-icon="perm_identity"
@@ -51,9 +51,11 @@
                     <v-text-field
                       v-model="eleitor.nu_rg"
                       label="*RG"
+                      counter
+                      maxlength="11"
                       append-icon="account_circle"
                       :rules="[rules.required]"
-                      mask="#########"
+                      mask="###########"
                       required
                     />
                   </v-flex>
@@ -154,18 +156,20 @@
                       append-icon="place"
                       :rules="[rules.required]"
                       required
+                      box
                     />
                   </v-flex>
                   <v-flex sm4>
                     <v-select
                       v-model="eleitor.co_ibge"
                       :items="listaUF"
-                      label="*Unidade da Federação"
+                      label="*Unidade da federação em que reside"
                       append-icon="place"
                       item-value="co_ibge"
                       item-text="no_uf"
                       :rules="[rules.required]"
                       required
+                      box
                     />
                   </v-flex>
                 </v-layout>
@@ -193,13 +197,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import File from '@/core/components/upload/File';
-import { eventHub } from '@/event';
 import Validate from '../../shared/util/validate';
 
 export default {
   name: 'Eleitor',
-  components: { File },
   data: () => ({
     nomeEleitorError: '',
     valid: false,
@@ -223,7 +224,7 @@ export default {
     ],
     eleitor: {
       nu_cpf: '',
-      no_eleitor: '',
+      no_nome: '',
       nu_rg: '',
       dt_nascimento: '',
       st_estrangeiro: '',
@@ -235,37 +236,41 @@ export default {
     email: '',
     emailConfirmation: '',
     rules: {
-      required: v => !!v || 'Campo não preenchido',
-      cpfInvalido: v => !!v || 'CPF não encontrado',
-      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-      email: (v) => {
+      required: value => !!value || 'Campo não preenchido',
+      cpfInvalido: value => !!value || 'CPF não encontrado',
+      phoneMin: value => (value && value.length >= 9) || 'Mínimo de 9 caracteres',
+      cpfMin: value => (value && value.length === 11) || 'Mínimo de 11 caracteres',
+      email: (value) => {
         // eslint-disable-next-line
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'E-mail invalido';
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || 'E-mail invalido';
       },
-      emailMatch: (email, emailConfirmation) => email == emailConfirmation || 'Os emails não correspondem',
-      dataAniversario: (v) => {
-        const bits = v.split('/');
-        const hoje = new Date();
-        const dataAniversario = new Date(bits[2], bits[1] - 1, bits[0]);
+      emailMatch: (email, emailConfirmation) => email === emailConfirmation || 'Os emails não correspondem',
+      dataAniversario: (value) => {
+        if (value.length === 0 || !value.trim()) {
+          return false;
+        }
+        // eslint-disable-next-line
+        var padraoDataValida = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])      [\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
 
-        const validDate = dataAniversario && (dataAniversario.getMonth() + 1) == bits[1];
-
-        if (!validDate) {
+        if (!value.match(padraoDataValida)) {
           return 'Data inválida';
         }
 
-        let ano = hoje.getFullYear() - dataAniversario.getFullYear();
-        const mes = hoje.getMonth() - dataAniversario.getMonth();
+        let [dia, mes, ano] = value.split('/');
+
+        const hoje = new Date();
+        const dataAniversario = new Date(ano, mes - 1, dia);
+
+        ano = hoje.getFullYear() - dataAniversario.getFullYear();
+        mes = hoje.getMonth() - dataAniversario.getMonth();
         if (mes < 0 || (mes === 0 && hoje.getDate() < dataAniversario.getDate())) {
           ano--;
         }
 
         if (ano > 100 || ano < 18) {
-          return 'É necessário ter entre 18 e 100 anos';
+          return 'É necessário ser maior de 18 anos';
         }
-
         return true;
       },
     },
@@ -279,12 +284,12 @@ export default {
     },
     'eleitor.nu_cpf': function (value) {
       const self = this;
-      self.eleitor.no_eleitor = '';
+      self.eleitor.no_nome = '';
       this.nomeEleitorError = 'CPF inválido';
       if (value.length === 11 && Validate.isCpfValido(value)) {
         this.consultarCPF(value).then((response) => {
           const { data } = response.data;
-          self.eleitor.no_eleitor = data.nmPessoaFisica;
+          self.eleitor.no_nome = data.nmPessoaFisica;
         });
         this.nomeEleitorError = '';
       }
