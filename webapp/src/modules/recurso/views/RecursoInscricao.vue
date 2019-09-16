@@ -189,7 +189,7 @@
         align-center
       >
         <v-flex offset-xs5>
-          <v-btn>Cancelar</v-btn>
+          <v-btn to="/">Cancelar</v-btn>
           <v-btn
             :disabled="!valid"
             color="primary"

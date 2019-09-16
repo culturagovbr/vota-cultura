@@ -9,17 +9,20 @@
         </div>
       </v-card-title>
       <v-card-text>
-        <lista-inscritos></lista-inscritos>
+        <lista-inscritos :sou-administrador="souAdministrador"></lista-inscritos>
       </v-card-text>
     </v-card>
   </v-container>
 </template>
 
 <script>
-import ListaInscritos from './ListaInscritos';
+import ListaInscritos from '@/modules/site/views/inscricao/ListaInscritos.vue';
 
 export default {
   components: { ListaInscritos },
-  name: 'ListaParcial',
+  name: 'AdministradorListaIncritos',
+  data: () => ({
+    souAdministrador: true,
+  }),
 };
 </script>
