@@ -47,7 +47,9 @@ class RecursoInscricao extends AbstractService
                 'nu_telefone',
                 'dh_cadastro',
                 'ds_recurso',
-            ])->toArray();
+                'no_razao_social',
+                'no_representante'
+                ])->toArray();
 
             $recursoInscricao = $this->getModel()->where(
                 $dadosInclusao

@@ -37,6 +37,8 @@ class RecursoInscricao extends JsonResource
             'dh_parecer_formatado' => $this->dh_parecer_formatado,
             'co_usuario_parecer' => $usuario,
             'fase' => $fase,
+            'no_razao_social' => $this->no_razao_social,
+            'no_representante' => $this->no_representante
         ];
     }
 

@@ -36,7 +36,7 @@
                   slot-scope="props"
                 >
                   <td>{{ props.item.cnpj_formatado }}</td>
-                  <td>{{ props.item.ds_email }}</td>
+                  <td>{{ props.item.no_razao_social }}</td>
                   <td><v-chip color="primary" text-color="white">{{ props.item.fase.ds_detalhamento }}</v-chip></td>
                   <td>{{ props.item.dh_cadastro_formatado }}</td>
                   <td>
@@ -101,8 +101,8 @@ export default {
           value: 'cnpj_formatado',
         },
         {
-          text: 'Email',
-          value: 'ds_email',
+          text: 'Razão Social',
+          value: 'no_razao_social'
         },
         {
           text: 'Categoria',
