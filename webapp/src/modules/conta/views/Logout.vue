@@ -18,7 +18,7 @@
             outline
             block
             color="primary"
-            to="/conta/autenticar"
+            href="/conta/autenticar"
           >
             Fazer login novamente
           </v-btn>
@@ -26,7 +26,7 @@
             class="mt-2"
             block
             color="primary"
-            to="/inicio"
+            href="/inicio"
           >
             Início
           </v-btn>

@@ -258,6 +258,13 @@ export default {
           name: 'lista-recurso-route',
           icon: 'gavel',
         }, 'Administração');
+
+        this.definirItemMenu({
+          title: 'Inscritos',
+          group: 'apps',
+          name: 'administrador-lista-inscritos-route',
+          icon: 'list',
+        }, 'Administração');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {
