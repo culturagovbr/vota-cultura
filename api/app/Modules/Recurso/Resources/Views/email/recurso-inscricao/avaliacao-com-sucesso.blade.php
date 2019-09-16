@@ -46,6 +46,9 @@
         {{ $recursoInscricao->ds_email }}
     </p>
     <p>
+        Este e-mail deverá ser acessado para acompanhamento do recurso
+    </p>
+    <p>
         <b>
             Recurso:
         </b>
