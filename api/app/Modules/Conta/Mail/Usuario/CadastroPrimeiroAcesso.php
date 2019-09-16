@@ -18,7 +18,7 @@ class CadastroPrimeiroAcesso extends Mailable
     {
         $linkPrimeiroAcesso = env('WEB_APP_HOST')
             . "/conta/primeiro-acesso/";
-        return $this->subject('Ministério da Cidadania - Primeiro acesso Vota Cultura')
+        return $this->subject('Ministério da Cidadania - Acesso ao Vota Cultura')
             ->view('conta::usuario.email.cadastro-primeiro-acesso')
             ->with([
                 'linkPrimeiroAcesso' => $linkPrimeiroAcesso,
