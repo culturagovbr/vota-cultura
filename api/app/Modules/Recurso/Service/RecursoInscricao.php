@@ -98,7 +98,6 @@ class RecursoInscricao extends AbstractService
             $request->only([
                 'ds_parecer',
                 'st_parecer',
-                'co_usuario_parecer',
             ]));
 
         try {
@@ -115,10 +114,12 @@ class RecursoInscricao extends AbstractService
                 );
             }
 
+            $dadosUsuarioLogado = auth()->user()->dadosUsuarioAutenticado();
+            $dados['co_usuario_parecer'] = $dadosUsuarioLogado['co_usuario'];
+
             DB::beginTransaction();
             $recursoInscricao->fill($dados->toArray());
             $horarioAtual = Carbon::now();
-
             $recursoInscricao->dh_parecer = $horarioAtual->toDateTimeString();
             $recursoInscricao->save();
 
