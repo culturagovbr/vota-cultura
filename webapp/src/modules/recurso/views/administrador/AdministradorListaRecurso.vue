@@ -35,9 +35,9 @@
                   slot="items"
                   slot-scope="props"
                 >
-                  <td> <v-chip color="primary" text-color="white">{{ props.item.fase.ds_detalhamento }}</v-chip></td>
-                  <td>{{ props.item.cpf_formatado }}</td>
+                  <td>{{ props.item.cnpj_formatado }}</td>
                   <td>{{ props.item.ds_email }}</td>
+                  <td><v-chip color="primary" text-color="white">{{ props.item.fase.ds_detalhamento }}</v-chip></td>
                   <td>{{ props.item.dh_cadastro_formatado }}</td>
                   <td>
                     <v-tooltip bottom>
@@ -97,16 +97,16 @@ export default {
       totalItems: 0,
       headers: [
         {
-          text: 'Tipo recurso',
-          value: 'fase.ds_detalhamento',
-        },
-        {
-          text: 'CPF',
-          value: 'nu_cpf_formatado',
+          text: 'CNPJ',
+          value: 'cnpj_formatado',
         },
         {
           text: 'Email',
           value: 'ds_email',
+        },
+        {
+          text: 'Categoria',
+          value: 'fase.ds_detalhamento',
         },
         {
           text: 'Data solicitação',
