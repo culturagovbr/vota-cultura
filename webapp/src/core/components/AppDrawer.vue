@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    :value="showDrawer"
+    :value="exibirGaveta"
     class="app--drawer"
     :mini-variant.sync="mini"
     app
@@ -152,7 +152,7 @@ export default {
       scrollSettings: {
         maxScrollbarLength: 160,
       },
-      showDrawer: false,
+      exibirGaveta: false,
       menuInscrivaseAtivo: false,
       usuarioLogado: {},
       menuAPI: [
@@ -162,27 +162,33 @@ export default {
           icon: 'home',
           name: 'Inicio',
         },
+        {
+          title: 'Lista parcial de inscritos',
+          group: 'apps',
+          icon: 'list',
+          name: 'inscricao-lista-parcial-route',
+        },
+        {
+          title: 'Enviar recurso',
+          group: 'apps',
+          icon: 'sms_failed',
+          name: 'recurso-inscricao-route',
+        },
       ],
     };
   },
   computed: {
     ...mapGetters({
-      ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
-      ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
-      ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
+      ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
+      ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
+      ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
       usuario: 'conta/usuario',
       perfil: 'conta/perfil',
     }),
-    computeGroupActive() {
-      return true;
-    },
-    sideToolbarColor() {
-      return this.$vuetify.options.extra.sideNav;
-    },
   },
   watch: {
     value(val) {
-      this.showDrawer = val;
+      this.exibirGaveta = val;
     },
     usuario(valor) {
       this.usuarioLogado = valor;
@@ -193,12 +199,12 @@ export default {
     },
   },
   mounted() {
-    this.obterCronogramas();
+    this.obterFases();
     this.usuarioLogado = this.usuario;
   },
   methods: {
     ...mapActions({
-      obterCronogramas: 'cronograma/obterCronogramas',
+      obterFases: 'fase/obterFases',
     }),
 
     carregarMenusUsuarioLogado() {
@@ -209,6 +215,7 @@ export default {
       this.carregarMenusConselho();
       this.carregarMenusOrganizacao();
       this.carregarMenusEleitor();
+      this.carregarMenuAdministrador();
 
       return true;
     },
@@ -240,6 +247,30 @@ export default {
           name: 'OrganizacaoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Organizacao');
+      }
+    },
+    carregarMenuAdministrador() {
+      if (this.perfil.no_perfil === 'administrador') {
+        this.definirItemMenu({
+          title: 'Usuários',
+          group: 'apps',
+          name: 'administrador-lista-usuarios-route',
+          icon: 'group',
+        }, 'Administração');
+
+        this.definirItemMenu({
+          title: 'Recursos',
+          group: 'apps',
+          name: 'lista-recurso-route',
+          icon: 'gavel',
+        }, 'Administração');
+
+        this.definirItemMenu({
+          title: 'Inscritos',
+          group: 'apps',
+          name: 'administrador-lista-inscritos-route',
+          icon: 'list',
+        }, 'Administração');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {

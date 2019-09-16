@@ -3,7 +3,14 @@
     <v-card-text>
       <div class="layout column align-center">
         <h1 class="flex my-4 primary--text">
-          {{ appTitle }}
+          <router-link
+            tag="div"
+            to="/"
+            style="cursor: pointer"
+            title="Voltar para o inicio"
+          >
+            {{ appTitle }}
+          </router-link>
         </h1>
       </div>
       <v-form

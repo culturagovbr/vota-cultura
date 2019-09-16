@@ -20,7 +20,7 @@ class AtivacaoController extends AApiResourceController
     {
         return $this->sendResponse(
             $this->usuarioService->gerarPrimeiroAcesso($request),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -29,7 +29,7 @@ class AtivacaoController extends AApiResourceController
     {
         return $this->sendResponse(
             $this->usuarioService->ativarUsuarioPorCodigoAtivacao($codigo_ativacao),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

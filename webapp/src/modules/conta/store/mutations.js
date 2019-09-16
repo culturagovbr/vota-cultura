@@ -13,15 +13,30 @@ export const mutations = {
   },
   [types.DEFINIR_DADOS_PRIMEIRO_ACESSO]() {},
   [types.ATIVAR_USUARIO]() {},
-  [types.CADASTRAR_USUARIO](state, dados) {
-    state.usuario = dados;
-  },
   [types.RECUPERAR_SENHA]() {},
   [types.ALTERAR_SENHA_INICIAL]() {},
   [types.ALTERAR_SENHA]() {},
   [types.LOGOUT](state) {
+    localStorage.removeItem('token_usuario');
     state.usuario = Object.assign({});
-    state.tokenUsuario = '';
+    state.tokenUsuario = String();
   },
   [types.SOLICITAR_PRIMEIRO_ACESSO]() {},
+  [types.LISTAR_USUARIOS](state, usuarios) {
+    state.usuarios = usuarios;
+  },
+  [types.BUSCAR_PERFIS]() {},
+  [types.DEFINIR_PERFIS](state, perfis) {
+    state.perfis = perfis;
+  },
+  [types.DEFINIR_PERFIS_ALTERACAO](state, perfis) {
+    state.perfis = perfis;
+  },
+  [types.ATRIBUIR_USUARIO_CADASTRADO_LISTA](state, usuario) {
+    state.usuarios.push(usuario);
+  },
+  [types.ATUALIZAR_USUARIO_LISTA](state, usuarioEditado) {
+    const index = state.usuarios.findIndex(usuario => usuario.co_usuario === usuarioEditado.co_usuario);
+    Object.assign(state.usuarios[index], usuarioEditado);
+  },
 };

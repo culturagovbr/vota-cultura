@@ -96,4 +96,38 @@ export default [
       },
     ],
   },
+  {
+    path: '/conta/administrador',
+    component: DefaultLayout,
+    hidden: true,
+    redirect: '/conta/administrador/usuario',
+    children: [
+      {
+        path: 'usuario',
+        name: 'administrador-lista-usuarios-route',
+        meta: {
+          title: 'Usuarios',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "administrador-lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaUsuarios.vue'),
+      },
+    ],
+  },
+  {
+    path: '/conta/administrador',
+    component: DefaultLayout,
+    hidden: true,
+    redirect: '/conta/administrador/usuario',
+    children: [
+      {
+        path: 'usuario',
+        name: 'administrador-lista-usuarios-route',
+        meta: {
+          title: 'Usuarios',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "administrador-lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaUsuarios.vue'),
+      },
+    ],
+  },
 ];

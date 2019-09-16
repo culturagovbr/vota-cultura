@@ -44,3 +44,9 @@ export const obterDadosOrganizacao = async ({ commit, dispatch }, coOrganizacao)
       throw new TypeError(error, 'obterDadosOrganizacao', 10);
     });
 };
+
+export const obterOrganizacoes = async ({ commit }) => {
+  organizacaoService.obterOrganizacoes().then((response) => {
+    commit(types.DEFINIR_ORGANIZACOES, response.data);
+  });
+};

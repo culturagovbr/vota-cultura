@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-card>
+    <v-card v-if="dataDentroPrazoInscricao">
       <v-toolbar
         dark
         color="primary"
@@ -653,6 +653,7 @@ import Validate from '../../shared/util/validate';
 export default {
   name: 'Organizacao',
   data: () => ({
+    dataDentroPrazoInscricao: false,
     nomeOrganizacaoError: '',
     nomeRepresentante: '',
     mascaraTelefone: '(##) #####-####',
@@ -802,6 +803,19 @@ export default {
     },
   },
   mounted() {
+    const self = this;
+    this.obterFases().then(function (response) {
+      const { data } = response.data;
+      const faseSlug = 'abertura_inscricoes_organizacao';
+      const faseOrganizacao = data.find((fase) => fase.tp_fase === faseSlug);
+
+      if (!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) {
+        self.mensagemErro('O prazo de inscrições expirou!');
+        self.$router.push('/');
+      }
+      self.dataDentroPrazoInscricao = true;
+    });
+
     if (Object.keys(this.organizacaoGetter).length > 0) {
       this.organizacao = this.organizacaoGetter;
       this.obterMunicipios(this.organizacao.endereco.co_municipio);
@@ -821,6 +835,8 @@ export default {
   },
   methods: {
     ...mapActions({
+      validarDataDentroPrazoFasePorSlug: 'fase/validarDataDentroPrazoFasePorSlug',
+      mensagemErro: 'app/setMensagemErro',
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       obterCriterios: 'organizacao/obterCriterios',
@@ -828,6 +844,7 @@ export default {
       confirmarOrganizacao: 'organizacao/confirmarOrganizacao',
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      obterFases: 'fase/obterFases',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {

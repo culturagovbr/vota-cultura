@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card v-if="dataDentroPrazoInscricao">
       <v-toolbar
         dark
         color="primary"
@@ -539,6 +539,7 @@ import Validate from '../../shared/util/validate';
 export default {
   components: { File },
   data: () => ({
+    dataDentroPrazoInscricao: false,
     nomeConselhoError: '',
     nomeRepresentante: '',
     etapaFormulario: 1,
@@ -665,6 +666,19 @@ export default {
     },
   },
   mounted() {
+    const self = this;
+    this.obterFases().then(function (response) {
+      const { data } = response.data;
+      const faseSlug = 'abertura_inscricoes_conselho';
+      const faseOrganizacao = data.find((fase) => fase.tp_fase === faseSlug);
+
+      if (!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) {
+        self.mensagemErro('O prazo de inscrições expirou!');
+        self.$router.push('/');
+      }
+      self.dataDentroPrazoInscricao = true;
+    });
+
     if (Object.keys(this.conselhoGetter).length > 0) {
       this.conselho = this.conselhoGetter;
     }
@@ -679,11 +693,13 @@ export default {
   },
   methods: {
     ...mapActions({
+      mensagemErro: 'app/setMensagemErro',
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       confirmarConselho: 'conselho/confirmarConselho',
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      obterFases: 'fase/obterFases',
     }),
     validarIrProximaEtapa(formRef) {
       if (this.$refs[formRef].validate()) {

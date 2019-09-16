@@ -12,6 +12,7 @@ class UF extends JsonResource
             'co_ibge' => $this->co_ibge,
             'sg_uf' => $this->sg_uf,
             'no_uf' => $this->no_uf,
+            'regiao' => new Regiao($this->regiao),
         ];
     }
 }

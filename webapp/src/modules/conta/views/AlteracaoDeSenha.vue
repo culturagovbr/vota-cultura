@@ -44,7 +44,7 @@
         :loading="loading"
         @click="alterar"
       >
-        Alterar senha
+        Criar senha
       </v-btn>
       <v-spacer />
     </div>
@@ -92,7 +92,6 @@ export default {
       }).catch((error) => {
         this.loading = false;
         this.mensagemErro(error.response.data.message);
-        this.$router.push('/');
       });
     },
   },

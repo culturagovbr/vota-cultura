@@ -2,14 +2,14 @@
 
 namespace App\Modules\Conta\Service;
 
-use App\Exceptions\ValidacaoCustomizadaException;
-use App\Modules\Conta\Mail\Usuario\RecuperacaoSenha as RecuperacaoSenhaMail;
 use App\Core\Service\IService;
+use App\Modules\Conta\Mail\Usuario\RecuperacaoSenha as RecuperacaoSenhaMail;
 use App\Modules\Conta\Service\Usuario as UsuarioService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class RecuperacaoSenha implements IService
@@ -22,7 +22,7 @@ class RecuperacaoSenha implements IService
         $this->usuarioService = $usuarioService;
     }
 
-    public function recuperarSenha(array $dados)
+    public function recuperarSenha(Collection $dados)
     {
         try {
             $usuario = $this->usuarioService->getModel()->where(
@@ -51,11 +51,13 @@ class RecuperacaoSenha implements IService
             $horarioAtual = Carbon::now();
             $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
 
-            $usuario->fill($dados);
+            $usuario->fill($dados->toArray());
             $usuario->gerarCodigoAtivacao();
             $usuario->save();
 
-            Mail::to($usuario->ds_email)->send(new RecuperacaoSenhaMail($usuario));
+            Mail::to($usuario->ds_email)->send(
+                app()->make(RecuperacaoSenhaMail::class, $usuario)
+            );
             DB::commit();
 
             return $usuario->toArray();

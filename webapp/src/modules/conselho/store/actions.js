@@ -1,5 +1,6 @@
 import * as conselhoService from '../service/conselho';
 import * as types from './types';
+import * as usuarioService from "../../conta/service/usuario";
 
 
 export const confirmarConselho = async ({ commit }, conselho) => {
@@ -31,4 +32,11 @@ export const obterDadosConselho = async ({ commit, dispatch }, coConselho) => {
       );
       throw new TypeError(error, 'obterDadosConselho', 10);
     });
+};
+
+export const obterConselhos = async ({ commit }) => {
+  conselhoService.obterConselhos().then((response) => {
+    const { data } = response.data;
+    commit(types.LISTAR_CONSELHOS, data);
+  });
 };

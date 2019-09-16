@@ -3,6 +3,7 @@
 namespace App\Modules\Conselho\Http\Resources;
 
 use App\Modules\Conta\Http\Resources\Usuario;
+use App\Modules\Core\Helper\CNPJ;
 use App\Modules\Localidade\Http\Resources\Endereco;
 use App\Modules\Representacao\Http\Resources\Representante;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,6 +19,7 @@ class Conselho extends JsonResource
             'ds_email' => $this->ds_email,
             'nu_telefone' => $this->nu_telefone,
             'nu_cnpj' => $this->nu_cnpj,
+            'nu_cnpj_mascarado' => CNPJ::adicionarMascara($this->nu_cnpj),
             'tp_governamental' => $this->tp_governamental,
             'endereco' => (new Endereco($this->endereco)),
             'representante' => (new Representante($this->representante)),

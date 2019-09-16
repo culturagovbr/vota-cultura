@@ -7,7 +7,13 @@ export const logout = usuario => service.getRequest('/conta/auth/logout', usuari
 
 export const ativarUsuario = ativacao => service.putRequest('/conta/ativar-usuario', ativacao, {});
 
-export const cadastrarUsuario = usuario => service.postRequest('/conta/usuario', usuario);
+export const cadastrarUsuario = usuario => service.postRequest('/conta/administrador/usuario', usuario);
+
+export const atualizarUsuario = usuario => service.patchRequest(
+  '/conta/administrador/usuario',
+  usuario.co_usuario,
+  usuario,
+);
 
 export const alterarSenha = (codigoAlteracao, payload) => service.putRequest(
   '/conta/alterar-senha-recuperada',
@@ -30,3 +36,7 @@ export const recuperarSenha = payload => service.postRequest(
   '/conta/recuperar-senha',
   payload,
 );
+
+export const obterUsuarios = () => service.getRequest('/conta/administrador/usuario');
+
+export const obterPerfis = () => service.getRequest('/conta/perfil');

@@ -2,14 +2,13 @@
 
 namespace App\Core\Service;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
-
 
 interface IServiceApiResource extends IService
 {
-    public function cadastrar(array $dados) : ?Model;
+    public function cadastrar(Collection $dados) : ?Model;
 
     public function obterUm($identificador) : ?Model;
 

@@ -23,7 +23,7 @@ class MunicipioController extends Controller
     {
         return $this->sendResponse(
             $this->service->obterPorUF((int)$identificador),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

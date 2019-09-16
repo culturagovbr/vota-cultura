@@ -2,20 +2,21 @@
 
 namespace App\Modules\Conta\Service;
 
+use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
-use App\Modules\Core\Exceptions\EParametrosInvalidos;
-use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
 use App\Modules\Conta\Model\Perfil as PerfilModel;
-use App\Core\Service\AbstractService;
+use App\Modules\Conta\Model\Usuario as UsuarioModel;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
+use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Modules\Eleitor\Model\Eleitor as EleitorModel;
-use App\Modules\Conta\Model\Usuario as UsuarioModel;
 
 
 class Usuario extends AbstractService
@@ -79,7 +80,7 @@ class Usuario extends AbstractService
                     break;
             }
 
-            $usuarioModel = $this->cadastrar($dadosUsuario);
+            $usuarioModel = $this->cadastrar(collect($dadosUsuario));
             $model->co_usuario = $usuarioModel->co_usuario;
             $model->save();
 
@@ -118,12 +119,12 @@ class Usuario extends AbstractService
 
     }
 
-    public function cadastrar(array $dados): ?Model
+    public function cadastrar(Collection $dados): ?Model
     {
         try {
-            $usuario = $this->getModel()->where([
-                'nu_cpf' => $dados['nu_cpf']
-            ])->first();
+            $usuario = $this->getModel()->where(
+                $dados->only(['nu_cpf'])->toArray()
+            )->first();
 
             if ($usuario) {
                 throw new EParametrosInvalidos(
@@ -133,13 +134,15 @@ class Usuario extends AbstractService
             }
 
             $dados['ds_senha'] = substr(sha1(time()), 0, 8);
-
             DB::beginTransaction();
             $usuario = $this->getModel();
             unset($dados['dh_cadastro']);
-            $usuario->fill($dados);
+            $usuario->fill($dados->toArray());
             $usuario->gerarCodigoAtivacao();
             $horarioAtual = Carbon::now();
+            if(!empty($dados['perfil'])) {
+                $usuario->co_perfil = $dados['perfil']['co_perfil'];
+            }
             $usuario->dh_cadastro = $horarioAtual->toDateTimeString();
             $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
             $usuario->st_ativo = false;
@@ -149,7 +152,7 @@ class Usuario extends AbstractService
             $usuario->ds_senha = $dados['ds_senha'];
 
             Mail::to($usuario->ds_email)->send(
-                new CadastroComSucesso($usuario)
+                app()->make(CadastroComSucesso::class, $usuario->toArray())
             );
             DB::commit();
             return $usuario;
@@ -172,14 +175,14 @@ class Usuario extends AbstractService
             }
             $usuario = $this->getModel()->find($co_usuario);
 
-            if (!$usuario || !$usuario->validarSenha($dados['ds_senha_atual']) ) {
+            if (!$usuario || !$usuario->senhaValida($dados['ds_senha_atual']) ) {
                 throw new EParametrosInvalidos(
                     'Dados inválidos.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
 
-            if($usuario->validarSenha($dados['ds_senha'])) {
+            if($usuario->senhaValida($dados['ds_senha'])) {
                 throw new EParametrosInvalidos(
                     'A nova senha é igual a atual.',
                     Response::HTTP_NOT_ACCEPTABLE
@@ -192,6 +195,93 @@ class Usuario extends AbstractService
         } catch (EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
+        }
+    }
+
+    public function obterTodosComPerfis()
+    {
+        return $this
+            ->getModel()
+            ->get();
+    }
+
+    public function atualizar(Request $request, int $identificador) : ?Model
+    {
+        $dados = collect(
+            $request->only([
+                'co_usuario',
+                'perfil',
+                'st_ativo',
+                'ds_email'
+        ]));
+
+        try {
+            $usuario = $this->getModel()->where(
+                $dados->only([
+                    'co_usuario'
+                ])->toArray()
+            )->first();
+
+
+
+            if (empty($usuario)) {
+                throw new EParametrosInvalidos(
+                    'Usuario não encontrado.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            $usuarioMesmoEmail = $this->getModel()
+                ->where(
+                    $dados->only([
+                        'ds_email',
+                    ])->toArray())
+                ->where(
+                    'co_usuario',
+                    '!=',
+                    $dados->only(['co_usuario']))
+                ->first();
+
+            if ($usuarioMesmoEmail) {
+                throw new EParametrosInvalidos(
+                 'E-mail já cadastrado.',
+                 Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+            DB::beginTransaction();
+            $usuario->fill($dados->toArray());
+            $horarioAtual = Carbon::now();
+            if(!empty($dados['perfil'])) {
+                $usuario->co_perfil = $dados['perfil']['co_perfil'];
+            }
+            $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
+            $usuario->save();
+
+
+            DB::commit();
+            return $usuario;
+        } catch (EParametrosInvalidos $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
+
+
+        try {
+            $modelPesquisada = $this->getModel()->find($identificador);
+            if (!$modelPesquisada) {
+                throw new \HttpException(
+                    'Dados não encontrados.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+            DB::beginTransaction();
+            $modelPesquisada->fill($request->all());
+            $modelPesquisada->save();
+            DB::commit();
+            return $modelPesquisada->toArray();
+        } catch (\HttpException $queryException) {
+            DB::rollBack();
+            throw $queryException;
         }
     }
 
