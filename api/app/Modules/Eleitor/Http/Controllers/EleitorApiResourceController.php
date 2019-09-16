@@ -27,7 +27,7 @@ class EleitorApiResourceController extends AApiResourceController
            new EleitorResource(
                 $this->service->obterUm($identificador)
             ),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

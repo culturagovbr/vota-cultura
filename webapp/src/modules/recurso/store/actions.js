@@ -1,5 +1,5 @@
-import * as recursoService from '../service/recurso';
 import * as types from './types';
+import * as recursoService from '../service/recurso';
 
 export const confirmarRecurso = async ({ commit }, recurso) => {
   commit(types.DEFINIR_RECURSO, recurso);
@@ -10,8 +10,16 @@ export const enviarDadosRecurso = async ({ commit }, recurso) => {
   return recursoService.enviarDadosRecurso(recurso);
 };
 
-export const enviarDadosRecursoInscricao = async ({ commit }, recurso) => {
-  return recursoService.enviarDadosRecursoInscricao(recurso);
+export const enviarDadosRecursoInscricao = async ({ commit, dispatch }, recurso) =>  {
+  commit(types.ENVIAR_DADOS_RECURSO);
+  return recursoService.enviarDadosRecursoInscricao(recurso).catch((error) => {
+    dispatch(
+      'app/setMensagemErro',
+      error.response.data.message,
+      { root: true },
+    );
+    throw new TypeError(error, 'enviarDadosRecursoInscricao', 10);
+  });
 };
 
 export const obterDadosRecurso = async ({ commit, dispatch }, coRecurso) => {
@@ -42,3 +50,22 @@ export const obterRecursos = async ({ commit }) => {
     commit(types.LISTAR_RECURSOS, data);
   });
 };
+
+export const avaliarRecursoInscricao = async ({ commit, dispatch }, recurso) => recursoService.avaliarRecursoInscricao(recurso).then((response) => {
+  const { data } = response.data;
+  commit(types.ATUALIZAR_RECURSO_INSCRICAO_LISTA, data);
+
+  dispatch(
+    'app/setMensagemSucesso',
+    'Recurso avaliado com sucesso!',
+    { root: true },
+  );
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});

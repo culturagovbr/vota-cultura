@@ -11,7 +11,7 @@ trait TApiResourceShow
     {
         return $this->sendResponse(
             $model->toArray(),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

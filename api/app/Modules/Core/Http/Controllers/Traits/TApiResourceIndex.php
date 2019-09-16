@@ -11,7 +11,7 @@ trait TApiResourceIndex
     {
         return $this->sendResponse(
             $this->service->obterTodos(),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

@@ -3,6 +3,7 @@
 namespace App\Modules\Recurso\Http\Resources;
 
 use App\Modules\Conta\Http\Resources\Usuario as UsuarioResource;
+use App\Modules\Fase\Http\Resources\Fase;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RecursoInscricao extends JsonResource

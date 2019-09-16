@@ -6,3 +6,9 @@ export const enviarDadosRecursoInscricao = recurso => service.postRequest('/recu
 export const obterDadosRecursoInscricao = coRecurso => service.getRequest(`/recurso/inscricao/${coRecurso}`);
 
 export const obterRecursosIncritos = () => service.getRequest('/recurso/inscricao');
+
+export const avaliarRecursoInscricao = recurso => service.patchRequest(
+  '/recurso/inscricao',
+  recurso.co_recurso_inscricao,
+  recurso,
+);

@@ -30,7 +30,7 @@ class UsuarioController extends Controller
     {
         return $this->sendResponse(
             $this->usuarioService->obterTodos(),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -39,7 +39,7 @@ class UsuarioController extends Controller
     {
         return $this->sendResponse(
             $usuario->toArray(),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -50,7 +50,7 @@ class UsuarioController extends Controller
             new UsuarioResource(
                 $this->usuarioService->cadastrar(collect($request->all()))
             ),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_CREATED
         );
     }
@@ -61,7 +61,7 @@ class UsuarioController extends Controller
             new UsuarioResource(
                 $this->usuarioService->atualizar($request, $co_usuario)
             ),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -77,7 +77,7 @@ class UsuarioController extends Controller
     {
         return $this->sendResponse(
             $this->usuarioService->alterarSenha($request, $co_usuario),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -86,7 +86,7 @@ class UsuarioController extends Controller
     {
         return $this->sendResponse(
             UsuarioResource::collection($this->usuarioService->obterTodosComPerfis($request)),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

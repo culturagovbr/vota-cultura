@@ -35,22 +35,31 @@
                   slot="items"
                   slot-scope="props"
                 >
-                  <td>{{ props.item.cpf_formatado }}</td>
+                  <td>{{ props.item.cnpj_formatado }}</td>
                   <td>{{ props.item.ds_email }}</td>
+                  <td><v-chip color="primary" text-color="white">{{ props.item.fase.ds_detalhamento }}</v-chip></td>
                   <td>{{ props.item.dh_cadastro_formatado }}</td>
                   <td>
-                    <v-btn
-                      depressed
-                      outline
-                      icon
-                      fab
-                      dark
-                      color="primary"
-                      small
-                      @click="editarItemModal(props.item)"
-                    >
-                      <v-icon>gavel</v-icon>
-                    </v-btn>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn
+                          depressed
+                          outline
+                          icon
+                          fab
+                          dark
+                          color="primary"
+                          small
+                          v-on="on"
+                          @click="editarItemModal(props.item)"
+                        >
+                          <v-icon v-if="props.item.st_parecer === null">gavel</v-icon>
+                          <v-icon v-else>remove_red_eye</v-icon>
+                        </v-btn>
+                      </template>
+                      <span v-if="props.item.st_parecer === null">Avaliar</span>
+                      <span v-else>Visualizar</span>
+                    </v-tooltip>
                   </td>
                 </template>
               </v-data-table>
@@ -88,12 +97,16 @@ export default {
       totalItems: 0,
       headers: [
         {
-          text: 'CPF',
-          value: 'nu_cpf_formatado',
+          text: 'CNPJ',
+          value: 'cnpj_formatado',
         },
         {
           text: 'Email',
           value: 'ds_email',
+        },
+        {
+          text: 'Categoria',
+          value: 'fase.ds_detalhamento',
         },
         {
           text: 'Data solicitação',
@@ -118,10 +131,6 @@ export default {
     editarItemModal(item) {
       this.itemEditado = item;
       this.mostrarModalEdicao = true;
-    },
-  },
-  watch: {
-    recursosGetter(va) {
     },
   },
   mounted() {

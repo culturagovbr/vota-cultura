@@ -26,7 +26,7 @@ class ConselhoApiResourceController extends AApiResourceController
     {
         return $this->sendResponse(
             new Conselho($this->service->obterUm($identificador)),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -35,7 +35,7 @@ class ConselhoApiResourceController extends AApiResourceController
     {
         return $this->sendResponse(
             $this->service->cadastrar(collect($request->all())),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_CREATED
         );
     }
@@ -44,7 +44,7 @@ class ConselhoApiResourceController extends AApiResourceController
     {
         return $this->sendResponse(
             Conselho::collection($this->service->obterTodos()),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

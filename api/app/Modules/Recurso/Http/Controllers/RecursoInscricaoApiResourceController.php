@@ -2,6 +2,7 @@
 
 namespace App\Modules\Recurso\Http\Controllers;
 
+use App\Modules\Conta\Http\Middleware\MiddlewareSouAdministrador;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
@@ -21,6 +22,7 @@ class RecursoInscricaoApiResourceController extends AApiResourceController
         $this->middleware('auth:api')->except(
             ['store']
         );
+        $this->middleware(MiddlewareSouAdministrador::class)->only('update');
         parent::__construct($service);
     }
 
@@ -28,7 +30,7 @@ class RecursoInscricaoApiResourceController extends AApiResourceController
     {
         return $this->sendResponse(
             RecursoInscricaoResource::collection($this->service->obterTodos()),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -39,7 +41,7 @@ class RecursoInscricaoApiResourceController extends AApiResourceController
             new RecursoInscricaoResource(
                 $this->service->atualizar($request, $identificador)
             ),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
