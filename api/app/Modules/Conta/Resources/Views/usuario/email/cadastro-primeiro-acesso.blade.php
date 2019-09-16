@@ -1,10 +1,8 @@
-<div>
-    <h1>
-        <b>
-            ATENÇÃO!
-        </b>
-    </h1>
-</div>
+<h1>
+    <b>
+        ATENÇÃO!
+    </b>
+</h1>
 <p>
     Prezado(a) representante,
 </p>
@@ -14,7 +12,7 @@
     sociedade civil no CNPC, é necessário fazer login e cadastrar senha.
 </p>
 <p>
-    Clique <a href="http://{{ $linkPrimeiroAcesso }}">aqui</a> para solicitar o seu LOGIN.
+    Clique <a href="http://votacultura.cidadania.gov.br/conta/primeiro-acesso/">aqui</a> para solicitar o seu LOGIN.
 </p>
 <p>
     *Acompanhe o edital e o cronograma em: <a href="http://cnpc.cultura.gov.br/editalcnpc2019-2022/">http://cnpc.cultura.gov.br/editalcnpc2019-2022/</a>.
