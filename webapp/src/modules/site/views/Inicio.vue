@@ -98,7 +98,7 @@
                       x-large
                       class="text--lighten-2"
                     >
-                      gavel
+                      sms_failed
                     </v-icon>
                   </v-card-text>
                   <v-card-title

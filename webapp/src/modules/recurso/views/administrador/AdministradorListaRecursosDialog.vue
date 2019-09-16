@@ -182,6 +182,7 @@
                       label="Descrição do recurso"
                       auto-grow
                       :placeholder="'Digite seu recurso aqui.'"
+                      :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
                       :counter="3000"
                       disabled
                     />
@@ -210,7 +211,7 @@
                       auto-grow
                       :placeholder="'Digite seu recurso aqui.'"
                       :counter="3000"
-                      :rules="[rules.required]"
+                      :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
                       required
                       :disabled="formulario.dh_parecer !== null"
                     />
@@ -351,10 +352,11 @@ export default {
       loading: false,
       valid: false,
       perfilPodeSerAlterado: false,
-      formulario: { no_nome: String() },
+      formulario: { no_nome: String(), ds_parecer: String() },
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
+        tamanhoMaximoCaracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
       },
     };
   },
@@ -405,6 +407,7 @@ export default {
       if (!self.$refs.form_recurso.validate()) {
         return false;
       }
+
       self.loading = true;
       this.avaliarRecursoInscricao(self.formulario)
         .then(() => {

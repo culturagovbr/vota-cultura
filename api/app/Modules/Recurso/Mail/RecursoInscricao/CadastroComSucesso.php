@@ -23,7 +23,7 @@ class CadastroComSucesso extends Mailable
     public function build()
     {
 
-        return $this->subject('Ministério da Cidadania - Inscrição realizada com sucesso')
+        return $this->subject('Ministério da Cidadania - Recurso enviado com sucesso')
             ->view('recurso::email.recurso-inscricao.cadastro-com-sucesso')
             ->with([
                 'recursoInscricao' => $this->recursoInscricao,

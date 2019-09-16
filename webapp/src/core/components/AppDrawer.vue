@@ -163,10 +163,16 @@ export default {
           name: 'Inicio',
         },
         {
-          title: 'Inscritos - Lista parcial',
+          title: 'Lista parcial de inscritos',
           group: 'apps',
           icon: 'list',
           name: 'inscricao-lista-parcial-route',
+        },
+        {
+          title: 'Enviar recurso',
+          group: 'apps',
+          icon: 'sms_failed',
+          name: 'recurso-inscricao-route',
         },
       ],
     };

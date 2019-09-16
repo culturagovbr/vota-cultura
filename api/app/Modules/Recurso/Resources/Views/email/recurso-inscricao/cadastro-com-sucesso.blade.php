@@ -6,25 +6,25 @@
     <b>
         Categoria:
     </b>
-    {{ $recursoInscricao->nu_cnpj }}
+    {{ $recursoInscricao->fase->ds_detalhamento }}
 </p>
 <p>
     <b>
         CNPJ:
     </b>
-    {{ $recursoInscricao->nu_cnpj }}
+    {{ $recursoInscricao->cnpj_formatado }}
 </p>
 <p>
     <b>
         Celular do representante:
     </b>
-    {{ $recursoInscricao->nu_telefone }}
+    {{ $recursoInscricao->telefone_formatado }}
 </p>
 <p>
     <b>
         CPF:
     </b>
-    {{ $recursoInscricao->nu_cpf }}
+    {{ $recursoInscricao->cpf_formatado }}
 </p>
 <p>
     <b>
