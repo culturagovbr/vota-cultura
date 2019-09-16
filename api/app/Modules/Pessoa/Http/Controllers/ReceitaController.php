@@ -23,7 +23,7 @@ class ReceitaController extends Controller
     {
         return $this->sendResponse(
             $this->service->consultarDadosPessoaJuridica($identificador),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -32,7 +32,7 @@ class ReceitaController extends Controller
     {
         return $this->sendResponse(
             $this->service->consultarDadosPessoaFisica($identificador),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }

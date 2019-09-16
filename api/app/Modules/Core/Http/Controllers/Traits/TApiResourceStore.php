@@ -11,7 +11,7 @@ trait TApiResourceStore
     {
         return $this->sendResponse(
             $this->service->cadastrar(collect($request->all())),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_CREATED
         );
     }

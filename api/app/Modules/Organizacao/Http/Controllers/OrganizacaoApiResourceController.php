@@ -28,7 +28,7 @@ class OrganizacaoApiResourceController extends AApiResourceController
     {
         return $this->sendResponse(
             new OrganizacaoResource($this->service->obterUm($identificador)),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
@@ -37,7 +37,7 @@ class OrganizacaoApiResourceController extends AApiResourceController
     {
         return $this->sendResponse(
             OrganizacaoResource::collection($this->service->obterTodos()),
-            "Operação Realizada com Sucesso",
+            "Operação realizada com sucesso",
             Response::HTTP_OK
         );
     }
