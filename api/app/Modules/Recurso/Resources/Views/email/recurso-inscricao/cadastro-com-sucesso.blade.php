@@ -16,6 +16,12 @@
 </p>
 <p>
     <b>
+        Razão social:
+    </b>
+    {{ $recursoInscricao->no_razao_social }}
+</p>
+<p>
+    <b>
         Celular do representante:
     </b>
     {{ $recursoInscricao->telefone_formatado }}
@@ -25,6 +31,12 @@
         CPF:
     </b>
     {{ $recursoInscricao->cpf_formatado }}
+</p>
+<p>
+    <b>
+        Nome do representante:
+    </b>
+    {{ $recursoInscricao->no_representante }}
 </p>
 <p>
     <b>
