@@ -62,18 +62,6 @@
                     menos cinco estados de duas macrorregiões brasileiras
                   </v-card-text>
                 </v-card>
-                <div class="text-xs-center">
-                  <v-btn
-                    v-if="ativarInscricaoOrganizacao"
-                    color="green darken-4"
-                    to="/organizacao/inscricao"
-                    dark
-                  >
-                    <v-icon>
-                      call_made
-                    </v-icon>
-                  </v-btn>
-                </div>
               </v-flex>
               <v-flex
                 xs12
@@ -102,18 +90,6 @@
                     âmbito do Estado, aquele vinculado à administração pública da respectiva capital
                   </v-card-text>
                 </v-card>
-                <div class="text-xs-center">
-                  <v-btn
-                    v-if="ativarInscricaoConselho"
-                    color="green darken-4"
-                    to="/conselho/inscricao"
-                    dark
-                  >
-                    <v-icon>
-                      call_made
-                    </v-icon>
-                  </v-btn>
-                </div>
               </v-flex>
               <v-flex
                 xs12
@@ -139,18 +115,6 @@
                   <v-card-text>
                     Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
                   </v-card-text>
-                  <div class="text-xs-center">
-                    <v-btn
-                      v-if="ativarInscricaoEleitor"
-                      color="green darken-4"
-                      to="/eleitor/inscricao"
-                      dark
-                    >
-                      <v-icon>
-                        call_made
-                      </v-icon>
-                    </v-btn>
-                  </div>
                 </v-card>
               </v-flex>
             </v-layout>
