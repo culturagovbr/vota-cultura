@@ -37,7 +37,100 @@
       />
     </section>
 
+    <section>
+      <v-layout
+        column
+        wrap
+        class="my-5"
+        align-center
+      >
+        <v-flex xs12>
+          <v-container grid-list-xl>
+            <v-layout
+              row
+              wrap
+              align-center
+            >
+              <v-flex
+                xs12
+                md6
+              >
+                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      list
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Lista parcial de inscritos
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    Consulte aqui a lista parcial de inscritos
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
+                      color="green darken-4"
+                      to="/inscricao/lista-parcial"
+                      dark
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+              <v-flex
+                xs12
+                md6
+              >
+                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      gavel
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Recurso da Inscrição
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    Caso não tenha localizado a inscrição da Organização ou entidade cultural, ou do Conselho de cultura, cadastre aqui o recurso.
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
 
+                      color="green darken-4"
+                      to="/recurso/inscricao"
+                      dark
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </v-layout>
+    </section>
 
     <section
       v-if="ativarInscricaoOrganizacao || ativarInscricaoConselho || ativarInscricaoEleitor"
