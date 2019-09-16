@@ -10,7 +10,7 @@ export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
   return usuarioService.login(usuario)
     .then((response) => {
       const { data } = response;
-      if (data && data.access_token) {
+      if (!!data && data.access_token) {
         localStorage.setItem('token_usuario', data.access_token);
       }
 
