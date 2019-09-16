@@ -14,4 +14,5 @@ export const mutations = {
     );
     Object.assign(state.recursos[index], recursoEditado);
   },
+  [types.ENVIAR_DADOS_RECURSO]() {},
 };

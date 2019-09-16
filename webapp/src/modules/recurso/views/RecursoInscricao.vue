@@ -11,7 +11,8 @@
         <v-form
           ref="form_recurso"
           v-model="valid"
-          lazy-validation>
+          lazy-validation
+        >
           <v-layout class="mt-1">
             <v-flex
               xs12
@@ -183,19 +184,21 @@
           </v-layout>
         </v-form>
       </v-card-text>
-        <v-layout
-          wrap
-          align-center>
-          <v-flex offset-xs5>
-            <v-btn>Cancelar</v-btn>
-            <v-btn
-              :disabled="!valid"
-              @click="abrirDialogo"
-              color="primary">
-              Enviar
-            </v-btn>
-          </v-flex>
-        </v-layout>
+      <v-layout
+        wrap
+        align-center
+      >
+        <v-flex offset-xs5>
+          <v-btn>Cancelar</v-btn>
+          <v-btn
+            :disabled="!valid"
+            color="primary"
+            @click="abrirDialogo"
+          >
+            Enviar
+          </v-btn>
+        </v-flex>
+      </v-layout>
     </v-card>
 
     <v-layout justify-center>
@@ -315,6 +318,7 @@ export default {
     ...mapActions({
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
+      definirMensagemSucesso: 'app/setMensagemSucesso',
       enviarDadosRecursoInscricao: 'recurso/enviarDadosRecursoInscricao',
     }),
     validarIrProximaEtapa(formRef) {
@@ -323,8 +327,15 @@ export default {
       }
     },
     salvar() {
-      this.enviarDadosRecursoInscricao(this.recursoInscricao).then((res) =>{
-      });
+      this.loading = true;
+      this.enviarDadosRecursoInscricao(this.recursoInscricao)
+        .then((response) => {
+          this.definirMensagemSucesso(response.response.data.message);
+          this.$router.push('/');
+        }).finally(() => {
+          this.loading = false;
+          this.fecharDialogo();
+        });
     },
     abrirDialogo() {
       if (!this.$refs.form_recurso.validate()) {
