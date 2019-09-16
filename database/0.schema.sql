@@ -488,3 +488,15 @@ ALTER TABLE public.tb_recurso_inscricao ADD no_razao_social varchar(255) NULL;
 COMMENT ON COLUMN public.tb_recurso_inscricao.no_razao_social IS 'Razão social da organização ou conselho';
 ALTER TABLE public.tb_recurso_inscricao ADD no_representante varchar(255) NULL;
 COMMENT ON COLUMN public.tb_recurso_inscricao.no_representante IS 'Nome do representando da organização ou conselho';
+
+--- >
+
+UPDATE tb_fase SET dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-09-16 18:00:00.000000' WHERE co_fase = 1;
+UPDATE tb_fase SET dh_inicio = '2019-08-13 10:00:00.000000', dh_fim = '2019-09-16 18:00:00.000000' WHERE co_fase = 2;
+UPDATE tb_fase SET tp_fase = 'abertura_inscricoes_eleitor',
+                   dh_inicio = '2019-09-16 18:00:01.000000', dh_fim = '2019-11-25 18:00:02.000000',
+                   ds_detalhamento = 'Inscrições - Eleitor' WHERE co_fase = 3;
+
+
+UPDATE tb_fase SET dh_inicio = '2019-09-17 00:09:01.000000', dh_fim = '2019-09-18 18:00:00.000000' WHERE co_fase = 4;
+UPDATE tb_fase SET dh_inicio = '2019-09-17 00:09:01.000000', dh_fim = '2019-09-18 18:00:00.000000' WHERE co_fase = 5;
