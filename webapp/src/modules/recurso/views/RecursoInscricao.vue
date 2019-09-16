@@ -5,7 +5,7 @@
         dark
         color="primary"
       >
-        <v-toolbar-title>Recurso - Inscrição</v-toolbar-title>
+        <v-toolbar-title>Cadastro de recurso</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
         <v-form
@@ -178,7 +178,7 @@
                 auto-grow
                 :placeholder="'Digite seu recurso aqui.'"
                 :counter="3000"
-                :rules="[rules.required]"
+                :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
               />
             </v-flex>
           </v-layout>
@@ -277,17 +277,18 @@ export default {
       },
     ],
     rules: {
-      required: v => !!v || 'Campo não preenchido',
-      cnpjInvalido: v => !!v || 'CNPJ não encontrado',
-      cpfInvalido: v => !!v || 'CPF não encontrado',
-      phoneMin: v => (v && v.length >= 9) || 'Mínimo de 9 caracteres',
-      cnpjMin: v => (v && v.length === 14) || 'Mínimo de 14 caracteres',
-      cpfMin: v => (v && v.length === 11) || 'Mínimo de 11 caracteres',
-      email: (v) => {
+      required: value => !!value || 'Campo não preenchido',
+      cnpjInvalido: value => !!value || 'CNPJ não encontrado',
+      cpfInvalido: value => !!value || 'CPF não encontrado',
+      phoneMin: value => (value && value.length >= 9) || 'Mínimo de 9 caracteres',
+      cnpjMin: value => (value && value.length === 14) || 'Mínimo de 14 caracteres',
+      cpfMin: value => (value && value.length === 11) || 'Mínimo de 11 caracteres',
+      email: (value) => {
         // eslint-disable-next-line
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'E-mail invalido';
+        return pattern.test(value) || 'E-mail invalido';
       },
+      tamanhoMaximoCaracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
     },
   }),
   watch: {
@@ -335,7 +336,7 @@ export default {
 
       this.enviarDadosRecursoInscricao(this.recursoInscricao)
         .then((response) => {
-          this.definirMensagemSucesso(response.response.data.message);
+          this.definirMensagemSucesso(response.data.message);
           this.$router.push('/');
         }).finally(() => {
           this.loading = false;

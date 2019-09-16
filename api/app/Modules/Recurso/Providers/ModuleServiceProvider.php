@@ -2,13 +2,10 @@
 
 namespace App\Modules\Recurso\Providers;
 
+use App\Modules\Recurso\Mail\RecursoInscricao\AvaliacaoComSucesso;
 use App\Modules\Recurso\Mail\RecursoInscricao\CadastroComSucesso;
-use App\Modules\Recurso\Model\Criterio as CriterioModel;
 use App\Modules\Recurso\Model\RecursoInscricao as RecursoInscricaoModel;
-use App\Modules\Recurso\Model\Segmento as SegmentoModel;
-use App\Modules\Recurso\Service\Criterio as CriterioService;
 use App\Modules\Recurso\Service\RecursoInscricao as RecursoInscricaoService;
-use App\Modules\Recurso\Service\Segmento as SegmentoService;
 use Caffeinated\Modules\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -35,6 +32,12 @@ class ModuleServiceProvider extends ServiceProvider
                 return new CadastroComSucesso($parametros);
             }
             return new CadastroComSucesso($app->make(RecursoInscricaoModel::class, $parametros));
+        });
+        $this->app->bind(AvaliacaoComSucesso::class, function ($app, $parametros) {
+            if($parametros instanceof RecursoInscricaoModel) {
+                return new AvaliacaoComSucesso($parametros);
+            }
+            return new AvaliacaoComSucesso($app->make(RecursoInscricaoModel::class, $parametros));
         });
         $this->app->bind(RecursoInscricaoModel::class, function ($app, $parametros) {
             return new RecursoInscricaoModel($parametros);

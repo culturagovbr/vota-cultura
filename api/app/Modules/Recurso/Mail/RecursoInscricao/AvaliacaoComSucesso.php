@@ -8,7 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CadastroComSucesso extends Mailable
+class AvaliacaoComSucesso extends Mailable
 {
     use Queueable,
         SerializesModels;
@@ -23,8 +23,8 @@ class CadastroComSucesso extends Mailable
     public function build()
     {
 
-        return $this->subject('Ministério da Cidadania - Recurso enviado com sucesso')
-            ->view('recurso::email.recurso-inscricao.cadastro-com-sucesso')
+        return $this->subject('Ministério da Cidadania - Avaliação do recurso da inscrição')
+            ->view('recurso::email.recurso-inscricao.avaliacao-com-sucesso')
             ->with([
                 'recursoInscricao' => $this->recursoInscricao,
             ]);

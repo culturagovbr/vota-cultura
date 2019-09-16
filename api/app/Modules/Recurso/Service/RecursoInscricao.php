@@ -6,6 +6,7 @@ use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Exceptions\EValidacaoCampo;
 use App\Modules\Fase\Service\Fase as FaseService;
+use App\Modules\Recurso\Mail\RecursoInscricao\AvaliacaoComSucesso;
 use App\Modules\Recurso\Mail\RecursoInscricao\CadastroComSucesso;
 use App\Modules\Recurso\Model\RecursoInscricao as RecursoInscricaoModel;
 use Carbon\Carbon;
@@ -103,11 +104,7 @@ class RecursoInscricao extends AbstractService
             ]));
 
         try {
-            $recursoInscricao = $this->getModel()->where(
-                $dados->only([
-                    'co_recursoInscricao'
-                ])->toArray()
-            )->first();
+            $recursoInscricao = $this->getModel()->find($identificador);
 
             if (empty($recursoInscricao)) {
                 throw new EParametrosInvalidos(
@@ -124,6 +121,15 @@ class RecursoInscricao extends AbstractService
             $horarioAtual = Carbon::now();
             $recursoInscricao->dh_parecer = $horarioAtual->toDateTimeString();
             $recursoInscricao->save();
+
+            Mail::to($recursoInscricao->ds_email)
+                ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+                ->send(
+                    app()->make(
+                        AvaliacaoComSucesso::class,
+                        $recursoInscricao->toArray()
+                    )
+                );
 
             DB::commit();
             return $recursoInscricao;
