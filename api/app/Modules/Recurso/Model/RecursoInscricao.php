@@ -30,6 +30,8 @@ class RecursoInscricao extends Model
         'ds_parecer',
         'dh_parecer',
         'st_parecer',
+        'no_razao_social',
+        'no_representante'
     ];
     public $timestamps = false;
 

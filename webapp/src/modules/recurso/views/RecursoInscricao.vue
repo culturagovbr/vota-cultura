@@ -261,6 +261,8 @@ export default {
       nu_cpf: '',
       nu_telefone: '',
       ds_recurso: '',
+      no_razao_social : '',
+      no_representante : ''
     },
     listaRecursos: [
       {
@@ -328,6 +330,9 @@ export default {
     },
     salvar() {
       this.loading = true;
+      this.recursoInscricao.no_razao_social = this.nomeConselho,
+      this.recursoInscricao.no_representante = this.nomeRepresentante
+
       this.enviarDadosRecursoInscricao(this.recursoInscricao)
         .then((response) => {
           this.definirMensagemSucesso(response.response.data.message);
