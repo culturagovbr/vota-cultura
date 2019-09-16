@@ -484,3 +484,7 @@ UPDATE tb_fase SET tp_fase = 'abertura_inscricoes_organizacao', dh_inicio = '201
 UPDATE tb_fase SET tp_fase = 'abertura_inscricoes_eleitor', dh_inicio = '2019-09-15 00:00:01.000000', dh_fim = '2019-09-15 00:00:02.000000', ds_detalhamento = 'Inscrições - Eleitor' WHERE co_fase = 3;
 INSERT INTO tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (4, 'recurso_inscricoes_conselho', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Conselho');
 INSERT INTO tb_fase (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento) VALUES (5, 'recurso_inscricoes_organizacao', '2019-09-13 00:00:01.000000', '2019-09-08 17:18:21.000000', 'Recurso - Inscrição Organização');
+ALTER TABLE public.tb_recurso_inscricao ADD no_razao_social varchar(255) NULL;
+COMMENT ON COLUMN public.tb_recurso_inscricao.no_razao_social IS 'Razão social da organização ou conselho';
+ALTER TABLE public.tb_recurso_inscricao ADD no_representante varchar(255) NULL;
+COMMENT ON COLUMN public.tb_recurso_inscricao.no_representante IS 'Nome do representando da organização ou conselho';
