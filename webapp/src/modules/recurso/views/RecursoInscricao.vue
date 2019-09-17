@@ -125,6 +125,8 @@
                 maxlength="100"
                 :rules="[rules.required, rules.email]"
                 required
+                hint="Atenção: este e-mail deverá ser acessado para acompanhamento do recurso"
+                persistent-hint
               />
             </v-flex>
             <v-flex
@@ -189,7 +191,9 @@
         align-center
       >
         <v-flex offset-xs5>
-          <v-btn to="/">Cancelar</v-btn>
+          <v-btn to="/">
+            Cancelar
+          </v-btn>
           <v-btn
             :disabled="!valid"
             color="primary"
@@ -261,8 +265,8 @@ export default {
       nu_cpf: '',
       nu_telefone: '',
       ds_recurso: '',
-      no_razao_social : '',
-      no_representante : ''
+      no_razao_social: '',
+      no_representante: '',
     },
     listaRecursos: [
       {
@@ -331,8 +335,8 @@ export default {
     },
     salvar() {
       this.loading = true;
-      this.recursoInscricao.no_razao_social = this.nomeConselho,
-      this.recursoInscricao.no_representante = this.nomeRepresentante
+      this.recursoInscricao.no_razao_social = this.nomeConselho;
+      this.recursoInscricao.no_representante = this.nomeRepresentante;
 
       this.enviarDadosRecursoInscricao(this.recursoInscricao)
         .then((response) => {
