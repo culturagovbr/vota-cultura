@@ -500,3 +500,5 @@ UPDATE tb_fase SET tp_fase = 'abertura_inscricoes_eleitor',
 
 UPDATE tb_fase SET dh_inicio = '2019-09-17 00:09:01.000000', dh_fim = '2019-09-18 18:00:00.000000' WHERE co_fase = 4;
 UPDATE tb_fase SET dh_inicio = '2019-09-17 00:09:01.000000', dh_fim = '2019-09-18 18:00:00.000000' WHERE co_fase = 5;
+
+ALTER TABLE public.tb_usuario ADD nu_cpf varchar(11) NULL;

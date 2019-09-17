@@ -35,7 +35,7 @@ class Conselho extends AbstractService
             $serviceFase = app()->make(Fase::class);
             $fase = $serviceFase->obterPorTipo(FaseModel::ABERTURA_INSCRICOES_CONSELHO);
 
-            if ($fase->faseFinalizada()) {
+            if ($fase->faseFinalizada() && !Auth::user()->souAdministrador()) {
                 throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
             }
 
