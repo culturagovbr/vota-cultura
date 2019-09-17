@@ -25,7 +25,7 @@
             >
               <v-flex
                 xs12
-                md6
+                md4
               >
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
@@ -49,6 +49,7 @@
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
+                      style="margin-top: 69px"
                       color="green darken-4"
                       to="/inscricao/lista-parcial"
                       dark
@@ -62,7 +63,7 @@
               </v-flex>
               <v-flex
                 xs12
-                md6
+                md4
               >
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
@@ -86,10 +87,49 @@
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
-
                       color="green darken-4"
                       to="/recurso/inscricao"
                       dark
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+              <v-flex
+                xs12
+                md4
+              >
+                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      thumbs_up_down
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Inscrição
+                      <br />
+                      Eleitor
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
+                      color="green darken-4"
+                      to="/eleitor/inscricao"
+                      dark
+                      style="margin-top: 16px"
                     >
                       <v-icon>
                         call_made
@@ -104,123 +144,6 @@
       </v-layout>
     </section>
 
-    <section
-      v-if="ativarInscricaoOrganizacao || ativarInscricaoConselho || ativarInscricaoEleitor"
-    >
-      <v-layout
-        column
-        wrap
-        class="my-5"
-        align-center
-      >
-        <v-flex
-          xs12
-          sm4
-          class="my-3"
-        >
-          <div class="text-xs-center">
-            <h2 class="headline">
-              Inscreva-se
-            </h2>
-          </div>
-        </v-flex>
-        <v-flex xs12>
-          <v-container grid-list-xl>
-            <v-layout
-              row
-              wrap
-              align-center
-            >
-              <v-flex
-                v-if="ativarInscricaoOrganizacao"
-                xs12
-                md4
-              >
-                <v-card class="elevation-0 transparent">
-                  <v-card-text class="text-xs-center">
-                    <v-icon
-                      x-large
-                      class="text--lighten-2"
-                    >
-                      color_lens
-                    </v-icon>
-                  </v-card-text>
-                  <v-card-title
-                    primary-title
-                    class="layout justify-center"
-                  >
-                    <div class="headline text-xs-center">
-                      Organizações e Entidades Culturais
-                    </div>
-                  </v-card-title>
-                  <v-card-text>
-                    Pessoa jurídica de direito privado sem fins lucrativos, legalmente constituída,
-                    de caráter associativo, com atuação nacional comprovada no campo cultural, em ao
-                    menos cinco estados de duas macrorregiões brasileiras
-                  </v-card-text>
-                </v-card>
-              </v-flex>
-              <v-flex
-                v-if="ativarInscricaoConselho"
-                xs12
-                md4
-              >
-                <v-card class="elevation-0 transparent">
-                  <v-card-text class="text-xs-center">
-                    <v-icon
-                      x-large
-                      class="text--lighten-2"
-                    >
-                      group
-                    </v-icon>
-                  </v-card-text>
-                  <v-card-title
-                    primary-title
-                    class="layout justify-center"
-                  >
-                    <div class="headline">
-                      Conselhos de Cultura Estaduais e Distrital
-                    </div>
-                  </v-card-title>
-                  <v-card-text>
-                    Órgão colegiado de cultura vinculados à administração pública do Estado ou
-                    Distrito Federal, e na impossibilidade declarada de participação de conselho no
-                    âmbito do Estado, aquele vinculado à administração pública da respectiva capital
-                  </v-card-text>
-                </v-card>
-              </v-flex>
-              <v-flex
-                v-if="ativarInscricaoEleitor"
-                xs12
-                md4
-              >
-                <v-card class="elevation-0 transparent">
-                  <v-card-text class="text-xs-center">
-                    <v-icon
-                      x-large
-                      class="text--lighten-2"
-                    >
-                      thumbs_up_down
-                    </v-icon>
-                  </v-card-text>
-                  <v-card-title
-                    primary-title
-                    class="layout justify-center"
-                  >
-                    <div class="headline text-xs-center">
-                      Eleitor
-                    </div>
-                  </v-card-title>
-                  <v-card-text>
-                    Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
-                  </v-card-text>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-flex>
-      </v-layout>
-    </section>
     <section>
       <v-parallax
         :src="require('@/assets/banner_2.jpg')"
