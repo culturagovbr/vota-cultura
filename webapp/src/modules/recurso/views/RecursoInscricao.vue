@@ -358,5 +358,9 @@ export default {
       this.dialog = false;
     },
   },
+  mounted() {
+    this.mensagemErro('O prazo de recurso expirou!');
+    this.$router.push('/');
+  },
 };
 </script>

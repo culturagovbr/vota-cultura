@@ -45,4 +45,9 @@ class RecursoInscricaoApiResourceController extends AApiResourceController
             Response::HTTP_OK
         );
     }
+
+    public function store(Request $request): JsonResponse
+    {
+        throw new \Exception('Funcionalidade não disponível.');
+    }
 }
