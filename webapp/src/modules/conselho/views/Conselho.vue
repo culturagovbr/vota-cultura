@@ -670,9 +670,9 @@ export default {
     this.obterFases().then(function (response) {
       const { data } = response.data;
       const faseSlug = 'abertura_inscricoes_conselho';
-      const faseOrganizacao = data.find((fase) => fase.tp_fase === faseSlug);
+      const faseOrganizacao = data.find(fase => fase.tp_fase === faseSlug);
 
-      if (!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) {
+      if ((!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) && self.perfil.no_perfil !== 'administrador') {
         self.mensagemErro('O prazo de inscrições expirou!');
         self.$router.push('/');
       }
@@ -689,6 +689,7 @@ export default {
       estadosGetter: 'localidade/estados',
       municipiosGetter: 'localidade/municipios',
       conselhoGetter: 'conselho/conselho',
+      perfil: 'conta/perfil',
     }),
   },
   methods: {
