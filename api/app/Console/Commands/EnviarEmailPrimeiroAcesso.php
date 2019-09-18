@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Conta\Mail\Usuario\CadastroPrimeiroAcesso;
-use App\Modules\Eleitor\Model\Eleitor;
 use App\Modules\Organizacao\Model\Organizacao;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -51,7 +50,9 @@ class EnviarEmailPrimeiroAcesso extends Command
         );
 
         foreach ($listaEmailsGeral as $email) {
-            Mail::to($email)->send(app()->make(CadastroPrimeiroAcesso::class));
+            Mail::to($email)
+                ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+                ->send(app()->make(CadastroPrimeiroAcesso::class));
         }
 
     }

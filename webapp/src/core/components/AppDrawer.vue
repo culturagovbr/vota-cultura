@@ -168,12 +168,6 @@ export default {
           icon: 'list',
           name: 'inscricao-lista-parcial-route',
         },
-        {
-          title: 'Enviar recurso',
-          group: 'apps',
-          icon: 'sms_failed',
-          name: 'recurso-inscricao-route',
-        },
       ],
     };
   },

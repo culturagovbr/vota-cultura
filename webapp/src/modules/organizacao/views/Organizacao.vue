@@ -804,12 +804,12 @@ export default {
   },
   mounted() {
     const self = this;
-    this.obterFases().then(function (response) {
+    this.obterFases().then((response) => {
       const { data } = response.data;
       const faseSlug = 'abertura_inscricoes_organizacao';
-      const faseOrganizacao = data.find((fase) => fase.tp_fase === faseSlug);
+      const faseOrganizacao = data.find(fase => fase.tp_fase === faseSlug);
 
-      if (!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) {
+      if ((!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) && self.perfil.no_perfil !== 'administrador') {
         self.mensagemErro('O prazo de inscrições expirou!');
         self.$router.push('/');
       }
@@ -831,6 +831,7 @@ export default {
       segmentosGetter: 'organizacao/segmentos',
       criteriosGetter: 'organizacao/criterios',
       organizacaoGetter: 'organizacao/organizacao',
+      perfil: 'conta/perfil',
     }),
   },
   methods: {

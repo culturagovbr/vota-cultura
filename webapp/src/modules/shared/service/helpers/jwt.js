@@ -11,7 +11,7 @@ export function obterInformacoesJWT(token) {
     if (finalToken == null) {
       finalToken = localStorage.getItem('token_usuario');
     }
-    return finalToken != null ? jsonwebtoken.verify(finalToken, process.env.VUE_APP_JWT_SECRET) : '';
+    return finalToken != null ? jsonwebtoken.verify(finalToken, process.env.VUE_APP_JWT_SECRET, { ignoreNotBefore: true }) : '';
   } catch (Exception) {
     // console.log(Exception);
     // return {};
