@@ -271,6 +271,18 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
+        this.definirItemMenu({
+          title: 'Inscrição - Conselho',
+          group: 'apps',
+          name: 'InscricaoConselho',
+          icon: 'group',
+        }, 'Administração');
+        this.definirItemMenu({
+          title: 'Inscrição - Organização',
+          group: 'apps',
+          name: 'InscricaoOrganizacao',
+          icon: 'group',
+        }, 'Administração');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {

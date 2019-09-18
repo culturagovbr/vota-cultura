@@ -34,7 +34,7 @@ class Organizacao extends AbstractService
             $serviceFase = app()->make(FaseService::class);
             $fase = $serviceFase->obterPorTipo(FaseModel::ABERTURA_INSCRICOES_ORGANIZACAO);
 
-            if ($fase->faseFinalizada()) {
+            if ($fase->faseFinalizada() && !Auth::user()->souAdministrador()) {
                 throw new EValidacaoCampo('O período de inscrição já foi encerrado.');
             }
 

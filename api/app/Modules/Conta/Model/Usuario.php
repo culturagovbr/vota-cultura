@@ -114,7 +114,18 @@ class Usuario extends AAutenticacao
 
     public function souAdministrador(): bool
     {
-        return ($this->perfil->no_perfil === 'administrador');
+        $dadosUsuarioAutenticado = auth()->user()->dadosUsuarioAutenticado();
+        $retorno = TRUE;
+
+        if(empty($dadosUsuarioAutenticado)) {
+            $retorno = FALSE;
+        }
+
+        if ($dadosUsuarioAutenticado['perfil']->co_perfil !== Perfil::CODIGO_ADMINISTRADOR) {
+            $retorno = FALSE;
+        }
+
+        return $retorno;
     }
 
     public function getNuCpfFormatadoAttribute(): string
