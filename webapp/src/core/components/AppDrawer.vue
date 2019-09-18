@@ -272,6 +272,12 @@ export default {
           icon: 'list',
         }, 'Administração');
         this.definirItemMenu({
+          title: 'Habilitação de conselhos',
+          group: 'apps',
+          name: 'ConselhoListaHabilitacaoRoute',
+          icon: 'list',
+        }, 'Administração');
+        this.definirItemMenu({
           title: 'Inscrição - Conselho',
           group: 'apps',
           name: 'InscricaoConselho',
