@@ -51,7 +51,9 @@ class EnviarEmailPrimeiroAcesso extends Command
         );
 
         foreach ($listaEmailsGeral as $email) {
-            Mail::to($email)->send(app()->make(CadastroPrimeiroAcesso::class));
+            Mail::to($email)
+                ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+                ->send(app()->make(CadastroPrimeiroAcesso::class));
         }
 
     }
