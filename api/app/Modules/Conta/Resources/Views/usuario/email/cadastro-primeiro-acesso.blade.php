@@ -4,7 +4,7 @@
     </b>
 </h1>
 <p>
-    Prezado(a) representante,
+    Prezado(a) {{ $dadosInscricao['representante']['no_nome'] }}, representante do(a) {{ $dadosInscricao['no_conselho'] ?: $dadosInscricao['no_organizacao']}}.
 </p>
 <br/>
 <p>

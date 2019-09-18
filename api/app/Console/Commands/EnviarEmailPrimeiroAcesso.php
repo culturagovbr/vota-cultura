@@ -4,7 +4,8 @@ namespace App\Console\Commands;
 
 use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Conta\Mail\Usuario\CadastroPrimeiroAcesso;
-use App\Modules\Eleitor\Model\Eleitor;
+use App\Modules\Organizacao\Http\Resources\Organizacao as OrganizacaoResource;
+use App\Modules\Conselho\Http\Resources\Conselho as ConselhoResource;
 use App\Modules\Organizacao\Model\Organizacao;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -33,25 +34,26 @@ class EnviarEmailPrimeiroAcesso extends Command
      */
     public function handle()
     {
-        $organizacaoModel = app()->make(Organizacao::class);
+        $organizacaoModel = app(Organizacao::class);
         $listaEmailsOrganizacao = $organizacaoModel
-            ->whereNull('co_usuario')->get()
-            ->pluck('representante.ds_email')
-            ->toArray();
+            ->with('representante')
+            ->whereNull('co_usuario')->get();
 
-        $conselhoModel = app()->make(Conselho::class);
+        $conselhoModel = app(Conselho::class);
         $listaEmailsConselho = $conselhoModel
-            ->whereNull('co_usuario')->get()
-            ->pluck('representante.ds_email')
-            ->toArray();
+            ->with('representante')
+            ->whereNull('co_usuario')->get();
 
-        $listaEmailsGeral = array_merge(
-            $listaEmailsConselho,
-            $listaEmailsOrganizacao
-        );
+        foreach ($listaEmailsConselho as $conselho) {
+            Mail::to($conselho->ds_email)->send(
+                new CadastroPrimeiroAcesso($conselho)
+            );
+        }
 
-        foreach ($listaEmailsGeral as $email) {
-            Mail::to($email)->send(app()->make(CadastroPrimeiroAcesso::class));
+        foreach ($listaEmailsOrganizacao as $organizacao) {
+            Mail::to($organizacao->ds_email)->send(
+                new CadastroPrimeiroAcesso($organizacao)
+            );
         }
 
     }

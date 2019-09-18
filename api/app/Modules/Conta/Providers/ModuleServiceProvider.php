@@ -5,6 +5,7 @@ namespace App\Modules\Conta\Providers;
 use App\Modules\Conta\Http\Resources\Perfil as PerfilResource;
 use App\Modules\Conta\Http\Resources\Usuario as UsuarioResource;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
+use App\Modules\Conta\Mail\Usuario\CadastroPrimeiroAcesso;
 use App\Modules\Conta\Model\Perfil as PerfilModel;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
 use Caffeinated\Modules\Support\ServiceProvider;
@@ -34,6 +35,10 @@ class ModuleServiceProvider extends ServiceProvider
 
         $this->app->bind(UsuarioResource::class, function ($app, $parametros) {
             return new UsuarioResource(app(UsuarioModel::class, $parametros));
+        });
+
+        $this->app->bind(CadastroPrimeiroAcesso::class, function ($app, $parametros) {
+            return new CadastroPrimeiroAcesso($parametros);
         });
 
         $this->app->bind(PerfilModel::class, function ($app, $parametros) {

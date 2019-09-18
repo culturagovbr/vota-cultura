@@ -12,16 +12,19 @@ class CadastroPrimeiroAcesso extends Mailable
     use Queueable,
         SerializesModels;
 
-    protected $listaRepresentantesNaoCadastrados;
+    protected $dadosInscricao;
+
+    public function __construct($dadosInscricao)
+    {
+        $this->dadosInscricao = $dadosInscricao;
+    }
 
     public function build()
     {
-        $linkPrimeiroAcesso = env('WEB_APP_HOST')
-            . "/conta/primeiro-acesso/";
         return $this->subject('Ministério da Cidadania - Acesso ao Vota Cultura')
             ->view('conta::usuario.email.cadastro-primeiro-acesso')
             ->with([
-                'linkPrimeiroAcesso' => $linkPrimeiroAcesso,
+                'dadosInscricao' => $this->dadosInscricao
             ]);
     }
 }
