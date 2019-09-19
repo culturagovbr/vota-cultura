@@ -8,10 +8,7 @@ class Usuario extends JsonResource
 {
     public function toArray($request): array
     {
-        $perfil = NULL;
-        if (!empty($this->perfil)) {
-            $perfil = app(Perfil::class, $this->perfil->toArray());
-        }
+
         return [
             'co_usuario' => $this->co_usuario,
             'no_nome' => $this->no_nome,
@@ -21,7 +18,7 @@ class Usuario extends JsonResource
             'dh_cadastro' => $this->dh_cadastro,
             'dh_ultima_atualizacao' => $this->dh_ultima_atualizacao,
             'ds_codigo_ativacao' => $this->ds_codigo_ativacao,
-            'perfil' => $perfil,
+            'perfil' => $this->perfil,
             'nu_cpf' => $this->nu_cpf,
             'nu_cpf_formatado' => $this->nu_cpf_formatado,
         ];
