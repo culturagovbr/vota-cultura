@@ -103,8 +103,8 @@
                         :rules="[rules.required]"
                         label="Perfil"
                         :disabled="
-                          this.formulario.perfil.co_perfil !== 777 &&
-                          this.formulario.perfil.co_perfil !== 1 &&
+                          (this.formulario.perfil.co_perfil !== 777 &&
+                          this.formulario.perfil.co_perfil !== 1) &&
                           formulario.hasOwnProperty('co_usuario')"
                         validate-on-blur
                       />
