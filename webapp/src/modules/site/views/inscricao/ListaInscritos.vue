@@ -19,67 +19,7 @@
       </v-tabs>
       <v-tabs-items v-model="tp_inscricao">
         <v-tab-item value="conselho">
-          <v-card>
-            <v-card-title>
-              <v-spacer />
-              <v-text-field
-                v-model="pesquisar"
-                append-icon="search"
-                label="Pesquisar"
-                single-line
-                hide-details
-              />
-              <v-spacer />
-            </v-card-title>
-            <v-card-text class="pa-0">
-              <v-data-table
-                :headers="headers"
-                :items="conselhosGetter"
-                :pagination.sync="pagination_conselho"
-                :total-items="totalItems"
-                :loading="loading"
-                :search="pesquisar"
-                item-key="co_usuario"
-                class="elevation-1"
-              >
-                <template
-                  slot="items"
-                  slot-scope="props"
-                >
-                  <td />
-                  <td>{{ props.item.nu_cnpj_mascarado }}</td>
-                  <td>{{ props.item.no_orgao_gestor }}</td>
-                  <td>
-                    <v-chip
-                      dark
-                      color="primary"
-                    >
-                      {{ props.item.endereco.municipio.uf.no_uf }}
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip>
-                      {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
-                    </v-chip>
-                  </td>
-                  <td v-if="souAdministrador">
-                    <v-btn
-                      depressed
-                      outline
-                      icon
-                      fab
-                      dark
-                      color="primary"
-                      small
-                      @click="visualizarItemModal('conselho', props.item.co_conselho)"
-                    >
-                      <v-icon>search</v-icon>
-                    </v-btn>
-                  </td>
-                </template>
-              </v-data-table>
-            </v-card-text>
-          </v-card>
+          <conselho-lista />
         </v-tab-item>
         <v-tab-item value="organizacao">
           <v-card>
@@ -218,12 +158,14 @@
 import { mapActions, mapGetters } from 'vuex';
 import OrganizacaoDetalhesInscricaoVisualizacao from '@/modules/organizacao/views/OrganizacaoDetalhesInscricaoVisualizacao.vue';
 import ConselhoDetalhesInscricaoVisualizacao from '@/modules/conselho/views/ConselhoDetalhesInscricaoVisualizacao.vue';
+import ConselhoLista from '@/modules/conselho/views/ConselhoLista.vue';
 
 export default {
   name: 'ListaInscritos',
   components: {
     ConselhoDetalhesInscricaoVisualizacao,
     OrganizacaoDetalhesInscricaoVisualizacao,
+    ConselhoLista,
   },
   props: {
     souAdministrador: {
@@ -247,35 +189,9 @@ export default {
       sortBy: 'no_organizacao',
       descending: false,
     },
-    pagination_conselho: {
-      page: 1,
-      rowsPerPage: 10,
-      sortBy: 'no_orgao_gestor',
-      descending: false,
-    },
+
     totalItems: 0,
-    headers: [
-      {
-        text: '',
-        sortable: false,
-      },
-      {
-        text: 'CNPJ',
-        value: 'nu_cnpj_mascarado',
-      },
-      {
-        text: 'Nome Conselho',
-        value: 'no_orgao_gestor',
-      },
-      {
-        text: 'UF',
-        value: 'endereco.municipio.uf.no_uf',
-      },
-      {
-        text: 'Região',
-        value: 'endereco.municipio.uf.regiao.no_regiao',
-      },
-    ],
+
     headers_organizacao: [
       {
         text: '',
@@ -301,14 +217,12 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      conselhosGetter: 'conselho/conselhos',
       organizacoesGetter: 'organizacao/organizacoes',
       organizacaoGetter: 'organizacao/organizacao',
     }),
   },
   methods: {
     ...mapActions({
-      obterConselhos: 'conselho/obterConselhos',
       obterOrganizacoes: 'organizacao/obterOrganizacoes',
       obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
       obterDadosConselho: 'conselho/obterDadosConselho',
@@ -333,18 +247,11 @@ export default {
     const self = this;
 
     self.loading = true;
-    self.obterConselhos().finally(() => {
-      self.loading = false;
-    });
     self.obterOrganizacoes().finally(() => {
       self.loading = false;
     });
     if (!!this.souAdministrador) {
       this.headers_organizacao.push({
-        text: 'Ações',
-        sortable: false,
-      });
-      this.headers.push({
         text: 'Ações',
         sortable: false,
       });
