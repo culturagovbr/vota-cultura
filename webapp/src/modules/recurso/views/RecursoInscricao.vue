@@ -326,6 +326,7 @@ export default {
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
       definirMensagemSucesso: 'app/setMensagemSucesso',
+      definirMensagemErro: 'app/setMensagemErro',
       enviarDadosRecursoInscricao: 'recurso/enviarDadosRecursoInscricao',
     }),
     validarIrProximaEtapa(formRef) {
@@ -359,7 +360,7 @@ export default {
     },
   },
   mounted() {
-    this.mensagemErro('O prazo de recurso expirou!');
+    this.definirMensagemErro('O prazo de recurso expirou!');
     this.$router.push('/');
   },
 };
