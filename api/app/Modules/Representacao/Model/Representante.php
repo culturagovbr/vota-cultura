@@ -61,6 +61,27 @@ class Representante extends Model
         );
     }
 
+    public function representacaoArquivoAvaliacao()
+    {
+        return $this->arquivos()->hasMany(
+            RepresentanteArquivoAvaliacao::class,
+            'co_representante_arquivo',
+            'co_representante_arquivo'
+        );
+    }
+
+    public function avaliacoesRepresentante()
+    {
+        return $this->hasManyThrough(
+            RepresentanteArquivoAvaliacao::class,
+            RepresentanteArquivoPivot::class,
+            'co_representante',
+            'co_representante_arquivo',
+            '',
+            'co_representante_arquivo'
+        );
+    }
+
     public function getTelefoneFormatadoAttribute()
     {
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
