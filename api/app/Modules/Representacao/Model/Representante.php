@@ -70,7 +70,7 @@ class Representante extends Model
         );
     }
 
-    public function avaliacoesRepresentante()
+    public function arquivosAvaliados()
     {
         return $this->hasManyThrough(
             RepresentanteArquivoAvaliacao::class,

@@ -22,63 +22,7 @@
           <conselho-lista />
         </v-tab-item>
         <v-tab-item value="organizacao">
-          <v-card>
-            <v-card-title>
-              <v-spacer />
-              <v-text-field
-                v-model="pesquisar"
-                append-icon="search"
-                label="Pesquisar"
-                single-line
-                hide-details
-              />
-              <v-spacer />
-            </v-card-title>
-            <v-card-text class="pa-0">
-              <v-data-table
-                :headers="headers_organizacao"
-                :items="organizacoesGetter"
-                :pagination.sync="pagination_organizacao"
-                :total-items="totalItems"
-                :loading="loading"
-                :search="pesquisar"
-                item-key="co_usuario"
-                class="elevation-1"
-              >
-                <template
-                  slot="items"
-                  slot-scope="props"
-                >
-                  <td />
-                  <td>{{ props.item.nu_cnpj_mascarado }}</td>
-                  <td>{{ props.item.no_organizacao }}</td>
-                  <td>
-                    <v-chip
-                      dark
-                      color="primary"
-                    >
-                      {{ props.item.segmento.ds_detalhamento }}
-                    </v-chip>
-                  </td>
-                  <td>{{ props.item.pontuacao }}</td>
-                  <td v-if="souAdministrador">
-                    <v-btn
-                      depressed
-                      outline
-                      icon
-                      fab
-                      dark
-                      color="primary"
-                      small
-                      @click="visualizarItemModal('organizacao', props.item.co_organizacao)"
-                    >
-                      <v-icon>search</v-icon>
-                    </v-btn>
-                  </td>
-                </template>
-              </v-data-table>
-            </v-card-text>
-          </v-card>
+          <organizacao-lista />
         </v-tab-item>
       </v-tabs-items>
     </v-card>
@@ -159,6 +103,7 @@ import { mapActions, mapGetters } from 'vuex';
 import OrganizacaoDetalhesInscricaoVisualizacao from '@/modules/organizacao/views/OrganizacaoDetalhesInscricaoVisualizacao.vue';
 import ConselhoDetalhesInscricaoVisualizacao from '@/modules/conselho/views/ConselhoDetalhesInscricaoVisualizacao.vue';
 import ConselhoLista from '@/modules/conselho/views/ConselhoLista.vue';
+import OrganizacaoLista from '@/modules/organizacao/views/OrganizacaoLista.vue';
 
 export default {
   name: 'ListaInscritos',
@@ -166,6 +111,7 @@ export default {
     ConselhoDetalhesInscricaoVisualizacao,
     OrganizacaoDetalhesInscricaoVisualizacao,
     ConselhoLista,
+    OrganizacaoLista,
   },
   props: {
     souAdministrador: {
@@ -179,51 +125,17 @@ export default {
     tipoModal: '',
     mostrarModal: false,
     loading: false,
-    formularioValido: true,
     step: 1,
     pesquisar: '',
     tp_inscricao: null,
-    pagination_organizacao: {
-      page: 1,
-      rowsPerPage: 10,
-      sortBy: 'no_organizacao',
-      descending: false,
-    },
-
-    totalItems: 0,
-
-    headers_organizacao: [
-      {
-        text: '',
-        sortable: false,
-      },
-      {
-        text: 'CNPJ',
-        value: 'nu_cnpj_mascarado',
-      },
-      {
-        text: 'Nome da Organização ou Entidade',
-        value: 'no_organizacao',
-      },
-      {
-        text: 'Segmento',
-        value: 'segmento.ds_detalhamento',
-      },
-      {
-        text: 'Pontuação',
-        value: 'pontuacao',
-      },
-    ],
   }),
   computed: {
     ...mapGetters({
-      organizacoesGetter: 'organizacao/organizacoes',
       organizacaoGetter: 'organizacao/organizacao',
     }),
   },
   methods: {
     ...mapActions({
-      obterOrganizacoes: 'organizacao/obterOrganizacoes',
       obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
       obterDadosConselho: 'conselho/obterDadosConselho',
     }),

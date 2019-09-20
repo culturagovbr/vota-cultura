@@ -9,17 +9,17 @@
         </div>
       </v-card-title>
       <v-card-text>
-        <!--<lista-inscritos></lista-inscritos>-->
+        <conselho-lista />
       </v-card-text>
     </v-card>
   </v-container>
 </template>
 
 <script>
-  // import ListaInscritos from '../../';
+  import ConselhoLista from '@/modules/conselho/views/ConselhoLista.vue';
 
   export default {
-    // components: { ListaInscritos },
+    components: { ConselhoLista },
     name: 'ConselhoListaHabilitacao.vue',
   };
 </script>
