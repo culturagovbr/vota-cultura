@@ -4,6 +4,7 @@ metadata:
   name: votacultura-nginx
 data:
   default.conf: |-
+    client_max_body_size 108M;
     server {
         listen 80 default;
         
