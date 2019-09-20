@@ -49,6 +49,15 @@ class Conselho extends Model
         );
     }
 
+    public function habilitacaoConselho()
+    {
+        return $this->hasOne(
+            HabilitacaoConselho::class,
+            'co_conselho',
+            'co_conselho'
+        );
+    }
+
     public function usuario()
     {
         return $this->hasOne(Usuario::class,

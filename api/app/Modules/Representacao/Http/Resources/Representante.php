@@ -17,7 +17,7 @@ class Representante extends JsonResource
             'nu_cpf' => $this->nu_cpf,
             'nu_telefone' => $this->nu_telefone,
             'dh_cadastro' => $this->dh_cadastro,
-            'avaliacoesRepresentante' => $this->avaliacoesRepresentante
+            'arquivosAvaliados' => $this->arquivosAvaliados
         ];
     }
 }

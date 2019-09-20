@@ -27,6 +27,7 @@ class Conselho extends JsonResource
             'ds_sitio_eletronico' => $this->ds_sitio_eletronico,
             'st_inscricao' => $this->st_inscricao,
             'dh_cadastro' => $this->dh_cadastro,
+            'habilitacao' => (new HabilitacaoConselho($this->habilitacaoConselho)),
         ];
     }
 }
