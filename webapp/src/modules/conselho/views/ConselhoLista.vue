@@ -28,7 +28,7 @@
         >
           <td />
           <td>{{ props.item.nu_cnpj_mascarado }}</td>
-          <td>{{ props.item.no_orgao_gestor }}</td>
+          <td>{{ props.item.no_conselho }}</td>
           <td>
             <v-chip
               dark
@@ -70,7 +70,7 @@ export default {
     pagination_conselho: {
       page: 1,
       rowsPerPage: 10,
-      sortBy: 'no_orgao_gestor',
+      sortBy: 'no_conselho',
       descending: false,
     },
     headers: [
@@ -83,8 +83,8 @@ export default {
         value: 'nu_cnpj_mascarado',
       },
       {
-        text: 'Nome Conselho',
-        value: 'no_orgao_gestor',
+        text: 'Nome do conselho',
+        value: 'no_conselho',
       },
       {
         text: 'UF',
