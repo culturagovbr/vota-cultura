@@ -6,6 +6,7 @@ use App\Modules\Conta\Model\Usuario;
 use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Representacao\Model\Representante;
+use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -45,6 +46,15 @@ class Conselho extends Model
             Representante::class,
             'co_representante',
             'co_representante'
+        );
+    }
+
+    public function habilitacaoConselho()
+    {
+        return $this->hasOne(
+            HabilitacaoConselho::class,
+            'co_conselho',
+            'co_conselho'
         );
     }
 
