@@ -41,11 +41,11 @@
                     class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Lista parcial de inscritos
+                      Lista final de inscritos
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Consulte aqui a lista parcial de inscritos
+                    Consulte aqui a lista final de inscritos
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
