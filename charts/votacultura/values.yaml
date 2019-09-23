@@ -32,11 +32,11 @@ webserver:
   database:
     artisan: false
     type: pgsql
-    host: pgsql-votacultura
+    host: supghm10.mds.net
     port: 5432
-    db: votacultura
-    username: votacultura
-    password: votacultura
+    db: dbvotacultura
+    username: usr_votacultura
+    password: EWFXWR75L2
   envs:
     appName: Laravel
     appEnv: local
