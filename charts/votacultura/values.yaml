@@ -4,7 +4,7 @@ webapp:
   name: webapp
   image:
     repository: docker-registry.default.svc:5000/vota-cultura/webapp
-    tag: desenvolvimento
+    tag: homologacao
   replicaCount: 1
   ingress:
     enabled: true
@@ -14,7 +14,7 @@ webapp:
     type: NodePort
   envs:
     vueAppTitle: Vota Cultura
-    nodeEnv: production
+    nodeEnv: homologacao
     vueAppSecret: secret
     vueAppJwtSecret: MLcfHzdEWKEiSK4mCFpNIgKkbg713IpCGDkIXNsfvSlYUafgwUwnAOdx1KHr6hre
     vueAppThemeDefault: pink
@@ -24,7 +24,7 @@ webserver:
   name: webserver
   image:
     repository: docker-registry.default.svc:5000/vota-cultura/webserver
-    tag: desenvolvimento
+    tag: homologacao
   replicaCount: 1
   ingress:
     enabled: true
