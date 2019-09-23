@@ -8,7 +8,7 @@ webapp:
   replicaCount: 1
   ingress:
     enabled: true
-    url: "vota-cultura-des.apps.cidadania.gov.br"
+    url: "vota-cultura-hom.apps.cidadania.gov.br"
   service:
     servicePort: 80
     type: NodePort
@@ -28,7 +28,7 @@ webserver:
   replicaCount: 1
   ingress:
     enabled: true
-    url: "vota-cultura-des-api.apps.cidadania.gov.br"
+    url: "vota-cultura-hom-api.apps.cidadania.gov.br"
   database:
     artisan: false
     type: pgsql
