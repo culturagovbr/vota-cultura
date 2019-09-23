@@ -32,265 +32,147 @@
                 color="cyan"
                 slider-color="yellow"
               >
+                <v-tabs-slider />
                 <v-tab
-                  :key="1"
-                  :href="`#tab-1`"
+                  href="#tab-1"
                 >
                   Habilitação
                 </v-tab>
                 <v-tab
-                  :key="2"
-                  :href="`#tab-2`"
+                  href="#tab-2"
                 >
                   Dados do conselho
                 </v-tab>
               </v-tabs>
-              <v-tabs-items v-model="model">
+              <v-tabs-items
+                v-model="model"
+                class="white elevation-1"
+              >
                 <v-tab-item
-                  :key="1"
-                  :value="`tab-1`"
+                  value="tab-1"
                 >
                   <v-card flat>
-                    lero 1
+                    <v-divider />
+
+                    <v-layout
+                      wrap
+                      align-center
+                    >
+                      <v-flex
+                        xs12
+                        sm12
+                        class="ma-3"
+                      >
+                        <div class="ma-4 text-justify subheading grey--text">
+                          <b>Documentação:</b>
+                        </div>
+                        <v-container
+                          fluid
+                          grid-list-xl
+                        >
+                          <v-layout
+                            align-center
+                            justify-center
+                            class="mb-4"
+                            wrap
+                          >
+                            <v-flex sm4>
+                              <v-card
+                                min-height="260"
+                                class="mx-auto"
+                              >
+                                <v-card-text class="mb-1">
+                                  <div class="justify-center mb-1">
+                                  Ato normativo que constituiu o conselho
+                                  </div>
+                                  <div class="justify-center mb-1 center">
+                                    <v-icon
+                                      size="40px"
+                                      color="blue darken-4"
+                                    >
+                                      cloud_download
+                                    </v-icon>
+                                  </div>
+                                  <p>
+                                    * Documento em conformidade com o item 4.2.3 do edital?
+                                  </p>
+                                  <v-layout>
+                                    <v-flex>
+                                      <v-radio-group
+                                        v-model="conselho.st_em_conformidade"
+                                        disabled
+                                        row
+                                      >
+                                        <v-radio
+                                          label="Estadual"
+                                          value="e"
+                                        />
+                                        <v-radio
+                                          label="Capital"
+                                          value="c"
+                                        />
+                                      </v-radio-group>
+                                    </v-flex>
+                                  </v-layout>
+
+
+                                </v-card-text>
+                              </v-card>
+                            </v-flex>
+                            <v-flex sm4>
+                              <v-card
+                                min-height="260"
+                                class="mx-auto"
+                              >
+                                <v-card-title class=" mb-1">
+                                  Ata da última reunião do conselho
+                                  <p>
+                                    * Documento em conformidade com o item 4.2.3 do edital?
+                                  </p>
+                                  <p>
+                                  </p>
+                                </v-card-title>
+                                <v-card-text>
+
+                                </v-card-text>
+                              </v-card>
+                            </v-flex>
+                            <v-flex sm4>
+                              <v-card
+                                min-height="260"
+                                class="mx-auto"
+                              >
+                                <v-card-title class=" mb-1">
+                                  Documento de identificação do representante com CPF
+                                  <p>
+                                    * Documento em conformidade com o item 4.2.3 do edital?
+                                  </p>
+                                </v-card-title>
+                                <v-card-text>
+
+                                </v-card-text>
+                              </v-card>
+                            </v-flex>
+                          </v-layout>
+                        </v-container>
+                      </v-flex>
+                    </v-layout>
                   </v-card>
                 </v-tab-item>
                 <v-tab-item
-                  :key="2"
-                  :value="`tab-2`"
+                  value="tab-2"
                 >
                   <v-card flat>
                     <conselho-detalhes-inscricao-visualizacao />
                   </v-card>
                 </v-tab-item>
               </v-tabs-items>
-              <v-form
-                ref="form_recurso"
-                v-model="valid"
-                lazy-validation
-              >
-                <v-layout class="mt-1">
-                  <v-flex
-                    xs12
-                    sm6
-                  >
-                    <v-radio-group
-                      v-model="formulario.co_fase"
-                      row
-                      disabled
-                    >
-                      <v-radio
-                        label="Conselho de cultura"
-                        value="4"
-                      />
-                      <v-radio
-                        label="Organização ou entidade cultural"
-                        value="5"
-                      />
-                    </v-radio-group>
-                  </v-flex>
-                </v-layout>
-                <v-layout
-                  wrap
-                  align-center
-                  class="mt-1"
-                >
-                  <v-flex
-                    xs12
-                    sm6
-                  >
-                    <v-text-field
-                      v-model="formulario.nu_cnpj"
-                      label="*CNPJ"
-                      append-icon="people"
-                      placeholder="99.999.999/9999-99"
-                      mask="##.###.###/####-##"
-                      required
-                      disabled
-                    />
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    sm6
-                  >
-                    <v-text-field
-                      v-model="razao_social"
-                      label="Razão social"
-                      append-icon="people_outline"
-                      required
-                      style="margin-left: 20px"
-                      disabled
-                    />
-                  </v-flex>
-                </v-layout>
-                <v-layout
-                  wrap
-                  align-center
-                  class="mt-1"
-                >
-                  <v-flex
-                    xs12
-                    sm6
-                  >
-                    <v-text-field
-                      v-model="formulario.nu_cpf"
-                      label="*CPF do representante"
-                      append-icon="person"
-                      mask="###.###.###-##"
-                      disabled
-                    />
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    sm6
-                  >
-                    <v-text-field
-                      v-model="nomePessoaFisica"
-                      label="*Nome do representante"
-                      append-icon="perm_identity"
-                      style="margin-left: 20px"
-                      disabled
-                    />
-                  </v-flex>
-                </v-layout>
-
-                <v-layout
-                  wrap
-                  align-center
-                  class="mt-1"
-                >
-                  <v-flex
-                    xs12
-                    sm6
-                  >
-                    <v-text-field
-                      v-model="formulario.ds_email"
-                      data-vv-name="email"
-                      label="*E-mail do representante"
-                      append-icon="mail"
-                      placeholder="email@exemplo.com"
-                      maxlength="100"
-                      required
-                      disabled
-                    />
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    sm6
-                  >
-                    <v-text-field
-                      v-model="formulario.nu_telefone"
-                      label="*Celular do representante"
-                      append-icon="phone"
-                      placeholder="(99) 99999-9999"
-                      mask="(##) #####-####"
-                      required
-                      style="margin-left: 20px"
-                      disabled
-                    />
-                  </v-flex>
-                </v-layout>
-                <v-layout
-                  wrap
-                  align-center
-                >
-                  <v-flex
-                    xs12
-                    sm12
-                  >
-                    <div class="ma-4 text-justify subheading grey--text">
-                      <b>Descrição do recurso:</b>
-                    </div>
-                  </v-flex>
-                </v-layout>
-                <v-layout
-                  wrap
-                  align-center
-                >
-                  <v-flex
-                    xs12
-                    sm12
-                    class="ma-3"
-                  >
-                    <v-textarea
-                      v-model="formulario.ds_recurso"
-                      name="input-7-1"
-                      box
-                      solo
-                      label="Descrição do recurso"
-                      auto-grow
-                      :placeholder="'Digite seu recurso aqui.'"
-                      :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
-                      :counter="3000"
-                      disabled
-                    />
-                  </v-flex>
-                </v-layout>
-                <v-divider />
-
-                <v-layout
-                  wrap
-                  align-center
-                >
-                  <v-flex
-                    xs12
-                    sm12
-                    class="ma-3"
-                  >
-                    <div class="ma-4 text-justify subheading grey--text">
-                      <b>Parecer:</b>
-                    </div>
-                    <v-textarea
-                      v-model="formulario.ds_parecer"
-                      name="input-7-1"
-                      box
-                      solo
-                      label="Parecer do recurso"
-                      auto-grow
-                      :placeholder="'Digite seu recurso aqui.'"
-                      :counter="3000"
-                      :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
-                      required
-                      :disabled="formulario.dh_parecer !== null"
-                    />
-                  </v-flex>
-                </v-layout>
-                <v-layout
-                  wrap
-                  align-center
-                >
-                  <v-flex
-                    xs12
-                    sm12
-                    class="ma-3"
-                  >
-                    <v-radio-group
-                      v-model="formulario.st_parecer"
-                      :rules="[rules.required]"
-                      :disabled="formulario.dh_parecer !== null"
-                    >
-                      <template v-slot:label>
-                        <div><strong>Avaliação</strong></div>
-                      </template>
-                      <v-radio
-                        value="1"
-                        color="success"
-                      >
-                        <template v-slot:label>
-                          <div><strong class="success--text">Aceito</strong></div>
-                        </template>
-                      </v-radio>
-                      <v-radio
-                        value="0"
-                        color="error"
-                      >
-                        <template v-slot:label>
-                          <div><strong class="error--text">Recusado</strong></div>
-                        </template>
-                      </v-radio>
-                    </v-radio-group>
-                  </v-flex>
-                </v-layout>
-              </v-form>
+              <!--<v-form-->
+              <!--ref="form_recurso"-->
+              <!--v-model="valid"-->
+              <!--lazy-validation-->
+              <!--&gt;-->
+              <!--</v-form>-->
             </v-card-text>
           </v-card>
         </v-container>
@@ -376,24 +258,18 @@ export default {
       type: Boolean,
       default: false,
     },
-    usuario: {
-      type: Object,
-      default: () => {},
-    },
   },
   data() {
     return {
+      avaliacaoArquivo: {
+        st_em_conformidade: '',
+      },
       confirmacaoDados: false,
       model: 'tab-1',
       modalConfirmacao: false,
-      razao_social: String(),
-      co_perfil: String(),
-      nomeFormularioError: String(),
-      nomePessoaFisica: String(),
       dialog: false,
       loading: false,
       valid: false,
-      perfilPodeSerAlterado: false,
       formulario: { no_nome: String(), ds_parecer: String() },
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
@@ -416,32 +292,10 @@ export default {
       this.$emit('input', valor);
       this.formulario = Object.assign({});
       this.$refs.form_recurso.reset();
-      if (valor) {
-        this.formulario = Object.assign(this.formulario, this.usuario);
-      }
-    },
-    usuario(usuario) {
-      this.formulario = Object.assign(this.formulario, usuario);
-    },
-    'formulario.nu_cpf': function (valor) {
-      this.carregarCPF(valor);
-    },
-    nomePessoaFisica(value) {
-      this.formulario.no_nome = value;
-    },
-    'formulario.nu_cnpj': function (value) {
-      const self = this;
-      this.consultarCNPJ(value).then((response) => {
-        const { data } = response.data;
-        self.razao_social = data.nmRazaoSocial;
-      });
     },
   },
   methods: {
     ...mapActions({
-      buscarPerfisAlteracao: 'conta/buscarPerfisAlteracao',
-      consultarCNPJ: 'pessoa/consultarCNPJ',
-      consultarCPF: 'pessoa/consultarCPF',
       avaliarRecursoInscricao: 'recurso/avaliarRecursoInscricao',
     }),
     salvar() {
@@ -460,13 +314,6 @@ export default {
         });
       return true;
     },
-    carregarCPF(valor) {
-      const self = this;
-      this.consultarCPF(valor).then((response) => {
-        const { data } = response.data;
-        self.nomePessoaFisica = data.nmPessoaFisica;
-      });
-    },
     abrirDialogo() {
       const self = this;
       if (!self.$refs.form_recurso.validate()) {
@@ -480,7 +327,7 @@ export default {
     },
   },
   mounted() {
-    this.buscarPerfisAlteracao();
+    // this.buscarPerfisAlteracao();
   },
 };
 </script>
