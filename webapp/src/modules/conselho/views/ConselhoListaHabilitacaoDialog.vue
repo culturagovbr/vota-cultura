@@ -83,7 +83,7 @@
                               >
                                 <v-card-text class="mb-1">
                                   <div class="justify-center mb-1">
-                                  Ato normativo que constituiu o conselho
+                                    Ato normativo que constituiu o conselho
                                   </div>
                                   <div class="justify-center mb-1 center">
                                     <v-icon
@@ -114,8 +114,6 @@
                                       </v-radio-group>
                                     </v-flex>
                                   </v-layout>
-
-
                                 </v-card-text>
                               </v-card>
                             </v-flex>
@@ -129,12 +127,9 @@
                                   <p>
                                     * Documento em conformidade com o item 4.2.3 do edital?
                                   </p>
-                                  <p>
-                                  </p>
+                                  <p />
                                 </v-card-title>
-                                <v-card-text>
-
-                                </v-card-text>
+                                <v-card-text />
                               </v-card>
                             </v-flex>
                             <v-flex sm4>
@@ -148,9 +143,7 @@
                                     * Documento em conformidade com o item 4.2.3 do edital?
                                   </p>
                                 </v-card-title>
-                                <v-card-text>
-
-                                </v-card-text>
+                                <v-card-text />
                               </v-card>
                             </v-flex>
                           </v-layout>
@@ -249,7 +242,7 @@ import { mapGetters, mapActions } from 'vuex';
 import ConselhoDetalhesInscricaoVisualizacao from './ConselhoDetalhesInscricaoVisualizacao';
 
 export default {
-  name: 'AdministradorListaRecursosDialog',
+  name: 'ConselhoListaHabilitacaoDialog',
   components: {
     ConselhoDetalhesInscricaoVisualizacao,
   },
@@ -262,7 +255,15 @@ export default {
   data() {
     return {
       avaliacaoArquivo: {
-        st_em_conformidade: '',
+        ata_reuniao_conselho: {
+          st_em_conformidade: '',
+        },
+        ato_normativo_conselho: {
+          st_em_conformidade: '',
+        },
+        documento_identificacao_responsavel: {
+          st_em_conformidade: '',
+        },
       },
       confirmacaoDados: false,
       model: 'tab-1',
