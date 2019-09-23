@@ -50,3 +50,17 @@ export const obterOrganizacoes = async ({ commit }) => {
     commit(types.DEFINIR_ORGANIZACOES, response.data);
   });
 };
+
+export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {
+  return organizacaoService.enviarDocumentacaoComprobatoria(payload).then((response) => {
+    return response;
+  });
+};
+
+export const obterDocumentacaoComprobatoria = async ({ commit }, coOrganizacao) => {
+  return organizacaoService.obterDocumentacaoComprobatoria(coOrganizacao).then((response) => {
+    const { data } = response.data;
+    commit(types.OBTER_DOCUMENTACAO_COMPROBATORIA, data)
+    return response;
+  });
+};

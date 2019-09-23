@@ -14,4 +14,7 @@ export const mutations = {
   [types.DEFINIR_ORGANIZACOES](state, dados) {
     state.organizacoes = dados.data;
   },
+  [types.OBTER_DOCUMENTACAO_COMPROBATORIA](state, dados) {
+    state.documentacaoComprobatoria = dados;
+  },
 };

@@ -10,3 +10,7 @@ export const obterCriterios = () => service.getRequest('/organizacao/criterio');
 export const obterDadosOrganizacao = coOrganizacao => service.getRequest(`/organizacao/${coOrganizacao}`);
 
 export const obterOrganizacoes = () => service.getRequest('/organizacao');
+
+export const enviarDocumentacaoComprobatoria = payload => service.postRequest('/organizacao/documentacao-comprobatoria', payload);
+
+export const obterDocumentacaoComprobatoria = coOrganizacao => service.getRequest(`/organizacao/${coOrganizacao}/documentacao-comprobatoria`);

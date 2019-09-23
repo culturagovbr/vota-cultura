@@ -72,17 +72,21 @@ export default {
       default: () => [
         'application/pdf',
         'image/jpeg',
+        'application/zip',
+        'application/x-rar-compressed',
       ],
     },
     maxFileSize: {
       type: String,
-      default: '5MB',
+      default: '20MB',
     },
     fileValidateTypeLabelExpectedTypesMap: {
       type: Object,
       default: () => ({
         'application/pdf': '.pdf',
         'image/jpeg': '.jpeg',
+        'application/zip': '.zip',
+        'application/x-rar-compressed': '.rar',
       }),
     },
     options: {
