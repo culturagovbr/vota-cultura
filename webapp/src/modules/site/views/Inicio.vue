@@ -25,7 +25,7 @@
             >
               <v-flex
                 xs12
-                md6
+                md4
               >
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
@@ -49,7 +49,7 @@
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
-                      style="margin-top: 69px"
+                      style="margin-top: 79px"
                       color="green darken-4"
                       to="/inscricao/lista-parcial"
                       dark
@@ -63,7 +63,48 @@
               </v-flex>
               <v-flex
                 xs12
-                md6
+                md4
+              >
+                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      library_books
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Organização ou entidade cultural
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    <div class="subheading">
+                      Documentação comprobatória
+                    </div>
+                    Insira aqui a documentação solicitada no item 4.2.3 do edital
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
+                      style=""
+                      color="green darken-4"
+                      to="/organizacao/documentacao-comprobatoria"
+                      dark
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+              <v-flex
+                xs12
+                md4
               >
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
@@ -92,7 +133,7 @@
                       color="green darken-4"
                       to="/eleitor/inscricao"
                       dark
-                      style="margin-top: 16px"
+                      style="margin-top: 32px"
                     >
                       <v-icon>
                         call_made

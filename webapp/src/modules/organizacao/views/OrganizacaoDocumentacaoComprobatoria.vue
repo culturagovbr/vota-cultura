@@ -19,7 +19,8 @@
             <v-flex
               v-for="documento in documentacaoComprobatoria"
               :key="documento.co_arquivo"
-              xs4>
+              xs4
+            >
               <v-card
                 color="blue-grey lighten-5"
               >
@@ -30,8 +31,7 @@
                     </div>
                   </div>
                 </v-card-title>
-                <v-card-actions>
-                </v-card-actions>
+                <v-card-actions />
               </v-card>
             </v-flex>
           </v-layout>
@@ -60,9 +60,9 @@
               Envie os documentos no formato PDF (preferencialmente), JPEG, <br>
               ZIP ou RAR para enviar mais de um arquivo.<br>
 
-              <br/>
+              <br>
               <b>ATENÇÃO</b>
-              <br/>
+              <br>
               Anexe arquivos com tamanho até 40MB
             </div>
 
@@ -417,10 +417,9 @@ export default {
       }
 
       this.enviarDocumentacaoComprobatoria(this.organizacao).then((response) => {
-        const {data} = response;
+        const { data } = response;
         self.notificarSucesso(data.message);
         window.location.reload();
-
       }).catch((error) => {
         self.notificarErro(error);
         this.loading = false;
@@ -429,6 +428,15 @@ export default {
     },
   },
   mounted() {
+    // if (!this.usuarioGetter) {
+    //   this.notificarErro('É necessário autenticação');
+    //   this.$router.push('/conta/autenticar');
+    // }
+    if (this.usuarioGetter.co_organizacao === null) {
+      this.notificarErro('Acesso restrito para organização e entidades culturais.');
+      this.$router.push('/');
+    }
+
     this.obterDocumentacaoComprobatoria(this.usuarioGetter.co_organizacao);
   },
 };
