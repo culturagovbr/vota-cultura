@@ -8,6 +8,7 @@ class Representante extends JsonResource
 {
     public function toArray($request): array
     {
+
         return [
             'co_representante' => $this->co_representante,
             'ds_email' => $this->ds_email,
@@ -16,6 +17,8 @@ class Representante extends JsonResource
             'nu_cpf' => $this->nu_cpf,
             'nu_telefone' => $this->nu_telefone,
             'dh_cadastro' => $this->dh_cadastro,
+            'arquivos' => $this->arquivos,
+            'arquivosAvaliados' => $this->arquivosAvaliados,
         ];
     }
 }

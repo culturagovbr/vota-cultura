@@ -5,4 +5,5 @@ export const state = {
   organizacoes: [],
   segmentos: [],
   criterios: [],
+  documentacaoComprobatoria: [],
 };

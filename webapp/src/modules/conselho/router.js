@@ -46,6 +46,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "conselho-detalhes-inscricao" */ '@/modules/conselho/views/ConselhoDetalhesInscricao.vue'),
       },
+      // {
+      //   path: '/conselho/lista-habilitacao',
+      //   name: 'ConselhoListaHabilitacaoRoute',
+      //   meta: {
+      //     title: 'Habilitação de conselhos',
+      //     group: 'apps',
+      //     icon: 'dashboard',
+      //     public: false,
+      //   },
+      //   component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoListaHabilitacao.vue'),
+      // },
     ],
   },
 ];

@@ -79,7 +79,7 @@ class Conselho extends AbstractService
                 $modeloArquivo = app(Arquivo::class);
                 $modeloArquivo->fill($dadosArquivo);
                 $serviceUpload = new Upload($modeloArquivo);
-                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificadoBase64(
                     $dadosArquivo['arquivoCodificado'],
                     'conselho/' . $dadosArquivo['tp_arquivo']
                 );

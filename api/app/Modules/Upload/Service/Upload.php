@@ -14,7 +14,7 @@ class Upload extends AbstractService
         parent::__construct($model);
     }
 
-    public function uploadArquivoCodificado($stringCodificada, $diretorioArmazenamento = '')
+    public function uploadArquivoCodificadoBase64($stringCodificada, $diretorioArmazenamento = '')
     {
         try {
             DB::beginTransaction();
@@ -33,4 +33,21 @@ class Upload extends AbstractService
         }
     }
 
+    public function uploadArquivoCodificado(\Illuminate\Http\UploadedFile $binario, $diretorioArmazenamento = '')
+    {
+        try {
+            DB::beginTransaction();
+            $model = $this->getModel();
+            $nomeArquivo = uniqid() . '.' . $model->no_extensao;
+            $localizacaoArquivo = "{$diretorioArmazenamento}";
+            Storage::putFileAs($localizacaoArquivo, $binario, $nomeArquivo);
+            $model->ds_localizacao = "{$localizacaoArquivo}/{$nomeArquivo}";
+            $model->save();
+            DB::commit();
+            return $model;
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+    }
 }
