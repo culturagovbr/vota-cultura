@@ -14,16 +14,6 @@ class UFApiResourceController extends AApiResourceController
         parent::__construct($service);
     }
 
-    /** @todo teste */
-    public function index(): \Illuminate\Http\JsonResponse
-    {
-        return $this->sendResponse(
-            ['DF'],
-            "Operação Realizada com Sucesso",
-            Response::HTTP_OK
-        );
-    }
-
     public function show(Uf $model): \Illuminate\Http\JsonResponse
     {
         return parent::genericShow($model);
