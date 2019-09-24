@@ -61,8 +61,20 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'ConselhoLista',
+  name: 'OrganizacaoLista',
+  props: {
+    souAdministrador: {
+      source: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  },
   data: () => ({
+    pesquisar: '',
+    tipoModal: '',
+    mostrarModal: false,
+    loading: false,
     pagination_organizacao: {
       page: 1,
       rowsPerPage: 10,
@@ -101,7 +113,19 @@ export default {
   methods: {
     ...mapActions({
       obterOrganizacoes: 'organizacao/obterOrganizacoes',
+      obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
     }),
+    visualizarItemModal(tipoInscricao, id) {
+      this.mostrarModal = true;
+      this.tipoModal = tipoInscricao;
+
+      if (tipoInscricao === 'organizacao') {
+        this.obterDadosOrganizacao(id);
+        return false;
+      }
+
+      return true;
+    },
   },
   mounted() {
     const self = this;
@@ -111,7 +135,7 @@ export default {
       self.loading = false;
     });
     if (!!this.souAdministrador) {
-      this.headers.push({
+      this.headers_organizacao.push({
         text: 'Ações',
         sortable: false,
       });

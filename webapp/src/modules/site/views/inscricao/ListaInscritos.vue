@@ -19,10 +19,10 @@
       </v-tabs>
       <v-tabs-items v-model="tp_inscricao">
         <v-tab-item value="conselho">
-          <conselho-lista />
+          <conselho-lista :sou-administrador="souAdministrador"/>
         </v-tab-item>
         <v-tab-item value="organizacao">
-          <organizacao-lista />
+          <organizacao-lista :sou-administrador="souAdministrador"/>
         </v-tab-item>
       </v-tabs-items>
     </v-card>
@@ -74,24 +74,24 @@
 
         </v-toolbar>
         <v-card-text>
-          <v-container>
-            <v-card>
-              <v-card-text>
-                <organizacao-detalhes-inscricao-visualizacao v-if="tipoModal === 'organizacao'"/>
-                <conselho-detalhes-inscricao-visualizacao v-if="tipoModal === 'conselho'"/>
-              </v-card-text>
-              <v-card-actions class="justify-center">
-                <v-btn
-                  @click="mostrarModal = false"
-                >
-                  <v-icon left>
-                    undo
-                  </v-icon>
-                  Fechar
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-container>
+          <!--<v-container>-->
+            <!--<v-card>-->
+              <!--<v-card-text>-->
+                <!--<organizacao-detalhes-inscricao-visualizacao v-if="tipoModal === 'organizacao'"/>-->
+                <!--<conselho-detalhes-inscricao-visualizacao v-if="tipoModal === 'conselho'"/>-->
+              <!--</v-card-text>-->
+              <!--<v-card-actions class="justify-center">-->
+                <!--<v-btn-->
+                  <!--@click="mostrarModal = false"-->
+                <!--&gt;-->
+                  <!--<v-icon left>-->
+                    <!--undo-->
+                  <!--</v-icon>-->
+                  <!--Fechar-->
+                <!--</v-btn>-->
+              <!--</v-card-actions>-->
+            <!--</v-card>-->
+          <!--</v-container>-->
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -154,20 +154,6 @@ export default {
 
       return true;
     },
-  },
-  mounted() {
-    const self = this;
-
-    self.loading = true;
-    self.obterOrganizacoes().finally(() => {
-      self.loading = false;
-    });
-    if (!!this.souAdministrador) {
-      this.headers_organizacao.push({
-        text: 'Ações',
-        sortable: false,
-      });
-    }
   },
 };
 </script>
