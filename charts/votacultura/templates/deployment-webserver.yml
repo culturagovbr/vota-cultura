@@ -26,6 +26,12 @@ spec:
             items:
             - key: default.conf
               path: default.conf
+        - name: php-overrides-config
+          configMap:
+            name: votacultura-php
+            items:
+            - key: php-ini-overrides.ini
+              path: php-ini-overrides.ini
       initContainers:
         {{- if .Values.postgresql.install }}
         - name: wait-for-pgsql
@@ -58,6 +64,9 @@ spec:
           mountPath: /etc/nginx/conf.d
       - name: {{ template "votacultura.webserver.fullname" . }}
         image: "{{ .Values.webserver.image.repository }}:{{ .Values.webserver.image.tag }}"
+        volumeMounts:
+          - name: php-overrides-config
+            mountPath: /usr/local/etc/php/conf.d/
         #securityContext:
         #  runAsUser: 33
         #  runAsGroup: 33
