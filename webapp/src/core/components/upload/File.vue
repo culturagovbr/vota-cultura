@@ -65,7 +65,7 @@ export default {
   props: {
     value: {
       type: Object,
-      default: {},
+      default: () => {},
     },
     acceptedFileTypes: {
       type: Array,
@@ -74,11 +74,12 @@ export default {
         'image/jpeg',
         'application/zip',
         'application/x-rar-compressed',
+        'application/vnd.rar',
       ],
     },
     maxFileSize: {
       type: String,
-      default: '20MB',
+      default: '80MB',
     },
     fileValidateTypeLabelExpectedTypesMap: {
       type: Object,
@@ -87,6 +88,7 @@ export default {
         'image/jpeg': '.jpeg',
         'application/zip': '.zip',
         'application/x-rar-compressed': '.rar',
+        'application/vnd.rar': '.rar',
       }),
     },
     options: {
@@ -118,7 +120,6 @@ export default {
     setFileMetaData() {
       try {
         this.self = this.$refs.pond.getFile();
-//this.self = this.$refs.pond.getFile().getFileEncodeBase64String();
       } catch (Exception) {
         this.self = {};
       }

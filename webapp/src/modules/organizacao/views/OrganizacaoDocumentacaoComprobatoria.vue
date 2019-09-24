@@ -31,11 +31,6 @@
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <!--<v-btn-->
-                    <!--flat-->
-                  <!--&gt;-->
-                    <!--Download-->
-                  <!--</v-btn>-->
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -101,7 +96,7 @@
                   min-width="500"
                   class="mx-auto"
                 >
-                  <v-card-title class=" mb-1 justify-center">
+                  <v-card-title class="mb-1 justify-center">
                     b.    Cópia do Cadastro Nacional da Pessoa Jurídica (CNPJ) que comprove a existência da entidade há pelo menos três anos:
                   </v-card-title>
                   <v-card-text>
@@ -288,7 +283,7 @@
           fill-height
         >
           <v-btn
-            @click=""
+            href="/"
           >
             Cancelar
           </v-btn>
@@ -358,8 +353,7 @@ export default {
     }),
   },
   watch: {
-    documentacaoComprobatoria(valor) {
-      console.log(!!valor.length);
+    documento_identificacao_representante(pond) {
     },
   },
   methods: {
@@ -392,11 +386,8 @@ export default {
       anexosNaoObrigatorios.forEach((nomeAnexo) => {
         if (Object.keys(this[nomeAnexo]).length) {
           this.organizacao.anexos.push({
-            tp_arquivo: nomeAnexo,
-            no_extensao: this[nomeAnexo].fileExtension,
-            no_mime_type: this[nomeAnexo].fileType,
-            no_arquivo: this[nomeAnexo].filename,
-            arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+            binario: this[nomeAnexo].file,
+            slug: nomeAnexo,
           });
         }
       });
@@ -408,11 +399,8 @@ export default {
           return false;
         }
         this.organizacao.anexos.push({
-          tp_arquivo: nomeAnexo,
-          no_extensao: this[nomeAnexo].fileExtension,
-          no_mime_type: this[nomeAnexo].fileType,
-          no_arquivo: this[nomeAnexo].filename,
-          arquivoCodificado: this[nomeAnexo].getFileEncodeBase64String(),
+          binario: this[nomeAnexo].file,
+          slug: nomeAnexo,
         });
         return true;
       });
@@ -424,13 +412,13 @@ export default {
       }
 
       this.enviarDocumentacaoComprobatoria(this.organizacao).then((response) => {
-        const { data } = response;
+        const {data} = response;
         self.notificarSucesso(data.message);
+        window.location.reload();
+
       }).catch((error) => {
-        self.notificarErro(error.response.data.message);
-      }).finally(() => {
+        self.notificarErro(error);
         this.loading = false;
-        this.$router.push('/');
       });
       return true;
     },

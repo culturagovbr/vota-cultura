@@ -16,7 +16,6 @@ use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use App\Modules\Representacao\Service\Representante;
 use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
-use function get_class_methods;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -111,7 +110,11 @@ class Organizacao extends AbstractService
         return $organizacao;
     }
 
-    public function anexarDocumentacaoComprobatoria(Collection $dados): ?Model
+    public function anexarDocumentacaoComprobatoria(
+        string $slug,
+        \Illuminate\Http\UploadedFile $uploadedFile,
+        bool $enviarEmail = false
+    ): ?Model
     {
         try {
             DB::beginTransaction();
@@ -121,28 +124,38 @@ class Organizacao extends AbstractService
                 'co_organizacao' => $usuarioAutenticado['co_organizacao']
             ])->first();
 
-            foreach ($dados['anexos'] as $dadosArquivo) {
-                $modeloArquivo = app(Arquivo::class);
-                $modeloArquivo->fill($dadosArquivo);
-                $serviceUpload = new Upload($modeloArquivo);
-                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-                    $dadosArquivo['arquivoCodificado'],
-                    'organizacao/' . $dadosArquivo['tp_arquivo']
-                );
-                $organizacao->representante->arquivos()->attach(
-                    $arquivoArmazenado->co_arquivo,
-                    [
-                        'tp_arquivo' => $dadosArquivo['tp_arquivo'],
-                        'tp_inscricao' => RepresentanteModel::TIPO_DOCUMENTACAO_COMPROBATORIA_ORGANIZACAO
-                    ]
-                );
-            }
+            $modeloUpload = [
+              'no_arquivo'  => $uploadedFile->getClientOriginalName(),
+              'no_extensao'  => $uploadedFile->getClientOriginalExtension(),
+              'no_mime_type'  => $uploadedFile->getClientMimeType(),
+            ];
 
-            Mail::to($organizacao->representante->ds_email)
-                ->bcc(env('EMAIL_ACOMPANHAMENTO'))
-                ->send(
-                    app()->make(CadastroDocumentacaoComprobatoriaComSucesso::class, $organizacao->toArray())
-                );
+            $modeloArquivo = app(Arquivo::class);
+
+            $modeloArquivo->fill($modeloUpload);
+
+            $serviceUpload = new Upload($modeloArquivo);
+
+            $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+                $uploadedFile,
+                'organizacao/' . $slug
+            );
+
+            $organizacao->representante->arquivos()->attach(
+                $arquivoArmazenado->co_arquivo,
+                [
+                    'tp_arquivo' => $slug,
+                    'tp_inscricao' => RepresentanteModel::TIPO_DOCUMENTACAO_COMPROBATORIA_ORGANIZACAO
+                ]
+            );
+
+            if ($enviarEmail === true) {
+                Mail::to($organizacao->representante->ds_email)
+                    ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+                    ->send(
+                        app()->make(CadastroDocumentacaoComprobatoriaComSucesso::class, $organizacao->toArray())
+                    );
+            }
 
             DB::commit();
             return $organizacao;
