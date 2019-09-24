@@ -6,19 +6,29 @@ data:
   default.conf: |-
     server {
         listen 80 default;
-        
-        client_max_body_size 108M;
-        
+
         access_log /var/log/nginx/application.access.log;
-        
-        
+
+
         root /var/www/html/public;
         index index.php;
+
+        client_header_buffer_size 64k;
+        client_body_in_file_only   on;
+        client_body_temp_path      /tmp/;
+        client_body_buffer_size    1M;
+
+        client_max_body_size 0;
+        proxy_http_version 1.1;
+        proxy_request_buffering off;
+
+        sendfile on;
+        send_timeout 300s;
         
         if (!-e $request_filename) {
             rewrite ^.*$ /index.php last;
         }
-        
+
         location ~ \.php$ {
             fastcgi_pass localhost:9000;
             fastcgi_index index.php;
