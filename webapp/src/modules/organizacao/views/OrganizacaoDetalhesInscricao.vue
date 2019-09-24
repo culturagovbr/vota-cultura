@@ -45,12 +45,19 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
 import OrganizacaoDetalhesInscricaoVisualizacao from './OrganizacaoDetalhesInscricaoVisualizacao';
 
 export default {
   name: 'OrganizacaoDetalhesInscricao',
+  props: {
+    souAdministrador: {
+      source: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  },
   components: {
     OrganizacaoDetalhesInscricaoVisualizacao,
   },
