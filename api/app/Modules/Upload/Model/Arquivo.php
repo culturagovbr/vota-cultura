@@ -32,7 +32,7 @@ class Arquivo extends Model
             'rl_representante_arquivo',
             'co_representante',
             'co_arquivo'
-        )->as('rl_representante_arquivo')->withPivot(['tp_arquivo', 'tp_inscricao']);
+        )->as('rl_representante_arquivo')->withPivot('tp_arquivo', 'tp_inscricao');
     }
 
     public function eleitores()
@@ -42,6 +42,6 @@ class Arquivo extends Model
             'rl_eleitor_arquivo',
             'co_eleitor',
             'co_arquivo'
-        )->as('rl_eleitor_arquivo')->withPivot(['tp_arquivo']);
+        )->withPivot(['tp_arquivo']);
     }
 }

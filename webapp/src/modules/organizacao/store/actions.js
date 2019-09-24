@@ -50,3 +50,33 @@ export const obterOrganizacoes = async ({ commit }) => {
     commit(types.DEFINIR_ORGANIZACOES, response.data);
   });
 };
+
+export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {
+  let respondendo = String();
+  let errando = String();
+  for (let indice = 0; indice < payload.anexos.length; indice++) {
+    let anexo = payload.anexos[indice];
+    let enviarEmail = false;
+    if (payload.anexos.length === indice + 1) {
+      enviarEmail = true;
+    }
+
+    anexo.enviarEmail = enviarEmail;
+
+    await organizacaoService.enviarDocumentacaoComprobatoria(anexo).catch((error) => {
+      errando = error.response.data.message;
+    }).then(response => {
+      respondendo = response;
+    });
+    if(errando) {
+      throw errando;
+    }
+  }
+  return respondendo;
+};
+
+export const obterDocumentacaoComprobatoria = async ({ commit }, coOrganizacao) => organizacaoService.obterDocumentacaoComprobatoria(coOrganizacao).then((response) => {
+  const { data } = response.data;
+  commit(types.OBTER_DOCUMENTACAO_COMPROBATORIA, data);
+  return response;
+});

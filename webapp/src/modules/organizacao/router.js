@@ -22,7 +22,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/organizacao/views/Organizacao.vue'),
+        component: () => import(/* webpackChunkName: "organizacao-inscricao" */ '@/modules/organizacao/views/Organizacao.vue'),
       },
       {
         path: '/organizacao/revisao-organizacao',
@@ -33,7 +33,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/organizacao/views/RevisaoOrganizacao.vue'),
+        component: () => import(/* webpackChunkName: "organizacao-revisao-organizacao" */ '@/modules/organizacao/views/RevisaoOrganizacao.vue'),
       },
       {
         path: '/organizacao/detalhes-inscricao',
@@ -44,7 +44,18 @@ export default [
           icon: 'dashboard',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/organizacao/views/OrganizacaoDetalhesInscricao.vue'),
+        component: () => import(/* webpackChunkName: "organizacao-detalhes-inscricao" */ '@/modules/organizacao/views/OrganizacaoDetalhesInscricao.vue'),
+      },
+      {
+        path: '/organizacao/documentacao-comprobatoria',
+        name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
+        meta: {
+          title: 'Enviar documentação',
+          group: 'apps',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "organizacao-documentacao-comprobatoria" */ '@/modules/organizacao/views/OrganizacaoDocumentacaoComprobatoria.vue'),
       },
     ],
   },

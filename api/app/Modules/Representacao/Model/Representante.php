@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Representante extends Model
 {
-    const TIPO_INSCRICAO_ORGANIZACAO = 1;
+    const TIPO_DOCUMENTACAO_COMPROBATORIA_ORGANIZACAO = 1;
     const TIPO_INSCRICAO_CONSELHO = 2;
 
     protected $table = 'tb_representante';
@@ -58,6 +58,27 @@ class Representante extends Model
             'rl_representante_arquivo',
             'co_representante',
             'co_arquivo'
+        )->as('rl_representante_arquivo')->withPivot('tp_arquivo', 'tp_inscricao');
+    }
+
+    public function representacaoArquivoAvaliacao()
+    {
+        return $this->arquivos()->hasMany(
+            RepresentanteArquivoAvaliacao::class,
+            'co_representante_arquivo',
+            'co_representante_arquivo'
+        );
+    }
+
+    public function arquivosAvaliados()
+    {
+        return $this->hasManyThrough(
+            RepresentanteArquivoAvaliacao::class,
+            RepresentanteArquivoPivot::class,
+            'co_representante',
+            'co_representante_arquivo',
+            '',
+            'co_representante_arquivo'
         );
     }
 

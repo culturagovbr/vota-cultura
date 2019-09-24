@@ -40,3 +40,10 @@ export const obterConselhos = async ({ commit }) => {
     commit(types.LISTAR_CONSELHOS, data);
   });
 };
+
+export const obterConselhosHabilitacao = async ({ commit }) => {
+  conselhoService.obterConselhosHabilitacao().then((response) => {
+    const { data } = response.data;
+    commit(types.LISTAR_CONSELHOS_HABILITACAO, data);
+  });
+};

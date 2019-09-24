@@ -22,7 +22,7 @@ export default [
         //   console.log('to');
         //   console.log('from');
         // },
-        component: () => import(/* webpackChunkName: "autenticar" */ '@/modules/conta/views/Login.vue'),
+        component: () => import(/* webpackChunkName: "conta-autenticar" */ '@/modules/conta/views/Login.vue'),
       },
       {
         path: 'sair',
@@ -31,7 +31,7 @@ export default [
           title: 'Sair do sistema',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "logout" */ '@/modules/conta/views/Logout.vue'),
+        component: () => import(/* webpackChunkName: "conta-logout" */ '@/modules/conta/views/Logout.vue'),
       },
       {
         path: 'cadastrar',
@@ -40,7 +40,7 @@ export default [
           title: 'Cadastrar-se',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "cadastro" */ '@/modules/conta/views/Cadastro.vue'),
+        component: () => import(/* webpackChunkName: "conta-cadastro" */ '@/modules/conta/views/Cadastro.vue'),
       },
       {
         path: 'ativar-usuario/:ds_codigo_ativacao',
@@ -49,7 +49,7 @@ export default [
           title: 'Ativar usuário',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "cadastro-ativacao-usuario" */ '@/modules/conta/views/CadastroAtivacaoUsuario.vue'),
+        component: () => import(/* webpackChunkName: "conta-cadastro-ativacao-usuario" */ '@/modules/conta/views/CadastroAtivacaoUsuario.vue'),
       },
       {
         path: 'recuperar-senha',
@@ -58,7 +58,7 @@ export default [
           title: 'Recuperar Senha',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "recuperar-senha" */ '@/modules/conta/views/RecuperacaoDeSenha.vue'),
+        component: () => import(/* webpackChunkName: "conta-recuperar-senha" */ '@/modules/conta/views/RecuperacaoDeSenha.vue'),
       },
       {
         path: 'alterar-senha/:ds_codigo_ativacao',
@@ -92,7 +92,7 @@ export default [
           title: 'Alterar Senha',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "recuperar-senha" */ '@/modules/conta/views/usuario/AlteracaoDeSenha.vue'),
+        component: () => import(/* webpackChunkName: "conta-recuperar-senha" */ '@/modules/conta/views/usuario/AlteracaoDeSenha.vue'),
       },
     ],
   },
@@ -109,7 +109,7 @@ export default [
           title: 'Usuarios',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "administrador-lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaUsuarios.vue'),
+        component: () => import(/* webpackChunkName: "conta-administrador-lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaUsuarios.vue'),
       },
     ],
   },
@@ -126,7 +126,7 @@ export default [
           title: 'Usuarios',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "administrador-lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaUsuarios.vue'),
+        component: () => import(/* webpackChunkName: "conta-administrador-lista-usuarios-route" */ '@/modules/conta/views/administrador/AdministradorListaUsuarios.vue'),
       },
     ],
   },

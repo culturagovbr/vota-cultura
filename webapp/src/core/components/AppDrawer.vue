@@ -142,7 +142,7 @@ export default {
     },
     drawWidth: {
       type: [Number, String],
-      default: '260',
+      default: '300',
     },
   },
   data() {
@@ -241,6 +241,12 @@ export default {
           name: 'OrganizacaoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Organizacao');
+        this.definirItemMenu({
+          title: 'Documentação comprobatória',
+          group: 'apps',
+          name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
+          icon: 'cloud_upload',
+        }, 'Organizacao');
       }
     },
     carregarMenuAdministrador() {
@@ -265,6 +271,12 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
+        // this.definirItemMenu({
+        //   title: 'Habilitação de conselhos',
+        //   group: 'apps',
+        //   name: 'ConselhoListaHabilitacaoRoute',
+        //   icon: 'list',
+        // }, 'Administração');
         this.definirItemMenu({
           title: 'Inscrição - Conselho',
           group: 'apps',

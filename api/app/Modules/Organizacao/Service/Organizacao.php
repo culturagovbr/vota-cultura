@@ -5,13 +5,17 @@ namespace App\Modules\Organizacao\Service;
 use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Exceptions\EValidacaoCampo;
-use App\Modules\Fase\Model\Fase as FaseModel;
 use App\Modules\Fase\Model\Fase;
+use App\Modules\Fase\Model\Fase as FaseModel;
 use App\Modules\Fase\Service\Fase as FaseService;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Organizacao\Mail\Organizacao\CadastroComSucesso;
+use App\Modules\Organizacao\Mail\Organizacao\CadastroDocumentacaoComprobatoriaComSucesso;
 use App\Modules\Organizacao\Model\Organizacao as OrganizacaoModel;
+use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use App\Modules\Representacao\Service\Representante;
+use App\Modules\Upload\Model\Arquivo;
+use App\Modules\Upload\Service\Upload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -100,9 +104,84 @@ class Organizacao extends AbstractService
 
         if ($organizacao->co_organizacao !== $usuarioAutenticado['co_organizacao'] &&
             $usuarioAutenticado['perfil']->no_perfil !== 'administrador') {
-            throw new EParametrosInvalidos('A Organização precisa ser o mesmo que o usuário logado.');
+            throw new EParametrosInvalidos('A organização precisa ser o mesmo que o usuário logado.');
         }
 
         return $organizacao;
+    }
+
+    public function anexarDocumentacaoComprobatoria(
+        string $slug,
+        \Illuminate\Http\UploadedFile $uploadedFile,
+        bool $enviarEmail = false
+    ): ?Model
+    {
+        try {
+            DB::beginTransaction();
+
+            $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
+            $organizacao = $this->getModel()->where([
+                'co_organizacao' => $usuarioAutenticado['co_organizacao']
+            ])->first();
+
+            $modeloUpload = [
+              'no_arquivo'  => $uploadedFile->getClientOriginalName(),
+              'no_extensao'  => $uploadedFile->getClientOriginalExtension(),
+              'no_mime_type'  => $uploadedFile->getClientMimeType(),
+            ];
+
+            $modeloArquivo = app(Arquivo::class);
+
+            $modeloArquivo->fill($modeloUpload);
+
+            $serviceUpload = new Upload($modeloArquivo);
+
+            $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+                $uploadedFile,
+                'organizacao/' . $slug
+            );
+
+            $organizacao->representante->arquivos()->attach(
+                $arquivoArmazenado->co_arquivo,
+                [
+                    'tp_arquivo' => $slug,
+                    'tp_inscricao' => RepresentanteModel::TIPO_DOCUMENTACAO_COMPROBATORIA_ORGANIZACAO
+                ]
+            );
+
+            if ($enviarEmail === true) {
+                Mail::to($organizacao->representante->ds_email)
+                    ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+                    ->send(
+                        app()->make(CadastroDocumentacaoComprobatoriaComSucesso::class, $organizacao->toArray())
+                    );
+            }
+
+            DB::commit();
+            return $organizacao;
+        } catch (EParametrosInvalidos $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
+    }
+
+    public function obterDocumentacaoComprobatoria(int $identificador)
+    {
+        $organizacao = parent::obterUm($identificador);
+        if (!$organizacao) {
+            throw new EParametrosInvalidos('Organização não encontrado');
+        }
+
+        $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
+
+        if ($organizacao->co_organizacao !== $usuarioAutenticado['co_organizacao'] &&
+            $usuarioAutenticado['perfil']->no_perfil !== 'administrador') {
+            throw new EParametrosInvalidos('A organização precisa ser do mesmo que o usuário logado.');
+        }
+
+        return $organizacao->representante->arquivos->where(
+            'rl_representante_arquivo.tp_inscricao',
+            RepresentanteModel::TIPO_DOCUMENTACAO_COMPROBATORIA_ORGANIZACAO
+        );
     }
 }

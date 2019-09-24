@@ -21,7 +21,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/eleitor/views/Eleitor.vue'),
+        component: () => import(/* webpackChunkName: "eleitor-inscricao" */ '@/modules/eleitor/views/Eleitor.vue'),
       },
       {
         path: '/eleitor/revisao-eleitor',
@@ -32,7 +32,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/eleitor/views/RevisaoEleitor.vue'),
+        component: () => import(/* webpackChunkName: "eleitor-revisao-inscricao" */ '@/modules/eleitor/views/RevisaoEleitor.vue'),
       },
       {
         path: '/eleitor/detalhes-inscricao',
@@ -43,7 +43,7 @@ export default [
           icon: 'dashboard',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/eleitor/views/EleitorDetalhesInscricao.vue'),
+        component: () => import(/* webpackChunkName: "eleitor-detalhes-inscricao" */ '@/modules/eleitor/views/EleitorDetalhesInscricao.vue'),
       },
     ],
   },
