@@ -37,6 +37,7 @@ webserver:
     db: dbvotacultura
     username: usr_votacultura
     password: EWFXWR75L2
+    schema: sc_votacultura
   envs:
     appName: Laravel
     appEnv: local
