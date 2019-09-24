@@ -20,7 +20,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "inicio" */ '@/modules/site/views/Inicio.vue'),
+        component: () => import(/* webpackChunkName: "site-inicio" */ '@/modules/site/views/Inicio.vue'),
       },
       {
         path: 'inscricao/lista-parcial',
@@ -31,7 +31,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "inscricao-lista-parcial-route" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
+        component: () => import(/* webpackChunkName: "site-inscricao-lista-parcial" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
       },
       {
         path: 'inscricao/administrador/lista-parcial',
@@ -42,7 +42,7 @@ export default [
           icon: 'dashboard',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "administrador-lista-inscritos-route" */ '@/modules/site/views/administrador/AdministradorListaIncritos.vue'),
+        component: () => import(/* webpackChunkName: "site-administrador-lista-inscritos" */ '@/modules/site/views/administrador/AdministradorListaIncritos.vue'),
       },
     ],
   },

@@ -22,7 +22,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/Conselho.vue'),
+        component: () => import(/* webpackChunkName: "conselho-inscricao" */ '@/modules/conselho/views/Conselho.vue'),
       },
       {
         path: '/conselho/revisao-conselho',
@@ -33,7 +33,7 @@ export default [
           icon: 'dashboard',
           public: true,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/RevisaoConselho.vue'),
+        component: () => import(/* webpackChunkName: "conselho-revisao-conselho" */ '@/modules/conselho/views/RevisaoConselho.vue'),
       },
       {
         path: '/conselho/detalhes-inscricao',
@@ -44,7 +44,7 @@ export default [
           icon: 'dashboard',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoDetalhesInscricao.vue'),
+        component: () => import(/* webpackChunkName: "conselho-detalhes-inscricao" */ '@/modules/conselho/views/ConselhoDetalhesInscricao.vue'),
       },
     ],
   },
