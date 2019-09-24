@@ -66,7 +66,7 @@
                       >
                         <v-layout>
                           <v-flex sm12>
-                            <div class="ma-4 text-justify subheading grey--text">
+                            <div class="ma-2 text-justify subheading grey--text">
                               <b>Nome do conselho:</b>
                               {{ formulario.no_conselho }}
                             </div>
@@ -74,19 +74,19 @@
                         </v-layout>
                         <v-layout>
                           <v-flex sm6>
-                            <div class="ma-4 text-justify subheading grey--text">
+                            <div class="ma-2 text-justify subheading grey--text">
                               <b>CNPJ do orgão gestor:</b>
                               {{ formulario.nu_cnpj_mascarado }}
                             </div>
                           </v-flex>
                           <v-flex sm6>
-                            <div class="ma-4 text-justify subheading grey--text">
+                            <div class="ma-2 text-justify subheading grey--text">
                               <b>Nome do orgão gestor:</b>
                               {{ formulario.no_orgao_gestor }}
                             </div>
                           </v-flex>
                         </v-layout>
-                        <div class="ma-4 text-justify title ">
+                        <div class="ma-2 text-justify title ">
                           <v-toolbar color="white darken-3">
                             Documentação
                           </v-toolbar>
@@ -103,7 +103,7 @@
                                 <v-flex sm6>
                                   <v-card
                                     min-height="260"
-                                    class="elevation-3"
+                                    class="elevation-1"
                                   >
                                     <v-card-text>
                                       <v-layout>
@@ -151,6 +151,8 @@
                                             name="input-7-4"
                                             rows="13"
                                             row-height="28"
+                                            :counter="500"
+                                            :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
                                           />
                                         </v-flex>
                                       </v-layout>
@@ -161,7 +163,7 @@
                                 <v-flex sm6>
                                   <v-card
                                     min-height="260"
-                                    class="elevation-3"
+                                    class="elevation-1"
                                   >
                                     <v-card-text>
                                       <v-layout>
@@ -209,6 +211,8 @@
                                             name="input-7-4"
                                             rows="13"
                                             row-height="28"
+                                            :counter="500"
+                                            :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
                                           />
                                         </v-flex>
                                       </v-layout>
@@ -224,7 +228,7 @@
                                 <v-flex sm12>
                                   <v-card
                                     min-height="260"
-                                    class="elevation-3"
+                                    class="elevation-1"
                                   >
                                     <v-card-text>
                                       <v-layout>
@@ -272,6 +276,8 @@
                                             name="input-7-4"
                                             rows="13"
                                             row-height="28"
+                                            :counter="500"
+                                            :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
                                           />
                                         </v-flex>
                                       </v-layout>
@@ -284,6 +290,56 @@
                         </div>
                       </v-flex>
                     </v-layout>
+                    <div class="ma-4 text-justify title ">
+                      <v-toolbar color="white darken-3">
+                        Avaliação
+                      </v-toolbar>
+                      <v-card class="elevation-1">
+                        <v-container
+                          fluid
+                          grid-list-xl
+                        >
+                          <v-layout>
+                            <v-flex class="pa-3">
+                              <v-radio-group
+                                v-model="avaliacaoArquivo.ata_reuniao_conselho.st_em_conformidade"
+                                column
+                              >
+                                <v-radio
+                                value="1"
+                                color="success"
+                                >
+                                <template v-slot:label>
+                                  <div><strong class="success--text">Habilitado</strong></div>
+                                </template>
+                                </v-radio>
+                                <v-radio
+                                  value="0"
+                                  color="error"
+                                >
+                                  <template v-slot:label>
+                                    <div><strong class="error--text">Inabilitado</strong></div>
+                                  </template>
+                                </v-radio>
+                              </v-radio-group>
+                            </v-flex>
+                          </v-layout>
+                          <v-layout>
+                            <v-flex class="pa-3">
+                              <v-textarea
+                                box
+                                label="* Parecer"
+                                name="input-7-4"
+                                rows="13"
+                                row-height="28"
+                                :counter="3000"
+                                :rules="[rules.required, rules.tamanhoMaximo3000Caracteres]"
+                              />
+                            </v-flex>
+                          </v-layout>
+                        </v-container>
+                      </v-card>
+                    </div>
                     <v-card-actions class="justify-center">
                       <v-btn
                         @click="dialog = false"
@@ -419,7 +475,8 @@ export default {
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
-        tamanhoMaximoCaracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
+        tamanhoMaximo3000Caracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
+        tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'Máximo 500 caracteres',
       },
     };
   },
