@@ -1,4 +1,4 @@
-import {AuthLayout, DefaultLayout} from '@/core/components/layouts';
+import { DefaultLayout } from '@/core/components/layouts';
 
 export default [
   {
@@ -7,7 +7,8 @@ export default [
     meta: {
       title: 'Conselho',
       group: 'apps',
-      icon: ''
+      icon: '',
+      public: true,
     },
     name: 'Conselho',
     redirect: '/conselho/inscricao',
@@ -19,6 +20,7 @@ export default [
           title: 'Inscrição Conselho',
           group: 'apps',
           icon: 'dashboard',
+          public: true,
         },
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/Conselho.vue'),
       },
@@ -29,8 +31,31 @@ export default [
           title: 'Revisão - Dados Conselho',
           group: 'apps',
           icon: 'dashboard',
+          public: true,
         },
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/RevisaoConselho.vue'),
+      },
+      {
+        path: '/conselho/detalhes-inscricao',
+        name: 'ConselhoDetalhesInscricaoRoute',
+        meta: {
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoDetalhesInscricao.vue'),
+      },
+      {
+        path: '/conselho/lista-habilitacao',
+        name: 'ConselhoListaHabilitacaoRoute',
+        meta: {
+          title: 'Habilitação de conselhos',
+          group: 'apps',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoListaHabilitacao.vue'),
       },
     ],
   },

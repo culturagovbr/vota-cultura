@@ -3,7 +3,7 @@
     <v-card-text>
       <div class="layout column align-center">
         <h2 class="flex my-2 primary--text">
-          {{$route.meta.title}}
+          {{ $route.meta.title }}
         </h2>
       </div>
       <v-form
@@ -19,8 +19,8 @@
           :type="mostrarSenha ? 'text' : 'password'"
           label="Senha"
           name="senha"
-          @click:append="mostrarSenha = !mostrarSenha"
           :rules="[rules.required, rules.minCaracter, rules.senhaValida]"
+          @click:append="mostrarSenha = !mostrarSenha"
         />
         <v-text-field
           id="confirma_senha"
@@ -30,8 +30,8 @@
           :type="mostrarSenha ? 'text' : 'password'"
           label="Confirmar senha"
           name="confirma_senha"
-          @click:append="mostrarSenha = !mostrarSenha"
           :rules="[rules.confirmaSenha(confirma_senha, usuario.ds_senha)]"
+          @click:append="mostrarSenha = !mostrarSenha"
         />
       </v-form>
     </v-card-text>
@@ -44,7 +44,7 @@
         :loading="loading"
         @click="alterar"
       >
-        Alterar senha
+        Criar senha
       </v-btn>
       <v-spacer />
     </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import Validate from '@/modules/shared/util/validate';
 
 export default {
@@ -66,28 +66,29 @@ export default {
     },
     rules: {
       required: value => !!value || 'Este campo é obrigatório',
-      minCaracter: value => value.length >= 8 || "Mínimo 8 caracteres",
-      senhaValida: value =>
-        Validate.isSenhaValida(value) ||
-        "Mínimo uma letra maiúscula, uma minúscula e um número",
-      confirmaSenha: (confirma_senha, ds_senha) =>
-        confirma_senha === ds_senha || "A senha não confere"
+      minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
+      senhaValida: value => Validate.isSenhaValida(value)
+        || 'É necessário conter uma letra maiúscula e um número',
+      confirmaSenha: (confirmaSenha, dsSenha) => confirmaSenha === dsSenha || 'A senhas não conferem',
     },
   }),
   methods: {
     ...mapActions({
       alterarSenha: 'conta/alterarSenha',
-      mensagemErro: "app/setMensagemErro",
-      mensagemSucesso: "app/setMensagemSucesso"
+      mensagemErro: 'app/setMensagemErro',
+      mensagemSucesso: 'app/setMensagemSucesso',
     }),
     alterar() {
       if (!this.$refs.form.validate()) {
         return;
       }
       this.loading = true;
-      this.alterarSenha({ codigoAlteracao: this.$route.params.ds_codigo_alteracao, usuario : this.usuario}).then(() => {
-        this.mensagemSucesso("Senha alterada com sucesso");
-        this.$router.push('/');
+      this.alterarSenha({
+        codigoAlteracao: this.$route.params.ds_codigo_ativacao,
+        usuario: this.usuario,
+      }).then(() => {
+        this.mensagemSucesso('Senha criada com sucesso');
+        this.$router.push('/conta/autenticar');
       }).catch((error) => {
         this.loading = false;
         this.mensagemErro(error.response.data.message);

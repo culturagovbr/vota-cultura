@@ -8,10 +8,13 @@
     Clique <a href="{{ $linkAtivacao }}">aqui</a> para ativar o seu cadastro.
 </p>
 <p>
-    <b>CPF:</b> {{$usuario->no_cpf}}
+    <b>CPF:</b> {{$usuario->nu_cpf}}
+</p>
+<p>
     <b>E-mail:</b> {{$usuario->ds_email}}
-    <b>Data de Nascimento:</b> {{$usuario->dt_nascimento->format('Localizacao')}}
 </p>
 
 <p>Atenciosamente,</p>
-<p>Minist&eacute;rio do Desenvolvimento Social</p>
+<p>Minist&eacute;rio da Cidadania</p>
+<p>(Mensagem automática, não responder)</p>
+

@@ -6,86 +6,124 @@
     clipped-left
   >
     <div class="toolbar-logo theme--dark green darken-4">
-        <!--:src="require('@/core/assets/logo.svg')"-->
-      <v-toolbar-side-icon @click="handleDrawerToggle"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="handleDrawerToggle" />
       <router-link to="/inicio">
-        <img :src="require('../../assets/logo-cnpc-novo-site.png')" alt="Logo do Sistema"/>
+        <img
+          :src="require('../../assets/logo-cnpc-novo-site.png')"
+          alt="Logo do Sistema"
+        >
       </router-link>
-        <!--class="ml-3 mt-2"-->
-      <!--<v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">-->
-        <!--<span>{{ appTitle }}</span>-->
-      <!--</v-toolbar-title>-->
-
-      <!--<v-btn-->
-        <!--class="button-drawer"-->
-        <!--color="green darken-4"-->
-        <!--icon-->
-        <!--@click="handleDrawerToggle"-->
-      <!--&gt;-->
-        <!--<v-icon v-text="drawer ? 'chevron_right' : 'chevron_left'" />-->
-      <!--</v-btn>-->
     </div>
-      <v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">
+    <v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">
       <span class="flex headline font-weight-medium">{{ appTitle }}</span>
-      </v-toolbar-title>
+    </v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
-      <v-btn
-        icon
-        @click="handleFullScreen()"
+      <v-menu
+        v-if="Object.keys(usuarioLogado).length > 0"
+        offset-y
+        origin="center center"
+        :nudge-bottom="10"
+        transition="scale-transition"
       >
-        <v-icon>fullscreen</v-icon>
+        <v-btn
+          slot="activator"
+          text
+          flat
+        >
+          <v-avatar size="30px">
+            <v-icon>account_circle</v-icon>
+          </v-avatar>
+          <span>
+            {{ usuarioLogado.no_nome }}
+          </span>
+        </v-btn>
+        <v-list class="pa-0">
+          <v-list-tile
+            v-for="(item, index) in items"
+            :key="index"
+            :href="item.href"
+            ripple="ripple"
+            :disabled="item.disabled"
+            :target="item.target"
+            rel="noopener"
+            @click="item.click"
+          >
+            <v-list-tile-action v-if="item.icon">
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-btn
+        v-if="Object.keys(usuarioLogado).length < 1"
+        slot="activator"
+        text
+        flat
+        to="/conta/autenticar"
+      >
+        Login
+        <v-avatar size="30px">
+          <v-icon>account_circle</v-icon>
+        </v-avatar>
       </v-btn>
     </v-toolbar-items>
-    <dialog-confirmacao />
-    <dialog-progresso />
   </v-toolbar>
 </template>
 <script>
-import Util from '../util';
-import DialogConfirmacao from '../../modules/shared/components/DialogConfirmacao';
-import DialogProgresso from '../../modules/shared/components/DialogProgresso';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AppToolbar',
-  components: {
-    DialogProgresso,
-    DialogConfirmacao,
-  },
+
   data() {
     return {
       appTitle: process.env.VUE_APP_TITLE,
-      drawer: false,
       items: [
         {
           icon: 'lock',
-          name: 'conta-usuario-alterar-senha',
+          href: '',
           title: 'Alterar Senha',
+          click: this.handleChangePassword,
         },
         {
-          icon: 'fullscreen_exit',
-          href: '#',
+          icon: 'exit_to_app',
+          href: '',
           title: 'Logout',
           click: this.handleLogout,
         },
       ],
+      usuarioLogado: {},
     };
   },
   computed: {
+    ...mapGetters({
+      usuario: 'conta/usuario',
+    }),
+  },
+  watch: {
+    usuario(valor) {
+      this.usuarioLogado = valor;
+    },
+  },
+  mounted() {
+    this.usuarioLogado = this.usuario;
   },
   methods: {
     handleDrawerToggle() {
       this.drawer = !this.drawer;
       this.$emit('side-icon-click');
     },
-    handleFullScreen() {
-      Util.toggleFullScreen();
+
+    handleChangePassword() {
+      this.$router.push({ name: 'conta-usuario-alterar-senha' });
     },
     handleLogout() {
-      this.$emit('handle-logout-click');
-      this.$router.push('/conta/sair');
+      this.$router.push({ name: 'conta-sair' });
     },
   },
 };
 </script>
-

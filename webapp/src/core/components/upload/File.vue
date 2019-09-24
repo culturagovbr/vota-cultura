@@ -5,7 +5,7 @@
       :max-file-size="maxFileSize"
       :accepted-file-types="acceptedFileTypes"
       :files="file"
-      label-idle="Clique ou arraste"
+      label-idle="Clique aqui para anexar"
       label-file-waiting-for-size="Calculando tamanho"
       label-invalid-field="Arquivo(s) invalido(s)"
       label-file-size-not-available="Tamanho não disponível"
@@ -65,24 +65,30 @@ export default {
   props: {
     value: {
       type: Object,
-      default: {},
+      default: () => {},
     },
     acceptedFileTypes: {
       type: Array,
       default: () => [
         'application/pdf',
         'image/jpeg',
+        'application/zip',
+        'application/x-rar-compressed',
+        'application/vnd.rar',
       ],
     },
     maxFileSize: {
       type: String,
-      default: '5MB',
+      default: '80MB',
     },
     fileValidateTypeLabelExpectedTypesMap: {
       type: Object,
       default: () => ({
         'application/pdf': '.pdf',
         'image/jpeg': '.jpeg',
+        'application/zip': '.zip',
+        'application/x-rar-compressed': '.rar',
+        'application/vnd.rar': '.rar',
       }),
     },
     options: {
@@ -114,7 +120,6 @@ export default {
     setFileMetaData() {
       try {
         this.self = this.$refs.pond.getFile();
-//this.self = this.$refs.pond.getFile().getFileEncodeBase64String();
       } catch (Exception) {
         this.self = {};
       }

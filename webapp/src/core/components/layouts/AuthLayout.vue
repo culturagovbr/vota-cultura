@@ -12,8 +12,8 @@
           <v-flex
             xs12
             sm8
-            md4
-            lg4
+            md6
+            lg6
           >
             <v-slide-y-reverse-transition
               leave-absolute

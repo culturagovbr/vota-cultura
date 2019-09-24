@@ -17,7 +17,7 @@ class CreateTbUsuario extends Migration
                 true,
                 true
             );
-            $table->string('no_pessoa', 255)->nullable(false);
+            $table->string('no_nome', 255)->nullable(false);
             $table->string('ds_email', 255)->unique();
             $table->string('ds_senha', 255);
             $table->string('ds_codigo_ativacao', 255);

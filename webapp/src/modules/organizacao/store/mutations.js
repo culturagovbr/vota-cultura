@@ -1,11 +1,5 @@
 import * as types from './types';
 
-export const state = {
-  organizacao: {},
-  segmentos: [],
-  criterios: [],
-};
-
 export const mutations = {
   [types.OBTER_SEGMENTOS](state, dados) {
     state.segmentos = dados.data;
@@ -15,5 +9,12 @@ export const mutations = {
   },
   [types.DEFINIR_ORGANIZACAO](state, dados) {
     state.organizacao = dados;
+  },
+  [types.OBTER_DADOS_ORGANIZACAO]() {},
+  [types.DEFINIR_ORGANIZACOES](state, dados) {
+    state.organizacoes = dados.data;
+  },
+  [types.OBTER_DOCUMENTACAO_COMPROBATORIA](state, dados) {
+    state.documentacaoComprobatoria = dados;
   },
 };

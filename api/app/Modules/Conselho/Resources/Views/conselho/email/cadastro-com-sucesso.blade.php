@@ -58,7 +58,7 @@
 </p>
 <p>
     <b>
-        Unidade da Federação da Sede:
+        Unidade da federação da sede:
     </b>
     {{ $conselho->endereco->municipio->uf->no_uf }}
 </p>
@@ -72,7 +72,7 @@
     <b>
         Nome do representante:
     </b>
-    {{ $conselho->representante->no_pessoa }}
+    {{ $conselho->representante->no_nome }}
 </p>
 <p>
     <b>
@@ -99,12 +99,6 @@
     {{ $conselho->representante->ds_email }}
 </p>
 
-
 <p>Atenciosamente,</p>
 <p>Minist&eacute;rio da Cidadania</p>
-
-
-
-
-
-(Mensagem automática, não responder)
+<p>(Mensagem automática, não responder)</p>

@@ -9,20 +9,23 @@ export function obterInformacoesJWT(token) {
 
     let finalToken = token;
     if (finalToken == null) {
-      finalToken = localStorage.getItem('user_token');
+      finalToken = localStorage.getItem('token_usuario');
     }
-    return finalToken != null ? jsonwebtoken.verify(finalToken, process.env.VUE_APP_JWT_SECRET) : '';
+    return finalToken != null ? jsonwebtoken.verify(finalToken, process.env.VUE_APP_JWT_SECRET, { ignoreNotBefore: true }) : '';
   } catch (Exception) {
-    console.log(Exception);
-    return '';
+    // console.log(Exception);
+    // return {};
     // throw Exception;
+    const error = 'Acesso expirado!';
+    localStorage.removeItem('token_usuario');
+    throw error;
   }
 }
 
 export function obterCabecalhoComToken(token) {
   let finalToken = token;
   if (finalToken == null) {
-    finalToken = localStorage.getItem('user_token');
+    finalToken = localStorage.getItem('token_usuario');
   }
   if (finalToken) {
     return {
@@ -32,4 +35,8 @@ export function obterCabecalhoComToken(token) {
     };
   }
   return {};
+}
+
+export function tokenValida(token) {
+  return Object.keys(obterInformacoesJWT(token)).length > 0;
 }

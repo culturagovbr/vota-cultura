@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    :value="showDrawer"
+    :value="exibirGaveta"
     class="app--drawer"
     :mini-variant.sync="mini"
     app
@@ -52,7 +52,7 @@
                 <v-list-tile
                   v-for="grand in subItem.children"
                   :key="grand.name"
-                  :to="genChildTarget(item, grand)"
+                  :to="obterRotaFilha(item, grand)"
                   :href="grand.href"
                   ripple="ripple"
                 >
@@ -65,7 +65,7 @@
               <v-list-tile
                 v-else
                 :key="subItem.name"
-                :to="genChildTarget(item, subItem)"
+                :to="obterRotaFilha(item, subItem)"
                 :href="subItem.href"
                 :disabled="subItem.disabled"
                 :target="subItem.target"
@@ -125,7 +125,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import menuAPI from '@/core/api/menu';
 
 export default {
   name: 'AppDrawer',
@@ -143,7 +142,7 @@ export default {
     },
     drawWidth: {
       type: [Number, String],
-      default: '260',
+      default: '300',
     },
   },
   data() {
@@ -153,97 +152,164 @@ export default {
       scrollSettings: {
         maxScrollbarLength: 160,
       },
-      showDrawer: false,
+      exibirGaveta: false,
       menuInscrivaseAtivo: false,
+      usuarioLogado: {},
+      menuAPI: [
+        {
+          title: 'Início',
+          group: 'apps',
+          icon: 'home',
+          name: 'Inicio',
+        },
+        {
+          title: 'Lista parcial de inscritos',
+          group: 'apps',
+          icon: 'list',
+          name: 'inscricao-lista-parcial-route',
+        },
+      ],
     };
   },
   computed: {
     ...mapGetters({
-      ativarInscricaoConselho: 'cronograma/ativarInscricaoConselho',
-      ativarInscricaoOrganizacao: 'cronograma/ativarInscricaoOrganizacao',
-      ativarInscricaoEleitor: 'cronograma/ativarInscricaoEleitor',
+      ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
+      ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
+      ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
+      usuario: 'conta/usuario',
+      perfil: 'conta/perfil',
     }),
-    computeGroupActive() {
-      return true;
-    },
-    sideToolbarColor() {
-      return this.$vuetify.options.extra.sideNav;
-    },
   },
   watch: {
     value(val) {
-      this.showDrawer = val;
+      this.exibirGaveta = val;
     },
-    ativarInscricaoConselho(value) {
-      let objetoMenu = {};
-      if (value === true) {
-        objetoMenu = {
-          title: 'Conselhos de Cultura',
-          group: 'apps',
-          name: 'Conselho',
-          icon: 'group',
-        };
-      }
-      this.definirItemMenuInscricao('Conselho', objetoMenu);
+    usuario(valor) {
+      this.usuarioLogado = valor;
     },
-    ativarInscricaoOrganizacao(value) {
-      let objetoMenu = {};
-      if (value === true) {
-        objetoMenu = {
-          title: 'Organização ou Entidade Cultural',
-          group: 'apps',
-          name: 'Organizacao',
-          icon: 'color_lens',
-        };
-      }
-      this.definirItemMenuInscricao('Organizacao', objetoMenu);
-    },
-    ativarInscricaoEleitor(value) {
-      let objetoMenu = {};
-      if (value === true) {
-        objetoMenu = {
-          title: 'Eleitor',
-          group: 'apps',
-          name: 'Eleitor',
-          icon: 'thumbs_up_down',
-        };
-      }
-      this.definirItemMenuInscricao('Eleitor', objetoMenu);
+    usuarioLogado() {
+      this.menus = this.menuAPI;
+      this.carregarMenusUsuarioLogado();
     },
   },
   mounted() {
-    this.obterCronogramas();
-    this.menus = menuAPI;
+    this.obterFases();
+    this.usuarioLogado = this.usuario;
   },
   methods: {
     ...mapActions({
-      obterCronogramas: 'cronograma/obterCronogramas',
+      obterFases: 'fase/obterFases',
     }),
 
-    definirItemMenuInscricao(nomeMenu, objetoMenu) {
-      const nomeAgrupadorInscricoes = 'AgrupadorInscricao';
-      const indiceAgrupadorInscricaoDeMenus = this.menus.findIndex(indice => indice.name === nomeAgrupadorInscricoes);
-      if (indiceAgrupadorInscricaoDeMenus === -1) {
-        this.menus.push({ header: 'Inscreva-se', name: nomeAgrupadorInscricoes });
+    carregarMenusUsuarioLogado() {
+      if (Object.keys(this.usuario).length < 1) {
+        return false;
       }
-      const indiceItemDeMenus = this.menus.findIndex(indice => indice.name === nomeMenu);
-      if (Object.keys(objetoMenu).length < 1 && indiceItemDeMenus > -1) {
-        this.menus.splice(indiceItemDeMenus);
-      }
-      if (Object.keys(objetoMenu).length > 1 && indiceItemDeMenus === -1) {
-        this.menus.push(objetoMenu);
+
+      this.carregarMenusConselho();
+      this.carregarMenusOrganizacao();
+      this.carregarMenusEleitor();
+      this.carregarMenuAdministrador();
+
+      return true;
+    },
+    carregarMenusEleitor() {
+      if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'EleitorDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Eleitor');
       }
     },
+    carregarMenusConselho() {
+      if (this.perfil.no_perfil === 'conselho') {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'ConselhoDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Conselho');
+      }
+    },
+    carregarMenusOrganizacao() {
+      if (this.perfil.no_perfil === 'organizacao') {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'OrganizacaoDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Organizacao');
+        this.definirItemMenu({
+          title: 'Documentação comprobatória',
+          group: 'apps',
+          name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
+          icon: 'cloud_upload',
+        }, 'Organizacao');
+      }
+    },
+    carregarMenuAdministrador() {
+      if (this.perfil.no_perfil === 'administrador') {
+        this.definirItemMenu({
+          title: 'Usuários',
+          group: 'apps',
+          name: 'administrador-lista-usuarios-route',
+          icon: 'group',
+        }, 'Administração');
 
-    genChildTarget(item, subItem) {
+        this.definirItemMenu({
+          title: 'Recursos',
+          group: 'apps',
+          name: 'lista-recurso-route',
+          icon: 'gavel',
+        }, 'Administração');
+
+        this.definirItemMenu({
+          title: 'Inscritos',
+          group: 'apps',
+          name: 'administrador-lista-inscritos-route',
+          icon: 'list',
+        }, 'Administração');
+        this.definirItemMenu({
+          title: 'Habilitação de conselhos',
+          group: 'apps',
+          name: 'ConselhoListaHabilitacaoRoute',
+          icon: 'list',
+        }, 'Administração');
+        this.definirItemMenu({
+          title: 'Inscrição - Conselho',
+          group: 'apps',
+          name: 'InscricaoConselho',
+          icon: 'group',
+        }, 'Administração');
+        this.definirItemMenu({
+          title: 'Inscrição - Organização',
+          group: 'apps',
+          name: 'InscricaoOrganizacao',
+          icon: 'group',
+        }, 'Administração');
+      }
+    },
+    definirItemMenu(objetoMenu, nomeAgrupador) {
+      this.definirAgrupadorMenu(nomeAgrupador);
+      this.menus.push(objetoMenu);
+    },
+    definirAgrupadorMenu(nomeAgrupador) {
+      const indiceAgrupadorInscricaoDeMenus = this.menus.findIndex(indice => indice.name === nomeAgrupador);
+      if (indiceAgrupadorInscricaoDeMenus === -1) {
+        this.menus.push({ header: nomeAgrupador, name: nomeAgrupador });
+      }
+    },
+    obterRotaFilha(item, subItem) {
       if (subItem.href) {
         return {};
       }
-      let child = { name: `${item.group}/${subItem.name}` };
+      let filho = { name: `${item.group}/${subItem.name}` };
       if (subItem.component) {
-        child = { name: subItem.component };
+        filho = { name: subItem.component };
       }
-      return child;
+      return filho;
     },
   },
 };

@@ -2,10 +2,10 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
-use App\Modules\Organizacao\Model\Organizacao;
+use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Organizacao\Model\Segmento;
 use App\Modules\Organizacao\Service\Segmento as SegmentoService;
-use App\Modules\Core\Http\Controllers\AApiResourceController;
+use Illuminate\Http\JsonResponse;
 
 class SegmentoApiResourceController extends AApiResourceController
 {
@@ -14,7 +14,7 @@ class SegmentoApiResourceController extends AApiResourceController
         parent::__construct($service);
     }
 
-    public function show(Segmento $model): \Illuminate\Http\JsonResponse
+    public function show(Segmento $model): JsonResponse
     {
         return parent::genericShow($model);
     }

@@ -9,8 +9,9 @@ trait TApiResourceStore
 {
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        return $this->sendResponse($this->service->cadastrar($request->all()),
-            "Operação Realizada com Sucesso",
+        return $this->sendResponse(
+            $this->service->cadastrar(collect($request->all())),
+            "Operação realizada com sucesso",
             Response::HTTP_CREATED
         );
     }

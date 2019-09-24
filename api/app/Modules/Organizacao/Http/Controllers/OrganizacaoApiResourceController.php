@@ -2,12 +2,14 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
-use App\Modules\Organizacao\Model\Criterio;
-use App\Modules\Organizacao\Model\Organizacao;
-use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
+use App\Modules\Conselho\Http\Resources\Organizacao;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
+use App\Modules\Organizacao\Http\Resources\Organizacao as OrganizacaoResource;
+use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class OrganizacaoApiResourceController extends AApiResourceController
 {
@@ -16,16 +18,27 @@ class OrganizacaoApiResourceController extends AApiResourceController
 
     public function __construct(OrganizacaoService $service)
     {
+        $this->middleware('auth:api')->except(
+            ['store', 'index']
+        );
         parent::__construct($service);
     }
 
-    public function show($identificador): \Illuminate\Http\JsonResponse
+    public function show($identificador): JsonResponse
     {
-        throw new \Exception("Método não disponível");
+        return $this->sendResponse(
+            new OrganizacaoResource($this->service->obterUm($identificador)),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): JsonResponse
     {
-        throw new \Exception("Método não disponível");
+        return $this->sendResponse(
+            OrganizacaoResource::collection($this->service->obterTodos()),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 }
