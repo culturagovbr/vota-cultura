@@ -78,7 +78,7 @@
             </v-data-table>
             <conselho-lista-habilitacao-dialog
               v-model="mostrarModalEdicao"
-              :usuario="itemEditado"
+              :conselho="itemEditado"
             />
           </v-card-text>
         </v-card>
