@@ -5,7 +5,7 @@
       :max-file-size="maxFileSize"
       :accepted-file-types="acceptedFileTypes"
       :files="file"
-      label-idle="Clique ou arraste"
+      label-idle="Clique aqui para anexar"
       label-file-waiting-for-size="Calculando tamanho"
       label-invalid-field="Arquivo(s) invalido(s)"
       label-file-size-not-available="Tamanho não disponível"

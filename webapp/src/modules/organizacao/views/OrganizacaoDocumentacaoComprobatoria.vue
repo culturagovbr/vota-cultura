@@ -5,7 +5,7 @@
         dark
         color="primary"
       >
-        <v-toolbar-title>Documentação comprovada</v-toolbar-title>
+        <v-toolbar-title>Documentação enviada</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
         <v-container
@@ -56,10 +56,15 @@
             fluid
             grid-list-xl
           >
-            <span class="grey--text title mb-9">
-              Envie os documentos no formato PDF (preferencialmente), JPEG, ZIP ou RAR
-            </span>
+            <div class="text-md-center grey--text title mb-9">
+              Envie os documentos no formato PDF (preferencialmente), JPEG, <br>
+              ZIP ou RAR para enviar mais de um arquivo.<br>
 
+              <br/>
+              <b>ATENÇÃO</b>
+              <br/>
+              Anexe arquivos com tamanho até 40MB
+            </div>
 
             <v-layout
               align-center
