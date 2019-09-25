@@ -84,3 +84,13 @@ export const putRequest = (path, id, payload) => instance.put(`${path}/${id}`, p
 export const patchRequest = (path, id, payload) => instance.patch(`${path}/${id}`, payload);
 
 export const deleteRequest = (path, id) => instance.delete(`${path}/${id}`);
+
+export const getFile = (coArquivo, config = {}) => axios.get(`upload/${coArquivo}`, config)
+  .then((response) => {
+console.log(response)
+    const blob = new Blob([response.data], {
+      type: 'application/pdf',
+    });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+  });

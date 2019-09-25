@@ -76,13 +76,13 @@
                         <v-layout>
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
-                              <b>CNPJ do orgão gestor:</b>
+                              <b>CNPJ do orgão gestor do conselho:</b>
                               {{ formulario.cnpj_formatado }}
                             </div>
                           </v-flex>
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
-                              <b>Nome do orgão gestor:</b>
+                              <b>Nome do orgão gestor do conselho:</b>
                               {{ formulario.no_orgao_gestor }}
                             </div>
                           </v-flex>
@@ -177,7 +177,7 @@
                                           class="text-md-center title"
                                           sm10
                                         >
-                                          Ato normativo que constituiu o conselho
+                                          Ata da última reunião do conselho
                                         </v-flex>
                                         <v-flex sm1>
                                           <v-icon
@@ -245,7 +245,7 @@
                                           class="text-md-center title"
                                           sm10
                                         >
-                                          Ato normativo que constituiu o conselho
+                                          Documento de identificação do representante com CPF
                                         </v-flex>
                                         <v-flex sm1>
                                           <v-icon
@@ -366,7 +366,7 @@
                       </v-btn>
                       <v-btn
                         :loading="loading"
-                        :disabled="!valid || loading || formulario.dh_parecer !== null"
+                        :disabled="!valid || loading
                         color="primary"
                         @click.native="abrirDialogo"
                       >
