@@ -27,7 +27,7 @@ class ConselhoListaHabilitacaoController extends Controller
     public function index(): JsonResponse
     {
         return $this->sendResponse(
-            ConselhoHabilitacao::collection($this->service->obterTodos()),
+            Conselho::collection($this->service->obterTodos()),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );

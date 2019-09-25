@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
 
 class ConselhoHabilitacao extends Model
 {
-    protected $table = 'tb_habilitacao_conselho';
+    protected $table = 'tb_conselho_habilitacao';
     protected $primaryKey = 'co_conselho_habilitacao';
 
     protected $fillable = [
