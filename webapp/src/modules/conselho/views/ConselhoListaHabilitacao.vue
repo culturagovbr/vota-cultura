@@ -66,11 +66,11 @@
                         v-on="on"
                         @click="editarItemModal(props.item)"
                       >
-                        <v-icon v-if="props.item.habilitacao === null">gavel</v-icon>
+                        <v-icon v-if="props.item.conselhoHabilitacao === null">gavel</v-icon>
                         <v-icon v-else>remove_red_eye</v-icon>
                       </v-btn>
                     </template>
-                    <span v-if="props.item.habilitacao === null">Avaliar</span>
+                    <span v-if="props.item.conselhoHabilitacao === null">Avaliar</span>
                     <span v-else>Visualizar</span>
                   </v-tooltip>
                 </td>

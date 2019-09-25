@@ -8,7 +8,6 @@ class RepresentanteArquivoAvaliacao extends JsonResource
 {
     public function toArray($request): array
     {
-
         return [
             'co_representante_arquivo_avaliacao' => $this->co_representante_arquivo_avaliacao,
             'co_representante_arquivo' => $this->co_representante_arquivo,
@@ -17,7 +16,8 @@ class RepresentanteArquivoAvaliacao extends JsonResource
             'co_usuario_avaliador' => $this->co_usuario_avaliador,
             'dh_avaliacao' => $this->dh_avaliacao,
             'co_conselho_habilitacao' => $this->co_conselho_habilitacao,
-            'representanteArquivo' => $this->representanteArquivo,
+            'co_arquivo' => $this->representanteArquivo->co_arquivo,
+            'tp_arquivo' => $this->representanteArquivo->tp_arquivo,
         ];
     }
 }
