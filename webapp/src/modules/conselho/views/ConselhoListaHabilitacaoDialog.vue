@@ -76,7 +76,7 @@
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>CNPJ do orgão gestor:</b>
-                              {{ formulario.nu_cnpj_mascarado }}
+                              {{ formulario.cnpj_formatado }}
                             </div>
                           </v-flex>
                           <v-flex sm6>

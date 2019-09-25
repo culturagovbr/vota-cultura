@@ -3,12 +3,11 @@
 namespace App\Modules\Conselho\Model;
 
 use App\Modules\Conta\Model\Usuario;
+use App\Modules\Core\Helper\CNPJ;
 use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Representacao\Model\Representante;
-use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 class Conselho extends Model
 {
@@ -71,4 +70,8 @@ class Conselho extends Model
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
     }
 
+    public function getCnpjFormatadoAttribute()
+    {
+        return CNPJ::adicionarMascara($this->nu_cnpj);
+    }
 }

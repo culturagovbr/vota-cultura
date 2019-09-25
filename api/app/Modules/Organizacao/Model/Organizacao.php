@@ -3,6 +3,7 @@
 namespace App\Modules\Organizacao\Model;
 
 use App\Modules\Conta\Model\Usuario;
+use App\Modules\Core\Helper\CNPJ;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Organizacao\Model\Criterio;
 use App\Modules\Organizacao\Model\Segmento;
@@ -79,6 +80,11 @@ class Organizacao extends Model
     public function getTelefoneFormatadoAttribute()
     {
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
+    }
+
+    public function getCnpjFormatadoAttribute()
+    {
+        return CNPJ::adicionarMascara($this->nu_cnpj);
     }
 
     public function obterCriteriosCostumizados()

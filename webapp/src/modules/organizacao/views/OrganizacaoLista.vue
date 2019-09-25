@@ -27,7 +27,7 @@
           slot-scope="props"
         >
           <td />
-          <td>{{ props.item.nu_cnpj_mascarado }}</td>
+          <td>{{ props.item.cnpj_formatado }}</td>
           <td>{{ props.item.no_organizacao }}</td>
           <td>
             <v-chip
@@ -89,7 +89,7 @@ export default {
       },
       {
         text: 'CNPJ',
-        value: 'nu_cnpj_mascarado',
+        value: 'cnpj_formatado',
       },
       {
         text: 'Nome da Organização ou Entidade',
