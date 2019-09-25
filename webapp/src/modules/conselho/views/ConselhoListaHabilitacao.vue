@@ -64,7 +64,7 @@
                         color="primary"
                         small
                         v-on="on"
-                        @click="editarItemModal(props.item)"
+                        @click="editarItemModal(props.item);"
                       >
                         <v-icon v-if="props.item.conselhoHabilitacao === null">gavel</v-icon>
                         <v-icon v-else>remove_red_eye</v-icon>
@@ -131,6 +131,13 @@ export default {
       },
     ],
   }),
+  watch:{
+    mostrarModalEdicao(valor){
+      if(!valor){
+        this.itemEditado = Object.assign({});
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       conselhosGetter: 'conselho/conselhos',

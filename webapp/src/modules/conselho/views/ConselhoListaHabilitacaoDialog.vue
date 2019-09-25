@@ -27,6 +27,7 @@
           ref="form_recurso"
           v-model="valid"
         >
+
           <v-container v-if="!!avaliacaoArquivo.ata_reuniao_conselho">
             <v-card>
               <v-card-text>
@@ -512,18 +513,24 @@ export default {
     value(valor) {
       this.dialog = valor;
     },
-    conselho(valor) {
-      this.formulario = Object.assign(this.formularioInicial, valor);
-      this.avaliacaoArquivo = Object.assign({}, this.avaliacaoArquivoInicial);
-      if (valor.conselhoHabilitacao) {
-        this.atribuirValoresConformidade(valor.conselhoHabilitacao);
-      }
-
-      this.obterDadosConselho(valor.co_conselho);
-    },
     dialog(valor) {
       this.$emit('input', valor);
-      this.limparFormulario();
+    },
+    conselho(valor) {
+      if(!!Object.keys(valor).length){
+        // console.log(this.conselho)
+        // this.formulario = Object.assign(this.formularioInicial, valor);
+        this.formulario = Object.assign({}, valor);
+
+        if (this.formulario.conselhoHabilitacao === null) {
+          this.formulario.conselhoHabilitacao = Object.assign({}, this.formularioInicial.conselhoHabilitacao);
+        }
+        this.avaliacaoArquivo = Object.assign({}, this.avaliacaoArquivoInicial);
+        if (valor.conselhoHabilitacao) {
+          this.atribuirValoresConformidade(valor.conselhoHabilitacao);
+        }
+        this.obterDadosConselho(valor.co_conselho);
+      }
     },
   },
   methods: {
@@ -552,9 +559,9 @@ export default {
       return true;
     },
     limparFormulario() {
-      if (this.$refs.form_recurso) {
-        this.$refs.form_recurso.reset();
-      }
+
+
+      // this.$refs.form_recurso.reset();
     },
     abrirDialogo() {
       const self = this;
@@ -569,10 +576,8 @@ export default {
     },
   },
   mounted() {
-    this.formulario = Object.assign({}, this.formularioInicial);
   },
   created() {
-
   },
 };
 </script>
