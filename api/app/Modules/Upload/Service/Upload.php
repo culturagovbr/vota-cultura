@@ -57,19 +57,31 @@ class Upload extends AbstractService
 
     public function downloadArquivo($identificador)
     {
-        $usuario = Auth::user();
-
-        if ($usuario->souAdministrador()) {
-            $arquivoModel = app(ArquivoModel::class);
-
-            $arquivo = $arquivoModel->find($identificador);
-
-            if (empty($arquivo)) {
-                throw new EParametrosInvalidos("O arquivo solicitado não existe.");
-            }
-            return Storage::download($arquivo->ds_localizacao, $arquivo->no_arquivo);
+        $arquivo = $this->_obterArquivo($identificador);
+        if (empty($arquivo)) {
+            throw new EParametrosInvalidos("O arquivo solicitado não existe.");
         }
+        return Storage::download($arquivo->ds_localizacao, $arquivo->no_arquivo);
+    }
 
+    private function _obterArquivo($identificador) : \App\Modules\Upload\Model\Arquivo
+    {
+        $usuario = Auth::user();
+        if ($usuario->souAdministrador()) {
+            return $this->_obterArquivoAdministrador($identificador);
+        }
+        return $this->_obterArquivoRepresentante($identificador);
+    }
+
+    private function _obterArquivoAdministrador($identificador) : \App\Modules\Upload\Model\Arquivo
+    {
+        $arquivoModel = app(ArquivoModel::class);
+        return $arquivoModel->find($identificador);
+    }
+
+    private function _obterArquivoRepresentante($identificador) : \App\Modules\Upload\Model\Arquivo
+    {
+        $usuario = Auth::user();
         $representanteModel = app(RepresentanteModel::class);
         $representante = $representanteModel->where([
             'nu_cpf' => $usuario->nu_cpf
@@ -80,12 +92,6 @@ class Upload extends AbstractService
         }
 
         $arquivosDoRepresentante = $representante->arquivos()->get();
-        $arquivo = $arquivosDoRepresentante->where('co_arquivo', $identificador)->first();
-
-        if (empty($arquivo)) {
-            throw new EParametrosInvalidos("O arquivo solicitado não existe.");
-        }
-
-        return Storage::download($arquivo->ds_localizacao, $arquivo->no_arquivo);
+        return $arquivosDoRepresentante->where('co_arquivo', $identificador)->first();
     }
 }
