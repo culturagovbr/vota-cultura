@@ -448,6 +448,8 @@ export default {
   },
   data() {
     return {
+
+
       avaliacaoArquivo: {
         ata_reuniao_conselho: {
           st_em_conformidade: String(),
@@ -471,7 +473,11 @@ export default {
       dialog: false,
       loading: false,
       valid: false,
-      formulario: { },
+      formulario: {
+        representante: {
+          arquivosAvaliados: [],
+        },
+      },
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',

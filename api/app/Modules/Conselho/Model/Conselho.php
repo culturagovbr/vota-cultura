@@ -49,10 +49,10 @@ class Conselho extends Model
         );
     }
 
-    public function habilitacaoConselho()
+    public function conselhoHabilitacao()
     {
         return $this->hasOne(
-            HabilitacaoConselho::class,
+            ConselhoHabilitacao::class,
             'co_conselho',
             'co_conselho'
         );

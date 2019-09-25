@@ -8,6 +8,10 @@ class Representante extends JsonResource
 {
     public function toArray($request): array
     {
+        $arquivosAvaliados = [];
+        if($this->arquivosAvaliados) {
+            $arquivosAvaliados = $this->arquivosAvaliados;
+        }
 
         return [
             'co_representante' => $this->co_representante,
@@ -18,7 +22,7 @@ class Representante extends JsonResource
             'nu_telefone' => $this->nu_telefone,
             'dh_cadastro' => $this->dh_cadastro,
             'arquivos' => $this->arquivos,
-            'arquivosAvaliados' => $this->arquivosAvaliados,
+            'arquivosAvaliados' => RepresentanteArquivoAvaliacao::collection($arquivosAvaliados),
         ];
     }
 }

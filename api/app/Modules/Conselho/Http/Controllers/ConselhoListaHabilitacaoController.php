@@ -4,6 +4,7 @@ namespace App\Modules\Conselho\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Conselho\Http\Resources\Conselho;
+use App\Modules\Conselho\Http\Resources\ConselhoHabilitacao;
 use App\Modules\Conselho\Service\Conselho as ConselhoService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -26,7 +27,7 @@ class ConselhoListaHabilitacaoController extends Controller
     public function index(): JsonResponse
     {
         return $this->sendResponse(
-            Conselho::collection($this->service->obterTodos()),
+            ConselhoHabilitacao::collection($this->service->obterTodos()),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );
