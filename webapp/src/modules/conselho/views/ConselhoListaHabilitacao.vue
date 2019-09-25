@@ -37,7 +37,7 @@
                 slot-scope="props"
               >
                 <td />
-                <td>{{ props.item.nu_cnpj_mascarado }}</td>
+                <td>{{ props.item.cnpj_formatado }}</td>
                 <td>{{ props.item.no_conselho }}</td>
                 <td>
                   <v-chip
@@ -64,13 +64,13 @@
                         color="primary"
                         small
                         v-on="on"
-                        @click="editarItemModal(props.item)"
+                        @click="editarItemModal(props.item);"
                       >
-                        <v-icon v-if="props.item.habilitacao === null">gavel</v-icon>
+                        <v-icon v-if="props.item.conselhoHabilitacao === null">gavel</v-icon>
                         <v-icon v-else>remove_red_eye</v-icon>
                       </v-btn>
                     </template>
-                    <span v-if="props.item.habilitacao === null">Avaliar</span>
+                    <span v-if="props.item.conselhoHabilitacao === null">Avaliar</span>
                     <span v-else>Visualizar</span>
                   </v-tooltip>
                 </td>
@@ -115,7 +115,7 @@ export default {
       },
       {
         text: 'CNPJ',
-        value: 'nu_cnpj_mascarado',
+        value: 'cnpj_formatado',
       },
       {
         text: 'Nome do conselho',
@@ -131,6 +131,13 @@ export default {
       },
     ],
   }),
+  watch:{
+    mostrarModalEdicao(valor){
+      if(!valor){
+        this.itemEditado = Object.assign({});
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       conselhosGetter: 'conselho/conselhos',

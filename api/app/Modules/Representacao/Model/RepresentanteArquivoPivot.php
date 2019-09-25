@@ -14,4 +14,10 @@ class RepresentanteArquivoPivot extends Pivot
 {
     protected $table = 'rl_representante_arquivo';
     protected $primaryKey = 'co_representante_arquivo';
+    protected $fillable = [
+        'co_representante',
+        'co_arquivo',
+        'tp_arquivo',
+        'tp_inscricao',
+    ];
 }
