@@ -85,12 +85,23 @@ export const patchRequest = (path, id, payload) => instance.patch(`${path}/${id}
 
 export const deleteRequest = (path, id) => instance.delete(`${path}/${id}`);
 
-export const getFile = (coArquivo, config = {}) => axios.get(`upload/${coArquivo}`, config)
+export const getFile = (coArquivo, config = {}) => instance.get(`/upload/${coArquivo}`, config)
   .then((response) => {
-console.log(response)
-    const blob = new Blob([response.data], {
-      type: 'application/pdf',
-    });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url);
+    // const blob = new Blob([response.data], {
+    //   type: response.headers['content-type'],
+    // });
+    // const url = window.URL.createObjectURL(blob);
+    // window.open(url);
+console.log(response);
+    
+    const url = window.URL.createObjectURL(new Blob([response.data], {
+        type: response.headers['content-type'],
+      }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'file.pdf';
+    // link.setAttribute('download', 'file.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });

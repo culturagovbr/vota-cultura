@@ -118,6 +118,7 @@
                                         </v-flex>
                                         <v-flex sm1>
                                           <v-icon
+                                            @click="downloadArquivo(avaliacaoArquivo.ata_reuniao_conselho.co_arquivo)"
                                             right
                                             size="32px"
                                             color="blue darken-4"
@@ -184,6 +185,7 @@
                                             right
                                             size="32px"
                                             color="blue darken-4"
+                                            @click="downloadArquivo(avaliacaoArquivo.ata_reuniao_conselho.co_arquivo)"
                                           >
                                             cloud_download
                                           </v-icon>
@@ -252,6 +254,7 @@
                                             right
                                             size="32px"
                                             color="blue darken-4"
+                                            @click="downloadArquivo(avaliacaoArquivo.ata_reuniao_conselho.co_arquivo)"
                                           >
                                             cloud_download
                                           </v-icon>
@@ -366,7 +369,7 @@
                       </v-btn>
                       <v-btn
                         :loading="loading"
-                        :disabled="!valid || loading
+                        :disabled="!valid || loading"
                         color="primary"
                         @click.native="abrirDialogo"
                       >
@@ -537,6 +540,7 @@ export default {
     ...mapActions({
       avaliarRecursoInscricao: 'recurso/avaliarRecursoInscricao',
       obterDadosConselho: 'conselho/obterDadosConselho',
+      downloadArquivo: 'shared/downloadArquivo',
     }),
     atribuirValoresConformidade(conselhoHabilitacao) {
       conselhoHabilitacao.arquivosAvaliacao.forEach((item) => {
@@ -558,10 +562,8 @@ export default {
         });
       return true;
     },
-    limparFormulario() {
-
-
-      // this.$refs.form_recurso.reset();
+    downloadArquivo_(coArquivo) {
+      this.downloadArquivo(coArquivo);
     },
     abrirDialogo() {
       const self = this;
