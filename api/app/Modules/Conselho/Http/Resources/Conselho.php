@@ -2,7 +2,7 @@
 
 namespace App\Modules\Conselho\Http\Resources;
 
-use App\Modules\Conta\Http\Resources\Usuario;
+use App\Modules\Conta\Http\Resources\UsuarioSomenteLeitura;
 use App\Modules\Core\Helper\CNPJ;
 use App\Modules\Localidade\Http\Resources\Endereco;
 use App\Modules\Representacao\Http\Resources\Representante;
@@ -23,7 +23,7 @@ class Conselho extends JsonResource
             'tp_governamental' => $this->tp_governamental,
             'endereco' => (new Endereco($this->endereco)),
             'representante' => (new Representante($this->representante)),
-            'usuario' => (new Usuario($this->usuario)),
+            'usuario' => (new UsuarioSomenteLeitura($this->usuario)),
             'ds_sitio_eletronico' => $this->ds_sitio_eletronico,
             'st_inscricao' => $this->st_inscricao,
             'dh_cadastro' => $this->dh_cadastro,

@@ -429,12 +429,10 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import ConselhoDetalhesInscricaoVisualizacao from './ConselhoDetalhesInscricaoVisualizacao';
-import Layout from '../../../core/components/media/Layout';
 
 export default {
   name: 'ConselhoListaHabilitacaoDialog',
   components: {
-    Layout,
     ConselhoDetalhesInscricaoVisualizacao,
   },
   props: {
@@ -448,7 +446,6 @@ export default {
   },
   data() {
     return {
-
 
       avaliacaoArquivo: {
         ata_reuniao_conselho: {
