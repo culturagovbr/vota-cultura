@@ -27,7 +27,7 @@
           ref="form_recurso"
           v-model="valid"
         >
-          <v-container>
+          <v-container v-if="!!avaliacaoArquivo.ata_reuniao_conselho">
             <v-card>
               <v-card-text>
                 <v-tabs
@@ -87,7 +87,6 @@
                           </v-flex>
                         </v-layout>
                         <div
-                          v-if="avaliacaoArquivo.ata_reuniao_conselho"
                           class="ma-2 text-justify title "
                         >
                           <v-toolbar color="white darken-3">
@@ -153,6 +152,7 @@
                                             box
                                             label="Observação"
                                             name="input-7-4"
+                                            v-model="avaliacaoArquivo.ata_reuniao_conselho.ds_observacao"
                                             rows="13"
                                             row-height="28"
                                             :counter="500"
@@ -219,6 +219,7 @@
                                             row-height="28"
                                             :counter="500"
                                             :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
+                                            v-model="avaliacaoArquivo.ato_normativo_conselho.ds_observacao"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           />
                                         </v-flex>
@@ -286,6 +287,7 @@
                                             row-height="28"
                                             :counter="500"
                                             :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
+                                            v-model="avaliacaoArquivo.ato_normativo_conselho.ds_observacao"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           />
                                         </v-flex>
@@ -483,11 +485,15 @@ export default {
       dialog: false,
       loading: false,
       valid: false,
-      formulario: {
-        representante: {
-          arquivosAvaliados: [],
+      formularioInicial: {
+        conselhoHabilitacao: {
+          co_conselho_habilitacao: null,
+          co_conselho: null,
+          st_avaliacao: null,
+          ds_parecer: null,
         },
       },
+      formulario: {},
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
@@ -507,7 +513,7 @@ export default {
       this.dialog = valor;
     },
     conselho(valor) {
-      this.formulario = Object.assign({}, valor);
+      this.formulario = Object.assign(this.formularioInicial, valor);
       this.avaliacaoArquivo = Object.assign({}, this.avaliacaoArquivoInicial);
       if (valor.conselhoHabilitacao) {
         this.atribuirValoresConformidade(valor.conselhoHabilitacao);
@@ -561,6 +567,12 @@ export default {
     fecharDialogo() {
       this.modalConfirmacao = false;
     },
+  },
+  mounted() {
+    this.formulario = Object.assign({}, this.formularioInicial);
+  },
+  created() {
+
   },
 };
 </script>
