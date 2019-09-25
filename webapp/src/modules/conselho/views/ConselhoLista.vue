@@ -59,20 +59,54 @@
         </template>
       </v-data-table>
     </v-card-text>
+    <!--<v-container>-->
+      <!--<v-card>-->
+        <!--<v-card-text>-->
+          <!--<conselho-detalhes-inscricao-visualizacao v-if="tipoModal === 'conselho'"/>-->
+        <!--</v-card-text>-->
+        <!--<v-card-actions class="justify-center">-->
+          <!--<v-btn-->
+            <!--@click="mostrarModal = false"-->
+          <!--&gt;-->
+            <!--<v-icon left>-->
+              <!--undo-->
+            <!--</v-icon>-->
+            <!--Fechar-->
+          <!--</v-btn>-->
+        <!--</v-card-actions>-->
+      <!--</v-card>-->
+    <!--</v-container>-->
   </v-card>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import ConselhoDetalhesInscricaoVisualizacao from '@/modules/conselho/views/ConselhoDetalhesInscricaoVisualizacao.vue';
 
 export default {
   name: 'ConselhoLista',
+  components: {
+    ConselhoDetalhesInscricaoVisualizacao,
+  },
+  props: {
+    souAdministrador: {
+      source: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  },
   data: () => ({
+    pesquisar: '',
+    tipoModal: '',
+    mostrarModal: false,
+    loading: false,
     pagination_conselho: {
       page: 1,
       rowsPerPage: 10,
       sortBy: 'no_conselho',
       descending: false,
     },
+    totalItems: 0,
     headers: [
       {
         text: '',
@@ -104,7 +138,19 @@ export default {
   methods: {
     ...mapActions({
       obterConselhos: 'conselho/obterConselhos',
+      obterDadosConselho: 'conselho/obterDadosConselho',
     }),
+    visualizarItemModal(tipoInscricao, id) {
+      this.mostrarModal = true;
+      this.tipoModal = tipoInscricao;
+
+      if (tipoInscricao === 'conselho') {
+        this.obterDadosConselho(id);
+        return false;
+      }
+
+      return true;
+    },
   },
   mounted() {
     const self = this;
