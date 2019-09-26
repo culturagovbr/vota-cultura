@@ -123,147 +123,154 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+    import { mapActions, mapGetters } from 'vuex';
+    import VuePerfectScrollbar from 'vue-perfect-scrollbar';
 
-export default {
-  name: 'AppDrawer',
-  components: {
-    VuePerfectScrollbar,
-  },
-  props: {
-    value: {
-      type: Boolean,
-      default: true,
-    },
-    expanded: {
-      type: Boolean,
-      default: true,
-    },
-    drawWidth: {
-      type: [Number, String],
-      default: '300',
-    },
-  },
-  data() {
-    return {
-      mini: false,
-      menus: [],
-      scrollSettings: {
-        maxScrollbarLength: 160,
-      },
-      exibirGaveta: false,
-      menuInscrivaseAtivo: false,
-      usuarioLogado: {},
-      menuAPI: [
-        {
-          title: 'Início',
-          group: 'apps',
-          icon: 'home',
-          name: 'Inicio',
+    export default {
+        name: 'AppDrawer',
+        components: {
+            VuePerfectScrollbar,
         },
-        {
-          title: 'Lista final de inscritos',
-          group: 'apps',
-          icon: 'list',
-          name: 'inscricao-lista-parcial-route',
+        props: {
+            value: {
+                type: Boolean,
+                default: true,
+            },
+            expanded: {
+                type: Boolean,
+                default: true,
+            },
+            drawWidth: {
+                type: [Number, String],
+                default: '300',
+            },
         },
-      ],
-    };
-  },
-  computed: {
-    ...mapGetters({
-      ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
-      ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
-      ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
-      usuario: 'conta/usuario',
-      perfil: 'conta/perfil',
-    }),
-  },
-  watch: {
-    value(val) {
-      this.exibirGaveta = val;
-    },
-    usuario(valor) {
-      this.usuarioLogado = valor;
-    },
-    usuarioLogado() {
-      this.menus = this.menuAPI;
-      this.carregarMenusUsuarioLogado();
-    },
-  },
-  mounted() {
-    this.obterFases();
-    this.usuarioLogado = this.usuario;
-  },
-  methods: {
-    ...mapActions({
-      obterFases: 'fase/obterFases',
-    }),
+        data() {
+            return {
+                mini: false,
+                menus: [],
+                scrollSettings: {
+                    maxScrollbarLength: 160,
+                },
+                exibirGaveta: false,
+                menuInscrivaseAtivo: false,
+                usuarioLogado: {},
+                menuAPI: [
+                    {
+                        title: 'Início',
+                        group: 'apps',
+                        icon: 'home',
+                        name: 'Inicio',
+                    },
+                    {
+                        title: 'Lista final de inscritos',
+                        group: 'apps',
+                        icon: 'list',
+                        name: 'inscricao-lista-parcial-route',
+                    },
+                ],
+            };
+        },
+        computed: {
+            ...mapGetters({
+                ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
+                ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
+                ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
+                usuario: 'conta/usuario',
+                perfil: 'conta/perfil',
+            }),
+        },
+        watch: {
+            value(val) {
+                this.exibirGaveta = val;
+            },
+            usuario(valor) {
+                this.usuarioLogado = valor;
+            },
+            usuarioLogado() {
+                this.menus = this.menuAPI;
+                this.carregarMenusUsuarioLogado();
+            },
+        },
+        mounted() {
+            this.obterFases();
+            this.usuarioLogado = this.usuario;
+        },
+        methods: {
+            ...mapActions({
+                obterFases: 'fase/obterFases',
+            }),
 
-    carregarMenusUsuarioLogado() {
-      if (Object.keys(this.usuario).length < 1) {
-        return false;
-      }
+            carregarMenusUsuarioLogado() {
+                if (Object.keys(this.usuario).length < 1) {
+                    return false;
+                }
 
-      this.carregarMenusConselho();
-      this.carregarMenusOrganizacao();
-      this.carregarMenusEleitor();
-      this.carregarMenuAdministrador();
+                this.carregarMenusConselho();
+                this.carregarMenusOrganizacao();
+                this.carregarMenusEleitor();
+                this.carregarMenuAdministrador();
 
-      return true;
-    },
-    carregarMenusEleitor() {
-      if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
-        this.definirItemMenu({
-          title: 'Detalhes da inscrição',
-          group: 'apps',
-          name: 'EleitorDetalhesInscricaoRoute',
-          icon: 'group',
-        }, 'Eleitor');
-      }
-    },
-    carregarMenusConselho() {
-      if (this.perfil.no_perfil === 'conselho') {
-        this.definirItemMenu({
-          title: 'Detalhes da inscrição',
-          group: 'apps',
-          name: 'ConselhoDetalhesInscricaoRoute',
-          icon: 'group',
-        }, 'Conselho');
-      }
-    },
-    carregarMenusOrganizacao() {
-      if (this.perfil.no_perfil === 'organizacao') {
-        this.definirItemMenu({
-          title: 'Detalhes da inscrição',
-          group: 'apps',
-          name: 'OrganizacaoDetalhesInscricaoRoute',
-          icon: 'group',
-        }, 'Organizacao');
-        this.definirItemMenu({
-          title: 'Documentação comprobatória',
-          group: 'apps',
-          name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
-          icon: 'cloud_upload',
-        }, 'Organizacao');
-      }
-    },
-    carregarMenuAdministrador() {
-      if (this.perfil.no_perfil === 'administrador') {
-        this.definirItemMenu({
-          title: 'Usuários',
-          group: 'apps',
-          name: 'administrador-lista-usuarios-route',
-          icon: 'group',
-        }, 'Administração');
+                return true;
+            },
+            carregarMenusEleitor() {
+                if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
+                    this.definirItemMenu({
+                        title: 'Detalhes da inscrição',
+                        group: 'apps',
+                        name: 'EleitorDetalhesInscricaoRoute',
+                        icon: 'group',
+                    }, 'Eleitor');
+                }
+            },
+            carregarMenusConselho() {
+                if (this.perfil.no_perfil === 'conselho') {
+                    this.definirItemMenu({
+                        title: 'Detalhes da inscrição',
+                        group: 'apps',
+                        name: 'ConselhoDetalhesInscricaoRoute',
+                        icon: 'group',
+                    }, 'Conselho');
 
-        this.definirItemMenu({
-          title: 'Recursos',
-          group: 'apps',
-          name: 'lista-recurso-route',
-          icon: 'gavel',
-        }, 'Administração');
+                    this.definirItemMenu({
+                        title: 'Recurso da habilitação',
+                        group: 'apps',
+                        name: 'ConselhoRecursoHabilitacaoRoute',
+                        icon: 'gavel',
+                    }, 'Conselho');
+                }
+            },
+            carregarMenusOrganizacao() {
+                if (this.perfil.no_perfil === 'organizacao') {
+                    this.definirItemMenu({
+                        title: 'Detalhes da inscrição',
+                        group: 'apps',
+                        name: 'OrganizacaoDetalhesInscricaoRoute',
+                        icon: 'group',
+                    }, 'Organizacao');
+                    this.definirItemMenu({
+                        title: 'Documentação comprobatória',
+                        group: 'apps',
+                        name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
+                        icon: 'cloud_upload',
+                    }, 'Organizacao');
+                }
+            },
+            carregarMenuAdministrador() {
+                if (this.perfil.no_perfil === 'administrador') {
+                    this.definirItemMenu({
+                        title: 'Usuários',
+                        group: 'apps',
+                        name: 'administrador-lista-usuarios-route',
+                        icon: 'group',
+                    }, 'Administração');
+
+                    this.definirItemMenu({
+                        title: 'Recursos',
+                        group: 'apps',
+                        name: 'lista-recurso-route',
+                        icon: 'gavel',
+                    }, 'Administração');
 
         this.definirItemMenu({
           title: 'Inscritos',

@@ -36,6 +36,17 @@ export default [
         component: () => import(/* webpackChunkName: "conselho-revisao-conselho" */ '@/modules/conselho/views/RevisaoConselho.vue'),
       },
       {
+        path: '/conselho/recurso-habilitacao',
+        name: 'ConselhoRecursoHabilitacaoRoute',
+        meta: {
+          title: 'Recurso da habilitação',
+          group: 'apps',
+          icon: 'gavel',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "cadastra-recurso-habilitacao" */ '@/modules/conselho/views/RecursoHabilitacao.vue'),
+      },
+      {
         path: '/conselho/detalhes-inscricao',
         name: 'ConselhoDetalhesInscricaoRoute',
         meta: {
