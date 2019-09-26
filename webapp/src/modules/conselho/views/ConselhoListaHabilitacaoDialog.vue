@@ -115,6 +115,7 @@
                                         >
                                           Ato normativo que constituiu o conselho
                                         </v-flex>
+                                        {{arquivosAvaliacao.ata_reuniao_conselho}}
                                         <v-flex sm1>
                                           <v-icon
                                             right
@@ -132,6 +133,7 @@
                                             v-model="arquivosAvaliacao.ata_reuniao_conselho.st_em_conformidade"
                                             label="* Documento em conformidade com o item 4.2.3 do edital?"
                                             column
+                                            :rules="[rules.required]"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           >
                                             <v-radio
@@ -157,7 +159,7 @@
                                             rows="13"
                                             row-height="28"
                                             :counter="500"
-                                            :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
+                                            :rules="[rules.tamanhoMaximo500Caracteres]"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           />
                                         </v-flex>
@@ -196,6 +198,7 @@
                                             v-model="arquivosAvaliacao.ato_normativo_conselho.st_em_conformidade"
                                             label="* Documento em conformidade com o item 4.2.3 do edital?"
                                             column
+                                            :rules="[rules.required]"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           >
                                             <v-radio
@@ -221,7 +224,7 @@
                                             rows="13"
                                             row-height="28"
                                             :counter="500"
-                                            :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
+                                            :rules="[rules.tamanhoMaximo500Caracteres]"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           />
                                         </v-flex>
@@ -265,6 +268,7 @@
                                             v-model="arquivosAvaliacao.documento_identificacao_responsavel.st_em_conformidade"
                                             label="* Documento em conformidade com o item 4.2.3 do edital?"
                                             column
+                                            :rules="[rules.required]"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           >
                                             <v-radio
@@ -283,14 +287,14 @@
                                       <v-layout>
                                         <v-flex class="pa-3">
                                           <v-textarea
-                                            v-model="arquivosAvaliacao.ato_normativo_conselho.ds_observacao"
+                                            v-model="arquivosAvaliacao.documento_identificacao_responsavel.ds_observacao"
                                             box
                                             label="Observação"
                                             name="input-7-4"
                                             rows="13"
                                             row-height="28"
                                             :counter="500"
-                                            :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
+                                            :rules="[rules.tamanhoMaximo500Caracteres]"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           />
                                         </v-flex>
@@ -318,6 +322,7 @@
                               <v-radio-group
                                 v-model="formulario.conselhoHabilitacao.st_avaliacao"
                                 column
+                                :rules="[rules.required]"
                                 :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                               >
                                 <v-radio
@@ -471,16 +476,19 @@ export default {
           st_em_conformidade: null,
           co_representante_arquivo: null,
           ds_observacao: String(),
+          co_arquivo: null,
         },
         ato_normativo_conselho: {
           st_em_conformidade: null,
           co_representante_arquivo: null,
           ds_observacao: String(),
+          co_arquivo: null,
         },
         documento_identificacao_responsavel: {
           st_em_conformidade: null,
           co_representante_arquivo: null,
           ds_observacao: String(),
+          co_arquivo: null,
         },
       },
       arquivosAvaliacao: {},
@@ -536,24 +544,30 @@ export default {
     },
     conselho(valor) {
       if (Object.keys(valor).length) {
-        // console.log(this.conselho)
-        // this.formulario = Object.assign(this.formularioInicial, valor);
         this.formulario = Object.assign({}, valor);
 
         if (this.formulario.conselhoHabilitacao === null) {
           this.formulario.conselhoHabilitacao = Object.assign({}, this.formularioInicial.conselhoHabilitacao);
         }
+
         this.arquivosAvaliacao = Object.assign({}, this.arquivosAvaliacaoInicial);
+
+        this.formulario.representante.arquivos.forEach((item) => {
+          this.arquivosAvaliacao[item.tp_arquivo].co_representante_arquivo = item.co_representante_arquivo;
+          this.arquivosAvaliacao[item.tp_arquivo].co_arquivo = item.co_arquivo;
+        });
+
         if (valor.conselhoHabilitacao) {
           this.atribuirValoresConformidade(valor.conselhoHabilitacao);
         }
+
         this.obterDadosConselho(valor.co_conselho);
       }
     },
   },
   methods: {
     ...mapActions({
-      avaliarHabilitacao: 'recurso/avaliarHabilitacao',
+      avaliarHabilitacao: 'conselho/avaliarHabilitacao',
       obterDadosConselho: 'conselho/obterDadosConselho',
       downloadArquivo: 'shared/downloadArquivo',
     }),

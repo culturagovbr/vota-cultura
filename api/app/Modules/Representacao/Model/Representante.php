@@ -58,7 +58,13 @@ class Representante extends Model
             'rl_representante_arquivo',
             'co_representante',
             'co_arquivo'
-        )->as('rl_representante_arquivo')->withPivot('tp_arquivo', 'tp_inscricao');
+        )->as('rl_representante_arquivo')->withPivot(
+            [
+                'tp_arquivo',
+                'tp_inscricao',
+                'co_representante_arquivo'
+            ]
+        );
     }
 
     public function representacaoArquivoAvaliacao()
