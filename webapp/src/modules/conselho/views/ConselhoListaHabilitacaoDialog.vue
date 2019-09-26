@@ -115,7 +115,6 @@
                                         >
                                           Ato normativo que constituiu o conselho
                                         </v-flex>
-                                        {{arquivosAvaliacao.ata_reuniao_conselho}}
                                         <v-flex sm1>
                                           <v-icon
                                             right
