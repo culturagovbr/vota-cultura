@@ -4,6 +4,7 @@ namespace App\Modules\Conselho\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Conselho\Http\Resources\Conselho;
+use App\Modules\Conselho\Http\Resources\ConselhoHabilitacao;
 use App\Modules\Conselho\Service\Conselho as ConselhoService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;

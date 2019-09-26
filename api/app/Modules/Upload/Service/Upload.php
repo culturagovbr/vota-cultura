@@ -3,9 +3,13 @@
 namespace App\Modules\Upload\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use App\Modules\Upload\Model\Arquivo as ArquivoModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
 
 class Upload extends AbstractService
 {
@@ -49,5 +53,45 @@ class Upload extends AbstractService
             DB::rollBack();
             throw $exception;
         }
+    }
+
+    public function downloadArquivo($identificador)
+    {
+        $arquivo = $this->_obterArquivo($identificador);
+        if (empty($arquivo)) {
+            throw new EParametrosInvalidos("O arquivo solicitado não existe.");
+        }
+        return Storage::download($arquivo->ds_localizacao, $arquivo->no_arquivo);
+    }
+
+    private function _obterArquivo($identificador) : \App\Modules\Upload\Model\Arquivo
+    {
+        $usuario = Auth::user();
+        if ($usuario->souAdministrador()) {
+            return $this->_obterArquivoAdministrador($identificador);
+        }
+        return $this->_obterArquivoRepresentante($identificador);
+    }
+
+    private function _obterArquivoAdministrador($identificador) : \App\Modules\Upload\Model\Arquivo
+    {
+        $arquivoModel = app(ArquivoModel::class);
+        return $arquivoModel->find($identificador);
+    }
+
+    private function _obterArquivoRepresentante($identificador) : \App\Modules\Upload\Model\Arquivo
+    {
+        $usuario = Auth::user();
+        $representanteModel = app(RepresentanteModel::class);
+        $representante = $representanteModel->where([
+            'nu_cpf' => $usuario->nu_cpf
+        ])->first();
+
+        if (empty($representante)) {
+            throw new EParametrosInvalidos("O usuario logado não possui representante cadastrado.");
+        }
+
+        $arquivosDoRepresentante = $representante->arquivos()->get();
+        return $arquivosDoRepresentante->where('co_arquivo', $identificador)->first();
     }
 }

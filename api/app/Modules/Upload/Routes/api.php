@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-
-Route::get('/upload', function (Request $request) {
-    // return $request->upload();
-})->middleware('auth:api');
+Route::group([
+    'prefix' => 'upload'
+], function () {
+    Route::get('{co_arquivo}', 'UploadController@show')->where('co_arquivo', '[0-9]+');
+});
