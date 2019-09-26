@@ -27,7 +27,6 @@
           ref="form_recurso"
           v-model="valid"
         >
-
           <v-container v-if="!!arquivosAvaliacao.ata_reuniao_conselho">
             <v-card>
               <v-card-text>
@@ -118,10 +117,10 @@
                                         </v-flex>
                                         <v-flex sm1>
                                           <v-icon
-                                            @click="downloadArquivo(arquivosAvaliacao.ata_reuniao_conselho.co_arquivo)"
                                             right
                                             size="32px"
                                             color="blue darken-4"
+                                            @click="downloadArquivo(arquivosAvaliacao.ata_reuniao_conselho.co_arquivo)"
                                           >
                                             cloud_download
                                           </v-icon>
@@ -151,10 +150,10 @@
                                       <v-layout>
                                         <v-flex class="pa-3">
                                           <v-textarea
+                                            v-model="arquivosAvaliacao.ata_reuniao_conselho.ds_observacao"
                                             box
                                             label="Observação"
                                             name="input-7-4"
-                                            v-model="arquivosAvaliacao.ata_reuniao_conselho.ds_observacao"
                                             rows="13"
                                             row-height="28"
                                             :counter="500"
@@ -215,6 +214,7 @@
                                       <v-layout>
                                         <v-flex class="pa-3">
                                           <v-textarea
+                                            v-model="arquivosAvaliacao.ato_normativo_conselho.ds_observacao"
                                             box
                                             label="Observação"
                                             name="input-7-4"
@@ -222,7 +222,6 @@
                                             row-height="28"
                                             :counter="500"
                                             :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
-                                            v-model="arquivosAvaliacao.ato_normativo_conselho.ds_observacao"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           />
                                         </v-flex>
@@ -284,6 +283,7 @@
                                       <v-layout>
                                         <v-flex class="pa-3">
                                           <v-textarea
+                                            v-model="arquivosAvaliacao.ato_normativo_conselho.ds_observacao"
                                             box
                                             label="Observação"
                                             name="input-7-4"
@@ -291,7 +291,6 @@
                                             row-height="28"
                                             :counter="500"
                                             :rules="[rules.required, rules.tamanhoMaximo500Caracteres]"
-                                            v-model="arquivosAvaliacao.ato_normativo_conselho.ds_observacao"
                                             :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                                           />
                                         </v-flex>
@@ -317,13 +316,14 @@
                           <v-layout>
                             <v-flex class="pa-3">
                               <v-radio-group
-                                column
                                 v-model="formulario.conselhoHabilitacao.st_avaliacao"
+                                column
                                 :disabled="!!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                               >
                                 <v-radio
                                   value="1"
                                   color="success"
+                                  :disabled="!avaliacaoPositiva"
                                 >
                                   <template v-slot:label>
                                     <div><strong class="success--text">Habilitado</strong></div>
@@ -511,6 +511,17 @@ export default {
       perfis: 'conta/perfis',
       perfisInscricao: 'conta/perfisInscricao',
     }),
+    avaliacaoPositiva: function() {
+      const avaliacao = (!!this.arquivosAvaliacao && this.arquivosAvaliacao.ata_reuniao_conselho.st_em_conformidade === '1'
+        && this.arquivosAvaliacao.ato_normativo_conselho.st_em_conformidade === '1'
+        && this.arquivosAvaliacao.documento_identificacao_responsavel.st_em_conformidade === '1');
+
+      if (!this.formulario.conselhoHabilitacao.co_conselho_habilitacao && !avaliacao) {
+        this.formulario.conselhoHabilitacao.st_avaliacao = '0';
+      }
+
+      return avaliacao;
+    },
   },
   watch: {
     value(valor) {
@@ -520,7 +531,7 @@ export default {
       this.$emit('input', valor);
     },
     conselho(valor) {
-      if(!!Object.keys(valor).length){
+      if (Object.keys(valor).length) {
         // console.log(this.conselho)
         // this.formulario = Object.assign(this.formularioInicial, valor);
         this.formulario = Object.assign({}, valor);
