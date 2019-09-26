@@ -17,7 +17,7 @@ class Criterio extends Model
         'qt_peso',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function organizacoes ()
     {

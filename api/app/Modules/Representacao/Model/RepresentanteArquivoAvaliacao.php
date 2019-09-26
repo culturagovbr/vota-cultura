@@ -29,7 +29,7 @@ class RepresentanteArquivoAvaliacao extends Model
         'dh_avaliacao',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function conselhoHabilitacao()
     {

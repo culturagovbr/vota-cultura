@@ -27,7 +27,7 @@ class Eleitor extends Model
         'co_usuario',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function uf()
     {

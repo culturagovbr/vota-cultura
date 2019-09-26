@@ -31,7 +31,7 @@ class Representante extends Model
         'nu_telefone',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function organizacao()
     {

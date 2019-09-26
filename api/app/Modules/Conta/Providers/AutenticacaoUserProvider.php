@@ -10,7 +10,7 @@ use Illuminate\Contracts\Auth\UserProvider;
 class AutenticacaoUserProvider implements UserProvider
 {
 
-    private $autenticado = false;
+    private $autenticado = FALSE;
 
     /**
      * Retrieve a user by their unique identifier.
