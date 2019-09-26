@@ -47,8 +47,7 @@ export const obterConselhosHabilitacao = async ({ commit }) => {
   });
 };
 
-
-export const avaliarHabilitacao = async ({ commit, dispatch }, conselho) => conselhoService.avaliarHabilitacao(conselho).then((response) => {
+export const avaliarHabilitacao = async ({ commit, dispatch }, conselhoHabilitacao) => conselhoService.avaliarHabilitacao(conselhoHabilitacao).then((response) => {
   const { data } = response.data;
   commit(types.ATUALIZAR_RECURSO_INSCRICAO_LISTA, data);
   
