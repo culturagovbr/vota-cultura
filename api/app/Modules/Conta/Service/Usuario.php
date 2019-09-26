@@ -145,7 +145,7 @@ class Usuario extends AbstractService
             }
             $usuario->dh_cadastro = $horarioAtual->toDateTimeString();
             $usuario->dh_ultima_atualizacao = $horarioAtual->toDateTimeString();
-            $usuario->st_ativo = false;
+            $usuario->st_ativo = FALSE;
             $usuario->setSenha($dados['ds_senha']);
             $usuario->save();
 

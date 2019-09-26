@@ -43,7 +43,7 @@ class Usuario extends AAutenticacao
         'pivot'
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function perfil()
     {

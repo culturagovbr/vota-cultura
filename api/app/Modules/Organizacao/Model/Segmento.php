@@ -14,7 +14,7 @@ class Segmento extends Model
         'st_ativo',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function organizacoes()
     {

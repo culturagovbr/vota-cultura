@@ -16,7 +16,7 @@ class Endereco extends Model
         'co_municipio',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function municipio()
     {

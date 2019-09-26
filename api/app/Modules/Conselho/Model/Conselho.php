@@ -28,7 +28,7 @@ class Conselho extends Model
         'st_inscricao',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function endereco()
     {

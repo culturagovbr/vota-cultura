@@ -28,7 +28,7 @@ class Fase extends Model
         'dh_fim',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function faseFinalizada() : bool
     {

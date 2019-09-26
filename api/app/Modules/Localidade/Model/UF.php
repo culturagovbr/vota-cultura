@@ -15,7 +15,7 @@ class UF extends Model
         'co_regiao',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function regiao()
     {

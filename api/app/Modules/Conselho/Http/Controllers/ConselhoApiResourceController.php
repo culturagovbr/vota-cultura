@@ -19,7 +19,7 @@ class ConselhoApiResourceController extends AApiResourceController
     public function __construct(ConselhoService $service)
     {
         $this->middleware('auth:api')->except(['store', 'index']);
-        $this->service = $service;
+        return parent::__construct($service);
     }
 
     public function show($identificador): JsonResponse
