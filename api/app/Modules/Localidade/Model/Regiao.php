@@ -13,6 +13,6 @@ class Regiao extends Model
         'no_regiao',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
 }

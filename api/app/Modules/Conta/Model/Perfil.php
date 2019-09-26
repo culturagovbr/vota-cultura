@@ -21,7 +21,7 @@ class Perfil extends Model
         'st_ativo',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function usuario(){
         return $this->belongsTo(

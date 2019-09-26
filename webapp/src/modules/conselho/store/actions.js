@@ -1,6 +1,5 @@
 import * as conselhoService from '../service/conselho';
 import * as types from './types';
-import * as usuarioService from "../../conta/service/usuario";
 
 
 export const confirmarConselho = async ({ commit }, conselho) => {
@@ -47,3 +46,14 @@ export const obterConselhosHabilitacao = async ({ commit }) => {
     commit(types.LISTAR_CONSELHOS_HABILITACAO, data);
   });
 };
+
+export const avaliarHabilitacao = async ({ dispatch }, conselhoHabilitacao) => conselhoService.avaliarHabilitacao(conselhoHabilitacao).then((response) => {
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});

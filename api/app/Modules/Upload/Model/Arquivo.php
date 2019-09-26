@@ -20,7 +20,7 @@ class Arquivo extends Model
         'dh_criacao'
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     protected $stringCodificada;
     protected $diretorioArmazenamento = '';

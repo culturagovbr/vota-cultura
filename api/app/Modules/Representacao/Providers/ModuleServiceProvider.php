@@ -2,7 +2,9 @@
 
 namespace App\Modules\Representacao\Providers;
 
+use App\Modules\Representacao\Http\Resources\RepresentanteArquivoAvaliacao;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
+use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao as RepresentanteArquivoAvaliacaoModel;
 use App\Modules\Representacao\Service\Representante as RepresentanteService;
 use Caffeinated\Modules\Support\ServiceProvider;
 
@@ -31,6 +33,15 @@ class ModuleServiceProvider extends ServiceProvider
                 return $parametros;
             }
             return new RepresentanteModel($parametros);
+        });
+        $this->app->bind(RepresentanteArquivoAvaliacaoModel::class, function ($app, $parametros) {
+            return new RepresentanteArquivoAvaliacaoModel($parametros);
+        });
+        $this->app->bind(RepresentanteArquivoAvaliacao::class, function ($app, $parametros) {
+            return new RepresentanteArquivoAvaliacao($app->make(
+                RepresentanteArquivoAvaliacaoModel::class,
+                $parametros
+            ));
         });
     }
 }
