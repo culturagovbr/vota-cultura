@@ -3,7 +3,7 @@
 namespace App\Modules\Conselho\Http\Controllers;
 
 use App\Modules\Conselho\Http\Resources\Conselho;
-use App\Modules\Conselho\Service\Conselho as ConselhoService;
+use App\Modules\Conselho\Service\ConselhoHabilitacao;
 use App\Modules\Core\Exceptions\EMetodoIndisponivel;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
 use Illuminate\Http\JsonResponse;
@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 class ConselhoHabilitacaoApiResourceController extends AApiResourceController
 {
 
-    public function __construct(ConselhoService $service)
+    public function __construct(ConselhoHabilitacao $service)
     {
         $this->middleware('auth:api');
         return parent::__construct($service);
@@ -21,8 +21,9 @@ class ConselhoHabilitacaoApiResourceController extends AApiResourceController
 
     public function index(): JsonResponse
     {
+        $conselhoService = app(\App\Modules\Conselho\Service\Conselho::class, request()->all());
         return $this->sendResponse(
-            Conselho::collection($this->service->obterTodos()),
+            Conselho::collection($conselhoService->obterTodos()),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );

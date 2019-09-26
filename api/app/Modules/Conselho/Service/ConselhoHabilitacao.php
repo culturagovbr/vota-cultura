@@ -45,15 +45,30 @@ class ConselhoHabilitacao extends AbstractService
             }
 
             $novoConselhoHabilitacao = parent::cadastrar($dados);
-            $arquivosHabilitacacao = $dados['arquivosAvaliacao'];
+            $arquivosHabilitacacao = [];
+            if (!empty($dados['arquivosAvaliacao'])) {
+                $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
+                $indice = 0;
+                foreach (array_values($dados['arquivosAvaliacao']) as $arquivoAvaliacao) {
+                    $colecao = collect($arquivoAvaliacao);
+                    $colecao['co_conselho_habilitacao'] = $novoConselhoHabilitacao->co_conselho_habilitacao;
+                    $colecao['co_usuario_avaliador'] = $dadosUsuarioLogado['co_usuario'];
+                    $colecao['dh_avaliacao'] = $carbon->toDateTimeString();
+                    $arquivosHabilitacacao[$indice] = $colecao->only(
+                        [
+                            'co_representante_arquivo',
+                            'st_em_conformidade',
+                            'ds_observacao',
+                            'co_usuario_avaliador',
+                            'dh_avaliacao',
+                            'co_conselho_habilitacao',
+                        ]
+                    )->toArray();
+                    $indice++;
+                }
 
-            foreach($arquivosHabilitacacao as &$arquivoAvaliacao) {
-                $arquivoAvaliacao['co_conselho_habilitacao'] = $novoConselhoHabilitacao->co_conselho_habilitacao;
-                $arquivoAvaliacao['co_usuario_avaliador'] = Auth::user()->co_usuario;
-                $arquivoAvaliacao['dh_avaliacao'] = $carbon->toDateTimeString();
+                $novoConselhoHabilitacao->representanteArquivoAvaliacao()->insert($arquivosHabilitacacao);
             }
-
-            $novoConselhoHabilitacao->representanteArquivoAvaliacao()->save($arquivosHabilitacacao);
 
             DB::commit();
             return $novoConselhoHabilitacao;

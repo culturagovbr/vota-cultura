@@ -582,6 +582,7 @@ export default {
       }
       self.loading = true;
       self.formulario.conselhoHabilitacao.co_conselho = self.formulario.co_conselho;
+      self.formulario.conselhoHabilitacao.arquivosAvaliacao = self.arquivosAvaliacao;
       this.avaliarHabilitacao(self.formulario.conselhoHabilitacao)
         .then(() => {
           self.dialog = false;
