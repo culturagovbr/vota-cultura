@@ -535,7 +535,9 @@ export default {
     value(valor) {
       this.dialog = valor;
       if (!valor) {
-        this.$refs.form_recurso.reset();
+        this.formulario.conselhoHabilitacao = Object.assign({}, this.formularioInicial.conselhoHabilitacao);
+        this.arquivosAvaliacao = Object.assign({}, this.arquivosAvaliacaoInicial);
+        // this.$refs.form_recurso.reset();
       }
     },
     dialog(valor) {
@@ -585,7 +587,7 @@ export default {
       self.formulario.conselhoHabilitacao.arquivosAvaliacao = self.arquivosAvaliacao;
       this.avaliarHabilitacao(self.formulario.conselhoHabilitacao)
         .then(() => {
-          self.dialog = false;
+          window.location.reload();
         })
         .finally(() => {
           self.loading = false;

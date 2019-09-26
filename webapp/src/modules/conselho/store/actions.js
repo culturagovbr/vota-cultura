@@ -47,15 +47,7 @@ export const obterConselhosHabilitacao = async ({ commit }) => {
   });
 };
 
-export const avaliarHabilitacao = async ({ commit, dispatch }, conselhoHabilitacao) => conselhoService.avaliarHabilitacao(conselhoHabilitacao).then((response) => {
-  const { data } = response.data;
-  commit(types.ATUALIZAR_RECURSO_INSCRICAO_LISTA, data);
-  
-  dispatch(
-    'app/setMensagemSucesso',
-    'Recurso avaliado com sucesso!',
-    { root: true },
-  );
+export const avaliarHabilitacao = async ({ dispatch }, conselhoHabilitacao) => conselhoService.avaliarHabilitacao(conselhoHabilitacao).then((response) => {
   return response;
 }).catch((error) => {
   dispatch(
