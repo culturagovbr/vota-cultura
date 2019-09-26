@@ -368,6 +368,7 @@
                         Voltar
                       </v-btn>
                       <v-btn
+                        v-if="!formulario.conselhoHabilitacao.co_conselho_habilitacao"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
