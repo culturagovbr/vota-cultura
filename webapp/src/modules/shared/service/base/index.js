@@ -10,32 +10,16 @@ const tratarErro = (error) => {
   const msgErro = 'Desculpe, houve um erro ao executar a operação';
 
   if (error.response) {
-    // se for erro de response lança para a próxima camada tratar
-    // console.log(error.response.data);
-    // console.log(error.response.status);
-    // console.log(error.response.headers);
-    // console.log(''. error);
     return Promise.reject(error);
   } if (error.request) {
-    console.log('errro2');
-    // The request was made but no response was received
-    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-    // http.ClientRequest in node.js
     console.log(error.request);
   } else {
     console.log('errro3');
     // Something happened in setting up the request that triggered an Error
     console.log('Error', error.message);
   }
-  console.log('error finall');
   console.log(error.config);
 
-  // if (typeof erro === 'object') {
-  //   msgErro = erro;
-  //   if (Object.keys(JSON.parse(JSON.stringify(erro))) > 0) {
-  //     msgErro = JSON.parse(JSON.stringify(erro)).message;
-  //   }
-  // }
   eventHub.$emit('eventoErro', msgErro);
   return Promise.reject(error);
 };
@@ -85,23 +69,8 @@ export const patchRequest = (path, id, payload) => instance.patch(`${path}/${id}
 
 export const deleteRequest = (path, id) => instance.delete(`${path}/${id}`);
 
-export const getFile = (coArquivo, config = {}) => instance.get(`/upload/${coArquivo}`, config)
+export const getFile = (coArquivo, config = { responseType: 'blob' }) => instance.get(`/upload/${coArquivo}`, config)
   .then((response) => {
-    // const blob = new Blob([response.data], {
-    //   type: response.headers['content-type'],
-    // });
-    // const url = window.URL.createObjectURL(blob);
-    // window.open(url);
-console.log(response);
-    
-    const url = window.URL.createObjectURL(new Blob([response.data], {
-        type: response.headers['content-type'],
-      }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'file.pdf';
-    // link.setAttribute('download', 'file.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const url = window.URL.createObjectURL(response.data);
+    window.open(url);
   });
