@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ConselhoHabilitacao extends AbstractService
@@ -44,6 +45,15 @@ class ConselhoHabilitacao extends AbstractService
             }
 
             $novoConselhoHabilitacao = parent::cadastrar($dados);
+            $arquivosHabilitacacao = $dados['arquivosAvaliacao'];
+
+            foreach($arquivosHabilitacacao as &$arquivoAvaliacao) {
+                $arquivoAvaliacao['co_conselho_habilitacao'] = $novoConselhoHabilitacao->co_conselho_habilitacao;
+                $arquivoAvaliacao['co_usuario_avaliador'] = Auth::user()->co_usuario;
+                $arquivoAvaliacao['dh_avaliacao'] = $carbon->toDateTimeString();
+            }
+
+            $novoConselhoHabilitacao->representanteArquivoAvaliacao()->save($arquivosHabilitacacao);
 
             DB::commit();
             return $novoConselhoHabilitacao;

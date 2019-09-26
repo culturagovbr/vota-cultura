@@ -520,7 +520,6 @@ export default {
       this.$emit('input', valor);
     },
     conselho(valor) {
-      console.log(valor);
       if(!!Object.keys(valor).length){
         // console.log(this.conselho)
         // this.formulario = Object.assign(this.formularioInicial, valor);
@@ -555,7 +554,6 @@ export default {
       }
       self.loading = true;
       self.formulario.conselhoHabilitacao.co_conselho = self.formulario.co_conselho;
-
       this.avaliarHabilitacao(self.formulario.conselhoHabilitacao)
         .then(() => {
           self.dialog = false;
