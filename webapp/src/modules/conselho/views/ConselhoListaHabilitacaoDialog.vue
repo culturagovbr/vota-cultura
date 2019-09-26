@@ -526,6 +526,9 @@ export default {
   watch: {
     value(valor) {
       this.dialog = valor;
+      if (!valor) {
+        this.$refs.form_recurso.reset();
+      }
     },
     dialog(valor) {
       this.$emit('input', valor);
