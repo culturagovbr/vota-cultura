@@ -15,13 +15,18 @@ class ConselhoHabilitacao extends Model
     protected $table = 'tb_conselho_habilitacao';
     protected $primaryKey = 'co_conselho_habilitacao';
 
+    protected $dates = [
+        'dh_avaliacao',
+    ];
+
     protected $fillable = [
         'co_conselho',
         'st_avaliacao',
         'ds_parecer',
+        'dh_avaliacao',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function conselho()
     {
