@@ -14,10 +14,10 @@ class RepresentanteArquivoAvaliacao extends Model
 {
     protected $table = 'tb_representante_arquivo_avaliacao';
     protected $primaryKey = 'co_representante_arquivo_avaliacao';
-    protected $dateFormat = 'Y-m-d H:i:s.u';
+    protected $dateFormat = 'Y-m-d H:i:s';
+    public $timestamps = FALSE;
 
     protected $dates = [
-        'dh_avaliacao'
     ];
 
     protected $fillable = [
@@ -29,7 +29,6 @@ class RepresentanteArquivoAvaliacao extends Model
         'dh_avaliacao',
     ];
 
-    public $timestamps = FALSE;
 
     public function conselhoHabilitacao()
     {
