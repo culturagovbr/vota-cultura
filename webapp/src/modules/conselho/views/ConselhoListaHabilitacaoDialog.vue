@@ -185,7 +185,7 @@
                                             right
                                             size="32px"
                                             color="blue darken-4"
-                                            @click="downloadArquivo(arquivosAvaliacao.ata_reuniao_conselho.co_arquivo)"
+                                            @click="downloadArquivo(arquivosAvaliacao.ato_normativo_conselho.co_arquivo)"
                                           >
                                             cloud_download
                                           </v-icon>
@@ -255,7 +255,7 @@
                                             right
                                             size="32px"
                                             color="blue darken-4"
-                                            @click="downloadArquivo(arquivosAvaliacao.ata_reuniao_conselho.co_arquivo)"
+                                            @click="downloadArquivo(arquivosAvaliacao.documento_identificacao_responsavel.co_arquivo)"
                                           >
                                             cloud_download
                                           </v-icon>
