@@ -18,6 +18,7 @@ class OrganizacaoHabilitacao extends JsonResource
             'co_organizacao' => $this->co_organizacao,
             'st_avaliacao' => $this->st_avaliacao,
             'ds_parecer' => $this->ds_parecer,
+            'nu_nova_pontuacao' => $this->nu_nova_pontuacao,
             'arquivosAvaliacao' => RepresentanteArquivoAvaliacao::collection($this->representanteArquivoAvaliacao),
         ];
     }
