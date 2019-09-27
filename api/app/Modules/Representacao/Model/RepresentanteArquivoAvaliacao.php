@@ -6,6 +6,7 @@ use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Conselho\Model\ConselhoHabilitacao;
 use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Organizacao\Model\Organizacao;
+use App\Modules\Organizacao\Model\OrganizacaoHabilitacao;
 use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,10 +15,10 @@ class RepresentanteArquivoAvaliacao extends Model
 {
     protected $table = 'tb_representante_arquivo_avaliacao';
     protected $primaryKey = 'co_representante_arquivo_avaliacao';
-    protected $dateFormat = 'Y-m-d H:i:s.u';
+    protected $dateFormat = 'Y-m-d H:i:s';
+    public $timestamps = FALSE;
 
     protected $dates = [
-        'dh_avaliacao'
     ];
 
     protected $fillable = [
@@ -29,13 +30,20 @@ class RepresentanteArquivoAvaliacao extends Model
         'dh_avaliacao',
     ];
 
-    public $timestamps = false;
 
     public function conselhoHabilitacao()
     {
         return $this->hasOne(ConselhoHabilitacao::class,
             'co_conselho_habilitacao',
             'co_conselho_habilitacao'
+        );
+    }
+
+    public function organizacaoHabilitacao()
+    {
+        return $this->hasOne(OrganizacaoHabilitacao::class,
+            'co_organizacao_habilitacao',
+            'co_organizacao_habilitacao'
         );
     }
 

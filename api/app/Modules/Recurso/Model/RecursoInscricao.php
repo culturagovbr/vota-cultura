@@ -33,7 +33,7 @@ class RecursoInscricao extends Model
         'no_razao_social',
         'no_representante'
     ];
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function fase()
     {

@@ -285,16 +285,10 @@
           icon: 'list',
         }, 'Administração');
         this.definirItemMenu({
-          title: 'Inscrição - Conselho',
+          title: 'Habilitação de organização',
           group: 'apps',
-          name: 'InscricaoConselho',
-          icon: 'group',
-        }, 'Administração');
-        this.definirItemMenu({
-          title: 'Inscrição - Organização',
-          group: 'apps',
-          name: 'InscricaoOrganizacao',
-          icon: 'group',
+          name: 'OrganizacaoListaHabilitacaoRoute',
+          icon: 'list',
         }, 'Administração');
       }
     },

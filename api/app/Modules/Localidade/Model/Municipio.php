@@ -16,7 +16,7 @@ class Municipio extends Model
         'co_uf',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function uf()
     {

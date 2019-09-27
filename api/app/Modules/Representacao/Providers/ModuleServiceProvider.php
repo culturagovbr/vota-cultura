@@ -4,8 +4,8 @@ namespace App\Modules\Representacao\Providers;
 
 use App\Modules\Representacao\Http\Resources\RepresentanteArquivoAvaliacao;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
-use App\Modules\Representacao\Service\Representante as RepresentanteService;
 use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao as RepresentanteArquivoAvaliacaoModel;
+use App\Modules\Representacao\Service\Representante as RepresentanteService;
 use Caffeinated\Modules\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider

@@ -1,30 +1,17 @@
-CREATE TABLE public.tb_representante_arquivo_avaliacao
+CREATE TABLE public.tb_organizacao_habilitacao
 (
-    co_representante_arquivo_avaliacao serial PRIMARY KEY NOT NULL,
-    co_representante_arquivo int NOT NULL,
-    st_em_conformidade char(1) NOT NULL,
-    ds_observacao text,
-    co_usuario_avaliador int NOT NULL,
-    dh_avaliacao timestamp DEFAULT current_timestamp,
-    CONSTRAINT tb_representante_arquivo_avaliacao_rl_representante_arquivo_co_representante_arquivo_fk FOREIGN KEY (co_representante_arquivo) REFERENCES public.rl_representante_arquivo (co_representante_arquivo),
-    CONSTRAINT tb_representante_arquivo_avaliacao_tb_usuario_co_usuario_fk FOREIGN KEY (co_usuario_avaliador) REFERENCES public.tb_usuario (co_usuario)
-);
-COMMENT ON COLUMN public.tb_representante_arquivo_avaliacao.st_em_conformidade IS '0 - Não conforme | 1 - Conforme';
-
-CREATE TABLE public.tb_conselho_habilitacao
-(
-    co_conselho_habilitacao serial PRIMARY KEY NOT NULL,
-    co_conselho int NOT NULL,
+    co_organizacao_habilitacao serial PRIMARY KEY NOT NULL,
+    co_organizacao int NOT NULL,
     st_avaliacao char(1) NOT NULL,
     ds_parecer text,
-    CONSTRAINT tb_conselho_habilitacao_tb_conselho_co_conselho_fk FOREIGN KEY (co_conselho) REFERENCES public.tb_conselho (co_conselho)
+    CONSTRAINT tb_org_hab_tb_org_co_org_fk FOREIGN KEY (co_organizacao) REFERENCES public.tb_organizacao (co_organizacao)
 );
-COMMENT ON COLUMN public.tb_conselho_habilitacao.st_avaliacao IS '0 - Habilitado | 1 - Inabilitado';
+COMMENT ON COLUMN public.tb_organizacao_habilitacao.st_avaliacao IS '0 - Habilitado | 1 - Inabilitado';
 
------ Parte 2
+ALTER TABLE public.tb_representante_arquivo_avaliacao ADD co_organizacao_habilitacao int NOT NULL;
 
-ALTER TABLE public.tb_habilitacao_conselho RENAME TO tb_conselho_habilitacao;
-ALTER TABLE public.tb_representante_arquivo_avaliacao ADD co_conselho_habilitacao int NOT NULL;
 ALTER TABLE public.tb_representante_arquivo_avaliacao
-ADD CONSTRAINT tb_representante_arquivo_avaliacao_tb_conselho_habilitacao_co_conselho_habilitacao_fk
-FOREIGN KEY (co_conselho_habilitacao) REFERENCES public.tb_conselho_habilitacao (co_conselho_habilitacao);
+  ADD CONSTRAINT tb_repr_arq_av_cons_hab_co_organizacao_hab_fk
+FOREIGN KEY (co_organizacao_habilitacao) REFERENCES public.tb_organizacao_habilitacao (co_organizacao_habilitacao);
+
+ALTER TABLE public.tb_organizacao_habilitacao ADD dh_avaliacao timestamp DEFAULT current_timestamp NOT NULL;

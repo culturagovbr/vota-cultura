@@ -5,4 +5,5 @@ export const enviarDadosConselho = conselho => service.postRequest('/conselho', 
 export const enviarDadosRecursoHabilitacaoConselho = conselho => service.postRequest('/conselho/recurso-habilitacao', service.buildData(conselho));
 export const obterDadosConselho = coConselho => service.getRequest(`/conselho/${coConselho}`);
 export const obterConselhos = () => service.getRequest('/conselho');
-export const obterConselhosHabilitacao = () => service.getRequest('/conselho/lista_habilitacao');
+export const obterConselhosHabilitacao = () => service.getRequest('/conselho/habilitacao');
+export const avaliarHabilitacao = conselho => service.postRequest('/conselho/habilitacao', conselho);
