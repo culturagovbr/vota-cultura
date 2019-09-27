@@ -12,9 +12,13 @@ export const enviarDadosConselho = async ({ commit }, conselho) => {
   return conselhoService.enviarDadosConselho(conselho);
 };
 
+export const enviarDadosRecursoHabilitacaoConselho = async ({ commit }, dadosRecurso) => {
+  return conselhoService.enviarDadosRecursoHabilitacaoConselho(dadosRecurso);
+};
+
 export const obterDadosConselho = async ({ commit, dispatch }, coConselho) => {
   commit(types.OBTER_DADOS_CONSELHO, coConselho);
-  conselhoService.obterDadosConselho(coConselho)
+  return conselhoService.obterDadosConselho(coConselho)
     .then((response) => {
       const { data } = response.data;
       if (!data) {

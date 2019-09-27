@@ -1,6 +1,10 @@
 <template>
   <v-container>
-    <v-card>
+
+    <carregando
+      v-if="loading"
+    />
+    <v-card v-if="!loading">
       <v-toolbar
         dark
         color="primary"
@@ -195,10 +199,12 @@
 import { mapActions, mapGetters } from 'vuex';
 import Validate from '../../shared/util/validate';
 import File from '@/core/components/upload/File';
+import Carregando from "../../shared/components/CardCarregando";
 
 export default {
-  components: { File },
+  components: {Carregando, File },
   data: () => ({
+    loading : true,
     dialog: false,
     valid: false,
     conselho: {},
@@ -223,16 +229,6 @@ export default {
     ],
     rules: {
       required: value => !!value || 'Campo não preenchido',
-      cnpjInvalido: value => !!value || 'CNPJ não encontrado',
-      cpfInvalido: value => !!value || 'CPF não encontrado',
-      phoneMin: value => (value && value.length >= 9) || 'Mínimo de 9 caracteres',
-      cnpjMin: value => (value && value.length === 14) || 'Mínimo de 14 caracteres',
-      cpfMin: value => (value && value.length === 11) || 'Mínimo de 11 caracteres',
-      email: (value) => {
-        // eslint-disable-next-line
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(value) || 'E-mail invalido';
-      },
       tamanhoMaximoCaracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
     },
   }),
@@ -245,6 +241,11 @@ export default {
         this.obterDadosConselho(usuario.co_conselho);
       }
     },
+    conselhoGetter(valor) {
+      if (Object.keys(valor).length > 0) {
+        this.conselho = valor;
+      }
+    }
   },
   computed: {
     ...mapGetters({
@@ -255,18 +256,22 @@ export default {
   methods: {
     ...mapActions({
       obterDadosConselho: 'conselho/obterDadosConselho',
+      enviarDadosRecursoHabilitacaoConselho: 'conselho/enviarDadosRecursoHabilitacaoConselho',
+      definirMensagemSucesso: 'app/setMensagemSucesso',
+      definirMensagemErro: 'app/setMensagemErro',
     }),
-    validarIrProximaEtapa(formRef) {
-      if (this.$refs[formRef].validate()) {
-        this.etapaFormulario = this.etapaFormulario + 1;
-      }
-    },
     salvar() {
       this.loading = true;
-      this.recursoInscricao.no_razao_social = this.nomeConselho;
-      this.recursoInscricao.no_representante = this.nomeRepresentante;
+        console.log(this.recursoHabilitacao);
+        let dadosSubmit = {
+            dsRecurso : this.recursoHabilitacao.ds_recurso
+        };
 
-      this.enviarDadosRecursoInscricao(this.recursoInscricao)
+        if(!!Object.keys(this.recursoHabilitacao.anexo).length) {
+            dadosSubmit.anexo = this.recursoHabilitacao.anexo.file;
+        }
+
+        this.enviarDadosRecursoHabilitacaoConselho(dadosSubmit)
         .then((response) => {
           this.definirMensagemSucesso(response.data.message);
           this.$router.push('/');
@@ -276,7 +281,7 @@ export default {
         });
     },
     abrirDialogo() {
-      if (!this.$refs.form_recurso.validate()) {
+      if (!this.$refs.form_recurso_habilitacao.validate()) {
         return false;
       }
       this.dialog = true;
@@ -292,10 +297,6 @@ export default {
     self.obterDadosConselho(this.usuario.co_conselho).finally(() => {
       self.loading = false;
     });
-
-    if (Object.keys(this.conselhoGetter).length > 0) {
-      this.conselho = this.conselhoGetter;
-    }
   },
 };
 </script>

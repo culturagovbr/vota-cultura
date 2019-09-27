@@ -6,4 +6,5 @@ Route::group([
     Route::get('{co_conselho}', 'ConselhoApiResourceController@show')->where('co_conselho', '[0-9]+');
     Route::apiResource('/', 'ConselhoApiResourceController');
     Route::get('lista_habilitacao', 'ConselhoListaHabilitacaoController@index');
+    Route::post('recurso-habilitacao', 'ConselhoRecursoHabilitacaoController@store');
 });
