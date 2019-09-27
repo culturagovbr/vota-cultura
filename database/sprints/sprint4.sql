@@ -15,3 +15,6 @@ ALTER TABLE public.tb_representante_arquivo_avaliacao
 FOREIGN KEY (co_organizacao_habilitacao) REFERENCES public.tb_organizacao_habilitacao (co_organizacao_habilitacao);
 
 ALTER TABLE public.tb_organizacao_habilitacao ADD dh_avaliacao timestamp DEFAULT current_timestamp NOT NULL;
+
+ALTER TABLE public.tb_representante_arquivo_avaliacao DROP co_organizacao_habilitacao;
+ALTER TABLE public.tb_organizacao_habilitacao ADD nu_nova_pontuacao int NULL;
