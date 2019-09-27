@@ -2,10 +2,11 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
-use App\Modules\Organizacao\Http\Resources\Organizacao;
-use App\Modules\Organizacao\Service\OrganizacaoHabilitacao;
 use App\Modules\Core\Exceptions\EMetodoIndisponivel;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
+use App\Modules\Organizacao\Http\Resources\Organizacao;
+use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
+use App\Modules\Organizacao\Service\OrganizacaoHabilitacao;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,7 +22,7 @@ class OrganizacaoHabilitacaoApiResourceController extends AApiResourceController
 
     public function index(): JsonResponse
     {
-        $organizacaoService = app(\App\Modules\Organizacao\Service\Organizacao::class, request()->all());
+        $organizacaoService = app(OrganizacaoService::class, request()->all());
         return $this->sendResponse(
             Organizacao::collection($organizacaoService->obterTodos()),
             "Operação realizada com sucesso",

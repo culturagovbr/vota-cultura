@@ -1,5 +1,6 @@
 import * as organizacaoService from '../service/organizacao';
 import * as types from './types';
+import * as conselhoService from "../../conselho/service/conselho";
 
 // eslint-disable-next-line no-empty-pattern
 export const enviarDadosOrganizacao = async ({ commit }, organizacao) => {
@@ -79,4 +80,22 @@ export const obterDocumentacaoComprobatoria = async ({ commit }, coOrganizacao) 
   const { data } = response.data;
   commit(types.OBTER_DOCUMENTACAO_COMPROBATORIA, data);
   return response;
+});
+
+export const obterOrganizacoesHabilitacao = async ({ commit }) => {
+  organizacaoService.obterOrganizacoesHabilitacao().then((response) => {
+    const { data } = response.data;
+    commit(types.LISTAR_ORGANIZACOES_HABILITACAO, data);
+  });
+};
+
+export const avaliarHabilitacao = async ({ dispatch }, organizacaoHabilitacao) => organizacaoService.avaliarHabilitacao(organizacaoHabilitacao).then((response) => {
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
 });
