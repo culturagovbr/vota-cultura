@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Modules\Conselho\Model;
+namespace App\Modules\Organizacao\Model;
 
 use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao;
 use Illuminate\Database\Eloquent\Model;
 
-class ConselhoHabilitacao extends Model
+class OrganizacaoHabilitacao extends Model
 {
-    protected $table = 'tb_conselho_habilitacao';
-    protected $primaryKey = 'co_conselho_habilitacao';
+    protected $table = 'tb_organizacao_habilitacao';
+    protected $primaryKey = 'co_organizacao_habilitacao';
 
     protected $dates = [
         'dh_avaliacao',
     ];
 
     protected $fillable = [
-        'co_conselho',
+        'co_organizacao',
         'st_avaliacao',
         'ds_parecer',
         'dh_avaliacao',
@@ -23,12 +23,12 @@ class ConselhoHabilitacao extends Model
 
     public $timestamps = FALSE;
 
-    public function conselho()
+    public function organizacao()
     {
         return $this->hasOne(
-            Conselho::class,
-            'co_conselho',
-            'co_conselho'
+            Organizacao::class,
+            'co_organizacao',
+            'co_organizacao'
         );
     }
 
@@ -36,8 +36,8 @@ class ConselhoHabilitacao extends Model
     {
         return $this->hasMany(
             RepresentanteArquivoAvaliacao::class,
-            'co_conselho_habilitacao',
-            'co_conselho_habilitacao'
+            'co_organizacao_habilitacao',
+            'co_organizacao_habilitacao'
         );
     }
 }
