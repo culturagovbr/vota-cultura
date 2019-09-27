@@ -59,258 +59,72 @@
                       wrap
                       align-center
                     >
-                      <v-flex
-                        xs12
-                        sm12
-                        class="ma-3"
-                      >
-                        <v-layout>
-                          <v-flex sm6>
-                            <div class="ma-2 text-justify subheading grey--text">
-                              <b>Nome da organização/entidade:</b>
-                              {{ formulario.no_organizacao }}
-                            </div>
-                          </v-flex>
-                          <v-flex sm6>
-                            <div class="ma-2 text-justify subheading grey--text">
-                              <b>CNPJ:</b>
-                              {{ formulario.cnpj_formatado }}
-                            </div>
-                          </v-flex>
-                        </v-layout>
-                        <v-layout>
-                          <v-flex sm6>
-                            <div class="ma-2 text-justify subheading grey--text">
-                              <b>Pontuação:</b>
-                              {{ formulario.pontuacao }}
-                            </div>
-                          </v-flex>
-                          <v-flex sm6>
-                            <div class="ma-2 text-justify subheading grey--text">
-                              <b>Segmento cultural:</b>
-                              {{ formulario.segmento.ds_detalhamento }}
-                            </div>
-                          </v-flex>
-                        </v-layout>
-                        <div
-                          class="ma-2 text-justify title "
-                        >
-                          <v-toolbar color="white darken-3">
-                            Documentação
-                          </v-toolbar>
-                          <v-card>
-                            <v-container
-                              fluid
-                              grid-list-xl
-                            >
-                              <v-layout
-                                align-center
-                                justify-center
-                                class="mb-4"
-                              >
-                                <v-flex sm6>
-                                  <v-card
-                                    min-height="260"
-                                    class="elevation-1"
-                                  >
-                                    <v-card-text>
-                                      <v-layout>
-                                        <v-flex
-                                          class="text-md-center title"
-                                          sm10
-                                        >
-                                          Ato normativo que constituiu o organizacao
-                                        </v-flex>
-                                        <v-flex sm1>
-                                          <v-icon
-                                            right
-                                            size="32px"
-                                            color="blue darken-4"
-                                            @click="downloadArquivo(arquivosAvaliacao.ata_reuniao_organizacao.co_arquivo)"
-                                          >
-                                            cloud_download
-                                          </v-icon>
-                                        </v-flex>
-                                      </v-layout>
-                                      <v-layout>
-                                        <v-flex class="pa-3">
-                                          <v-radio-group
-                                            v-model="arquivosAvaliacao.ata_reuniao_organizacao.st_em_conformidade"
-                                            label="* Documento em conformidade com o item 4.2.3 do edital?"
-                                            column
-                                            :rules="[rules.required]"
-                                            :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
-                                          >
-                                            <v-radio
-                                              label="Sim"
-                                              class="v-label"
-                                              value="1"
-                                            />
-                                            <v-radio
-                                              label="Não"
-                                              class="v-label"
-                                              value="0"
-                                            />
-                                          </v-radio-group>
-                                        </v-flex>
-                                      </v-layout>
-                                      <v-layout>
-                                        <v-flex class="pa-3">
-                                          <v-textarea
-                                            v-model="arquivosAvaliacao.ata_reuniao_organizacao.ds_observacao"
-                                            box
-                                            label="Observação"
-                                            name="input-7-4"
-                                            rows="13"
-                                            row-height="28"
-                                            :counter="500"
-                                            :rules="[rules.tamanhoMaximo500Caracteres]"
-                                            :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
-                                          />
-                                        </v-flex>
-                                      </v-layout>
-                                    </v-card-text>
-                                  </v-card>
-                                </v-flex>
+                      <v-flex>
 
-                                <v-flex sm6>
-                                  <v-card
-                                    min-height="260"
-                                    class="elevation-1"
-                                  >
-                                    <v-card-text>
-                                      <v-layout>
-                                        <v-flex
-                                          class="text-md-center title"
-                                          sm10
-                                        >
-                                          Ata da última reunião do organizacao
-                                        </v-flex>
-                                        <v-flex sm1>
-                                          <v-icon
-                                            right
-                                            size="32px"
-                                            color="blue darken-4"
-                                            @click="downloadArquivo(arquivosAvaliacao.ato_normativo_organizacao.co_arquivo)"
-                                          >
-                                            cloud_download
-                                          </v-icon>
-                                        </v-flex>
-                                      </v-layout>
-                                      <v-layout>
-                                        <v-flex class="pa-3">
-                                          <v-radio-group
-                                            v-model="arquivosAvaliacao.ato_normativo_organizacao.st_em_conformidade"
-                                            label="* Documento em conformidade com o item 4.2.3 do edital?"
-                                            column
-                                            :rules="[rules.required]"
-                                            :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
-                                          >
-                                            <v-radio
-                                              label="Sim"
-                                              class="v-label"
-                                              value="1"
-                                            />
-                                            <v-radio
-                                              label="Não"
-                                              class="v-label"
-                                              value="0"
-                                            />
-                                          </v-radio-group>
-                                        </v-flex>
-                                      </v-layout>
-                                      <v-layout>
-                                        <v-flex class="pa-3">
-                                          <v-textarea
-                                            v-model="arquivosAvaliacao.ato_normativo_organizacao.ds_observacao"
-                                            box
-                                            label="Observação"
-                                            name="input-7-4"
-                                            rows="13"
-                                            row-height="28"
-                                            :counter="500"
-                                            :rules="[rules.tamanhoMaximo500Caracteres]"
-                                            :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
-                                          />
-                                        </v-flex>
-                                      </v-layout>
-                                    </v-card-text>
-                                  </v-card>
-                                </v-flex>
-                              </v-layout>
-                              <v-layout
-                                align-center
-                                justify-center
-                                class="mb-4"
-                              >
-                                <v-flex sm12>
-                                  <v-card
-                                    min-height="260"
-                                    class="elevation-1"
-                                  >
-                                    <v-card-text>
-                                      <v-layout>
-                                        <v-flex
-                                          class="text-md-center title"
-                                          sm10
-                                        >
-                                          Documento de identificação do representante com CPF
-                                        </v-flex>
-                                        <v-flex sm1>
-                                          <v-icon
-                                            right
-                                            size="32px"
-                                            color="blue darken-4"
-                                            @click="downloadArquivo(arquivosAvaliacao.documento_identificacao_responsavel.co_arquivo)"
-                                          >
-                                            cloud_download
-                                          </v-icon>
-                                        </v-flex>
-                                      </v-layout>
-                                      <v-layout>
-                                        <v-flex class="pa-3">
-                                          <v-radio-group
-                                            v-model="arquivosAvaliacao.documento_identificacao_responsavel.st_em_conformidade"
-                                            label="* Documento em conformidade com o item 4.2.3 do edital?"
-                                            column
-                                            :rules="[rules.required]"
-                                            :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
-                                          >
-                                            <v-radio
-                                              label="Sim"
-                                              class="v-label"
-                                              value="1"
-                                            />
-                                            <v-radio
-                                              label="Não"
-                                              class="v-label"
-                                              value="0"
-                                            />
-                                          </v-radio-group>
-                                        </v-flex>
-                                      </v-layout>
-                                      <v-layout>
-                                        <v-flex class="pa-3">
-                                          <v-textarea
-                                            v-model="arquivosAvaliacao.documento_identificacao_responsavel.ds_observacao"
-                                            box
-                                            label="Observação"
-                                            name="input-7-4"
-                                            rows="13"
-                                            row-height="28"
-                                            :counter="500"
-                                            :rules="[rules.tamanhoMaximo500Caracteres]"
-                                            :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
-                                          />
-                                        </v-flex>
-                                      </v-layout>
-                                    </v-card-text>
-                                  </v-card>
-                                </v-flex>
-                              </v-layout>
-                            </v-container>
-                          </v-card>
-                        </div>
+
+
+                        <v-list two-line>
+                          <template>
+                            <!--<v-subheader-->
+                             <!---->
+                            <!--&gt;-->
+                              <!---->
+                            <!--</v-subheader>-->
+
+                            <v-divider
+                            ></v-divider>
+
+                            <v-list-tile
+                              avatar
+                              @click=""
+                            >
+                              <v-list-tile-avatar>
+                                biruleibe
+                              </v-list-tile-avatar>
+
+                              <v-list-tile-content>
+                                <v-list-tile-title v-html="`asdasd`"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="`aasdas`"></v-list-tile-sub-title>
+                              </v-list-tile-content>
+                              <v-list-tile-action>
+                                <v-btn icon ripple>
+                                  <v-icon color="blue darken-4">cloud_download</v-icon>
+                                </v-btn>
+                              </v-list-tile-action>
+                            </v-list-tile>
+                          </template>
+                          <template>
+                            <!--<v-subheader-->
+                             <!---->
+                            <!--&gt;-->
+                              <!---->
+                            <!--</v-subheader>-->
+
+                            <v-divider
+                            ></v-divider>
+
+                            <v-list-tile
+                              avatar
+                              @click=""
+                            >
+                              <v-list-tile-avatar>
+                                biruleibe
+                              </v-list-tile-avatar>
+
+                              <v-list-tile-content>
+                                <v-list-tile-title v-html="`asdasd`"></v-list-tile-title>
+                                <v-list-tile-sub-title v-html="`aasdas`"></v-list-tile-sub-title>
+                              </v-list-tile-content>
+                              <v-list-tile-action>
+                                <v-btn icon ripple>
+                                  <v-icon color="blue darken-4">cloud_download</v-icon>
+                                </v-btn>
+                              </v-list-tile-action>
+                            </v-list-tile>
+                          </template>
+                        </v-list>
+
+
                       </v-flex>
                     </v-layout>
                     <div class="ma-4 text-justify title ">
