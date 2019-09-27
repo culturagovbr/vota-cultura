@@ -44,12 +44,12 @@
                     dark
                     color="primary"
                   >
-                    {{ props.item.endereco.municipio.uf.no_uf }}
+                    {{ props.item.segmento.ds_detalhamento }}
                   </v-chip>
                 </td>
                 <td>
                   <v-chip>
-                    {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
+                    {{ props.item.pontuacao }}
                   </v-chip>
                 </td>
                 <td>
@@ -122,16 +122,16 @@ export default {
         value: 'cnpj_formatado',
       },
       {
-        text: 'Nome do organizacao',
+        text: 'Nome da organização ou entidade',
         value: 'no_organizacao',
       },
       {
-        text: 'UF',
-        value: 'endereco.municipio.uf.no_uf',
+        text: 'Segmento',
+        value: 'segmento.ds_detalhamento',
       },
       {
-        text: 'Região',
-        value: 'endereco.municipio.uf.regiao.no_regiao',
+        text: 'Pontuação',
+        value: 'pontuacao',
       },
     ],
   }),

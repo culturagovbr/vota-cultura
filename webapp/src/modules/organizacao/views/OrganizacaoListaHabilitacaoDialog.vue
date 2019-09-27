@@ -65,24 +65,30 @@
                         class="ma-3"
                       >
                         <v-layout>
-                          <v-flex sm12>
+                          <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
-                              <b>Nome do organizacao:</b>
+                              <b>Nome da organização/entidade:</b>
                               {{ formulario.no_organizacao }}
+                            </div>
+                          </v-flex>
+                          <v-flex sm6>
+                            <div class="ma-2 text-justify subheading grey--text">
+                              <b>CNPJ:</b>
+                              {{ formulario.cnpj_formatado }}
                             </div>
                           </v-flex>
                         </v-layout>
                         <v-layout>
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
-                              <b>CNPJ do orgão gestor do organização:</b>
-                              {{ formulario.cnpj_formatado }}
+                              <b>Pontuação:</b>
+                              {{ formulario.pontuacao }}
                             </div>
                           </v-flex>
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
-                              <b>Nome do orgão gestor do organização:</b>
-                              {{ formulario.no_orgao_gestor }}
+                              <b>Segmento cultural:</b>
+                              {{ formulario.segmento.ds_detalhamento }}
                             </div>
                           </v-flex>
                         </v-layout>
