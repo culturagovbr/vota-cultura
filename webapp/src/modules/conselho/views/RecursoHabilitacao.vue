@@ -78,6 +78,8 @@
               >
                 <v-textarea
                   v-model="recursoHabilitacao.ds_recurso"
+                  :readonly="recursoHabilitacao.isLocked"
+                  :disabled="recursoHabilitacao.isLocked"
                   name="input-7-1"
                   box
                   solo
@@ -90,7 +92,53 @@
               </v-flex>
             </v-layout>
 
+            <v-card v-if="Object.keys(recursoHabilitacao.anexo).length > 0 && recursoHabilitacao.isLocked">
+              <v-toolbar
+                dark
+                color="primary"
+              >
+              <v-toolbar-title>Documentação enviada</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
+                <v-container
+                  grid-list-md
+                  text-xs-center
+                >
+                  <v-layout
+                    row
+                    wrap
+                  >
+                    <v-flex
+                      :key="recursoHabilitacao.anexo.co_arquivo"
+                      xs12
+                      text-xs-center
+                    >
+                      <v-card
+                        color="blue-grey lighten-5"
+                      >
+                        <v-card-title primary-title>
+                           {{ recursoHabilitacao.anexo.no_arquivo }}
+                            <v-flex sm1>
+                              <v-icon
+                                right
+                                size="32px"
+                                color="blue darken-4"
+                                @click="downloadArquivo(recursoHabilitacao.anexo.co_arquivo, true)"
+                              >
+                                cloud_download
+                              </v-icon>
+                            </v-flex>
+                        </v-card-title>
+                        <v-card-actions />
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-text>
+            </v-card>
+
             <v-layout
+              v-if="!recursoHabilitacao.isLocked"
               wrap
               align-center
               class="grey--text subheading text-lg-center"
@@ -99,6 +147,7 @@
                 xs12
                 sm12
                 class="ma-2"
+                v-if="!recursoHabilitacao.isLocked"
               >
                 <div class="lg-12">
                   Caso seja necessário, anexe documento no formato PDF (preferencialmente), JPEG. Para enviar mais de um arquivo utilize ZIP ou RAR.
@@ -112,6 +161,7 @@
               </v-flex>
             </v-layout>
             <v-layout
+              v-if="!recursoHabilitacao.isLocked"
               align-center
               justify-center
               class="mb-4"
@@ -123,7 +173,11 @@
                   class="mx-auto"
                 >
                   <v-card-text>
-                    <file v-model="recursoHabilitacao.anexo" />
+                    <file
+                      v-model="recursoHabilitacao.anexo"
+                      :readonly="recursoHabilitacao.isLocked"
+                      :disabled="recursoHabilitacao.isLocked"
+                    />
                     <v-input
                       error
                       disabled
@@ -144,7 +198,8 @@
             Cancelar
           </v-btn>
           <v-btn
-            :disabled="!valid"
+            :readonly="recursoHabilitacao.isLocked"
+            :disabled="recursoHabilitacao.isLocked || !valid"
             color="primary"
             @click="abrirDialogo"
           >
@@ -214,19 +269,8 @@ export default {
     recursoHabilitacao: {
       ds_recurso: '',
       anexo: {},
+      isLocked : false
     },
-    listaRecursos: [
-      {
-        co_fase: 4,
-        tp_fase: 'recurso_inscricoes_conselho',
-        ds_detalhamento: 'Conselho',
-      },
-      {
-        co_fase: 5,
-        tp_fase: 'recurso_inscricoes_organizacao',
-        ds_detalhamento: 'Organização',
-      },
-    ],
     rules: {
       required: value => !!value || 'Campo não preenchido',
       tamanhoMaximoCaracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
@@ -256,9 +300,11 @@ export default {
   methods: {
     ...mapActions({
       obterDadosConselho: 'conselho/obterDadosConselho',
+      obterRecursoHabilitacao: 'conselho/obterRecursoHabilitacao',
       enviarDadosRecursoHabilitacaoConselho: 'conselho/enviarDadosRecursoHabilitacaoConselho',
       definirMensagemSucesso: 'app/setMensagemSucesso',
       definirMensagemErro: 'app/setMensagemErro',
+      downloadArquivo: 'shared/downloadArquivo',
     }),
     salvar() {
       this.loading = true;
@@ -274,7 +320,7 @@ export default {
         this.enviarDadosRecursoHabilitacaoConselho(dadosSubmit)
         .then((response) => {
           this.definirMensagemSucesso(response.data.message);
-          this.$router.push('/');
+          this.$router.push('/conselho/recurso-habilitacao');
         }).finally(() => {
           this.loading = false;
           this.fecharDialogo();
@@ -294,7 +340,15 @@ export default {
   mounted() {
     const self = this;
     self.loading = true;
-    self.obterDadosConselho(this.usuario.co_conselho).finally(() => {
+    self.obterDadosConselho(this.usuario.co_conselho).then(dadosConselho => {
+        console.log('Dados conselho', dadosConselho);
+        if(Object.keys(dadosConselho.recursoHabilitacao).length > 0) {
+            let recurso = dadosConselho.recursoHabilitacao;
+            this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
+            this.recursoHabilitacao.anexo = recurso.anexo;
+            this.recursoHabilitacao.isLocked = true;
+        }
+    }).finally(() => {
       self.loading = false;
     });
   },

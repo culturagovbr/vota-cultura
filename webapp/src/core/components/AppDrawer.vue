@@ -232,6 +232,12 @@
           icon: 'group',
         }, 'Conselho');
       }
+        this.definirItemMenu({
+            title: 'Recurso da habilitação',
+            group: 'apps',
+            name: 'ConselhoRecursoHabilitacaoRoute',
+            icon: 'gavel',
+        }, 'Conselho');
     },
     carregarMenusOrganizacao() {
       if (this.perfil.no_perfil === 'organizacao') {

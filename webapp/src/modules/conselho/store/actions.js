@@ -37,6 +37,26 @@ export const obterDadosConselho = async ({ commit, dispatch }, coConselho) => {
     });
 };
 
+export const obterDadosRecurso = async ({ commit, dispatch }, coConselho) => {
+  return conselhoService.obterDadosRecurso(coConselho)
+    .then((response) => {
+      const { data } = response.data;
+      if (!data) {
+        const error = 'Não foi possível obter os dados do recurso.';
+        throw error;
+      }
+      return data;
+    })
+    .catch((error) => {
+      dispatch(
+        'app/setMensagemErro',
+        error.response.data.error,
+        { root: true },
+      );
+      throw new TypeError(error, 'obterDadosRecurso', 10);
+    });
+};
+
 export const obterConselhos = async ({ commit }) => {
   conselhoService.obterConselhos().then((response) => {
     const { data } = response.data;

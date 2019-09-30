@@ -21,6 +21,7 @@ class Conselho extends JsonResource
             'cnpj_formatado' => $this->cnpj_formatado,
             'tp_governamental' => $this->tp_governamental,
             'endereco' => (new Endereco($this->endereco)),
+            'recursoHabilitacao' => (new ConselhoRecursoHabilitacao($this->recursoHabilitacao)),
             'representante' => (new Representante($this->representante)),
             'usuario' => (new UsuarioSomenteLeitura($this->usuario)),
             'ds_sitio_eletronico' => $this->ds_sitio_eletronico,

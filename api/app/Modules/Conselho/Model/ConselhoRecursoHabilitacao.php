@@ -31,8 +31,8 @@ class ConselhoRecursoHabilitacao extends Model
     {
         return $this->hasOne(
             Arquivo::class,
-            'co_anexo',
-            'co_anexo'
+            'co_arquivo',
+            'co_arquivo'
         );
     }
 }
