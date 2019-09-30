@@ -344,6 +344,7 @@
                           <v-layout>
                             <v-flex sm6>
                               <v-select
+                                v-model="formulario.organizacaoHabilitacao.st_avaliacao"
                                 :items="resultadoItens"
                                 item-value="valor"
                                 item-text="descricao"
@@ -354,7 +355,7 @@
                             </v-flex>
                           </v-layout>
 
-                          <v-layout>
+                          <v-layout v-show="formulario.organizacaoHabilitacao.st_avaliacao !== '2'">
                             <v-flex class="pa-3">
                               <v-textarea
                                 v-model="formulario.organizacaoHabilitacao.ds_parecer"
@@ -365,6 +366,7 @@
                                 row-height="28"
                                 :counter="3000"
                                 :rules="[rules.required, rules.tamanhoMaximo3000Caracteres]"
+                                :disabled="formulario.organizacaoHabilitacao.st_avaliacao === '2'"
                               />
                             </v-flex>
                           </v-layout>
@@ -375,7 +377,7 @@
                               sm4
                             >
                               <v-radio-group
-                                v-model="formulario.organizacaoHabilitacao.st_avaliacao"
+                                v-model="possuiNovaPontuacao"
                                 column
                                 label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
@@ -400,7 +402,7 @@
                               </v-radio-group>
                             </v-flex>
                             <v-flex
-                              v-if="formulario.organizacaoHabilitacao.st_avaliacao == 1"
+                              v-if="possuiNovaPontuacao === '1'"
                               class="pa-3"
                               sm7
                             >
@@ -546,6 +548,7 @@ export default {
         comprovante_realizacao_projetos: {},
         comprovante_instancia_colegiada: {},
       },
+      possuiNovaPontuacao: null,
       arquivosAvaliacao: {},
       confirmacaoDados: false,
       model: 'tab-1',
@@ -608,6 +611,14 @@ export default {
 
         this.obterDadosOrganizacao(valor.co_organizacao);
       }
+    },
+    'formulario.organizacaoHabilitacao.st_avaliacao': function (valor) {
+      if (valor === '2') {
+        this.formulario.organizacaoHabilitacao.ds_parecer = String();
+      }
+    },
+    possuiNovaPontuacao(value) {
+
     },
   },
   methods: {
