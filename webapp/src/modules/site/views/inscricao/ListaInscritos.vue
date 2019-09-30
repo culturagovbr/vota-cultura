@@ -28,8 +28,56 @@
     </v-card>
 
     <v-dialog
-      v-model="mostrarModal"
+      v-model="mostrarModalConselho"
       fullscreen
+      hide-overlay
+      persistent
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-toolbar
+          dark
+          color="primary"
+        >
+          <v-btn
+            icon
+            dark
+            @click="fecharModalConselho"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>
+            Visualizar inscrição
+          </v-toolbar-title>
+          <v-spacer />
+
+        </v-toolbar>
+        <v-card-text>
+          <v-container>
+            <v-card>
+              <v-card-text>
+                <conselho-detalhes-inscricao-visualizacao/>
+              </v-card-text>
+              <v-card-actions class="justify-center">
+                <v-btn
+                  @click="fecharModalConselho"
+                >
+                  <v-icon left>
+                    undo
+                  </v-icon>
+                  Fechar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog
+      v-model="mostrarModalOrganizacao"
+      fullscreen
+      persistent
       hide-overlay
       transition="dialog-bottom-transition"
     >
@@ -41,7 +89,7 @@
           <v-btn
             icon
             dark
-            @click="mostrarModal = false"
+            @click="fecharModalOrganizacao"
           >
             <v-icon>close</v-icon>
           </v-btn>
@@ -50,9 +98,7 @@
           </v-toolbar-title>
           <v-spacer />
 
-          <v-scale-transition
-            v-if="tipoModal === 'organizacao'"
-          >
+          <v-scale-transition>
             <v-badge
               overlap
               color="orange"
@@ -74,24 +120,23 @@
 
         </v-toolbar>
         <v-card-text>
-          <!--<v-container>-->
-            <!--<v-card>-->
-              <!--<v-card-text>-->
-                <!--<organizacao-detalhes-inscricao-visualizacao v-if="tipoModal === 'organizacao'"/>-->
-                <!--<conselho-detalhes-inscricao-visualizacao v-if="tipoModal === 'conselho'"/>-->
-              <!--</v-card-text>-->
-              <!--<v-card-actions class="justify-center">-->
-                <!--<v-btn-->
-                  <!--@click="mostrarModal = false"-->
-                <!--&gt;-->
-                  <!--<v-icon left>-->
-                    <!--undo-->
-                  <!--</v-icon>-->
-                  <!--Fechar-->
-                <!--</v-btn>-->
-              <!--</v-card-actions>-->
-            <!--</v-card>-->
-          <!--</v-container>-->
+          <v-container>
+            <v-card>
+              <v-card-text>
+                <organizacao-detalhes-inscricao-visualizacao/>
+              </v-card-text>
+              <v-card-actions class="justify-center">
+                <v-btn
+                  @click="fecharModalOrganizacao"
+                >
+                  <v-icon left>
+                    undo
+                  </v-icon>
+                  Fechar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -100,10 +145,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import OrganizacaoDetalhesInscricaoVisualizacao from '@/modules/organizacao/views/OrganizacaoDetalhesInscricaoVisualizacao.vue';
-import ConselhoDetalhesInscricaoVisualizacao from '@/modules/conselho/views/ConselhoDetalhesInscricaoVisualizacao.vue';
-import ConselhoLista from '@/modules/conselho/views/ConselhoLista.vue';
-import OrganizacaoLista from '@/modules/organizacao/views/OrganizacaoLista.vue';
+import OrganizacaoDetalhesInscricaoVisualizacao from '@/modules/organizacao/views/OrganizacaoDetalhesInscricaoVisualizacao';
+import ConselhoDetalhesInscricaoVisualizacao from '@/modules/conselho/views/ConselhoDetalhesInscricaoVisualizacao';
+import ConselhoLista from '@/modules/conselho/views/ConselhoLista';
+import OrganizacaoLista from '@/modules/organizacao/views/OrganizacaoLista';
 
 export default {
   name: 'ListaInscritos',
@@ -123,7 +168,6 @@ export default {
   },
   data: () => ({
     tipoModal: '',
-    mostrarModal: false,
     loading: false,
     step: 1,
     pesquisar: '',
@@ -132,27 +176,22 @@ export default {
   computed: {
     ...mapGetters({
       organizacaoGetter: 'organizacao/organizacao',
+      mostrarModalOrganizacao: 'organizacao/modalVisualizacaoOrganizacaoAdministrador',
+      mostrarModalConselho: 'conselho/modalVisualizacaoConselhoAdministrador',
     }),
   },
   methods: {
     ...mapActions({
       obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
       obterDadosConselho: 'conselho/obterDadosConselho',
+      modalVisualizacaoOrganizacaoAdministrador: 'organizacao/modalVisualizacaoOrganizacaoAdministrador',
+      modalVisualizacaoConselhoAdministrador: 'conselho/modalVisualizacaoConselhoAdministrador',
     }),
-    visualizarItemModal(tipoInscricao, id) {
-      this.mostrarModal = true;
-      this.tipoModal = tipoInscricao;
-      if (tipoInscricao === 'organizacao') {
-        this.obterDadosOrganizacao(id);
-        return false;
-      }
-
-      if (tipoInscricao === 'conselho') {
-        this.obterDadosConselho(id);
-        return false;
-      }
-
-      return true;
+    fecharModalOrganizacao() {
+      this.modalVisualizacaoOrganizacaoAdministrador(false);
+    },
+    fecharModalConselho() {
+      this.modalVisualizacaoConselhoAdministrador(false);
     },
   },
 };

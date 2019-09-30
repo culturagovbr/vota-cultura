@@ -55,7 +55,7 @@ export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {
   let respondendo = String();
   let errando = String();
   for (let indice = 0; indice < payload.anexos.length; indice++) {
-    let anexo = payload.anexos[indice];
+    const anexo = payload.anexos[indice];
     let enviarEmail = false;
     if (payload.anexos.length === indice + 1) {
       enviarEmail = true;
@@ -65,10 +65,10 @@ export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {
 
     await organizacaoService.enviarDocumentacaoComprobatoria(anexo).catch((error) => {
       errando = error.response.data.message;
-    }).then(response => {
+    }).then((response) => {
       respondendo = response;
     });
-    if(errando) {
+    if (errando) {
       throw errando;
     }
   }
@@ -80,3 +80,10 @@ export const obterDocumentacaoComprobatoria = async ({ commit }, coOrganizacao) 
   commit(types.OBTER_DOCUMENTACAO_COMPROBATORIA, data);
   return response;
 });
+
+export const modalVisualizacaoOrganizacaoAdministrador = async ({ commit }, dado) => {
+  commit(types.MOSTRAR_MODAL_VISUALIZACAO, dado);
+  if (!dado) {
+    commit(types.DEFINIR_ORGANIZACAO, {});
+  }
+};

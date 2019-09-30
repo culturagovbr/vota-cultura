@@ -17,4 +17,7 @@ export const mutations = {
   [types.OBTER_DOCUMENTACAO_COMPROBATORIA](state, dados) {
     state.documentacaoComprobatoria = dados;
   },
+  [types.MOSTRAR_MODAL_VISUALIZACAO](state, dados) {
+    state.modalVisualizacaoOrganizacaoAdministrador = dados;
+  },
 };
