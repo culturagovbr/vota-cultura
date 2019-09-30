@@ -271,6 +271,12 @@ export default {
           name: 'ConselhoListaHabilitacaoRoute',
           icon: 'list',
         }, 'Administração');
+        this.definirItemMenu({
+          title: 'Habilitação de organização',
+          group: 'apps',
+          name: 'OrganizacaoListaHabilitacaoRoute',
+          icon: 'list',
+        }, 'Administração');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {

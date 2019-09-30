@@ -6,6 +6,7 @@ use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Conselho\Model\ConselhoHabilitacao;
 use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Organizacao\Model\Organizacao;
+use App\Modules\Organizacao\Model\OrganizacaoHabilitacao;
 use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +36,14 @@ class RepresentanteArquivoAvaliacao extends Model
         return $this->hasOne(ConselhoHabilitacao::class,
             'co_conselho_habilitacao',
             'co_conselho_habilitacao'
+        );
+    }
+
+    public function organizacaoHabilitacao()
+    {
+        return $this->hasOne(OrganizacaoHabilitacao::class,
+            'co_organizacao_habilitacao',
+            'co_organizacao_habilitacao'
         );
     }
 
