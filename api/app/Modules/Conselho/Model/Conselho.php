@@ -8,6 +8,7 @@ use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
+use \App\Modules\Conselho\Model\ConselhoRecursoHabilitacao;
 
 class Conselho extends Model
 {
@@ -36,6 +37,15 @@ class Conselho extends Model
             Endereco::class,
             'co_endereco',
             'co_endereco'
+        );
+    }
+
+    public function recursoHabilitacao()
+    {
+        return $this->hasOne(
+            ConselhoRecursoHabilitacao::class,
+            'co_conselho',
+            'co_conselho'
         );
     }
 
