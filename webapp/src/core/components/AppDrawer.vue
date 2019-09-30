@@ -209,6 +209,7 @@ export default {
       this.carregarMenusConselho();
       this.carregarMenusOrganizacao();
       this.carregarMenusEleitor();
+      this.carregarMenuHabilitacao();
       this.carregarMenuAdministrador();
 
       return true;
@@ -265,18 +266,22 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
-        this.definirItemMenu({
-          title: 'Habilitação de conselhos',
-          group: 'apps',
-          name: 'ConselhoListaHabilitacaoRoute',
-          icon: 'list',
-        }, 'Administração');
+      }
+    },
+    carregarMenuHabilitacao() {
+      if (this.perfil.no_perfil === 'administrador' || this.perfil.no_perfil === 'avaliador') {
         this.definirItemMenu({
           title: 'Habilitação de organização',
           group: 'apps',
           name: 'OrganizacaoListaHabilitacaoRoute',
           icon: 'list',
-        }, 'Administração');
+        }, 'Habilitação');
+        this.definirItemMenu({
+          title: 'Habilitação de conselhos',
+          group: 'apps',
+          name: 'ConselhoListaHabilitacaoRoute',
+          icon: 'list',
+        }, 'Habilitação');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {
