@@ -3,4 +3,5 @@
 export const state = {
   conselho: {},
   conselhos: [],
+  modalVisualizacaoConselhoAdministrador: false,
 };

@@ -73,7 +73,6 @@ export default {
   data: () => ({
     pesquisar: '',
     tipoModal: '',
-    mostrarModal: false,
     loading: false,
     pagination_organizacao: {
       page: 1,
@@ -108,23 +107,18 @@ export default {
   computed: {
     ...mapGetters({
       organizacoesGetter: 'organizacao/organizacoes',
+      mostrarModal: 'organizacao/modalVisualizacaoOrganizacaoAdministrador',
     }),
   },
   methods: {
     ...mapActions({
       obterOrganizacoes: 'organizacao/obterOrganizacoes',
       obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
+      modalVisualizacaoOrganizacaoAdministrador: 'organizacao/modalVisualizacaoOrganizacaoAdministrador',
     }),
     visualizarItemModal(tipoInscricao, id) {
-      this.mostrarModal = true;
-      this.tipoModal = tipoInscricao;
-
-      if (tipoInscricao === 'organizacao') {
-        this.obterDadosOrganizacao(id);
-        return false;
-      }
-
-      return true;
+      this.modalVisualizacaoOrganizacaoAdministrador(true);
+      this.obterDadosOrganizacao(id);
     },
   },
   mounted() {
