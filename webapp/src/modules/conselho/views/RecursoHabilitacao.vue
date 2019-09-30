@@ -307,7 +307,6 @@ export default {
     }),
     salvar() {
       this.loading = true;
-        console.log(this.recursoHabilitacao);
         let dadosSubmit = {
             dsRecurso : this.recursoHabilitacao.ds_recurso
         };
@@ -340,7 +339,6 @@ export default {
     const self = this;
     self.loading = true;
     self.obterDadosConselho(this.usuario.co_conselho).then(dadosConselho => {
-        console.log('Dados conselho', dadosConselho);
         if(Object.keys(dadosConselho.recursoHabilitacao).length > 0) {
             let recurso = dadosConselho.recursoHabilitacao;
             this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
