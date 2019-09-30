@@ -49,6 +49,7 @@
                   </v-tab>
                 </v-tabs>
                 <v-tabs-items
+                  v-model="model"
                   class="white elevation-1"
                 >
                   <v-tab-item
@@ -670,14 +671,6 @@ export default {
     },
     fecharDialogo() {
       this.modalConfirmacao = false;
-    },
-  },
-  filters: {
-    apenasNumeros(string) {
-      if (string) {
-        return parseInt(string.replace(/[^0-9]/g, ''));
-      }
-      return 0;
     },
   },
 };
