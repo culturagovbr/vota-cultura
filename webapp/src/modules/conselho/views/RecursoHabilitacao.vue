@@ -320,7 +320,7 @@ export default {
         this.enviarDadosRecursoHabilitacaoConselho(dadosSubmit)
         .then((response) => {
           this.definirMensagemSucesso(response.data.message);
-          this.$router.push('/conselho/recurso-habilitacao');
+          this.$router.push('/');
         }).finally(() => {
           this.loading = false;
           this.fecharDialogo();
