@@ -99,8 +99,8 @@
                       align-center
                     />
 
-                    <div class="ma-4 text-justify title ">
-                      <v-toolbar color="white darken-3">
+                    <div class="ma-4 text-justify">
+                      <v-toolbar color="white darken-3 title">
                         Documentação
                       </v-toolbar>
                       <v-card class="elevation-1">
@@ -325,7 +325,7 @@
                               class="ma-3"
                             >
                               <p>
-                                Arquivos não enviados.
+                                Documentação comprobatória não enviada.
                               </p>
                             </v-flex>
                           </v-layout>
@@ -349,6 +349,7 @@
                                 item-text="descricao"
                                 box
                                 label="* Resultado da avaliação"
+                                required
                               />
                             </v-flex>
                           </v-layout>
@@ -369,12 +370,16 @@
                           </v-layout>
 
                           <v-layout>
-                            <v-flex class="pa-3">
+                            <v-flex
+                              class="pa-3"
+                              sm4
+                            >
                               <v-radio-group
                                 v-model="formulario.organizacaoHabilitacao.st_avaliacao"
                                 column
                                 label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
+                                required
                               >
                                 <v-radio
                                   value="1"
@@ -394,15 +399,19 @@
                                 </v-radio>
                               </v-radio-group>
                             </v-flex>
-                          </v-layout>
-
-
-                          <v-layout>
                             <v-flex
+                              v-if="formulario.organizacaoHabilitacao.st_avaliacao == 1"
                               class="pa-3"
-                              sm4
+                              sm7
                             >
                               <v-text-field
+                                v-model="formulario.organizacaoHabilitacao.nu_nova_pontuacao"
+                                type="number"
+                                min="0"
+                                max="99"
+                                step="1"
+                                mask="##"
+                                onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
                                 label="Informe a nova pontuação da organização/entidade cultural:"
                               />
                             </v-flex>
@@ -650,6 +659,14 @@ export default {
     },
     fecharDialogo() {
       this.modalConfirmacao = false;
+    },
+  },
+  filters: {
+    apenasNumeros(string) {
+      if (string) {
+        return parseInt(string.replace(/[^0-9]/g, ''));
+      }
+      return 0;
     },
   },
 };

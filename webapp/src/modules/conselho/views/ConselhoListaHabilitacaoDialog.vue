@@ -64,7 +64,6 @@
                         sm12
                         class="ma-3"
                       >
-
                         <v-layout>
                           <v-flex sm12>
                             <div class="ma-2 text-justify subheading grey--text">
@@ -102,7 +101,6 @@
                                 align-center
                                 justify-center
                                 class="mb-4"
-                                v-if="!!formulario.anexos"
                               >
                                 <v-flex sm6>
                                   <v-card
@@ -234,7 +232,6 @@
                                   </v-card>
                                 </v-flex>
                               </v-layout>
-
                               <v-layout
                                 align-center
                                 justify-center
@@ -310,7 +307,6 @@
                         </div>
                       </v-flex>
                     </v-layout>
-
                     <div class="ma-4 text-justify title ">
                       <v-toolbar color="white darken-3">
                         Avaliação
