@@ -109,7 +109,6 @@
                     wrap
                   >
                     <v-flex
-                      :key="recursoHabilitacao.anexo.co_arquivo"
                       xs12
                       text-xs-center
                     >
@@ -345,7 +344,10 @@ export default {
         if(Object.keys(dadosConselho.recursoHabilitacao).length > 0) {
             let recurso = dadosConselho.recursoHabilitacao;
             this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
-            this.recursoHabilitacao.anexo = recurso.anexo;
+            if (Object.keys(this.recursoHabilitacao.anexo) > 0) {
+              this.recursoHabilitacao.anexo = recurso.anexo;
+
+            }
             this.recursoHabilitacao.isLocked = true;
         }
     }).finally(() => {
