@@ -56,7 +56,7 @@ class RecuperacaoSenha implements IService
             $usuario->save();
 
             Mail::to($usuario->ds_email)->send(
-                app()->make(RecuperacaoSenhaMail::class, $usuario)
+                new RecuperacaoSenhaMail($usuario)
             );
             DB::commit();
 
