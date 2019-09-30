@@ -45,11 +45,10 @@
                   <v-tab
                     href="#tab-2"
                   >
-                    Dados do organizacao
+                    Dados da organização
                   </v-tab>
                 </v-tabs>
                 <v-tabs-items
-                  v-model="model"
                   class="white elevation-1"
                 >
                   <v-tab-item
@@ -59,74 +58,265 @@
                       wrap
                       align-center
                     >
-                      <v-flex>
-
-
-
-                        <v-list two-line>
-                          <template>
-                            <!--<v-subheader-->
-                             <!---->
-                            <!--&gt;-->
-                              <!---->
-                            <!--</v-subheader>-->
-
-                            <v-divider
-                            ></v-divider>
-
-                            <v-list-tile
-                              avatar
-                              @click=""
-                            >
-                              <v-list-tile-avatar>
-                                biruleibe
-                              </v-list-tile-avatar>
-
-                              <v-list-tile-content>
-                                <v-list-tile-title v-html="`asdasd`"></v-list-tile-title>
-                                <v-list-tile-sub-title v-html="`aasdas`"></v-list-tile-sub-title>
-                              </v-list-tile-content>
-                              <v-list-tile-action>
-                                <v-btn icon ripple>
-                                  <v-icon color="blue darken-4">cloud_download</v-icon>
-                                </v-btn>
-                              </v-list-tile-action>
-                            </v-list-tile>
-                          </template>
-                          <template>
-                            <!--<v-subheader-->
-                             <!---->
-                            <!--&gt;-->
-                              <!---->
-                            <!--</v-subheader>-->
-
-                            <v-divider
-                            ></v-divider>
-
-                            <v-list-tile
-                              avatar
-                              @click=""
-                            >
-                              <v-list-tile-avatar>
-                                biruleibe
-                              </v-list-tile-avatar>
-
-                              <v-list-tile-content>
-                                <v-list-tile-title v-html="`asdasd`"></v-list-tile-title>
-                                <v-list-tile-sub-title v-html="`aasdas`"></v-list-tile-sub-title>
-                              </v-list-tile-content>
-                              <v-list-tile-action>
-                                <v-btn icon ripple>
-                                  <v-icon color="blue darken-4">cloud_download</v-icon>
-                                </v-btn>
-                              </v-list-tile-action>
-                            </v-list-tile>
-                          </template>
-                        </v-list>
-
-
+                      <v-flex
+                        xs12
+                        sm12
+                        class="ma-3"
+                      >
+                        <v-layout>
+                          <v-flex sm6>
+                            <div class="ma-2 text-justify subheading grey--text">
+                              <b>Nome da organização/entidade cultural:</b>
+                              {{ formulario.no_organizacao }}
+                            </div>
+                          </v-flex>
+                          <v-flex sm6>
+                            <div class="ma-2 text-justify subheading grey--text">
+                              <b>CNPJ:</b>
+                              {{ formulario.nu_cnpj }}
+                            </div>
+                          </v-flex>
+                        </v-layout>
+                        <v-layout>
+                          <v-flex sm6>
+                            <div class="ma-2 text-justify subheading grey--text">
+                              <b>Pontuação:</b>
+                              {{ formulario.pontuacao }}
+                            </div>
+                          </v-flex>
+                          <v-flex sm6>
+                            <div class="ma-2 text-justify subheading grey--text">
+                              <b>Segmento cultural:</b>
+                              {{ formulario.segmento.ds_detalhamento }}
+                            </div>
+                          </v-flex>
+                        </v-layout>
                       </v-flex>
                     </v-layout>
+
+                    <v-layout
+                      wrap
+                      align-center
+                    />
+
+                    <div class="ma-4 text-justify title ">
+                      <v-toolbar color="white darken-3">
+                        Documentação
+                      </v-toolbar>
+                      <v-card class="elevation-1">
+                        <v-container
+                          fluid
+                          grid-list-xl
+                        >
+                          <v-layout>
+                            <v-flex class="pa-3">
+                              <v-list two-line>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`a.    Cópia de documento de identificação do representante legal responsável pela inscrição da organização ou entidade cultural (conforme item 2.5.2 deste edital) e CPF.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`b.    Cópia do Cadastro Nacional da Pessoa Jurídica (CNPJ) que comprove a existência da entidade há pelo menos três anos.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`c.     Cópia do documento de constituição da atual diretoria e da presidência, ou cargo equivalente, da organização ou entidade cultural.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`d.    Cópia do documento de identificação (conforme item 2.5.2 deste edital) e CPF do presidente, diretor executivo ou cargo equivalente.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`e.    Cópia do atual estatuto social ou contrato social, conforme o caso, devidamente registrado no órgão competente, de modo a comprovar o caráter cultural da entidade e seu ano de criação.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`f.      Relatório anual das atividades culturais no último triênio (2016, 2017 e 2018), com ações realizadas em cada um dos três anos, contendo, minimamente: o resumo de cada atividade, o local, o período de realização e o número de participantes.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`g.    Comprovação efetiva de que possui projetos ou atividades culturais realizados em ao menos 5 estados de 2 macrorregiões brasileiras, a partir do exercício de 2016, por meio de: portfólio, folders, publicações, listas de presença, revistas, jornais, conteúdos de divulgação, links de vídeos, registros fotográficos ou outros materiais que permitam, minimamente, a identificação de data e local de realização das atividades e a aferição da veracidade das informações apresentadas.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`h.    Lista de associados ou filiados atestada pelo dirigente da organização ou entidade cultural.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`i.      Documentação que comprove a atuação da organização ou entidade cultural em instâncias colegiadas do setor cultural, tais como conselhos, comissões ou câmaras, se houver, por meio de termo de posse ou portaria de designação de representante.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                                <template>
+                                  <v-list-tile
+                                    avatar
+                                    @click=""
+                                  >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title v-html="`j.      Documentação que comprove a realização de projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016, tais como: publicações, pesquisa de campo e artigos científicos, se houver.`" />
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                      <v-btn
+                                        icon
+                                        ripple
+                                      >
+                                        <v-icon color="blue darken-4">
+                                          cloud_download
+                                        </v-icon>
+                                      </v-btn>
+                                    </v-list-tile-action>
+                                  </v-list-tile>
+                                </template>
+                              </v-list>
+                            </v-flex>
+                          </v-layout>
+                        </v-container>
+                      </v-card>
+                    </div>
                     <div class="ma-4 text-justify title ">
                       <v-toolbar color="white darken-3">
                         Avaliação
@@ -137,20 +327,46 @@
                           grid-list-xl
                         >
                           <v-layout>
+                            <v-flex sm6>
+                              <v-select
+                                :items="resultadoItens"
+                                item-value="valor"
+                                item-text="descricao"
+                                box
+                                label="* Resultado da avaliação"
+                              />
+                            </v-flex>
+                          </v-layout>
+
+                          <v-layout>
+                            <v-flex class="pa-3">
+                              <v-textarea
+                                v-model="formulario.organizacaoHabilitacao.ds_parecer"
+                                box
+                                label="* Justificativa"
+                                name="input-7-4"
+                                rows="13"
+                                row-height="28"
+                                :counter="3000"
+                                :rules="[rules.required, rules.tamanhoMaximo3000Caracteres]"
+                              />
+                            </v-flex>
+                          </v-layout>
+
+                          <v-layout>
                             <v-flex class="pa-3">
                               <v-radio-group
                                 v-model="formulario.organizacaoHabilitacao.st_avaliacao"
                                 column
+                                label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               >
                                 <v-radio
                                   value="1"
                                   color="success"
-                                  :disabled="!avaliacaoPositiva"
                                 >
                                   <template v-slot:label>
-                                    <div><strong class="success--text">Habilitado</strong></div>
+                                    <div>Sim</div>
                                   </template>
                                 </v-radio>
                                 <v-radio
@@ -158,24 +374,18 @@
                                   color="error"
                                 >
                                   <template v-slot:label>
-                                    <div><strong class="error--text">Inabilitado</strong></div>
+                                    <div>Não</div>
                                   </template>
                                 </v-radio>
                               </v-radio-group>
                             </v-flex>
                           </v-layout>
+
+
                           <v-layout>
-                            <v-flex class="pa-3">
-                              <v-textarea
-                                v-model="formulario.organizacaoHabilitacao.ds_parecer"
-                                box
-                                label="* Parecer"
-                                name="input-7-4"
-                                rows="13"
-                                row-height="28"
-                                :counter="3000"
-                                :rules="[rules.required, rules.tamanhoMaximo3000Caracteres]"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                            <v-flex class="pa-3" sm4>
+                              <v-text-field
+                                label="Informe a nova pontuação da organização/entidade cultural:"
                               />
                             </v-flex>
                           </v-layout>
@@ -192,7 +402,6 @@
                         Voltar
                       </v-btn>
                       <v-btn
-                        v-if="!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
@@ -220,7 +429,6 @@
         </v-form>
       </v-card-text>
     </v-card>
-
 
     <v-layout justify-center>
       <v-dialog
@@ -264,11 +472,6 @@
     </v-layout>
   </v-dialog>
 </template>
-<style scoped>
-  .v-label {
-    font-size: 14px;
-  }
-</style>
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import OrganizacaoDetalhesInscricaoVisualizacao from './OrganizacaoDetalhesInscricaoVisualizacao';
@@ -290,6 +493,20 @@ export default {
   },
   data() {
     return {
+      resultadoItens: [
+        {
+          descricao: 'Habilitada e classificada',
+          valor: '2',
+        },
+        {
+          descricao: 'Habilitada e desclassificada',
+          valor: '1',
+        },
+        {
+          descricao: 'Inabilitada',
+          valor: '0',
+        },
+      ],
       arquivosAvaliacaoInicial: {
         ata_reuniao_organizacao: {
           st_em_conformidade: null,
@@ -339,7 +556,7 @@ export default {
       perfis: 'conta/perfis',
       perfisInscricao: 'conta/perfisInscricao',
     }),
-    avaliacaoPositiva: function() {
+    avaliacaoPositiva() {
       const avaliacao = (!!this.arquivosAvaliacao && this.arquivosAvaliacao.ata_reuniao_organizacao.st_em_conformidade === '1'
         && this.arquivosAvaliacao.ato_normativo_organizacao.st_em_conformidade === '1'
         && this.arquivosAvaliacao.documento_identificacao_responsavel.st_em_conformidade === '1');
@@ -357,7 +574,6 @@ export default {
       if (!valor) {
         this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
         this.arquivosAvaliacao = Object.assign({}, this.arquivosAvaliacaoInicial);
-        // this.$refs.form_recurso.reset();
       }
     },
     dialog(valor) {

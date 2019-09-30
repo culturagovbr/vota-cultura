@@ -5,6 +5,7 @@ namespace App\Modules\Conta\Providers;
 use App\Modules\Conta\Http\Resources\Perfil as PerfilResource;
 use App\Modules\Conta\Http\Resources\Usuario as UsuarioResource;
 use App\Modules\Conta\Mail\Usuario\CadastroComSucesso;
+use App\Modules\Conta\Mail\Usuario\RecuperacaoSenha;
 use App\Modules\Conta\Model\Perfil as PerfilModel;
 use App\Modules\Conta\Model\Usuario as UsuarioModel;
 use Caffeinated\Modules\Support\ServiceProvider;
@@ -45,6 +46,13 @@ class ModuleServiceProvider extends ServiceProvider
                 return new PerfilResource($parametros);
             }
             return new PerfilResource(app(PerfilModel::class, $parametros));
+        });
+
+        $this->app->bind(RecuperacaoSenha::class, function ($app, $parametros) {
+            if($parametros instanceof UsuarioModel) {
+                return new RecuperacaoSenha($parametros);
+            }
+            return new RecuperacaoSenha(app(UsuarioModel::class, $parametros));
         });
     }
 }

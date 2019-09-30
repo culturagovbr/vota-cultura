@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrganizacaoHabilitacao extends Model
 {
+    const SITUACAO_AVALIACAO_INABILITADA = '0';
+    const SITUACAO_AVALIACAO_HABILITADA_DESCLASSIFICADA = '1';
+    const SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA = '2';
+
     protected $table = 'tb_organizacao_habilitacao';
     protected $primaryKey = 'co_organizacao_habilitacao';
 
@@ -19,6 +23,7 @@ class OrganizacaoHabilitacao extends Model
         'st_avaliacao',
         'ds_parecer',
         'dh_avaliacao',
+        'nu_nova_pontuacao',
     ];
 
     public $timestamps = FALSE;

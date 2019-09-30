@@ -211,59 +211,46 @@
                 this.carregarMenusEleitor();
                 this.carregarMenuAdministrador();
 
-                return true;
-            },
-            carregarMenusEleitor() {
-                if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
-                    this.definirItemMenu({
-                        title: 'Detalhes da inscrição',
-                        group: 'apps',
-                        name: 'EleitorDetalhesInscricaoRoute',
-                        icon: 'group',
-                    }, 'Eleitor');
-                }
-            },
-            carregarMenusConselho() {
-                if (this.perfil.no_perfil === 'conselho') {
-                    this.definirItemMenu({
-                        title: 'Detalhes da inscrição',
-                        group: 'apps',
-                        name: 'ConselhoDetalhesInscricaoRoute',
-                        icon: 'group',
-                    }, 'Conselho');
-
-                    this.definirItemMenu({
-                        title: 'Recurso da habilitação',
-                        group: 'apps',
-                        name: 'ConselhoRecursoHabilitacaoRoute',
-                        icon: 'gavel',
-                    }, 'Conselho');
-                }
-            },
-            carregarMenusOrganizacao() {
-                if (this.perfil.no_perfil === 'organizacao') {
-                    this.definirItemMenu({
-                        title: 'Detalhes da inscrição',
-                        group: 'apps',
-                        name: 'OrganizacaoDetalhesInscricaoRoute',
-                        icon: 'group',
-                    }, 'Organizacao');
-                    this.definirItemMenu({
-                        title: 'Documentação comprobatória',
-                        group: 'apps',
-                        name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
-                        icon: 'cloud_upload',
-                    }, 'Organizacao');
-                }
-            },
-            carregarMenuAdministrador() {
-                if (this.perfil.no_perfil === 'administrador') {
-                    this.definirItemMenu({
-                        title: 'Usuários',
-                        group: 'apps',
-                        name: 'administrador-lista-usuarios-route',
-                        icon: 'group',
-                    }, 'Administração');
+      return true;
+    },
+    carregarMenusEleitor() {
+      if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'EleitorDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Eleitor');
+      }
+    },
+    carregarMenusConselho() {
+      if (this.perfil.no_perfil === 'conselho') {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'ConselhoDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Conselho');
+      }
+    },
+    carregarMenusOrganizacao() {
+      if (this.perfil.no_perfil === 'organizacao') {
+        this.definirItemMenu({
+          title: 'Detalhes da inscrição',
+          group: 'apps',
+          name: 'OrganizacaoDetalhesInscricaoRoute',
+          icon: 'group',
+        }, 'Organizacao');
+      }
+    },
+    carregarMenuAdministrador() {
+      if (this.perfil.no_perfil === 'administrador') {
+        this.definirItemMenu({
+          title: 'Usuários',
+          group: 'apps',
+          name: 'administrador-lista-usuarios-route',
+          icon: 'group',
+        }, 'Administração');
 
                     this.definirItemMenu({
                         title: 'Recursos',
