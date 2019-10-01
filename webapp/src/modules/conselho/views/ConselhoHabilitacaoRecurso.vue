@@ -1,6 +1,5 @@
 <template>
   <v-container>
-
     <carregando
       v-if="loading"
     />
@@ -59,7 +58,7 @@
                 sm12
               >
                 <div class="ma-4 text-justify subheading grey--text">
-                  Ilmo Sr. Secretário da Diversidade Cultural, <br /><br />
+                  Ilmo Sr. Secretário da Diversidade Cultural, <br><br>
                   com base no <b>item 6</b> deste edital de CHAMADA PÚBLICA PARA COMPOSIÇÃO DO
                   CONSELHO NACIONAL DE POLÍTICA CULTURAL (CNPC) no triênio 2019/2022,
                   venho interpor recurso em face do resultado na etapa de habilitação pelos motivos
@@ -97,7 +96,7 @@
                 dark
                 color="primary"
               >
-              <v-toolbar-title>Documentação enviada</v-toolbar-title>
+                <v-toolbar-title>Documentação enviada</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-container
@@ -116,17 +115,17 @@
                         color="blue-grey lighten-5"
                       >
                         <v-card-title primary-title>
-                           {{ recursoHabilitacao.anexo.no_arquivo }}
-                            <v-flex sm1>
-                              <v-icon
-                                right
-                                size="32px"
-                                color="blue darken-4"
-                                @click="downloadArquivo(recursoHabilitacao.anexo.co_arquivo, true)"
-                              >
-                                cloud_download
-                              </v-icon>
-                            </v-flex>
+                          {{ recursoHabilitacao.anexo.no_arquivo }}
+                          <v-flex sm1>
+                            <v-icon
+                              right
+                              size="32px"
+                              color="blue darken-4"
+                              @click="downloadArquivo(recursoHabilitacao.anexo.co_arquivo, true)"
+                            >
+                              cloud_download
+                            </v-icon>
+                          </v-flex>
                         </v-card-title>
                         <v-card-actions />
                       </v-card>
@@ -143,10 +142,10 @@
               class="grey--text subheading text-lg-center"
             >
               <v-flex
+                v-if="!recursoHabilitacao.isLocked"
                 xs12
                 sm12
                 class="ma-2"
-                v-if="!recursoHabilitacao.isLocked"
               >
                 <div class="lg-12">
                   Caso seja necessário, anexe documento no formato PDF (preferencialmente), JPEG. Para enviar mais de um arquivo utilize ZIP ou RAR.
@@ -253,12 +252,12 @@
 import { mapActions, mapGetters } from 'vuex';
 import Validate from '../../shared/util/validate';
 import File from '@/core/components/upload/File';
-import Carregando from "../../shared/components/CardCarregando";
+import Carregando from '../../shared/components/CardCarregando';
 
 export default {
-  components: {Carregando, File },
+  components: { Carregando, File },
   data: () => ({
-    loading : true,
+    loading: true,
     dialog: false,
     valid: false,
     conselho: {},
@@ -268,7 +267,7 @@ export default {
     recursoHabilitacao: {
       ds_recurso: '',
       anexo: {},
-      isLocked : false
+      isLocked: false,
     },
     rules: {
       required: value => !!value || 'Campo não preenchido',
@@ -288,7 +287,7 @@ export default {
       if (Object.keys(valor).length > 0) {
         this.conselho = valor;
       }
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -307,15 +306,15 @@ export default {
     }),
     salvar() {
       this.loading = true;
-        let dadosSubmit = {
-            dsRecurso : this.recursoHabilitacao.ds_recurso
-        };
+      const dadosSubmit = {
+        dsRecurso: this.recursoHabilitacao.ds_recurso,
+      };
 
-        if(!!Object.keys(this.recursoHabilitacao.anexo).length) {
-            dadosSubmit.anexo = this.recursoHabilitacao.anexo.file;
-        }
+      if (Object.keys(this.recursoHabilitacao.anexo).length) {
+        dadosSubmit.anexo = this.recursoHabilitacao.anexo.file;
+      }
 
-        this.enviarDadosRecursoConselhoHabilitacao(dadosSubmit)
+      this.enviarDadosRecursoConselhoHabilitacao(dadosSubmit)
         .then((response) => {
           this.definirMensagemSucesso(response.data.message);
           this.$router.push('/');
@@ -336,26 +335,22 @@ export default {
     },
   },
   mounted() {
-
-    console.log(this.usuario);
-
     if (!this.usuario.co_conselho) {
-        this.definirMensagemErro('Acesso restrito aos conselhos de cultura');
-        this.$router.push('/');
+      this.definirMensagemErro('Acesso restrito aos conselhos de cultura');
+      this.$router.push('/');
     }
 
     const self = this;
     self.loading = true;
-    self.obterDadosConselho(this.usuario.co_conselho).then(dadosConselho => {
-      if(dadosConselho.recursoHabilitacao) {
-          let recurso = dadosConselho.recursoHabilitacao;
-          this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
-          if (recurso.anexo) {
-              this.recursoHabilitacao.anexo = recurso.anexo;
-          }
-          this.recursoHabilitacao.isLocked = true;
+    self.obterDadosConselho(this.usuario.co_conselho).then((dadosConselho) => {
+      if (dadosConselho.recursoHabilitacao) {
+        const recurso = dadosConselho.recursoHabilitacao;
+        this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
+        if (recurso.anexo) {
+          this.recursoHabilitacao.anexo = recurso.anexo;
+        }
+        this.recursoHabilitacao.isLocked = true;
       }
-
     }).finally(() => {
       self.loading = false;
     });
