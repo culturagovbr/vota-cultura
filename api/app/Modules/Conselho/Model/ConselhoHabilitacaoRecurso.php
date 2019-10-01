@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConselhoHabilitacaoRecurso extends Model
 {
-    protected $table = 'tb_conselho_recurso_habilitacao';
-    protected $primaryKey = 'co_conselho_recurso_habilitacao';
+    protected $table = 'tb_conselho_habilitacao_recurso';
+    protected $primaryKey = 'co_conselho_habilitacao_recurso';
 
     protected $fillable = [
         'ds_recurso',

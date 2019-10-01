@@ -235,7 +235,7 @@
         this.definirItemMenu({
             title: 'Recurso da habilitação',
             group: 'apps',
-            name: 'ConselhoRecursoHabilitacaoRoute',
+            name: 'ConselhoHabilitacaoRecursoRoute',
             icon: 'gavel',
         }, 'Conselho');
     },

@@ -19,29 +19,29 @@ ALTER TABLE public.tb_organizacao_habilitacao ADD dh_avaliacao timestamp DEFAULT
 ALTER TABLE public.tb_representante_arquivo_avaliacao DROP co_organizacao_habilitacao;
 ALTER TABLE public.tb_organizacao_habilitacao ADD nu_nova_pontuacao int NULL;
 
---###### Criando a tabela tb_conselho_recurso_habilitacao, vinculada à HU060 ######
+--###### Criando a tabela tb_conselho_habilitacao_recurso, vinculada à HU060 ######
 
-CREATE TABLE public.tb_conselho_recurso_habilitacao (
-	co_conselho_recurso_habilitacao serial NOT NULL, -- Chave Primária da tabela
+CREATE TABLE public.tb_conselho_habilitacao_recurso (
+	co_conselho_habilitacao_recurso serial NOT NULL, -- Chave Primária da tabela
 	co_conselho int4 NOT NULL, -- Código do conselho a qual o usuário está solicitando recurso
 	ds_recurso text NOT NULL, -- Descrição do recurso.
 	co_arquivo int4 NULL, -- Referência ao arquivo anexado
 	dh_cadastro_recurso timestamp NOT NULL DEFAULT now(), -- Data de cadastro do recurso.
-	CONSTRAINT ph_conselho_recurso_habilitacao PRIMARY KEY (co_conselho_recurso_habilitacao),
-	CONSTRAINT fk_arquivo_conselho_recurso_habilitacao FOREIGN KEY (co_arquivo) REFERENCES tb_arquivo(co_arquivo),
-	CONSTRAINT fk_conselho_conselho_recurso_habilitacao FOREIGN KEY (co_conselho) REFERENCES tb_conselho(co_conselho)
+	CONSTRAINT ph_conselho_habilitacao_recurso PRIMARY KEY (co_conselho_habilitacao_recurso),
+	CONSTRAINT fk_arquivo_conselho_habilitacao_recurso FOREIGN KEY (co_arquivo) REFERENCES tb_arquivo(co_arquivo),
+	CONSTRAINT fk_conselho_conselho_habilitacao_recurso FOREIGN KEY (co_conselho) REFERENCES tb_conselho(co_conselho)
 );
-CREATE UNIQUE INDEX tb_conselho_recurso_habilitacao_co_conselho_recurso_habilitacao ON public.tb_conselho_recurso_habilitacao USING btree (co_conselho_recurso_habilitacao);
+CREATE UNIQUE INDEX tb_conselho_habilitacao_recurso_co_conselho_habilitacao_recurso ON public.tb_conselho_habilitacao_recurso USING btree (co_conselho_habilitacao_recurso);
 
 -- Column comments
 
-COMMENT ON COLUMN public.tb_conselho_recurso_habilitacao.co_conselho_recurso_habilitacao IS 'Chave Primária da tabela';
-COMMENT ON COLUMN public.tb_conselho_recurso_habilitacao.co_conselho IS 'Código do conselho a qual o usuário está solicitando recurso';
-COMMENT ON COLUMN public.tb_conselho_recurso_habilitacao.ds_recurso IS 'Descrição do recurso.';
-COMMENT ON COLUMN public.tb_conselho_recurso_habilitacao.co_arquivo IS 'Referência ao arquivo anexado';
-COMMENT ON COLUMN public.tb_conselho_recurso_habilitacao.dh_cadastro_recurso IS 'Data de cadastro do recurso.';
+COMMENT ON COLUMN public.tb_conselho_habilitacao_recurso.co_conselho_habilitacao_recurso IS 'Chave Primária da tabela';
+COMMENT ON COLUMN public.tb_conselho_habilitacao_recurso.co_conselho IS 'Código do conselho a qual o usuário está solicitando recurso';
+COMMENT ON COLUMN public.tb_conselho_habilitacao_recurso.ds_recurso IS 'Descrição do recurso.';
+COMMENT ON COLUMN public.tb_conselho_habilitacao_recurso.co_arquivo IS 'Referência ao arquivo anexado';
+COMMENT ON COLUMN public.tb_conselho_habilitacao_recurso.dh_cadastro_recurso IS 'Data de cadastro do recurso.';
 
 -- Permissions
 
-ALTER TABLE public.tb_conselho_recurso_habilitacao OWNER TO votacultura;
-GRANT ALL ON TABLE public.tb_conselho_recurso_habilitacao TO votacultura;
+ALTER TABLE public.tb_conselho_habilitacao_recurso OWNER TO votacultura;
+GRANT ALL ON TABLE public.tb_conselho_habilitacao_recurso TO votacultura;

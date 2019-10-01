@@ -337,6 +337,8 @@ export default {
   },
   mounted() {
 
+    console.log(this.usuario);
+
     if (!this.usuario.co_conselho) {
         this.definirMensagemErro('Acesso restrito aos conselhos de cultura');
         this.$router.push('/');
