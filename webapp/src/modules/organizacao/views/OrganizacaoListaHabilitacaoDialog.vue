@@ -92,6 +92,14 @@
                             </div>
                           </v-flex>
                         </v-layout>
+                        <v-layout v-if="!!formulario.organizacaoHabilitacao.nu_nova_pontuacao">
+                          <v-flex sm6>
+                            <div class="ma-2 text-justify subheading grey--text">
+                              <b>Nova pontuação:</b>
+                              {{ formulario.organizacaoHabilitacao.nu_nova_pontuacao }}
+                            </div>
+                          </v-flex>
+                        </v-layout>
                       </v-flex>
                     </v-layout>
 
