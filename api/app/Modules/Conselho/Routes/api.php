@@ -7,5 +7,5 @@ Route::group([
     Route::apiResource('/', 'ConselhoApiResourceController');
     Route::apiResource('habilitacao', 'ConselhoHabilitacaoApiResourceController');
     Route::get('lista_habilitacao', 'ConselhoListaHabilitacaoController@index');
-    Route::post('recurso-habilitacao', 'ConselhoHabilitacaoRecursoController@store');
+    Route::post('habilitacao-recurso', 'ConselhoHabilitacaoRecursoController@store');
 });

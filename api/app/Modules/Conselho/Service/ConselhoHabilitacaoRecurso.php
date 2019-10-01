@@ -26,7 +26,7 @@ class ConselhoHabilitacaoRecurso extends AbstractService
      * @return \Illuminate\Database\Eloquent\Model|null
      * @throws EParametrosInvalidos
      */
-    public function cadastrarRecursoHabilitacao($requestParams)
+    public function cadastrarHabilitacaoRecurso($requestParams)
     {
         if (empty($requestParams['dsRecurso'])) {
             throw new EParametrosInvalidos('A descrição do recurso deve ser preenchida.');
@@ -37,24 +37,24 @@ class ConselhoHabilitacaoRecurso extends AbstractService
             $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
             $coConselho = $usuarioAutenticado['co_conselho'];
             $dsRecurso = $requestParams['dsRecurso'];
-            $dadosRecursoHabilitacao = [];
-            $dadosRecursoHabilitacao['co_conselho'] = $coConselho;
-            $dadosRecursoHabilitacao['ds_recurso'] = $dsRecurso;
+            $dadosHabilitacaoRecurso = [];
+            $dadosHabilitacaoRecurso['co_conselho'] = $coConselho;
+            $dadosHabilitacaoRecurso['ds_recurso'] = $dsRecurso;
 
             if(!empty($requestParams['anexo'])) {
-                $dadosRecursoHabilitacao['co_arquivo'] =
-                    $this->cadastrarAnexoRecursoHabilitacao($requestParams['anexo'], $usuarioAutenticado);
+                $dadosHabilitacaoRecurso['co_arquivo'] =
+                    $this->cadastrarAnexoHabilitacaoRecurso($requestParams['anexo'], $usuarioAutenticado);
             }
-            $recursoHabilitacaoModel = $this->getModel();
-            $recursoHabilitacaoModel->fill($dadosRecursoHabilitacao);
+            $habilitacaoRecursoModel = $this->getModel();
+            $habilitacaoRecursoModel->fill($dadosHabilitacaoRecurso);
 
-            $recursoHabilitacaoModel->save();
+            $habilitacaoRecursoModel->save();
 
             /** @var \App\Modules\Conselho\Model\Conselho $conselhoModel */
             $conselho = app(\App\Modules\Conselho\Model\Conselho::class)->find($coConselho);
             $this->enviarEmailConfirmacao($conselho, $dsRecurso);
             DB::commit();
-            return $recursoHabilitacaoModel;
+            return $habilitacaoRecursoModel;
         } catch(EParametrosInvalidos $exception) {
             DB::rollBack();
             throw $exception;
@@ -67,7 +67,7 @@ class ConselhoHabilitacaoRecurso extends AbstractService
      * @return mixed
      * @throws \Exception
      */
-    private function cadastrarAnexoRecursoHabilitacao(UploadedFile $uploadedFile, $usuarioAutenticado)
+    private function cadastrarAnexoHabilitacaoRecurso(UploadedFile $uploadedFile, $usuarioAutenticado)
     {
         $modeloUpload = [
             'no_arquivo'  => $uploadedFile->getClientOriginalName(),

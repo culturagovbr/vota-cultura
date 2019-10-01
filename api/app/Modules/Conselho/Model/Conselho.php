@@ -40,7 +40,7 @@ class Conselho extends Model
         );
     }
 
-    public function recursoHabilitacao()
+    public function habilitacaoRecurso()
     {
         return $this->hasOne(
             ConselhoHabilitacaoRecurso::class,

@@ -76,9 +76,9 @@
                 class="ma-3"
               >
                 <v-textarea
-                  v-model="recursoHabilitacao.ds_recurso"
-                  :readonly="recursoHabilitacao.isLocked"
-                  :disabled="recursoHabilitacao.isLocked"
+                  v-model="habilitacaoRecurso.ds_recurso"
+                  :readonly="habilitacaoRecurso.isLocked"
+                  :disabled="habilitacaoRecurso.isLocked"
                   name="input-7-1"
                   box
                   solo
@@ -91,7 +91,7 @@
               </v-flex>
             </v-layout>
 
-            <v-card v-if="Object.keys(recursoHabilitacao.anexo).length > 0 && recursoHabilitacao.isLocked">
+            <v-card v-if="Object.keys(habilitacaoRecurso.anexo).length > 0 && habilitacaoRecurso.isLocked">
               <v-toolbar
                 dark
                 color="primary"
@@ -115,13 +115,13 @@
                         color="blue-grey lighten-5"
                       >
                         <v-card-title primary-title>
-                          {{ recursoHabilitacao.anexo.no_arquivo }}
+                          {{ habilitacaoRecurso.anexo.no_arquivo }}
                           <v-flex sm1>
                             <v-icon
                               right
                               size="32px"
                               color="blue darken-4"
-                              @click="downloadArquivo(recursoHabilitacao.anexo.co_arquivo, true)"
+                              @click="downloadArquivo(habilitacaoRecurso.anexo.co_arquivo, true)"
                             >
                               cloud_download
                             </v-icon>
@@ -136,13 +136,13 @@
             </v-card>
 
             <v-layout
-              v-if="!recursoHabilitacao.isLocked"
+              v-if="!habilitacaoRecurso.isLocked"
               wrap
               align-center
               class="grey--text subheading text-lg-center"
             >
               <v-flex
-                v-if="!recursoHabilitacao.isLocked"
+                v-if="!habilitacaoRecurso.isLocked"
                 xs12
                 sm12
                 class="ma-2"
@@ -159,7 +159,7 @@
               </v-flex>
             </v-layout>
             <v-layout
-              v-if="!recursoHabilitacao.isLocked"
+              v-if="!habilitacaoRecurso.isLocked"
               align-center
               justify-center
               class="mb-4"
@@ -172,9 +172,9 @@
                 >
                   <v-card-text>
                     <file
-                      v-model="recursoHabilitacao.anexo"
-                      :readonly="recursoHabilitacao.isLocked"
-                      :disabled="recursoHabilitacao.isLocked"
+                      v-model="habilitacaoRecurso.anexo"
+                      :readonly="habilitacaoRecurso.isLocked"
+                      :disabled="habilitacaoRecurso.isLocked"
                     />
                     <v-input
                       error
@@ -196,8 +196,8 @@
             Cancelar
           </v-btn>
           <v-btn
-            :readonly="recursoHabilitacao.isLocked"
-            :disabled="recursoHabilitacao.isLocked || !valid"
+            :readonly="habilitacaoRecurso.isLocked"
+            :disabled="habilitacaoRecurso.isLocked || !valid"
             color="primary"
             @click="abrirDialogo"
           >
@@ -264,7 +264,7 @@ export default {
     nomeConselhoError: '',
     nomeRepresentante: '',
     nomeRepresentanteError: '',
-    recursoHabilitacao: {
+    habilitacaoRecurso: {
       ds_recurso: '',
       anexo: {},
       isLocked: false,
@@ -298,7 +298,7 @@ export default {
   methods: {
     ...mapActions({
       obterDadosConselho: 'conselho/obterDadosConselho',
-      obterRecursoHabilitacao: 'conselho/obterRecursoHabilitacao',
+      obterHabilitacaoRecurso: 'conselho/obterHabilitacaoRecurso',
       enviarDadosRecursoConselhoHabilitacao: 'conselho/enviarDadosRecursoConselhoHabilitacao',
       definirMensagemSucesso: 'app/setMensagemSucesso',
       definirMensagemErro: 'app/setMensagemErro',
@@ -307,11 +307,11 @@ export default {
     salvar() {
       this.loading = true;
       const dadosSubmit = {
-        dsRecurso: this.recursoHabilitacao.ds_recurso,
+        dsRecurso: this.habilitacaoRecurso.ds_recurso,
       };
 
-      if (Object.keys(this.recursoHabilitacao.anexo).length) {
-        dadosSubmit.anexo = this.recursoHabilitacao.anexo.file;
+      if (Object.keys(this.habilitacaoRecurso.anexo).length) {
+        dadosSubmit.anexo = this.habilitacaoRecurso.anexo.file;
       }
 
       this.enviarDadosRecursoConselhoHabilitacao(dadosSubmit)
@@ -343,13 +343,13 @@ export default {
     const self = this;
     self.loading = true;
     self.obterDadosConselho(this.usuario.co_conselho).then((dadosConselho) => {
-      if (dadosConselho.recursoHabilitacao) {
-        const recurso = dadosConselho.recursoHabilitacao;
-        this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
+      if (dadosConselho.habilitacaoRecurso) {
+        const recurso = dadosConselho.habilitacaoRecurso;
+        this.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
         if (recurso.anexo) {
-          this.recursoHabilitacao.anexo = recurso.anexo;
+          this.habilitacaoRecurso.anexo = recurso.anexo;
         }
-        this.recursoHabilitacao.isLocked = true;
+        this.habilitacaoRecurso.isLocked = true;
       }
     }).finally(() => {
       self.loading = false;

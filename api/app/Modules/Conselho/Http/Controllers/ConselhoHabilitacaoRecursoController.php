@@ -31,7 +31,7 @@ class ConselhoHabilitacaoRecursoController extends Controller
     public function store(Request $request)
     {
        return $this->sendResponse(
-           $this->service->cadastrarRecursoHabilitacao($request->only(['dsRecurso', 'anexo'])),
+           $this->service->cadastrarHabilitacaoRecurso($request->only(['dsRecurso', 'anexo'])),
            'Operação realizada com sucesso',
            Response::HTTP_CREATED
        );
