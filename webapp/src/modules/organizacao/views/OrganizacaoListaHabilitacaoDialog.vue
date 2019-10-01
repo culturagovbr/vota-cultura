@@ -356,7 +356,7 @@
                             </v-flex>
                           </v-layout>
 
-                          <v-layout v-show="formulario.organizacaoHabilitacao.st_avaliacao !== '2'">
+                          <v-layout v-if="formulario.organizacaoHabilitacao.st_avaliacao !== '2'">
                             <v-flex class="pa-3">
                               <v-textarea
                                 v-model="formulario.organizacaoHabilitacao.ds_parecer"
@@ -618,9 +618,6 @@ export default {
         this.formulario.organizacaoHabilitacao.ds_parecer = String();
       }
     },
-    possuiNovaPontuacao(value) {
-
-    },
   },
   methods: {
     ...mapActions({
@@ -652,6 +649,7 @@ export default {
       self.loading = true;
       self.formulario.organizacaoHabilitacao.co_organizacao = self.formulario.co_organizacao;
       self.formulario.organizacaoHabilitacao.arquivosAvaliacao = self.arquivosAvaliacao;
+console.log(self.formulario);
       this.avaliarHabilitacao(self.formulario.organizacaoHabilitacao)
         .then(() => {
           window.location.reload();
