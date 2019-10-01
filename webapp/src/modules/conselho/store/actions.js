@@ -11,8 +11,8 @@ export const enviarDadosConselho = async ({ commit }, conselho) => {
   return conselhoService.enviarDadosConselho(conselho);
 };
 
-export const enviarDadosRecursoHabilitacaoConselho = async ({ commit }, dadosRecurso) => {
-  return conselhoService.enviarDadosRecursoHabilitacaoConselho(dadosRecurso);
+export const enviarDadosRecursoConselhoHabilitacao = async ({ commit }, dadosRecurso) => {
+  return conselhoService.enviarDadosRecursoConselhoHabilitacao(dadosRecurso);
 };
 
 export const obterDadosConselho = async ({ commit, dispatch }, coConselho) => {

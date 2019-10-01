@@ -300,7 +300,7 @@ export default {
     ...mapActions({
       obterDadosConselho: 'conselho/obterDadosConselho',
       obterRecursoHabilitacao: 'conselho/obterRecursoHabilitacao',
-      enviarDadosRecursoHabilitacaoConselho: 'conselho/enviarDadosRecursoHabilitacaoConselho',
+      enviarDadosRecursoConselhoHabilitacao: 'conselho/enviarDadosRecursoConselhoHabilitacao',
       definirMensagemSucesso: 'app/setMensagemSucesso',
       definirMensagemErro: 'app/setMensagemErro',
       downloadArquivo: 'shared/downloadArquivo',
@@ -315,7 +315,7 @@ export default {
             dadosSubmit.anexo = this.recursoHabilitacao.anexo.file;
         }
 
-        this.enviarDadosRecursoHabilitacaoConselho(dadosSubmit)
+        this.enviarDadosRecursoConselhoHabilitacao(dadosSubmit)
         .then((response) => {
           this.definirMensagemSucesso(response.data.message);
           this.$router.push('/');
