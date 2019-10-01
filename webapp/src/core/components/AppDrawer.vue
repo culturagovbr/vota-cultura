@@ -241,12 +241,6 @@ export default {
           name: 'OrganizacaoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Organizacao');
-        this.definirItemMenu({
-          title: 'Documentação comprobatória',
-          group: 'apps',
-          name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
-          icon: 'cloud_upload',
-        }, 'Organizacao');
       }
     },
     carregarMenuAdministrador() {
