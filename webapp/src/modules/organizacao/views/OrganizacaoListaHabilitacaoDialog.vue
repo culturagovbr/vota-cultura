@@ -74,14 +74,14 @@
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>CNPJ:</b>
-                              {{ formulario.nu_cnpj }}
+                              {{ formulario.cnpj_formatado }}
                             </div>
                           </v-flex>
                         </v-layout>
                         <v-layout>
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
-                              <b>Pontuação:</b>
+                              <b>Pontuação inicial:</b>
                               {{ formulario.pontuacao }}
                             </div>
                           </v-flex>
@@ -95,7 +95,7 @@
                         <v-layout v-if="!!formulario.organizacaoHabilitacao.nu_nova_pontuacao">
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
-                              <b>Nova pontuação:</b>
+                              <b>Pontuação após análise:</b>
                               {{ formulario.organizacaoHabilitacao.nu_nova_pontuacao }}
                             </div>
                           </v-flex>
@@ -443,6 +443,7 @@
                         Voltar
                       </v-btn>
                       <v-btn
+                        v-if="!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
