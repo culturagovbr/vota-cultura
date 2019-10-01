@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RepresentanteArquivoAvaliacao extends Model
 {
+    const SITUACAO_CONFORMIDADE_NAO_CONFORME = '0';
+    const SITUACAO_CONFORMIDADE_CONFORME = '1';
+
     protected $table = 'tb_representante_arquivo_avaliacao';
     protected $primaryKey = 'co_representante_arquivo_avaliacao';
     protected $dateFormat = 'Y-m-d H:i:s';

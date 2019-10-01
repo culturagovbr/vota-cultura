@@ -13,6 +13,22 @@ class OrganizacaoHabilitacao extends JsonResource
 {
     public function toArray($request): array
     {
+
+        switch ($this->st_avaliacao) {
+            case \App\Modules\Organizacao\Model\OrganizacaoHabilitacao::SITUACAO_AVALIACAO_INABILITADA:
+                $situacaoAvaliacao = 'Inabilitada';
+                break;
+            case \App\Modules\Organizacao\Model\OrganizacaoHabilitacao::SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA:
+                $situacaoAvaliacao = 'Habilitada e classificada';
+                break;
+            case \App\Modules\Organizacao\Model\OrganizacaoHabilitacao::SITUACAO_AVALIACAO_HABILITADA_DESCLASSIFICADA:
+                $situacaoAvaliacao = 'Habilitada e desclassificada';
+                break;
+            default:
+                $situacaoAvaliacao = '';
+                break;
+        }
+
         return [
             'co_organizacao_habilitacao' => $this->co_organizacao_habilitacao,
             'co_organizacao' => $this->co_organizacao,
@@ -20,6 +36,7 @@ class OrganizacaoHabilitacao extends JsonResource
             'ds_parecer' => $this->ds_parecer,
             'nu_nova_pontuacao' => $this->nu_nova_pontuacao,
             'arquivosAvaliacao' => RepresentanteArquivoAvaliacao::collection($this->representanteArquivoAvaliacao),
+            'situacao_avaliacao' => $situacaoAvaliacao,
         ];
     }
 }

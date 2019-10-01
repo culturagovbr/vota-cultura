@@ -428,8 +428,8 @@ export default {
     },
   },
   mounted() {
-    this.definirMensagemErro('O prazo de recurso expirou!');
-    this.$router.push('/');
+    // this.definirMensagemErro('O prazo de recurso expirou!');
+    // this.$router.push('/');
 
     if (this.usuarioGetter.co_organizacao === null) {
       this.notificarErro('Acesso restrito para organização e entidades culturais.');

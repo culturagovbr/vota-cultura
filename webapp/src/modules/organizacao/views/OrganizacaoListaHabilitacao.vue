@@ -40,17 +40,17 @@
                 <td>{{ props.item.cnpj_formatado }}</td>
                 <td>{{ props.item.no_organizacao }}</td>
                 <td>
-                  <v-chip
-                    dark
-                    color="primary"
-                  >
                     {{ props.item.segmento.ds_detalhamento }}
-                  </v-chip>
                 </td>
                 <td>
                   <v-chip>
                     {{ props.item.pontuacao }}
                   </v-chip>
+                </td>
+                <td>
+                    <span v-if="!!props.item.organizacaoHabilitacao && !!props.item.organizacaoHabilitacao.situacao_avaliacao"
+                    v-html="props.item.organizacaoHabilitacao.situacao_avaliacao"></span>
+                    <span v-else>Aguardando avaliação</span>
                 </td>
                 <td>
                   <v-tooltip bottom>
@@ -132,6 +132,10 @@ export default {
       {
         text: 'Pontuação',
         value: 'pontuacao',
+      },
+      {
+        text: 'Resultado da avaliação',
+        value: 'organizacaoHabilitacao.situacao_avaliacao',
       },
     ],
   }),

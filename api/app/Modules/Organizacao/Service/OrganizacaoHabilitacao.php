@@ -5,6 +5,7 @@ namespace App\Modules\Organizacao\Service;
 use App\Core\Service\AbstractService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Organizacao\Model\OrganizacaoHabilitacao as OrganizacaoHabilitacaoModel;
+use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
@@ -29,12 +30,13 @@ class OrganizacaoHabilitacao extends AbstractService
                     'co_organizacao',
                     'st_avaliacao',
                     'ds_parecer',
+                    'nu_nova_pontuacao',
                 ]
-            )->toArray();
+            );
             $dadosInclusao['dh_avaliacao'] = $carbon->toDateTimeString();
 
             $organizacaoHabilitacao = $this->getModel()
-                ->where($dadosInclusao)
+                ->where($dadosInclusao->toArray())
                 ->first();
 
             if ($organizacaoHabilitacao) {
@@ -44,24 +46,29 @@ class OrganizacaoHabilitacao extends AbstractService
                 );
             }
 
-            $novoOrganizacaoHabilitacao = parent::cadastrar($dados);
+            $novoOrganizacaoHabilitacao = parent::cadastrar($dadosInclusao);
             $arquivosHabilitacacao = [];
             if (!empty($dados['arquivosAvaliacao'])) {
                 $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
                 foreach (array_values($dados['arquivosAvaliacao']) as $indice => $arquivoAvaliacao) {
+                    if(empty($arquivoAvaliacao['co_representante_arquivo'])) {
+                        continue;
+                    }
                     $colecao = collect($arquivoAvaliacao);
                     $colecao['co_organizacao_habilitacao'] = $novoOrganizacaoHabilitacao->co_organizacao_habilitacao;
                     $colecao['co_usuario_avaliador'] = $dadosUsuarioLogado['co_usuario'];
                     $colecao['dh_avaliacao'] = $carbon->toDateTimeString();
+                    $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_NAO_CONFORME;
+                    if ((int)$dadosInclusao['st_avaliacao'] === (int)OrganizacaoHabilitacaoModel::SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA) {
+                        $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_CONFORME;
+                    }
                     $arquivosHabilitacacao[$indice] = $colecao->only(
                         [
                             'co_representante_arquivo',
                             'st_em_conformidade',
-                            'ds_observacao',
                             'co_usuario_avaliador',
                             'dh_avaliacao',
                             'co_organizacao_habilitacao',
-                            'nu_nova_pontuacao',
                         ]
                     )->toArray();
                 }

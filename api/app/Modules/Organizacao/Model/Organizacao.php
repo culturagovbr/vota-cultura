@@ -77,6 +77,15 @@ class Organizacao extends Model
         );
     }
 
+    public function organizacaoHabilitacao()
+    {
+        return $this->hasOne(
+            OrganizacaoHabilitacao::class,
+            'co_organizacao',
+            'co_organizacao'
+        );
+    }
+
     public function getTelefoneFormatadoAttribute()
     {
         return TelefoneHelper::adicionarMascara($this->nu_telefone);
