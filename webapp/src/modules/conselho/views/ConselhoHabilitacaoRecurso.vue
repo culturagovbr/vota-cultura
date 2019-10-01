@@ -345,15 +345,15 @@ export default {
     const self = this;
     self.loading = true;
     self.obterDadosConselho(this.usuario.co_conselho).then(dadosConselho => {
-        if(Object.keys(dadosConselho.recursoHabilitacao).length > 0) {
-            let recurso = dadosConselho.recursoHabilitacao;
-            this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
-            if (Object.keys(this.recursoHabilitacao.anexo) > 0) {
+      if(dadosConselho.recursoHabilitacao) {
+          let recurso = dadosConselho.recursoHabilitacao;
+          this.recursoHabilitacao.ds_recurso = recurso.ds_recurso;
+          if (recurso.anexo) {
               this.recursoHabilitacao.anexo = recurso.anexo;
+          }
+          this.recursoHabilitacao.isLocked = true;
+      }
 
-            }
-            this.recursoHabilitacao.isLocked = true;
-        }
     }).finally(() => {
       self.loading = false;
     });

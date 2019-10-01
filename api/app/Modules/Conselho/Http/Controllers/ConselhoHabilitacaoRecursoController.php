@@ -2,21 +2,21 @@
 
 namespace App\Modules\Conselho\Http\Controllers;
 
-use App\Modules\Conselho\Service\ConselhoRecursoHabilitacao;
+use App\Modules\Conselho\Service\ConselhoHabilitacaoRecurso;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 
-class ConselhoRecursoHabilitacaoController extends Controller
+class ConselhoHabilitacaoRecursoController extends Controller
 {
 
     /**
-     * @var ConselhoRecursoHabilitacao
+     * @var ConselhoHabilitacaoRecurso
      */
     protected $service;
 
-    public function __construct(ConselhoRecursoHabilitacao $service)
+    public function __construct(ConselhoHabilitacaoRecurso $service)
     {
         $this->service = $service;
         $this->middleware('auth:api');

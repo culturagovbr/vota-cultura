@@ -8,13 +8,12 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
 
-class CadastroRecursoHabilitacaoSucesso extends Mailable
+class CadastroHabilitacaoRecursoSucesso extends Mailable
 {
     use Queueable,
         SerializesModels;
 
     protected $conselho;
-    protected $dsRecurso;
 
     public function __construct(array $conselho)
     {

@@ -174,7 +174,7 @@
                     <v-btn
                       style="margin-top: 79px"
                       color="green darken-4"
-                      to="/conselho/recurso-habilitacao"
+                      to="/conselho/habilitacao-recurso"
                       dark
                     >
                       <v-icon>

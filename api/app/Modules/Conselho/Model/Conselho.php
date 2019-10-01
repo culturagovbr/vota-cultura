@@ -8,7 +8,7 @@ use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
-use \App\Modules\Conselho\Model\ConselhoRecursoHabilitacao;
+use \App\Modules\Conselho\Model\ConselhoHabilitacaoRecurso;
 
 class Conselho extends Model
 {
@@ -43,7 +43,7 @@ class Conselho extends Model
     public function recursoHabilitacao()
     {
         return $this->hasOne(
-            ConselhoRecursoHabilitacao::class,
+            ConselhoHabilitacaoRecurso::class,
             'co_conselho',
             'co_conselho'
         );

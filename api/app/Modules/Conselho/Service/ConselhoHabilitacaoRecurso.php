@@ -3,8 +3,8 @@
 namespace App\Modules\Conselho\Service;
 
 use App\Core\Service\AbstractService;
-use App\Modules\Conselho\Mail\Conselho\CadastroRecursoHabilitacaoSucesso;
-use App\Modules\Conselho\Model\ConselhoRecursoHabilitacao as ConselhoRecursoHabilitacaoModel;
+use App\Modules\Conselho\Mail\Conselho\CadastroHabilitacaoRecursoSucesso;
+use App\Modules\Conselho\Model\ConselhoHabilitacaoRecurso as ConselhoHabilitacaoRecursoModel;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Representacao\Model\Representante as RepresentanteModel;
 use App\Modules\Upload\Model\Arquivo;
@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class ConselhoRecursoHabilitacao extends AbstractService
+class ConselhoHabilitacaoRecurso extends AbstractService
 {
-    public function __construct(ConselhoRecursoHabilitacaoModel $model)
+    public function __construct(ConselhoHabilitacaoRecursoModel $model)
     {
         parent::__construct($model);
     }
@@ -88,6 +88,10 @@ class ConselhoRecursoHabilitacao extends AbstractService
         return $arquivoArmazenado->co_arquivo;
     }
 
+    /**
+     * @param $arquivoArmazenado
+     * @param $usuarioAutenticado
+     */
     private function salvarRelacionamentoArquivoRepresentante($arquivoArmazenado, $usuarioAutenticado)
     {
         $representanteModel = app(RepresentanteModel::class);
@@ -104,6 +108,11 @@ class ConselhoRecursoHabilitacao extends AbstractService
         );
     }
 
+    /**
+     * @param \App\Modules\Conselho\Model\Conselho $conselho
+     * @param string $dsRecurso
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     private function enviarEmailConfirmacao(\App\Modules\Conselho\Model\Conselho $conselho, string $dsRecurso) : void
     {
         $corpoEmail = $conselho->toArray();
@@ -117,7 +126,7 @@ class ConselhoRecursoHabilitacao extends AbstractService
             ->bcc($conselho->ds_email)
             ->bcc(env('EMAIL_ACOMPANHAMENTO'))
             ->send(
-                app()->make(CadastroRecursoHabilitacaoSucesso::class, $corpoEmail)
+                app()->make(CadastroHabilitacaoRecursoSucesso::class, $corpoEmail)
             );
     }
 }
