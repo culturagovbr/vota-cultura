@@ -18,7 +18,7 @@
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>
-          Habilitação - Organizacao de cultura
+          Habilitação - Organização ou entidade cultural
         </v-toolbar-title>
         <v-spacer />
       </v-toolbar>
@@ -370,12 +370,12 @@
                               <v-textarea
                                 v-model="formulario.organizacaoHabilitacao.ds_parecer"
                                 box
-                                label="* Justificativa"
+                                label="* Parecer"
                                 name="input-7-4"
                                 rows="13"
                                 row-height="28"
-                                :counter="3000"
-                                :rules="[rules.required, rules.tamanhoMaximo3000Caracteres]"
+                                :counter="5000"
+                                :rules="[rules.required, rules.tamanhoMaximo5000Caracteres]"
                                 :disabled="formulario.organizacaoHabilitacao.st_avaliacao === '2' || !!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
@@ -581,6 +581,7 @@ export default {
         required: value => !!value || 'Este campo é obrigatório',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
         tamanhoMaximo3000Caracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
+        tamanhoMaximo5000Caracteres: value => (!!value && value.length <= 5000) || 'Máximo 5000 caracteres',
         tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'Máximo 500 caracteres',
       },
     };
