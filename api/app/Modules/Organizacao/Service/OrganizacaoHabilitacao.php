@@ -51,6 +51,9 @@ class OrganizacaoHabilitacao extends AbstractService
             if (!empty($dados['arquivosAvaliacao'])) {
                 $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
                 foreach (array_values($dados['arquivosAvaliacao']) as $indice => $arquivoAvaliacao) {
+                    if(empty($arquivoAvaliacao['co_representante_arquivo'])) {
+                        continue;
+                    }
                     $colecao = collect($arquivoAvaliacao);
                     $colecao['co_organizacao_habilitacao'] = $novoOrganizacaoHabilitacao->co_organizacao_habilitacao;
                     $colecao['co_usuario_avaliador'] = $dadosUsuarioLogado['co_usuario'];

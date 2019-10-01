@@ -352,11 +352,12 @@
                                 box
                                 label="* Resultado da avaliação"
                                 required
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
 
-                          <v-layout v-if="formulario.organizacaoHabilitacao.st_avaliacao !== '2'">
+                          <v-layout v-if="!!formulario.organizacaoHabilitacao.st_avaliacao && formulario.organizacaoHabilitacao.st_avaliacao !== '2'">
                             <v-flex class="pa-3">
                               <v-textarea
                                 v-model="formulario.organizacaoHabilitacao.ds_parecer"
@@ -367,7 +368,7 @@
                                 row-height="28"
                                 :counter="3000"
                                 :rules="[rules.required, rules.tamanhoMaximo3000Caracteres]"
-                                :disabled="formulario.organizacaoHabilitacao.st_avaliacao === '2'"
+                                :disabled="formulario.organizacaoHabilitacao.st_avaliacao === '2' || !!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
@@ -383,6 +384,7 @@
                                 label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
                                 required
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               >
                                 <v-radio
                                   value="1"
@@ -416,6 +418,7 @@
                                 mask="##"
                                 onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
                                 label="Informe a nova pontuação da organização/entidade cultural:"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
@@ -635,11 +638,16 @@ export default {
           co_arquivo: null,
         });
       });
+      this.possuiNovaPontuacao = null;
     },
     atribuirValoresConformidade(organizacaoHabilitacao) {
       organizacaoHabilitacao.arquivosAvaliacao.forEach((item) => {
         this.arquivosAvaliacao[item.tp_arquivo] = Object.assign({}, item);
       });
+      this.possuiNovaPontuacao = '0';
+      if (organizacaoHabilitacao.nu_nova_pontuacao > 0) {
+        this.possuiNovaPontuacao = '1';
+      }
     },
     salvar() {
       const self = this;
@@ -649,7 +657,6 @@ export default {
       self.loading = true;
       self.formulario.organizacaoHabilitacao.co_organizacao = self.formulario.co_organizacao;
       self.formulario.organizacaoHabilitacao.arquivosAvaliacao = self.arquivosAvaliacao;
-console.log(self.formulario);
       this.avaliarHabilitacao(self.formulario.organizacaoHabilitacao)
         .then(() => {
           window.location.reload();
