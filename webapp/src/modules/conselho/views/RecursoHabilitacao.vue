@@ -336,6 +336,12 @@ export default {
     },
   },
   mounted() {
+
+    if (!this.usuario.co_conselho) {
+        this.definirMensagemErro('Acesso restrito aos conselhos de cultura');
+        this.$router.push('/');
+    }
+
     const self = this;
     self.loading = true;
     self.obterDadosConselho(this.usuario.co_conselho).then(dadosConselho => {
