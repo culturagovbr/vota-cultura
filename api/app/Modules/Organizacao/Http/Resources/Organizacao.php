@@ -11,6 +11,7 @@ class Organizacao extends JsonResource
 {
     public function toArray($request): array
     {
+
         return [
             'co_organizacao' => $this->co_organizacao,
             'nu_cnpj' => $this->nu_cnpj,

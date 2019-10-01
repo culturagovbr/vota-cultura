@@ -27,7 +27,7 @@
           ref="form_recurso"
           v-model="valid"
         >
-          <v-container v-if="!!arquivosAvaliacao.ata_reuniao_organizacao">
+          <v-container v-if="!!arquivosAvaliacao.documento_identificacao_representante">
             <v-card>
               <v-card-text>
                 <v-tabs
@@ -49,6 +49,7 @@
                   </v-tab>
                 </v-tabs>
                 <v-tabs-items
+                  v-model="model"
                   class="white elevation-1"
                 >
                   <v-tab-item
@@ -91,6 +92,14 @@
                             </div>
                           </v-flex>
                         </v-layout>
+                        <v-layout v-if="!!formulario.organizacaoHabilitacao.nu_nova_pontuacao">
+                          <v-flex sm6>
+                            <div class="ma-2 text-justify subheading grey--text">
+                              <b>Nova pontuação:</b>
+                              {{ formulario.organizacaoHabilitacao.nu_nova_pontuacao }}
+                            </div>
+                          </v-flex>
+                        </v-layout>
                       </v-flex>
                     </v-layout>
 
@@ -99,8 +108,8 @@
                       align-center
                     />
 
-                    <div class="ma-4 text-justify title ">
-                      <v-toolbar color="white darken-3">
+                    <div class="ma-4 text-justify">
+                      <v-toolbar color="white darken-3 title">
                         Documentação
                       </v-toolbar>
                       <v-card class="elevation-1">
@@ -108,13 +117,13 @@
                           fluid
                           grid-list-xl
                         >
-                          <v-layout>
+                          <v-layout v-if="!!formulario.representante.arquivos && !!formulario.representante.arquivos.length > 0">
                             <v-flex class="pa-3">
                               <v-list two-line>
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.documento_identificacao_representante.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`a.    Cópia de documento de identificação do representante legal responsável pela inscrição da organização ou entidade cultural (conforme item 2.5.2 deste edital) e CPF.`" />
@@ -134,7 +143,7 @@
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.comprovante_cnpj.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`b.    Cópia do Cadastro Nacional da Pessoa Jurídica (CNPJ) que comprove a existência da entidade há pelo menos três anos.`" />
@@ -154,7 +163,7 @@
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.constituicao_diretoria.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`c.     Cópia do documento de constituição da atual diretoria e da presidência, ou cargo equivalente, da organização ou entidade cultural.`" />
@@ -174,7 +183,7 @@
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.documento_identificacao_presidente.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`d.    Cópia do documento de identificação (conforme item 2.5.2 deste edital) e CPF do presidente, diretor executivo ou cargo equivalente.`" />
@@ -194,7 +203,7 @@
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.contrato_social.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`e.    Cópia do atual estatuto social ou contrato social, conforme o caso, devidamente registrado no órgão competente, de modo a comprovar o caráter cultural da entidade e seu ano de criação.`" />
@@ -214,7 +223,7 @@
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.relatorio_anual_atividades.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`f.      Relatório anual das atividades culturais no último triênio (2016, 2017 e 2018), com ações realizadas em cada um dos três anos, contendo, minimamente: o resumo de cada atividade, o local, o período de realização e o número de participantes.`" />
@@ -234,7 +243,7 @@
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.comprovacao_projetos_atividades.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`g.    Comprovação efetiva de que possui projetos ou atividades culturais realizados em ao menos 5 estados de 2 macrorregiões brasileiras, a partir do exercício de 2016, por meio de: portfólio, folders, publicações, listas de presença, revistas, jornais, conteúdos de divulgação, links de vídeos, registros fotográficos ou outros materiais que permitam, minimamente, a identificação de data e local de realização das atividades e a aferição da veracidade das informações apresentadas.`" />
@@ -254,7 +263,7 @@
                                 <template>
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.lista_associados.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`h.    Lista de associados ou filiados atestada pelo dirigente da organização ou entidade cultural.`" />
@@ -271,10 +280,10 @@
                                     </v-list-tile-action>
                                   </v-list-tile>
                                 </template>
-                                <template>
+                                <template v-if="!!arquivosAvaliacao.comprovante_realizacao_projetos.co_arquivo">
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.comprovante_realizacao_projetos.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`i.      Documentação que comprove a atuação da organização ou entidade cultural em instâncias colegiadas do setor cultural, tais como conselhos, comissões ou câmaras, se houver, por meio de termo de posse ou portaria de designação de representante.`" />
@@ -291,10 +300,10 @@
                                     </v-list-tile-action>
                                   </v-list-tile>
                                 </template>
-                                <template>
+                                <template v-if="!!arquivosAvaliacao.comprovante_instancia_colegiada.co_arquivo">
                                   <v-list-tile
                                     avatar
-                                    @click=""
+                                    @click="downloadArquivo(arquivosAvaliacao.comprovante_instancia_colegiada.co_arquivo)"
                                   >
                                     <v-list-tile-content>
                                       <v-list-tile-title v-html="`j.      Documentação que comprove a realização de projetos na área de pesquisa ou produção do conhecimento no campo da cultura a partir de 2016, tais como: publicações, pesquisa de campo e artigos científicos, se houver.`" />
@@ -314,6 +323,21 @@
                               </v-list>
                             </v-flex>
                           </v-layout>
+                          <v-layout
+                            v-else
+                            wrap
+                            align-center
+                          >
+                            <v-flex
+                              xs12
+                              sm12
+                              class="ma-3"
+                            >
+                              <p>
+                                Documentação comprobatória não enviada.
+                              </p>
+                            </v-flex>
+                          </v-layout>
                         </v-container>
                       </v-card>
                     </div>
@@ -329,16 +353,19 @@
                           <v-layout>
                             <v-flex sm6>
                               <v-select
+                                v-model="formulario.organizacaoHabilitacao.st_avaliacao"
                                 :items="resultadoItens"
                                 item-value="valor"
                                 item-text="descricao"
                                 box
                                 label="* Resultado da avaliação"
+                                required
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
 
-                          <v-layout>
+                          <v-layout v-if="!!formulario.organizacaoHabilitacao.st_avaliacao && formulario.organizacaoHabilitacao.st_avaliacao !== '2'">
                             <v-flex class="pa-3">
                               <v-textarea
                                 v-model="formulario.organizacaoHabilitacao.ds_parecer"
@@ -349,17 +376,23 @@
                                 row-height="28"
                                 :counter="3000"
                                 :rules="[rules.required, rules.tamanhoMaximo3000Caracteres]"
+                                :disabled="formulario.organizacaoHabilitacao.st_avaliacao === '2' || !!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
 
                           <v-layout>
-                            <v-flex class="pa-3">
+                            <v-flex
+                              class="pa-3"
+                              sm4
+                            >
                               <v-radio-group
-                                v-model="formulario.organizacaoHabilitacao.st_avaliacao"
+                                v-model="possuiNovaPontuacao"
                                 column
                                 label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
+                                required
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               >
                                 <v-radio
                                   value="1"
@@ -379,13 +412,21 @@
                                 </v-radio>
                               </v-radio-group>
                             </v-flex>
-                          </v-layout>
-
-
-                          <v-layout>
-                            <v-flex class="pa-3" sm4>
+                            <v-flex
+                              v-if="possuiNovaPontuacao === '1'"
+                              class="pa-3"
+                              sm7
+                            >
                               <v-text-field
+                                v-model="formulario.organizacaoHabilitacao.nu_nova_pontuacao"
+                                type="number"
+                                min="0"
+                                max="99"
+                                step="1"
+                                mask="##"
+                                onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
                                 label="Informe a nova pontuação da organização/entidade cultural:"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
@@ -508,25 +549,18 @@ export default {
         },
       ],
       arquivosAvaliacaoInicial: {
-        ata_reuniao_organizacao: {
-          st_em_conformidade: null,
-          co_representante_arquivo: null,
-          ds_observacao: String(),
-          co_arquivo: null,
-        },
-        ato_normativo_organizacao: {
-          st_em_conformidade: null,
-          co_representante_arquivo: null,
-          ds_observacao: String(),
-          co_arquivo: null,
-        },
-        documento_identificacao_responsavel: {
-          st_em_conformidade: null,
-          co_representante_arquivo: null,
-          ds_observacao: String(),
-          co_arquivo: null,
-        },
+        documento_identificacao_representante: {},
+        comprovante_cnpj: {},
+        constituicao_diretoria: {},
+        documento_identificacao_presidente: {},
+        contrato_social: {},
+        relatorio_anual_atividades: {},
+        comprovacao_projetos_atividades: {},
+        lista_associados: {},
+        comprovante_realizacao_projetos: {},
+        comprovante_instancia_colegiada: {},
       },
+      possuiNovaPontuacao: null,
       arquivosAvaliacao: {},
       confirmacaoDados: false,
       model: 'tab-1',
@@ -556,24 +590,13 @@ export default {
       perfis: 'conta/perfis',
       perfisInscricao: 'conta/perfisInscricao',
     }),
-    avaliacaoPositiva() {
-      const avaliacao = (!!this.arquivosAvaliacao && this.arquivosAvaliacao.ata_reuniao_organizacao.st_em_conformidade === '1'
-        && this.arquivosAvaliacao.ato_normativo_organizacao.st_em_conformidade === '1'
-        && this.arquivosAvaliacao.documento_identificacao_responsavel.st_em_conformidade === '1');
-
-      if (!this.formulario.organizacaoHabilitacao.co_organizacao_habilitacao && !avaliacao) {
-        this.formulario.organizacaoHabilitacao.st_avaliacao = '0';
-      }
-
-      return avaliacao;
-    },
   },
   watch: {
     value(valor) {
       this.dialog = valor;
       if (!valor) {
         this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
-        this.arquivosAvaliacao = Object.assign({}, this.arquivosAvaliacaoInicial);
+        this.inicializarValoresComponente();
       }
     },
     dialog(valor) {
@@ -587,7 +610,7 @@ export default {
           this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
         }
 
-        this.arquivosAvaliacao = Object.assign({}, this.arquivosAvaliacaoInicial);
+        this.inicializarValoresComponente();
 
         this.formulario.representante.arquivos.forEach((item) => {
           this.arquivosAvaliacao[item.tp_arquivo].co_representante_arquivo = item.co_representante_arquivo;
@@ -601,6 +624,16 @@ export default {
         this.obterDadosOrganizacao(valor.co_organizacao);
       }
     },
+    'formulario.organizacaoHabilitacao.st_avaliacao': function (valor) {
+      if (valor === '2') {
+        this.formulario.organizacaoHabilitacao.ds_parecer = String();
+      }
+    },
+    possuiNovaPontuacao(valor) {
+      if (valor === '0') {
+        this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = String();
+      }
+    },
   },
   methods: {
     ...mapActions({
@@ -608,10 +641,26 @@ export default {
       obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
       downloadArquivo: 'shared/downloadArquivo',
     }),
+    inicializarValoresComponente() {
+      this.arquivosAvaliacao = Object.assign({}, this.arquivosAvaliacaoInicial);
+      Object.keys(this.arquivosAvaliacao).forEach((indice) => {
+        this.arquivosAvaliacao[indice] = Object.assign({
+          st_em_conformidade: null,
+          co_representante_arquivo: null,
+          ds_observacao: String(),
+          co_arquivo: null,
+        });
+      });
+      this.possuiNovaPontuacao = null;
+    },
     atribuirValoresConformidade(organizacaoHabilitacao) {
       organizacaoHabilitacao.arquivosAvaliacao.forEach((item) => {
         this.arquivosAvaliacao[item.tp_arquivo] = Object.assign({}, item);
       });
+      this.possuiNovaPontuacao = '0';
+      if (organizacaoHabilitacao.nu_nova_pontuacao > 0) {
+        this.possuiNovaPontuacao = '1';
+      }
     },
     salvar() {
       const self = this;
