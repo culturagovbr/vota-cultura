@@ -621,6 +621,11 @@ export default {
         this.formulario.organizacaoHabilitacao.ds_parecer = String();
       }
     },
+    possuiNovaPontuacao(valor) {
+      if (valor === '0') {
+        this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = String();
+      }
+    },
   },
   methods: {
     ...mapActions({
