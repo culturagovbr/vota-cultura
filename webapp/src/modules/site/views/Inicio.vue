@@ -125,14 +125,16 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    <div class="subheading text-xs-center">
-                      Habilitação
+                    <div class="title text-xs-center">
+                      Lista parcial de habilitação
                     </div>
-                    Consulte aqui a lista parcial dos conselhos habilitados
+                    <div style="margin-top: 49px" class="subheading text-xs-center">
+                      Consulte aqui
+                    </div>
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
-                      style="margin-top: 39px"
+                      style="margin-top: 10px"
                       color="green darken-4"
                       to="/inscricao/lista-parcial-habilitados"
                       dark
