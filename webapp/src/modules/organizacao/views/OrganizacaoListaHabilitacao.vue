@@ -50,6 +50,7 @@
                 <td>
                     <span v-if="!!props.item.organizacaoHabilitacao && !!props.item.organizacaoHabilitacao.situacao_avaliacao"
                     v-html="props.item.organizacaoHabilitacao.situacao_avaliacao"></span>
+                    <span v-else>Aguardando avaliação</span>
                 </td>
                 <td>
                   <v-tooltip bottom>
