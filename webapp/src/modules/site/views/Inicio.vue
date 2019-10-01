@@ -142,6 +142,50 @@
                   </div>
                 </v-card>
               </v-flex>
+
+              <v-flex
+                xs12
+                md4
+                v-if="isConselho"
+              >
+                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      list
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Conselho de cultura
+                    </div>
+                  </v-card-title>
+                  <v-card-text class="text-xs-center">
+                    Recurso de Habilitação <br /><br />
+
+                    Cadastre aqui o recurso referente à etapa<br /> de habilitação dos conselhos de cultura
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
+                      style="margin-top: 79px"
+                      color="green darken-4"
+                      to="/conselho/habilitacao-recurso"
+                      dark
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+
+
             </v-layout>
           </v-container>
         </v-flex>
@@ -308,16 +352,20 @@ import { mapGetters } from 'vuex';
 
 export default {
   data: () => ({
+      isConselho : false
   }),
   computed: {
     ...mapGetters({
       ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
       ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
       ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
+      usuario: 'conta/usuario',
     }),
   },
-  methods: {
-
-  },
+    mounted() {
+        if (this.usuario.co_conselho) {
+            this.isConselho = true;
+        }
+    }
 };
 </script>

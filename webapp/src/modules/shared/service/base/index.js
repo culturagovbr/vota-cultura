@@ -48,7 +48,7 @@ instance.interceptors.response.use(response => response, (error) => {
   return Promise.reject(error);
 });
 
-const buildData = (params) => {
+export const buildData = (params) => {
   // console.log(Object.keys(params));
   const bodyFormData = new FormData();
 
