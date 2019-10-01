@@ -11,4 +11,7 @@ export const mutations = {
   [types.LISTAR_CONSELHOS_HABILITACAO](state, conselhos) {
     state.conselhos = conselhos;
   },
+  [types.LISTAR_CONSELHOS_PARCIALMENTE_HABILITADOS](state, conselhos) {
+    state.conselhos = conselhos;
+  },
 };

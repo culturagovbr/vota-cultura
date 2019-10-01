@@ -3,6 +3,7 @@
 namespace App\Modules\Conselho\Http\Controllers;
 
 use App\Modules\Conselho\Http\Resources\Conselho;
+use App\Modules\Conselho\Http\Resources\ConselhoHabilitacaoListaFinal;
 use App\Modules\Conselho\Service\ConselhoHabilitacao;
 use App\Modules\Core\Exceptions\EMetodoIndisponivel;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
@@ -15,7 +16,7 @@ class ConselhoHabilitacaoApiResourceController extends AApiResourceController
 
     public function __construct(ConselhoHabilitacao $service)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except('listaParcial');
         return parent::__construct($service);
     }
 
@@ -40,7 +41,17 @@ class ConselhoHabilitacaoApiResourceController extends AApiResourceController
 
     public function show($identificador): JsonResponse
     {
-        throw new EMetodoIndisponivel("E-mail não definido.");
+        throw new EMetodoIndisponivel("Método indisponível.");
+    }
+
+    public function listaParcial(): JsonResponse
+    {
+        $conselhoService = app(\App\Modules\Conselho\Service\Conselho::class, request()->all());
+        return $this->sendResponse(
+            ConselhoHabilitacaoListaFinal::collection($conselhoService->obterTodosParcialmenteHabilitados()),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
 }

@@ -18,6 +18,7 @@ class ConselhoHabilitacao extends JsonResource
             'co_conselho_habilitacao' => $this->co_conselho_habilitacao,
             'co_conselho' => $this->co_conselho,
             'st_avaliacao' => $this->st_avaliacao,
+            'ds_avaliacao' => ($this->st_avaliacao) ? 'Habilitado' : 'Inabilitado',
             'ds_parecer' => $this->ds_parecer,
             'arquivosAvaliacao' => RepresentanteArquivoAvaliacao::collection($this->representanteArquivoAvaliacao),
         ];

@@ -168,6 +168,12 @@ export default {
           icon: 'list',
           name: 'inscricao-lista-parcial-route',
         },
+        {
+          title: 'Lista parcial dos habilitados',
+          group: 'apps',
+          icon: 'list',
+          name: 'inscricao-lista-parcial-habilitacao-route',
+        },
       ],
     };
   },

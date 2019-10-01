@@ -121,4 +121,9 @@ class Conselho extends AbstractService
 
         return $conselho;
     }
+
+    public function obterTodosParcialmenteHabilitados()
+    {
+        return $this->getModel()->has('conselhoHabilitacao')->get();
+    }
 }
