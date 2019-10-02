@@ -10,6 +10,7 @@ class OrganizacaoHabilitacao extends Model
     const SITUACAO_AVALIACAO_INABILITADA = '0';
     const SITUACAO_AVALIACAO_HABILITADA_DESCLASSIFICADA = '1';
     const SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA = '2';
+    const SITUACAO_AVALIACAO_HABILITADA = '4';
 
     protected $table = 'tb_organizacao_habilitacao';
     protected $primaryKey = 'co_organizacao_habilitacao';

@@ -360,12 +360,12 @@
                                 box
                                 label="* Resultado da avaliação"
                                 required
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
                               />
                             </v-flex>
                           </v-layout>
 
-                          <v-layout v-if="!!formulario.organizacaoHabilitacao.st_avaliacao && formulario.organizacaoHabilitacao.st_avaliacao !== '2'">
+                          <v-layout>
                             <v-flex class="pa-3">
                               <v-textarea
                                 v-model="formulario.organizacaoHabilitacao.ds_parecer"
@@ -376,7 +376,7 @@
                                 row-height="28"
                                 :counter="5000"
                                 :rules="[rules.required, rules.tamanhoMaximo5000Caracteres]"
-                                :disabled="formulario.organizacaoHabilitacao.st_avaliacao === '2' || !!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
                               />
                             </v-flex>
                           </v-layout>
@@ -392,7 +392,7 @@
                                 label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
                                 required
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
                               >
                                 <v-radio
                                   value="1"
@@ -426,7 +426,7 @@
                                 mask="##"
                                 onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
                                 label="Informe a nova pontuação da organização/entidade cultural:"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
                               />
                             </v-flex>
                           </v-layout>
@@ -454,6 +454,18 @@
                         </v-icon>
                         Avaliar
                       </v-btn>
+                      <!--<v-btn-->
+                        <!--v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'"-->
+                        <!--:loading="loading"-->
+                        <!--:disabled="!valid || loading"-->
+                        <!--color="primary"-->
+                        <!--@click.native="abrirDialogo"-->
+                      <!--&gt;-->
+                        <!--<v-icon left>-->
+                          <!--send-->
+                        <!--</v-icon>-->
+                        <!--Revisar-->
+                      <!--</v-btn>-->
                     </v-card-actions>
                   </v-tab-item>
                   <v-tab-item value="tab-2">
@@ -535,20 +547,7 @@ export default {
   },
   data() {
     return {
-      resultadoItens: [
-        {
-          descricao: 'Habilitada e classificada',
-          valor: '2',
-        },
-        {
-          descricao: 'Habilitada e desclassificada',
-          valor: '1',
-        },
-        {
-          descricao: 'Inabilitada',
-          valor: '0',
-        },
-      ],
+      resultadoItens: [],
       arquivosAvaliacaoInicial: {
         documento_identificacao_representante: {},
         comprovante_cnpj: {},
@@ -591,6 +590,7 @@ export default {
     ...mapGetters({
       perfis: 'conta/perfis',
       perfisInscricao: 'conta/perfisInscricao',
+      perfil: 'conta/perfil',
     }),
   },
   watch: {
@@ -626,11 +626,6 @@ export default {
         this.obterDadosOrganizacao(valor.co_organizacao);
       }
     },
-    'formulario.organizacaoHabilitacao.st_avaliacao': function (valor) {
-      if (valor === '2') {
-        this.formulario.organizacaoHabilitacao.ds_parecer = String();
-      }
-    },
     possuiNovaPontuacao(valor) {
       if (valor === '0') {
         this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = String();
@@ -654,6 +649,29 @@ export default {
         });
       });
       this.possuiNovaPontuacao = null;
+
+      if (!!this.formulario.organizacaoHabilitacao
+        && !!this.formulario.organizacaoHabilitacao.co_organizacao_habilitacao
+        && this.perfil.no_perfil === 'administrador') {
+        this.resultadoItens.push({
+          descricao: 'Habilitada e classificada',
+          valor: '2',
+        });
+        this.resultadoItens.push({
+          descricao: 'Habilitada e desclassificada',
+          valor: '1',
+        });
+      }
+
+      this.resultadoItens.push({
+        descricao: 'Habilitada',
+        valor: '3',
+      });
+
+      this.resultadoItens.push({
+        descricao: 'Inabilitada',
+        valor: '0',
+      });
     },
     atribuirValoresConformidade(organizacaoHabilitacao) {
       organizacaoHabilitacao.arquivosAvaliacao.forEach((item) => {

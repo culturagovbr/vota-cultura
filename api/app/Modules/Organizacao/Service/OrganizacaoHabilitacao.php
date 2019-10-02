@@ -47,34 +47,6 @@ class OrganizacaoHabilitacao extends AbstractService
             }
 
             $novoOrganizacaoHabilitacao = parent::cadastrar($dadosInclusao);
-            $arquivosHabilitacacao = [];
-            if (!empty($dados['arquivosAvaliacao'])) {
-                $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
-                foreach (array_values($dados['arquivosAvaliacao']) as $indice => $arquivoAvaliacao) {
-                    if(empty($arquivoAvaliacao['co_representante_arquivo'])) {
-                        continue;
-                    }
-                    $colecao = collect($arquivoAvaliacao);
-                    $colecao['co_organizacao_habilitacao'] = $novoOrganizacaoHabilitacao->co_organizacao_habilitacao;
-                    $colecao['co_usuario_avaliador'] = $dadosUsuarioLogado['co_usuario'];
-                    $colecao['dh_avaliacao'] = $carbon->toDateTimeString();
-                    $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_NAO_CONFORME;
-                    if ((int)$dadosInclusao['st_avaliacao'] === (int)OrganizacaoHabilitacaoModel::SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA) {
-                        $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_CONFORME;
-                    }
-                    $arquivosHabilitacacao[$indice] = $colecao->only(
-                        [
-                            'co_representante_arquivo',
-                            'st_em_conformidade',
-                            'co_usuario_avaliador',
-                            'dh_avaliacao',
-                            'co_organizacao_habilitacao',
-                        ]
-                    )->toArray();
-                }
-
-                $novoOrganizacaoHabilitacao->representanteArquivoAvaliacao()->insert($arquivosHabilitacacao);
-            }
 
             DB::commit();
             return $novoOrganizacaoHabilitacao;
@@ -82,5 +54,37 @@ class OrganizacaoHabilitacao extends AbstractService
             DB::rollBack();
             throw $queryException;
         }
+    }
+
+    public function revisarAvaliacao()
+    {
+//            $arquivosHabilitacacao = [];
+//            if (!empty($dados['arquivosAvaliacao']) && Auth::user()->souAdministrador() ) {
+//                $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
+//                foreach (array_values($dados['arquivosAvaliacao']) as $indice => $arquivoAvaliacao) {
+//                    if(empty($arquivoAvaliacao['co_representante_arquivo'])) {
+//                        continue;
+//                    }
+//                    $colecao = collect($arquivoAvaliacao);
+//                    $colecao['co_organizacao_habilitacao'] = $novoOrganizacaoHabilitacao->co_organizacao_habilitacao;
+//                    $colecao['co_usuario_avaliador'] = $dadosUsuarioLogado['co_usuario'];
+//                    $colecao['dh_avaliacao'] = $carbon->toDateTimeString();
+//                    $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_NAO_CONFORME;
+//                    if ((int)$dadosInclusao['st_avaliacao'] === (int)OrganizacaoHabilitacaoModel::SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA) {
+//                        $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_CONFORME;
+//                    }
+//                    $arquivosHabilitacacao[$indice] = $colecao->only(
+//                        [
+//                            'co_representante_arquivo',
+//                            'st_em_conformidade',
+//                            'co_usuario_avaliador',
+//                            'dh_avaliacao',
+//                            'co_organizacao_habilitacao',
+//                        ]
+//                    )->toArray();
+//                }
+//
+//                $novoOrganizacaoHabilitacao->representanteArquivoAvaliacao()->insert($arquivosHabilitacacao);
+//            }
     }
 }
