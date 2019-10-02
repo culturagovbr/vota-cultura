@@ -25,6 +25,7 @@ class ConselhoHabilitacaoRecurso extends AbstractService
      * @param $requestParams
      * @return \Illuminate\Database\Eloquent\Model|null
      * @throws EParametrosInvalidos
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function cadastrarHabilitacaoRecurso($requestParams)
     {

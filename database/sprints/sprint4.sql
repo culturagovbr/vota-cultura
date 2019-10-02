@@ -45,3 +45,7 @@ COMMENT ON COLUMN public.tb_conselho_habilitacao_recurso.dh_cadastro_recurso IS 
 
 ALTER TABLE public.tb_conselho_habilitacao_recurso OWNER TO votacultura;
 GRANT ALL ON TABLE public.tb_conselho_habilitacao_recurso TO votacultura;
+
+--#### Removendo os campos referentes ao anexo do recurso da habilitação.
+ALTER TABLE public.tb_conselho_habilitacao_recurso DROP COLUMN co_arquivo;
+
