@@ -103,7 +103,8 @@ class Organizacao extends AbstractService
         $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
 
         if ($organizacao->co_organizacao !== $usuarioAutenticado['co_organizacao'] &&
-            $usuarioAutenticado['perfil']->no_perfil !== 'administrador') {
+            $usuarioAutenticado['perfil']->no_perfil !== 'administrador' &&
+            $usuarioAutenticado['perfil']->no_perfil !== 'avaliador') {
             throw new EParametrosInvalidos('A organização precisa ser o mesmo que o usuário logado.');
         }
 

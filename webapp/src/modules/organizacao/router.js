@@ -47,6 +47,17 @@ export default [
         component: () => import(/* webpackChunkName: "organizacao-detalhes-inscricao" */ '@/modules/organizacao/views/OrganizacaoDetalhesInscricao.vue'),
       },
       {
+        path: '/organizacao/lista-habilitacao',
+        name: 'OrganizacaoListaHabilitacaoRoute',
+        meta: {
+          title: 'Habilitação de organizações',
+          group: 'apps',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/organizacao/views/OrganizacaoListaHabilitacao.vue'),
+      },
+      {
         path: '/organizacao/documentacao-comprobatoria',
         name: 'OrganizacaoDocumentacaoComprobatoriaRoute',
         meta: {

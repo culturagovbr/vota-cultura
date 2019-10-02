@@ -34,6 +34,17 @@ export default [
         component: () => import(/* webpackChunkName: "site-inscricao-lista-parcial" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
       },
       {
+        path: 'inscricao/lista-parcial-habilitados',
+        name: 'inscricao-lista-parcial-habilitacao-route',
+        meta: {
+          title: 'Lista parcial dos habilitados',
+          group: 'apps',
+          icon: 'dashboard',
+          public: true,
+        },
+        component: () => import(/* webpackChunkName: "site-inscricao-lista-parcial-habilitacao" */ '@/modules/site/views/inscricao/ListaParcialHabilitacao.vue'),
+      },
+      {
         path: 'inscricao/administrador/lista-parcial',
         name: 'administrador-lista-inscritos-route',
         meta: {

@@ -37,13 +37,12 @@ class Upload extends AbstractService
         }
     }
 
-    public function uploadArquivoCodificado(\Illuminate\Http\UploadedFile $binario, $diretorioArmazenamento = '')
+    public function uploadArquivoCodificado(\Illuminate\Http\UploadedFile $binario, $localizacaoArquivo = '')
     {
         try {
             DB::beginTransaction();
             $model = $this->getModel();
             $nomeArquivo = uniqid() . '.' . $model->no_extensao;
-            $localizacaoArquivo = "{$diretorioArmazenamento}";
             Storage::putFileAs($localizacaoArquivo, $binario, $nomeArquivo);
             $model->ds_localizacao = "{$localizacaoArquivo}/{$nomeArquivo}";
             $model->save();
@@ -64,22 +63,22 @@ class Upload extends AbstractService
         return Storage::download($arquivo->ds_localizacao, $arquivo->no_arquivo);
     }
 
-    private function _obterArquivo($identificador) : \App\Modules\Upload\Model\Arquivo
+    private function _obterArquivo($identificador) : ?ArquivoModel
     {
         $usuario = Auth::user();
-        if ($usuario->souAdministrador()) {
+        if ($usuario->possoFazerDownload()) {
             return $this->_obterArquivoAdministrador($identificador);
         }
         return $this->_obterArquivoRepresentante($identificador);
     }
 
-    private function _obterArquivoAdministrador($identificador) : \App\Modules\Upload\Model\Arquivo
+    private function _obterArquivoAdministrador($identificador) : ?ArquivoModel
     {
         $arquivoModel = app(ArquivoModel::class);
         return $arquivoModel->find($identificador);
     }
 
-    private function _obterArquivoRepresentante($identificador) : \App\Modules\Upload\Model\Arquivo
+    private function _obterArquivoRepresentante($identificador) : ?ArquivoModel
     {
         $usuario = Auth::user();
         $representanteModel = app(RepresentanteModel::class);

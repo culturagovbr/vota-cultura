@@ -5,13 +5,10 @@ namespace App\Modules\Conta\Model;
 use App\Modules\Conselho\Model\Conselho;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Helper\CPF;
-use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Eleitor\Model\Eleitor;
 use App\Modules\Organizacao\Model\Organizacao;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Usuario extends AAutenticacao
 {
@@ -110,6 +107,21 @@ class Usuario extends AAutenticacao
             return [];
         }
         return (array)$payload->get('user');
+    }
+
+    public function possoFazerDownload(): bool
+    {
+        $dadosUsuarioAutenticado = auth()->user()->dadosUsuarioAutenticado();
+        if(empty($dadosUsuarioAutenticado)) {
+            return false;
+        }
+
+        if ($dadosUsuarioAutenticado['perfil']->co_perfil !== Perfil::CODIGO_ADMINISTRADOR
+            && $dadosUsuarioAutenticado['perfil']->co_perfil !== Perfil::CODIGO_AVALIADOR) {
+            return false;
+        }
+
+        return true;
     }
 
     public function souAdministrador(): bool

@@ -11,9 +11,11 @@ export const enviarDadosConselho = async ({ commit }, conselho) => {
   return conselhoService.enviarDadosConselho(conselho);
 };
 
+export const enviarDadosRecursoConselhoHabilitacao = async ({ commit }, dadosRecurso) => conselhoService.enviarDadosRecursoConselhoHabilitacao(dadosRecurso);
+
 export const obterDadosConselho = async ({ commit, dispatch }, coConselho) => {
   commit(types.OBTER_DADOS_CONSELHO, coConselho);
-  conselhoService.obterDadosConselho(coConselho)
+  return conselhoService.obterDadosConselho(coConselho)
     .then((response) => {
       const { data } = response.data;
       if (!data) {
@@ -33,6 +35,24 @@ export const obterDadosConselho = async ({ commit, dispatch }, coConselho) => {
     });
 };
 
+export const obterDadosRecurso = async ({ commit, dispatch }, coConselho) => conselhoService.obterDadosRecurso(coConselho)
+  .then((response) => {
+    const { data } = response.data;
+    if (!data) {
+      const error = 'Não foi possível obter os dados do recurso.';
+      throw error;
+    }
+    return data;
+  })
+  .catch((error) => {
+    dispatch(
+      'app/setMensagemErro',
+      error.response.data.error,
+      { root: true },
+    );
+    throw new TypeError(error, 'obterDadosRecurso', 10);
+  });
+
 export const obterConselhos = async ({ commit }) => {
   conselhoService.obterConselhos().then((response) => {
     const { data } = response.data;
@@ -47,9 +67,7 @@ export const obterConselhosHabilitacao = async ({ commit }) => {
   });
 };
 
-export const avaliarHabilitacao = async ({ dispatch }, conselhoHabilitacao) => conselhoService.avaliarHabilitacao(conselhoHabilitacao).then((response) => {
-  return response;
-}).catch((error) => {
+export const avaliarHabilitacao = async ({ dispatch }, conselhoHabilitacao) => conselhoService.avaliarHabilitacao(conselhoHabilitacao).then(response => response).catch((error) => {
   dispatch(
     'app/setMensagemErro',
     error.response.data.message,
@@ -63,4 +81,10 @@ export const modalVisualizacaoConselhoAdministrador = async ({ commit }, dado) =
   if (!dado) {
     commit(types.DEFINIR_CONSELHO, {});
   }
+};
+export const obterConselhosParcialmenteHabilitados = async ({ commit }) => {
+  conselhoService.obterConselhosParcialmenteHabilitados().then((response) => {
+    const { data } = response.data;
+    commit(types.LISTAR_CONSELHOS_PARCIALMENTE_HABILITADOS, data);
+  });
 };

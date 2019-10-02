@@ -11,6 +11,7 @@ class Organizacao extends JsonResource
 {
     public function toArray($request): array
     {
+
         return [
             'co_organizacao' => $this->co_organizacao,
             'nu_cnpj' => $this->nu_cnpj,
@@ -29,6 +30,7 @@ class Organizacao extends JsonResource
             'usuario' => (new Usuario($this->usuario)),
             'endereco' => (new Endereco($this->endereco)),
             'representante' => (new Representante($this->representante)),
+            'organizacaoHabilitacao' => (new OrganizacaoHabilitacao($this->organizacaoHabilitacao)),
         ];
     }
 
