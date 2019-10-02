@@ -360,7 +360,7 @@
                                 box
                                 label="* Resultado da avaliação"
                                 required
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
@@ -376,7 +376,7 @@
                                 row-height="28"
                                 :counter="5000"
                                 :rules="[rules.required, rules.tamanhoMaximo5000Caracteres]"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
@@ -392,7 +392,7 @@
                                 label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
                                 required
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               >
                                 <v-radio
                                   value="1"
@@ -426,7 +426,7 @@
                                 mask="##"
                                 onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
                                 label="Informe a nova pontuação da organização/entidade cultural:"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
