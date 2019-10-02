@@ -238,12 +238,12 @@ export default {
           name: 'ConselhoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Conselho');
-        this.definirItemMenu({
-          title: 'Recurso da habilitação',
-          group: 'apps',
-          name: 'ConselhoHabilitacaoRecursoRoute',
-          icon: 'gavel',
-        }, 'Conselho');
+        // this.definirItemMenu({
+        //   title: 'Recurso da habilitação',
+        //   group: 'apps',
+        //   name: 'ConselhoHabilitacaoRecursoRoute',
+        //   icon: 'gavel',
+        // }, 'Conselho');
       }
     },
     carregarMenusOrganizacao() {
