@@ -24,6 +24,9 @@ class OrganizacaoHabilitacao extends JsonResource
             case \App\Modules\Organizacao\Model\OrganizacaoHabilitacao::SITUACAO_AVALIACAO_HABILITADA_DESCLASSIFICADA:
                 $situacaoAvaliacao = 'Habilitada e desclassificada';
                 break;
+            case \App\Modules\Organizacao\Model\OrganizacaoHabilitacao::SITUACAO_AVALIACAO_HABILITADA:
+                $situacaoAvaliacao = 'Habilitada';
+                break;
             default:
                 $situacaoAvaliacao = '';
                 break;
