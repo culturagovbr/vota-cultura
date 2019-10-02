@@ -3,9 +3,7 @@
 namespace App\Modules\Upload\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Upload\Http\Resources\Upload;
 use App\Modules\Upload\Service\Upload as UploadService;
-
 
 class UploadController extends Controller
 {

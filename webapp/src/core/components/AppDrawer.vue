@@ -215,6 +215,7 @@ export default {
       this.carregarMenusConselho();
       this.carregarMenusOrganizacao();
       this.carregarMenusEleitor();
+      this.carregarMenuHabilitacao();
       this.carregarMenuAdministrador();
 
       return true;
@@ -230,12 +231,18 @@ export default {
       }
     },
     carregarMenusConselho() {
-      if (this.perfil.no_perfil === 'conselho') {
+      if (this.perfil.no_perfil === 'conselho' || this.perfil.no_perfil === 'administrador') {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
           group: 'apps',
           name: 'ConselhoDetalhesInscricaoRoute',
           icon: 'group',
+        }, 'Conselho');
+        this.definirItemMenu({
+          title: 'Recurso da habilitação',
+          group: 'apps',
+          name: 'ConselhoHabilitacaoRecursoRoute',
+          icon: 'gavel',
         }, 'Conselho');
       }
     },
@@ -271,18 +278,22 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
-        this.definirItemMenu({
-          title: 'Habilitação de conselhos',
-          group: 'apps',
-          name: 'ConselhoListaHabilitacaoRoute',
-          icon: 'list',
-        }, 'Administração');
+      }
+    },
+    carregarMenuHabilitacao() {
+      if (this.perfil.no_perfil === 'administrador' || this.perfil.no_perfil === 'avaliador') {
         this.definirItemMenu({
           title: 'Habilitação de organização',
           group: 'apps',
           name: 'OrganizacaoListaHabilitacaoRoute',
           icon: 'list',
-        }, 'Administração');
+        }, 'Habilitação');
+        this.definirItemMenu({
+          title: 'Habilitação de conselhos',
+          group: 'apps',
+          name: 'ConselhoListaHabilitacaoRoute',
+          icon: 'list',
+        }, 'Habilitação');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {

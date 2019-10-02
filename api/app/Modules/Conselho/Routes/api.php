@@ -12,4 +12,6 @@ Route::group([
         Route::apiResource('/', 'ConselhoHabilitacaoApiResourceController');
         Route::get('/lista-parcial', 'ConselhoHabilitacaoApiResourceController@listaParcial');
     });
+    Route::get('lista_habilitacao', 'ConselhoListaHabilitacaoController@index');
+    Route::post('habilitacao-recurso', 'ConselhoHabilitacaoRecursoController@store');
 });
