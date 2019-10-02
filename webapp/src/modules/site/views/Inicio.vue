@@ -25,7 +25,7 @@
             >
               <v-flex
                 xs12
-                md6
+                md4
               >
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
@@ -104,7 +104,6 @@
                   </div>
                 </v-card>
               </v-flex>
-
 
               <v-flex
                 xs12
