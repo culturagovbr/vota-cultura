@@ -76,6 +76,12 @@ export const avaliarHabilitacao = async ({ dispatch }, conselhoHabilitacao) => c
   throw new TypeError(error);
 });
 
+export const modalVisualizacaoConselhoAdministrador = async ({ commit }, dado) => {
+  commit(types.MOSTRAR_MODAL_VISUALIZACAO, dado);
+  if (!dado) {
+    commit(types.DEFINIR_CONSELHO, {});
+  }
+};
 export const obterConselhosParcialmenteHabilitados = async ({ commit }) => {
   conselhoService.obterConselhosParcialmenteHabilitados().then((response) => {
     const { data } = response.data;

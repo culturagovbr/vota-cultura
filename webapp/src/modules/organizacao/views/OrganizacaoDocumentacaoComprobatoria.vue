@@ -428,9 +428,12 @@ export default {
     },
   },
   mounted() {
-    // this.definirMensagemErro('O prazo de recurso expirou!');
-    // this.$router.push('/');
-
+    // if (!this.usuarioGetter) {
+    //   this.notificarErro('É necessário autenticação');
+    //   this.$router.push('/conta/autenticar');
+    // }
+    this.$router.push('/');
+    this.notificarErro('Prazo para envio da documentação expirou.');
     if (this.usuarioGetter.co_organizacao === null) {
       this.notificarErro('Acesso restrito para organização e entidades culturais.');
       this.$router.push('/');

@@ -25,7 +25,7 @@
             >
               <v-flex
                 xs12
-                md4
+                md6
               >
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
