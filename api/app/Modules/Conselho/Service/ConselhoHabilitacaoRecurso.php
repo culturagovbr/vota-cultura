@@ -40,11 +40,6 @@ class ConselhoHabilitacaoRecurso extends AbstractService
             $dadosHabilitacaoRecurso = [];
             $dadosHabilitacaoRecurso['co_conselho'] = $coConselho;
             $dadosHabilitacaoRecurso['ds_recurso'] = $dsRecurso;
-
-            if(!empty($requestParams['anexo'])) {
-                $dadosHabilitacaoRecurso['co_arquivo'] =
-                    $this->cadastrarAnexoHabilitacaoRecurso($requestParams['anexo'], $usuarioAutenticado);
-            }
             $habilitacaoRecursoModel = $this->getModel();
             $habilitacaoRecursoModel->fill($dadosHabilitacaoRecurso);
 
@@ -59,53 +54,6 @@ class ConselhoHabilitacaoRecurso extends AbstractService
             DB::rollBack();
             throw $exception;
         }
-    }
-
-    /**
-     * @param UploadedFile $uploadedFile
-     * @param $usuarioAutenticado
-     * @return mixed
-     * @throws \Exception
-     */
-    private function cadastrarAnexoHabilitacaoRecurso(UploadedFile $uploadedFile, $usuarioAutenticado)
-    {
-        $modeloUpload = [
-            'no_arquivo'  => $uploadedFile->getClientOriginalName(),
-            'no_extensao'  => $uploadedFile->getClientOriginalExtension(),
-            'no_mime_type'  => $uploadedFile->getClientMimeType(),
-        ];
-
-        $modeloArquivo = app(Arquivo::class);
-        $modeloArquivo->fill($modeloUpload);
-        $serviceUpload = new Upload($modeloArquivo);
-
-        $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-            $uploadedFile,
-            'conselho/recurso-habilitacao'
-        );
-
-        $this->salvarRelacionamentoArquivoRepresentante($arquivoArmazenado, $usuarioAutenticado);
-        return $arquivoArmazenado->co_arquivo;
-    }
-
-    /**
-     * @param $arquivoArmazenado
-     * @param $usuarioAutenticado
-     */
-    private function salvarRelacionamentoArquivoRepresentante($arquivoArmazenado, $usuarioAutenticado)
-    {
-        $representanteModel = app(RepresentanteModel::class);
-        /** @var RepresentanteModel $representante */
-        $representante = $representanteModel->where([
-            'nu_cpf' => $usuarioAutenticado['nu_cpf']
-        ])->first();
-        $representante->arquivos()->attach(
-            $arquivoArmazenado->co_arquivo,
-            [
-                'tp_arquivo' => 'recurso_habilitacao_conselho',
-                'tp_inscricao' => RepresentanteModel::TIPO_INSCRICAO_CONSELHO
-            ]
-        );
     }
 
     /**
