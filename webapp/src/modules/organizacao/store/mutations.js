@@ -20,4 +20,7 @@ export const mutations = {
   [types.LISTAR_ORGANIZACOES_HABILITACAO](state, organizacoes) {
     state.organizacoes = organizacoes;
   },
+  [types.MOSTRAR_MODAL_VISUALIZACAO](state, dados) {
+    state.modalVisualizacaoOrganizacaoAdministrador = dados;
+  },
 };

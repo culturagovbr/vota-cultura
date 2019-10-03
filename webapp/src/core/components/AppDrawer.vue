@@ -168,6 +168,12 @@ export default {
           icon: 'list',
           name: 'inscricao-lista-parcial-route',
         },
+        {
+          title: 'Lista parcial dos habilitados',
+          group: 'apps',
+          icon: 'list',
+          name: 'inscricao-lista-parcial-habilitacao-route',
+        },
       ],
     };
   },
@@ -232,12 +238,12 @@ export default {
           name: 'ConselhoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Conselho');
-        this.definirItemMenu({
-          title: 'Recurso da habilitação',
-          group: 'apps',
-          name: 'ConselhoHabilitacaoRecursoRoute',
-          icon: 'gavel',
-        }, 'Conselho');
+        // this.definirItemMenu({
+        //   title: 'Recurso da habilitação',
+        //   group: 'apps',
+        //   name: 'ConselhoHabilitacaoRecursoRoute',
+        //   icon: 'gavel',
+        // }, 'Conselho');
       }
     },
     carregarMenusOrganizacao() {

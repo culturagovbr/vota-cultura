@@ -6,4 +6,5 @@ export const state = {
   segmentos: [],
   criterios: [],
   documentacaoComprobatoria: [],
+  modalVisualizacaoOrganizacaoAdministrador: false,
 };

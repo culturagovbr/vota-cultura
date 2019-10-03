@@ -45,11 +45,14 @@
             </v-chip>
           </td>
           <td class="text-md-center">
-            <v-chip>
-              {{ (props.item.organizacaoHabilitacao) ? props.item.organizacaoHabilitacao.nu_nova_pontuacao : props.item.pontuacao }}
+            <v-chip v-if="!!props.item.organizacaoHabilitacao">
+              {{ (!!props.item.organizacaoHabilitacao.nu_nova_pontuacao) ? props.item.organizacaoHabilitacao.nu_nova_pontuacao : props.item.pontuacao }}
             </v-chip>
+            <span v-else>
+              -
+            </span>
           </td>
-          <td>
+          <td class="text-md-center">
             <span
               v-if="!!props.item.organizacaoHabilitacao && !!props.item.organizacaoHabilitacao.situacao_avaliacao"
               v-html="props.item.organizacaoHabilitacao.situacao_avaliacao"
@@ -143,6 +146,7 @@ export default {
       {
         text: 'Resultado da análise',
         value: 'organizacaoHabilitacao.situacao_avaliacao',
+        align: 'center',
       },
     ],
   }),
