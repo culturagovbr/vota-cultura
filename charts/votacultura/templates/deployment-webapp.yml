@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "votacultura.webapp.fullname" . }}
+  labels:
+    app: {{ template "votacultura.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.webapp.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "votacultura.webapp.fullname" . }}
+      version: {{ .Chart.Version }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "votacultura.webapp.fullname" . }}
+        version: {{ .Chart.Version }}
+    spec:
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+      - name: {{ template "votacultura.webapp.fullname" . }}
+        image: "{{ .Values.webapp.image.repository }}:{{ .Values.webapp.image.tag }}"
+        imagePullPolicy: Always
+        #securityContext:
+        #  runAsUser: 33
+        #  runAsGroup: 33
+        envFrom:
+        - configMapRef:
+            name: votacultura-envs
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
+        ports:
+        - name: webapphttp
+          containerPort: 80

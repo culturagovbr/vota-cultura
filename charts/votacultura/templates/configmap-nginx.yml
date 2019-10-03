@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: votacultura-nginx
+data:
+  default.conf: |-
+    server {
+        listen 80 default;
+
+        access_log /var/log/nginx/application.access.log;
+
+
+        root /var/www/html/public;
+        index index.php;
+
+        client_header_buffer_size 64k;
+        client_body_in_file_only   on;
+        client_body_temp_path      /tmp/;
+        client_body_buffer_size    1M;
+
+        client_max_body_size 0;
+        proxy_http_version 1.1;
+        proxy_request_buffering off;
+
+        sendfile on;
+        send_timeout 300s;
+        
+        if (!-e $request_filename) {
+            rewrite ^.*$ /index.php last;
+        }
+
+        location ~ \.php$ {
+            fastcgi_pass localhost:9000;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PHP_VALUE "error_log=/var/log/nginx/application_php_errors.log";
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
+            include fastcgi_params;
+        }
+    }

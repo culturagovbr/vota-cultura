@@ -3,7 +3,8 @@ import { obterInformacoesJWT } from '../helpers/jwt';
 import { eventHub } from '@/event';
 
 const instance = axios.create({
-  baseURL: process.env.VUE_APP_API_HOST,
+  //baseURL: process.env.VUE_APP_API_HOST,
+  baseURL: '/api',
 });
 
 const tratarErro = (error) => {

@@ -1,0 +1,94 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "votacultura.webserver.fullname" . }}
+  labels:
+    app: {{ template "votacultura.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.webserver.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "votacultura.webserver.fullname" . }}
+      version: {{ .Chart.Version }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "votacultura.webserver.fullname" . }}
+        version: {{ .Chart.Version }}
+    spec:
+      volumes:
+        - name: nginx-proxy-config
+          configMap:
+            name: votacultura-nginx
+            items:
+            - key: default.conf
+              path: default.conf
+        - name: php-overrides-config
+          configMap:
+            name: votacultura-php
+            items:
+            - key: php-ini-overrides.ini
+              path: php-ini-overrides.ini
+      initContainers:
+        {{- if .Values.postgresql.install }}
+        - name: wait-for-pgsql
+          image: postgres:11-alpine
+          args:
+          - /bin/bash
+          - -c
+          - >
+            set -x;
+            while ! pg_isready -h {{ .Values.webserver.database.host }} -p {{ .Values.webserver.database.port }} -U {{ .Values.webserver.database.username }} -d {{ .Values.webserver.database.db }} > /dev/null 2> /dev/null; do 
+              echo '.'
+              sleep 2;
+            done
+        {{- end }}
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+      - name: {{ template "votacultura.webserver.fullname" . }}-nginx
+        image: nginx:stable
+        #securityContext:
+        #  runAsUser: 33
+        #  runAsGroup: 33
+        ports:
+        - name: http
+          containerPort: {{ .Values.webserver.service.servicePort }}
+        volumeMounts:
+        - name: nginx-proxy-config
+          mountPath: /etc/nginx/conf.d
+      - name: {{ template "votacultura.webserver.fullname" . }}
+        image: "{{ .Values.webserver.image.repository }}:{{ .Values.webserver.image.tag }}"
+        volumeMounts:
+          - name: php-overrides-config
+            mountPath: /usr/local/etc/php/conf.d/
+        #securityContext:
+        #  runAsUser: 33
+        #  runAsGroup: 33
+        imagePullPolicy: Always
+        command: ["/bin/sh","-c","{{ if .Values.webserver.database.artisan }}php artisan migrate:refresh --seed && {{ end }}docker-php-entrypoint php-fpm"]
+        envFrom:
+        - configMapRef:
+            name: votacultura-envs
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              {{- if .Values.postgresql.install }}
+              name: {{ .Values.postgresql.fullnameOverride }}
+              {{- else }}
+              name: {{ .Values.webserver.database.host }}
+              {{- end }}
+              key: postgresql-password
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "1024Mi"
+            cpu: "2"

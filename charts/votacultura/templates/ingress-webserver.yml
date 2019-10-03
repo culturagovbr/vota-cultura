@@ -1,0 +1,23 @@
+{{- if .Values.webserver.ingress.enabled -}}
+{{- $releaseName := .Release.Name -}}
+{{- $serviceName := include "votacultura.webserver.fullname" . }}
+{{- $servicePort := .Values.webserver.service.servicePort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "votacultura.webserver.fullname" . }}
+  labels:
+    app: {{ template "votacultura.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  rules:
+  - host: {{ .Values.webserver.ingress.url }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $serviceName }}
+          servicePort: {{ $servicePort }}
+{{- end -}}

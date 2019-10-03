@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: votacultura-php
+data:
+  php-ini-overrides.ini: |-
+    max_execution_time=3600;
+    max_input_time = 9999;
+    post_max_size=360M;
+    upload_max_filesize=360M;
+    memory_limit = 124M;
+    extension=calendar.so;
+    extension=gd.so;
+    extension=soap.so;
+    extension=pdo_pgsql.so;
+    extension=pgsql.so;
+
+
+
+
+
