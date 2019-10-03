@@ -231,7 +231,7 @@ export default {
       }
     },
     carregarMenusConselho() {
-      if (this.perfil.no_perfil === 'conselho' || this.perfil.no_perfil === 'administrador') {
+      if (this.perfil.no_perfil === 'conselho') {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
           group: 'apps',
