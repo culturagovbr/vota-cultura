@@ -46,7 +46,7 @@
           </td>
           <td class="text-md-center">
             <v-chip v-if="!!props.item.organizacaoHabilitacao">
-              {{ (!!props.item.organizacaoHabilitacao.nu_nova_pontuacao) ? props.item.organizacaoHabilitacao.nu_nova_pontuacao : props.item.pontuacao }}
+              {{ (parseInt(props.item.organizacaoHabilitacao.nu_nova_pontuacao) >= 0) ? props.item.organizacaoHabilitacao.nu_nova_pontuacao : props.item.pontuacao }}
             </v-chip>
             <span v-else>
               -
