@@ -41,7 +41,7 @@
               </div>
 
               <div class="md6">
-                <span class="font-weight-bold">Nome do órgão Gestor:</span> {{ conselho.no_orgao_gestor }}
+                <span class="font-weight-bold">Nome do órgão gestor do conselho:</span> {{ conselho.no_orgao_gestor }}
               </div>
             </v-flex>
           </v-layout>
@@ -90,100 +90,25 @@
                 />
               </v-flex>
             </v-layout>
+          </v-card>
 
-            <v-card v-if="Object.keys(habilitacaoRecurso.anexo).length > 0 && habilitacaoRecurso.isLocked">
-              <v-toolbar
-                dark
-                color="primary"
-              >
-                <v-toolbar-title>Documentação enviada</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                <v-container
-                  grid-list-md
-                  text-xs-center
-                >
-                  <v-layout
-                    row
-                    wrap
-                  >
-                    <v-flex
-                      xs12
-                      text-xs-center
-                    >
-                      <v-card
-                        color="blue-grey lighten-5"
-                      >
-                        <v-card-title primary-title>
-                          {{ habilitacaoRecurso.anexo.no_arquivo }}
-                          <v-flex sm1>
-                            <v-icon
-                              right
-                              size="32px"
-                              color="blue darken-4"
-                              @click="downloadArquivo(habilitacaoRecurso.anexo.co_arquivo, true)"
-                            >
-                              cloud_download
-                            </v-icon>
-                          </v-flex>
-                        </v-card-title>
-                        <v-card-actions />
-                      </v-card>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card-text>
-            </v-card>
-
+          <v-card
+            class="ma-3"
+          >
             <v-layout
-              v-if="!habilitacaoRecurso.isLocked"
               wrap
               align-center
-              class="grey--text subheading text-lg-center"
             >
               <v-flex
-                v-if="!habilitacaoRecurso.isLocked"
                 xs12
                 sm12
-                class="ma-2"
               >
-                <div class="lg-12">
-                  Caso seja necessário, anexe documento no formato PDF (preferencialmente), JPEG. Para enviar mais de um arquivo utilize ZIP ou RAR.
-                </div>
-                <div class="lg-12 font-weight-bold align-items-center">
-                  Atenção!
-                </div>
-                <div class="lg-12 align-items-center">
-                  Anexe arquivos com tamanho até 40MB.
+                <div class="ma-4 text-justify subheading grey--text">
+                  Caso seja necessário o envio de documentos, encaminhar para o e-mail <span class="font-weight-bold">votacultura@cidadania.gov.br</span> informando no assunto: Recurso de habilitação e o nome do conselho.
                 </div>
               </v-flex>
             </v-layout>
-            <v-layout
-              v-if="!habilitacaoRecurso.isLocked"
-              align-center
-              justify-center
-              class="mb-4"
-              wrap
-            >
-              <v-flex md12>
-                <v-card
-                  min-width="500"
-                  class="mx-auto"
-                >
-                  <v-card-text>
-                    <file
-                      v-model="habilitacaoRecurso.anexo"
-                      :readonly="habilitacaoRecurso.isLocked"
-                      :disabled="habilitacaoRecurso.isLocked"
-                    />
-                    <v-input
-                      error
-                      disabled
-                    />
-                  </v-card-text>
-                </v-card>
-              </v-flex>
-            </v-layout>
+
           </v-card>
         </v-form>
       </v-card-text>
@@ -266,7 +191,6 @@ export default {
     nomeRepresentanteError: '',
     habilitacaoRecurso: {
       ds_recurso: '',
-      anexo: {},
       isLocked: false,
     },
     rules: {
@@ -302,17 +226,12 @@ export default {
       enviarDadosRecursoConselhoHabilitacao: 'conselho/enviarDadosRecursoConselhoHabilitacao',
       definirMensagemSucesso: 'app/setMensagemSucesso',
       definirMensagemErro: 'app/setMensagemErro',
-      downloadArquivo: 'shared/downloadArquivo',
     }),
     salvar() {
       this.loading = true;
       const dadosSubmit = {
         dsRecurso: this.habilitacaoRecurso.ds_recurso,
       };
-
-      if (Object.keys(this.habilitacaoRecurso.anexo).length) {
-        dadosSubmit.anexo = this.habilitacaoRecurso.anexo.file;
-      }
 
       this.enviarDadosRecursoConselhoHabilitacao(dadosSubmit)
         .then((response) => {
@@ -346,9 +265,6 @@ export default {
       if (dadosConselho.habilitacaoRecurso) {
         const recurso = dadosConselho.habilitacaoRecurso;
         this.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
-        if (recurso.anexo) {
-          this.habilitacaoRecurso.anexo = recurso.anexo;
-        }
         this.habilitacaoRecurso.isLocked = true;
       }
     }).finally(() => {
