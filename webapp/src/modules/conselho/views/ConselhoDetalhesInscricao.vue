@@ -34,8 +34,8 @@
                                        style="left: 0px; right: auto; position: absolute;">Resultado da habilitação</label>
                                 <input
                                   aria-label="RG" disabled="disabled" type="text" maxlength="12"
-                                  :value="!parseInt(dadosHabilitacao.st_avaliacao, 10) ? 'Habilitado' : 'Inabilitado'"
-                                  :class="!parseInt(dadosHabilitacao.st_avaliacao, 10) ? 'color : green--text' : 'color : red--text'"
+                                  :value="!parseInt(dadosHabilitacao.st_avaliacao, 10) ? 'Inabilitado' : 'Habilitado'"
+                                  :class="!parseInt(dadosHabilitacao.st_avaliacao, 10) ? 'color : red--text' : 'color : green--text'"
                                 >
                               </div>
                               <div class="v-input__append-inner">
