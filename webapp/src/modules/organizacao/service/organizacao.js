@@ -1,15 +1,6 @@
 import * as service from '../../shared/service/base/index';
 /* eslint-disable import/prefer-default-export */
 
-const buildData = (params) => {
-  const bodyFormData = new FormData();
-
-  Object.keys(params).forEach((key) => {
-    bodyFormData.append(key, params[key]);
-  });
-  return bodyFormData;
-};
-
 export const enviarDadosOrganizacao = organizacao => service.postRequest('/organizacao', organizacao);
 export const obterSegmentos = () => service.getRequest('/organizacao/segmento');
 export const obterCriterios = () => service.getRequest('/organizacao/criterio');
@@ -19,3 +10,4 @@ export const enviarDocumentacaoComprobatoria = payload => service.postRequest('/
 export const obterDocumentacaoComprobatoria = coOrganizacao => service.getRequest(`/organizacao/${coOrganizacao}/documentacao-comprobatoria`);
 export const obterOrganizacoesHabilitacao = () => service.getRequest('/organizacao/habilitacao');
 export const avaliarHabilitacao = organizacao => service.postRequest('/organizacao/habilitacao', organizacao);
+export const enviarDadosOrganizacaoHabilitacaoRecurso = organizacao => service.postRequest('/organizacao/habilitacao-recurso', service.buildData(organizacao));

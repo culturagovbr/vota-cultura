@@ -52,6 +52,8 @@ export const obterOrganizacoes = async ({ commit }) => {
   });
 };
 
+export const enviarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.enviarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
+
 export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {
   let respondendo = String();
   let errando = String();
