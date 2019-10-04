@@ -26,7 +26,7 @@ export const confirmarOrganizacao = async ({ commit }, organizacao) => {
 
 export const obterDadosOrganizacao = async ({ commit, dispatch }, coOrganizacao) => {
   commit(types.OBTER_DADOS_ORGANIZACAO, coOrganizacao);
-  organizacaoService.obterDadosOrganizacao(coOrganizacao)
+  return organizacaoService.obterDadosOrganizacao(coOrganizacao)
     .then((response) => {
       const { data } = response.data;
       if (!data) {

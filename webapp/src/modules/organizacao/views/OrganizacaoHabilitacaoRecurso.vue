@@ -49,7 +49,7 @@
               <v-spacer /> <v-spacer /> <v-spacer />              <v-spacer /> <v-spacer /> <v-spacer />
 
               <div class="md6">
-                <span class="font-weight-bold">Segmento cultural:</span> {{ organizacao.segmento.ds_detalhamento }}
+                <span class="font-weight-bold">Segmento cultural:</span> {{ organizacao.segmento ? organizacao.segmento.ds_detalhamento : ''}}
               </div>
             </v-flex>
           </v-layout>
@@ -63,7 +63,7 @@
               d-inline-flex
             >
               <div class="md6">
-                <span class="font-weight-bold">Pontuação após análise:</span> {{ organizacao.organizacaoHabilitacao.nu_nova_pontuacao }}
+                <span class="font-weight-bold">Pontuação após análise:</span> {{ organizacao.organizacaoHabilitacao ? organizacao.organizacaoHabilitacao.nu_nova_pontuacao : ''}}
               </div>
             </v-flex>
           </v-layout>
@@ -279,14 +279,13 @@ export default {
   },
   mounted() {
     const self = this;
-    self.loading = true;
-    self.obterDadosOrganizacao(this.usuario.co_organizacao).then((dadosOrganizacao) => {
-      if (dadosOrganizacao.habilitacaoRecurso) {
-        const recurso = dadosOrganizacao.habilitacaoRecurso;
-        this.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
-        this.habilitacaoRecurso.isLocked = true;
-      }
-    }).finally(() => {
+      self.obterDadosOrganizacao(this.usuario.co_organizacao).then((dadosOrganizacao) => {
+        if (typeof dadosOrganizacao.habilitacaoRecurso !== undefined) {
+            const recurso = dadosOrganizacao.habilitacaoRecurso;
+          self.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
+            self.habilitacaoRecurso.isLocked = true;
+        }
+      }).finally(() => {
       self.loading = false;
     });
   },
