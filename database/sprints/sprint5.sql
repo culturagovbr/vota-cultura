@@ -11,4 +11,13 @@ CREATE TABLE public.tb_organizacao_habilitacao_historico
     CONSTRAINT tb_organizacao_habilitacao_historico_tb_organizacao_co_organizacao_fk FOREIGN KEY (co_organizacao) REFERENCES public.tb_organizacao (co_organizacao)
 );
 
-ALTER TABLE public.tb_organizacao_habilitacao_historico ADD st_ativo boolean DEFAULT true NOT NULL;
+ALTER TABLE public.tb_organizacao_habilitacao ADD co_usuario_avaliador integer NULL;
+ALTER TABLE public.tb_organizacao_habilitacao
+ADD CONSTRAINT tb_organizacao_habilitacao_tb_usuario_co_usuario_fk
+FOREIGN KEY (co_usuario_avaliador) REFERENCES public.tb_usuario (co_usuario);
+
+
+ALTER TABLE public.tb_organizacao_habilitacao_historico ADD co_usuario_avaliador integer NULL;
+ALTER TABLE public.tb_organizacao_habilitacao_historico
+ADD CONSTRAINT tb_organizacao_habilitacao_historico_tb_usuario_co_usuario_fk
+FOREIGN KEY (co_usuario_avaliador) REFERENCES public.tb_usuario (co_usuario);

@@ -26,10 +26,6 @@ class OrganizacaoHabilitacaoHistorico extends AbstractService
                 throw new EParametrosInvalidos('Identificador da habilitação de organização não informado.');
             }
 
-            $this->getModel()->where([
-                'co_organizacao_habilitacao' => $dados['co_organizacao_habilitacao']
-            ])->update(['st_ativo' => FALSE]);
-
             $dadosInclusao = $dados->only([
                 'co_organizacao_habilitacao',
                 'co_organizacao',

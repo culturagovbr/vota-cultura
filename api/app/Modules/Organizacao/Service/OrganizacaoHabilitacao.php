@@ -3,11 +3,12 @@
 namespace App\Modules\Organizacao\Service;
 
 use App\Core\Service\AbstractService;
+use App\Modules\Core\Exceptions\EAcessoRestrito;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Organizacao\Model\OrganizacaoHabilitacao as OrganizacaoHabilitacaoModel;
-use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,8 @@ class OrganizacaoHabilitacao extends AbstractService
                 'nu_nova_pontuacao',
             ]);
             $dadosInclusao['dh_avaliacao'] = $carbon->toDateTimeString();
+            $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
+            $dadosInclusao['co_usuario_avaliador'] = $dadosUsuarioLogado['co_usuario'];
 
             $organizacaoHabilitacao = $this->getModel()
                 ->where($dadosInclusao->toArray())
@@ -45,8 +48,6 @@ class OrganizacaoHabilitacao extends AbstractService
             }
 
             $novoOrganizacaoHabilitacao = parent::cadastrar($dadosInclusao);
-            $historicoService = (OrganizacaoHabilitacaoHistorico::class);
-            $historicoService->cadastrar(collect($novoOrganizacaoHabilitacao->toArray()));
 
             DB::commit();
             return $novoOrganizacaoHabilitacao;
@@ -56,35 +57,35 @@ class OrganizacaoHabilitacao extends AbstractService
         }
     }
 
-    public function revisarAvaliacao()
+    public function revisarAvaliacao(Request $request, int $identificador): ?Model
     {
-//            $arquivosHabilitacacao = [];
-//            if (!empty($dados['arquivosAvaliacao']) && Auth::user()->souAdministrador() ) {
-//                $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
-//                foreach (array_values($dados['arquivosAvaliacao']) as $indice => $arquivoAvaliacao) {
-//                    if(empty($arquivoAvaliacao['co_representante_arquivo'])) {
-//                        continue;
-//                    }
-//                    $colecao = collect($arquivoAvaliacao);
-//                    $colecao['co_organizacao_habilitacao'] = $novoOrganizacaoHabilitacao->co_organizacao_habilitacao;
-//                    $colecao['co_usuario_avaliador'] = $dadosUsuarioLogado['co_usuario'];
-//                    $colecao['dh_avaliacao'] = $carbon->toDateTimeString();
-//                    $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_NAO_CONFORME;
-//                    if ((int)$dadosInclusao['st_avaliacao'] === (int)OrganizacaoHabilitacaoModel::SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA) {
-//                        $colecao['st_em_conformidade'] = RepresentanteArquivoAvaliacao::SITUACAO_CONFORMIDADE_CONFORME;
-//                    }
-//                    $arquivosHabilitacacao[$indice] = $colecao->only(
-//                        [
-//                            'co_representante_arquivo',
-//                            'st_em_conformidade',
-//                            'co_usuario_avaliador',
-//                            'dh_avaliacao',
-//                            'co_organizacao_habilitacao',
-//                        ]
-//                    )->toArray();
-//                }
-//
-//                $novoOrganizacaoHabilitacao->representanteArquivoAvaliacao()->insert($arquivosHabilitacacao);
-//            }
+        try {
+            DB::beginTransaction();
+            if (!Auth::user()->souAdministrador()) {
+                throw new EAcessoRestrito('Acesso restrito.');
+            }
+
+            $organizacaoHabilitacao = $this->obterUm($identificador);
+            if (empty($organizacaoHabilitacao)) {
+                throw new EParametrosInvalidos('Habilitação da organização não localizada.');
+            }
+
+            $historicoService = (OrganizacaoHabilitacaoHistorico::class);
+            $historicoService->cadastrar(collect($organizacaoHabilitacao->toArray()));
+            $organizacaoHabilitacao->fill($request->only([
+                'st_avaliacao',
+                'ds_parecer',
+                'nu_nova_pontuacao',
+            ])->toArray());
+
+            $carbon = Carbon::now();
+            $organizacaoHabilitacao->dh_avaliacao = $carbon->toDateTimeString();
+            $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
+            $organizacaoHabilitacao->co_usuario_avaliador = $dadosUsuarioLogado['co_usuario'];
+            $organizacaoHabilitacao->save();
+        } catch (EParametrosInvalidos $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
     }
 }

@@ -41,7 +41,18 @@ class OrganizacaoHabilitacaoApiResourceController extends AApiResourceController
 
     public function show($identificador): JsonResponse
     {
-        throw new EMetodoIndisponivel("E-mail não definido.");
+        throw new EMetodoIndisponivel("Funcionalidade indisponível.");
+    }
+
+    public function update(Request $request, $co_usuario)
+    {
+        return $this->sendResponse(
+            new Organizacao(
+                $this->service->revisarAvaliacao($request, $co_usuario)
+            ),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
 }

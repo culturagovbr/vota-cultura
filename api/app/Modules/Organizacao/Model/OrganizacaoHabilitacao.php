@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organizacao\Model;
 
+use App\Modules\Conta\Model\Usuario;
 use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +26,7 @@ class OrganizacaoHabilitacao extends Model
         'ds_parecer',
         'dh_avaliacao',
         'nu_nova_pontuacao',
+        'co_usuario_avaliador',
     ];
 
     public $timestamps = FALSE;
@@ -53,6 +55,14 @@ class OrganizacaoHabilitacao extends Model
             OrganizacaoHabilitacaoHistorico::class,
             'co_organizacao_habilitacao',
             'co_organizacao_habilitacao'
+        );
+    }
+
+    public function usuarioAvaliador()
+    {
+        return $this->hasOne(Usuario::class,
+            'co_usuario',
+            'co_usuario_avaliador'
         );
     }
 }
