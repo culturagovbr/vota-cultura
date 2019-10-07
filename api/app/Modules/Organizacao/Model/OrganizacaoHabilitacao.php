@@ -46,4 +46,13 @@ class OrganizacaoHabilitacao extends Model
             'co_organizacao_habilitacao'
         );
     }
+
+    public function historico()
+    {
+        return $this->hasmany(
+            OrganizacaoHabilitacaoHistorico::class,
+            'co_organizacao_habilitacao',
+            'co_organizacao_habilitacao'
+        );
+    }
 }
