@@ -169,7 +169,7 @@ export default {
           name: 'inscricao-lista-parcial-route',
         },
         {
-          title: 'Lista parcial dos habilitados',
+          title: 'Lista final dos habilitados',
           group: 'apps',
           icon: 'list',
           name: 'inscricao-lista-parcial-habilitacao-route',

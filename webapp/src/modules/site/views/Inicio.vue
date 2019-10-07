@@ -86,7 +86,7 @@
                   </v-card-title>
                   <v-card-text>
                     <div class="text-xs-center">
-                      Lista parcial de habilitação
+                      Lista final de habilitação
                     </div>
                     <div style="margin-top: 49px" class="subheading text-xs-center">
                       Consulte aqui
@@ -96,7 +96,7 @@
                     <v-btn
                       style="margin-top: 10px"
                       color="green darken-4"
-                      to="/inscricao/lista-parcial-habilitados"
+                      to="/inscricao/lista-final-habilitados"
                       dark
                     >
                       <v-icon>
