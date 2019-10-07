@@ -21,13 +21,12 @@
             <v-layout
               row
               align-center
-              style="margin-left: -140px;"
             >
               <v-flex
                 xs12
-                md3
-                class="ma-3"
+                md4
               >
+
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
                     <v-icon
@@ -64,9 +63,9 @@
               </v-flex>
               <v-flex
                 xs12
-                md3
-                class="ma-3"
+                md4
               >
+
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
                     <v-icon
@@ -109,9 +108,9 @@
 
               <v-flex
                 xs12
-                md3
-                class="ma-3"
+                md4
               >
+
                 <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
                   <v-card-text class="text-xs-center">
                     <v-icon
@@ -148,52 +147,6 @@
                   </div>
                 </v-card>
               </v-flex>
-
-              <!--Ocultando esse trecho temporariamente ;D <3 -->
-
-              <v-flex
-                xs12
-                md3
-                class="ma-3"
-              >
-                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
-                  <v-card-text class="text-xs-center">
-                    <v-icon
-                      x-large
-                      class="text--lighten-2"
-                    >
-                      list
-                    </v-icon>
-                  </v-card-text>
-                  <v-card-title
-                    primary-title
-                    class="layout justify-center"
-                  >
-                    <div class="headline text-xs-center">
-                      Conselho de cultura
-                    </div>
-                  </v-card-title>
-                  <v-card-text class="text-xs-center">
-                    Recurso de Habilitação <br /><br />
-
-                    Cadastre aqui o recurso referente à etapa<br /> de habilitação dos conselhos de cultura
-                  </v-card-text>
-                  <div class="text-xs-center pb-4">
-                    <v-btn
-                      style="margin-top: 20px"
-                      color="green darken-4"
-                      to="/conselho/habilitacao-recurso"
-                      dark
-                    >
-                      <v-icon>
-                        call_made
-                      </v-icon>
-                    </v-btn>
-                  </div>
-                </v-card>
-              </v-flex>
-
-
             </v-layout>
           </v-container>
         </v-flex>
