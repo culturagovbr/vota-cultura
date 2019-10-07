@@ -3,6 +3,7 @@
 namespace App\Modules\Conselho\Http\Controllers;
 
 use App\Modules\Conselho\Service\ConselhoHabilitacaoRecurso;
+use App\Modules\Core\Exceptions\EMetodoIndisponivel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,16 +25,10 @@ class ConselhoHabilitacaoRecursoController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse
-     * @throws \App\Modules\Core\Exceptions\EParametrosInvalidos
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws EMetodoIndisponivel
      */
     public function store(Request $request)
     {
-       return $this->sendResponse(
-           $this->service->cadastrarHabilitacaoRecurso($request->only(['dsRecurso'])),
-           'Operação realizada com sucesso',
-           Response::HTTP_CREATED
-       );
+        throw new EMetodoIndisponivel('O prazo de envio do recurso da habilitação expirou.');
     }
 }
