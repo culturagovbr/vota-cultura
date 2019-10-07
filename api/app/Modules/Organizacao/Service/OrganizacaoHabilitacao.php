@@ -48,8 +48,8 @@ class OrganizacaoHabilitacao extends AbstractService
             }
 
             $novoOrganizacaoHabilitacao = parent::cadastrar($dadosInclusao);
-
             DB::commit();
+
             return $novoOrganizacaoHabilitacao;
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
@@ -76,6 +76,7 @@ class OrganizacaoHabilitacao extends AbstractService
                 'st_avaliacao',
                 'ds_parecer',
                 'nu_nova_pontuacao',
+                'st_revisao_final',
             ])->toArray());
 
             $carbon = Carbon::now();
@@ -83,6 +84,8 @@ class OrganizacaoHabilitacao extends AbstractService
             $dadosUsuarioLogado = Auth::user()->dadosUsuarioAutenticado();
             $organizacaoHabilitacao->co_usuario_avaliador = $dadosUsuarioLogado['co_usuario'];
             $organizacaoHabilitacao->save();
+
+            DB::commit();
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;

@@ -32,7 +32,8 @@ class OrganizacaoHabilitacaoHistorico extends AbstractService
                 'st_avaliacao',
                 'ds_parecer',
                 'nu_nova_pontuacao',
-                'dh_avaliacao'
+                'dh_avaliacao',
+                'st_revisao_final',
             ]);
 
             $organizacaoHabilitacao = $this->getModel()

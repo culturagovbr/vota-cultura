@@ -44,11 +44,11 @@ class OrganizacaoHabilitacaoApiResourceController extends AApiResourceController
         throw new EMetodoIndisponivel("Funcionalidade indisponível.");
     }
 
-    public function update(Request $request, $co_usuario)
+    public function update(Request $request, $co_organizacao_habilitacao)
     {
         return $this->sendResponse(
             new Organizacao(
-                $this->service->revisarAvaliacao($request, $co_usuario)
+                $this->service->revisarAvaliacao($request, $co_organizacao_habilitacao)
             ),
             "Operação realizada com sucesso",
             Response::HTTP_OK

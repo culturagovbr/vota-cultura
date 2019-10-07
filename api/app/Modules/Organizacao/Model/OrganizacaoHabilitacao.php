@@ -27,6 +27,7 @@ class OrganizacaoHabilitacao extends Model
         'dh_avaliacao',
         'nu_nova_pontuacao',
         'co_usuario_avaliador',
+        'st_revisao_final',
     ];
 
     public $timestamps = FALSE;

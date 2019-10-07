@@ -21,3 +21,13 @@ ALTER TABLE public.tb_organizacao_habilitacao_historico ADD co_usuario_avaliador
 ALTER TABLE public.tb_organizacao_habilitacao_historico
 ADD CONSTRAINT tb_organizacao_habilitacao_historico_tb_usuario_co_usuario_fk
 FOREIGN KEY (co_usuario_avaliador) REFERENCES public.tb_usuario (co_usuario);
+
+ALTER TABLE public.tb_organizacao_habilitacao ADD st_revisao_final boolean NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao.st_revisao_final IS 'null - Sem avaliação
+false - Não é revisão final
+true - Última revisão da habilitação';
+
+ALTER TABLE public.tb_organizacao_habilitacao_historico ADD st_revisao_final boolean NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_historico.st_revisao_final IS 'null - Sem avaliação
+false - Não é revisão final
+true - Última revisão da habilitação';
