@@ -594,12 +594,11 @@ export default {
   },
   watch: {
     value(valor) {
-      this.$refs.form_recurso.reset();
-
       this.dialog = valor;
       if (!valor) {
         this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
         this.inicializarValoresComponente();
+        this.$refs.form_recurso.reset();
       }
     },
     dialog(valor) {
