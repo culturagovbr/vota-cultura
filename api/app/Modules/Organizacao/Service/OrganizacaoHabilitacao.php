@@ -25,14 +25,12 @@ class OrganizacaoHabilitacao extends AbstractService
         try {
             DB::beginTransaction();
             $carbon = Carbon::now();
-            $dadosInclusao = $dados->only(
-                [
-                    'co_organizacao',
-                    'st_avaliacao',
-                    'ds_parecer',
-                    'nu_nova_pontuacao',
-                ]
-            );
+            $dadosInclusao = $dados->only([
+                'co_organizacao',
+                'st_avaliacao',
+                'ds_parecer',
+                'nu_nova_pontuacao',
+            ]);
             $dadosInclusao['dh_avaliacao'] = $carbon->toDateTimeString();
 
             $organizacaoHabilitacao = $this->getModel()
@@ -47,6 +45,8 @@ class OrganizacaoHabilitacao extends AbstractService
             }
 
             $novoOrganizacaoHabilitacao = parent::cadastrar($dadosInclusao);
+            $historicoService = (OrganizacaoHabilitacaoHistorico::class);
+            $historicoService->cadastrar(collect($novoOrganizacaoHabilitacao->toArray()));
 
             DB::commit();
             return $novoOrganizacaoHabilitacao;
