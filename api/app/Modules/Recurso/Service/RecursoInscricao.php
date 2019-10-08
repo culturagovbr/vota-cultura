@@ -95,7 +95,7 @@ class RecursoInscricao extends AbstractService
         return $recursoInscricao;
     }
 
-    public function atualizar(Request $request, int $identificador) : ?Model
+    public function atualizar(Request $request, int $identificador) : ?array
     {
         $dados = collect(
             $request->only([
@@ -132,7 +132,7 @@ class RecursoInscricao extends AbstractService
                 );
 
             DB::commit();
-            return $recursoInscricao;
+            return $recursoInscricao->toArray();
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;

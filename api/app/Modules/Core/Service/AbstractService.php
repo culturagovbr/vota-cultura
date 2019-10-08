@@ -4,6 +4,7 @@ namespace App\Core\Service;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +32,7 @@ abstract class AbstractService implements IServiceApiResource
         return $this->getModel()->get();
     }
 
-    public function atualizar(Request $request, int $identificador)
+    public function atualizar(Request $request, int $identificador) : ?array
     {
         try {
             $modelPesquisada = $this->getModel()->find($identificador);

@@ -19,25 +19,17 @@ class ConselhoIndicacao extends AbstractService
         parent::__construct($model);
     }
 
-    /**
-     * @param array $dadosConselho
-     * @throws EParametrosInvalidos
-     */
-    public function verificarQuantidadeIndicados(array $dadosConselho)
+    private function validarQuantidadeMaximaIndicados(array $dadosConselho)
     {
         $count = $this->getModel()
             ->where($dadosConselho)
             ->count();
 
-        if ($count === self::QTD_MAXIMO_INDICADOS) {
+        if ($count >= self::QTD_MAXIMO_INDICADOS) {
             throw new EParametrosInvalidos('O conselho já atingiu o limite de indicados.');
         }
     }
 
-    /**
-     * @param array $verification
-     * @throws EParametrosInvalidos
-     */
     private function verificarIndicadoCadastrado(array $verification)
     {
         $conselhoIndicacao = $this->getModel()
@@ -52,20 +44,13 @@ class ConselhoIndicacao extends AbstractService
         }
     }
 
-    /**
-     * @param Collection $dados
-     * @return Model|null
-     * @throws EParametrosInvalidos
-     * @throws \HttpException
-     */
     public function cadastrar(Collection $dados): ?Model
     {
-        $this->verificarQuantidadeIndicados($dados->only(['co_conselho'])->toArray());
+        $this->validarQuantidadeMaximaIndicados($dados->only(['co_conselho'])->toArray());
         $this->verificarIndicadoCadastrado($dados->only(['co_conselho', 'nu_cpf_indicado'])->toArray());
 
         try {
-            $novoIndicado = parent::cadastrar($dados);
-            return $novoIndicado;
+            return parent::cadastrar($dados);
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;

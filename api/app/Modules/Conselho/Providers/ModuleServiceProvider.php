@@ -4,9 +4,11 @@ namespace App\Modules\Conselho\Providers;
 
 use App\Modules\Conselho\Mail\Conselho\CadastroComSucesso;
 use App\Modules\Conselho\Mail\Conselho\CadastroHabilitacaoRecursoSucesso;
+use App\Modules\Conselho\Model\ConselhoIndicacao;
 use Caffeinated\Modules\Support\ServiceProvider;
 use App\Modules\Conselho\Service\Conselho as ConselhoService;
 use App\Modules\Conselho\Model\Conselho as ConselhoModel;
+use App\Modules\Conselho\Http\Resources\ConselhoIndicacao as ConselhoIndicacaoResource;
 
 class ModuleServiceProvider extends ServiceProvider
 {
@@ -42,6 +44,16 @@ class ModuleServiceProvider extends ServiceProvider
                 return $parametros;
             }
             return new ConselhoModel($parametros);
+        });
+
+        $this->app->bind(ConselhoIndicacao::class, function ($app, $parametros) {
+            return new ConselhoIndicacao($parametros);
+        });
+        $this->app->bind(ConselhoIndicacaoResource::class, function ($app, $parametros) {
+            if($parametros instanceof ConselhoIndicacao) {
+                return $parametros;
+            }
+            return new ConselhoIndicacaoResource($app->make(ConselhoIndicacao::class, $parametros));
         });
     }
 }
