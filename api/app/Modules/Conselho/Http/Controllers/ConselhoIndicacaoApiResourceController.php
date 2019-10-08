@@ -5,6 +5,7 @@ namespace App\Modules\Conselho\Http\Controllers;
 use App\Modules\Conselho\Service\ConselhoIndicacao;
 USE \App\Modules\Conselho\Http\Resources\ConselhoIndicacao as ConselhoIndicacaoResource;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
+use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,7 +14,9 @@ use Illuminate\Http\Response;
 
 class ConselhoIndicacaoApiResourceController extends AApiResourceController
 {
-    use TApiResourceUpdate;
+    use TApiResourceUpdate,
+        TApiResourceDestroy;
+
     /** @var ConselhoIndicacao ConselhoIndicacao  */
     protected $service;
     public function __construct(ConselhoIndicacao $service)
@@ -91,13 +94,14 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     * @throws \HttpException
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $this->service->remover($request, $id);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
