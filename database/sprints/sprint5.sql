@@ -12,6 +12,8 @@ CREATE TABLE public.tb_conselho_indicacao (
 
 -- Column comments
 
+ALTER TABLE public.tb_conselho_indicacao ALTER COLUMN dh_indicacao SET DEFAULT NOW();
+
 COMMENT ON COLUMN public.tb_conselho_indicacao.co_conselho_indicacao IS 'Chave primária da tabela.';
 COMMENT ON COLUMN public.tb_conselho_indicacao.nu_cpf_indicado IS 'Número do CPF do indicado.';
 COMMENT ON COLUMN public.tb_conselho_indicacao.no_indicado IS 'Nome do indicado.';
