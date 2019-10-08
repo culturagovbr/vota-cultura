@@ -4,3 +4,4 @@ export const organizacoes = state => state.organizacoes;
 export const segmentos = state => state.segmentos;
 export const criterios = state => state.criterios;
 export const documentacaoComprobatoria = state => state.documentacaoComprobatoria;
+export const modalVisualizacaoOrganizacaoAdministrador = state => state.modalVisualizacaoOrganizacaoAdministrador;

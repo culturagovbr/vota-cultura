@@ -51,7 +51,7 @@
               dark
               color="primary"
               small
-              @click="visualizarItemModal('conselho', props.item.co_conselho)"
+              @click="visualizarItemModal(props.item.co_conselho)"
             >
               <v-icon>search</v-icon>
             </v-btn>
@@ -59,34 +59,13 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <!--<v-container>-->
-      <!--<v-card>-->
-        <!--<v-card-text>-->
-          <!--<conselho-detalhes-inscricao-visualizacao v-if="tipoModal === 'conselho'"/>-->
-        <!--</v-card-text>-->
-        <!--<v-card-actions class="justify-center">-->
-          <!--<v-btn-->
-            <!--@click="mostrarModal = false"-->
-          <!--&gt;-->
-            <!--<v-icon left>-->
-              <!--undo-->
-            <!--</v-icon>-->
-            <!--Fechar-->
-          <!--</v-btn>-->
-        <!--</v-card-actions>-->
-      <!--</v-card>-->
-    <!--</v-container>-->
   </v-card>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import ConselhoDetalhesInscricaoVisualizacao from '@/modules/conselho/views/ConselhoDetalhesInscricaoVisualizacao.vue';
 
 export default {
   name: 'ConselhoLista',
-  components: {
-    ConselhoDetalhesInscricaoVisualizacao,
-  },
   props: {
     souAdministrador: {
       source: {
@@ -98,7 +77,6 @@ export default {
   data: () => ({
     pesquisar: '',
     tipoModal: '',
-    mostrarModal: false,
     loading: false,
     pagination_conselho: {
       page: 1,
@@ -139,17 +117,11 @@ export default {
     ...mapActions({
       obterConselhos: 'conselho/obterConselhos',
       obterDadosConselho: 'conselho/obterDadosConselho',
+      modalVisualizacaoConselhoAdministrador: 'conselho/modalVisualizacaoConselhoAdministrador',
     }),
-    visualizarItemModal(tipoInscricao, id) {
-      this.mostrarModal = true;
-      this.tipoModal = tipoInscricao;
-
-      if (tipoInscricao === 'conselho') {
-        this.obterDadosConselho(id);
-        return false;
-      }
-
-      return true;
+    visualizarItemModal(id) {
+      this.modalVisualizacaoConselhoAdministrador(true);
+      this.obterDadosConselho(id);
     },
   },
   mounted() {

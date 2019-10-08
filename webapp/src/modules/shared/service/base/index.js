@@ -69,8 +69,20 @@ export const patchRequest = (path, id, payload) => instance.patch(`${path}/${id}
 
 export const deleteRequest = (path, id) => instance.delete(`${path}/${id}`);
 
+const self = this;
 export const getFile = (coArquivo, config = { responseType: 'blob' }) => instance.get(`/upload/${coArquivo}`, config)
   .then((response) => {
-    const url = window.URL.createObjectURL(response.data);
-    window.open(url);
+    const { headers } = response;
+    const dadosFilename = headers['content-disposition'].split('filename=');
+    const filename = dadosFilename[1].split('"').join('');
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
   });
+
+export const replaceAll = function (searchString, replaceString, str) {
+  return str.split(searchString).join(replaceString);
+}
