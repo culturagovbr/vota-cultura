@@ -8,7 +8,6 @@ use App\Modules\Core\Helper\Telefone as TelefoneHelper;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Representacao\Model\Representante;
 use Illuminate\Database\Eloquent\Model;
-use \App\Modules\Conselho\Model\ConselhoHabilitacaoRecurso;
 
 class Conselho extends Model
 {
@@ -29,7 +28,7 @@ class Conselho extends Model
         'st_inscricao',
     ];
 
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     public function endereco()
     {
@@ -62,6 +61,15 @@ class Conselho extends Model
     {
         return $this->hasOne(
             ConselhoHabilitacao::class,
+            'co_conselho',
+            'co_conselho'
+        );
+    }
+
+    public function conselhoIndicacao()
+    {
+        return $this->hasMany(
+            ConselhoIndicacao::class,
             'co_conselho',
             'co_conselho'
         );
