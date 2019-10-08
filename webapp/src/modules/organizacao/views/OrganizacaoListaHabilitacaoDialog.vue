@@ -375,9 +375,9 @@
                                 name="input-7-4"
                                 rows="13"
                                 row-height="28"
-                                :counter="5000"
-                                :rules="[rules.required, rules.tamanhoMaximo5000Caracteres]"
-                                :disabled="desabilitarRevisaoHabilitacao()"
+                                :counter="15000"
+                                :rules="[rules.required, rules.tamanhoMaximo15000Caracteres]"
+                                :readonly="desabilitarRevisaoHabilitacao()"
                               />
                             </v-flex>
                           </v-layout>
@@ -607,7 +607,7 @@ export default {
         required: value => !!value || 'Este campo é obrigatório',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
         tamanhoMaximo3000Caracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
-        tamanhoMaximo5000Caracteres: value => (!!value && value.length <= 5000) || 'Máximo 5000 caracteres',
+        tamanhoMaximo15000Caracteres: value => (!!value && value.length <= 15000) || 'Máximo 15000 caracteres',
         tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'Máximo 500 caracteres',
       },
     };
