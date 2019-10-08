@@ -57,7 +57,7 @@ class OrganizacaoHabilitacao extends AbstractService
         }
     }
 
-    public function revisarAvaliacao(Request $request, int $identificador): ?Model
+    public function revisarAvaliacao(Request $request, \App\Modules\Organizacao\Model\OrganizacaoHabilitacao $habilitacao): ?Model
     {
         try {
             DB::beginTransaction();
@@ -65,19 +65,19 @@ class OrganizacaoHabilitacao extends AbstractService
                 throw new EAcessoRestrito('Acesso restrito.');
             }
 
-            $organizacaoHabilitacao = $this->obterUm($identificador);
+            $organizacaoHabilitacao = $this->obterUm($habilitacao->co_organizacao_habilitacao);
             if (empty($organizacaoHabilitacao)) {
                 throw new EParametrosInvalidos('Habilitação da organização não localizada.');
             }
 
-            $historicoService = (OrganizacaoHabilitacaoHistorico::class);
+            $historicoService = app(OrganizacaoHabilitacaoHistorico::class);
             $historicoService->cadastrar(collect($organizacaoHabilitacao->toArray()));
             $organizacaoHabilitacao->fill($request->only([
                 'st_avaliacao',
                 'ds_parecer',
                 'nu_nova_pontuacao',
                 'st_revisao_final',
-            ])->toArray());
+            ]));
 
             $carbon = Carbon::now();
             $organizacaoHabilitacao->dh_avaliacao = $carbon->toDateTimeString();
@@ -86,6 +86,7 @@ class OrganizacaoHabilitacao extends AbstractService
             $organizacaoHabilitacao->save();
 
             DB::commit();
+            return $organizacaoHabilitacao;
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;

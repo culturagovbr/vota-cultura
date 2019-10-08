@@ -33,6 +33,7 @@ class OrganizacaoHabilitacaoHistorico extends AbstractService
                 'ds_parecer',
                 'nu_nova_pontuacao',
                 'dh_avaliacao',
+                'co_usuario_avaliador',
                 'st_revisao_final',
             ]);
 

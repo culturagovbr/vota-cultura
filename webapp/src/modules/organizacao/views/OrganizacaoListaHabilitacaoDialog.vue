@@ -97,7 +97,7 @@
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>Pontuação após análise:</b>
-                              {{!!formulario.organizacaoHabilitacao.nu_nova_pontuacao.toString() ? formulario.organizacaoHabilitacao.nu_nova_pontuacao:formulario.pontuacao}}
+                              {{ !!formulario.organizacaoHabilitacao.nu_nova_pontuacao.toString() ? formulario.organizacaoHabilitacao.nu_nova_pontuacao:formulario.pontuacao }}
                             </div>
                           </v-flex>
                         </v-layout>
@@ -361,7 +361,7 @@
                                 box
                                 label="* Resultado da avaliação"
                                 required
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="desabilitarRevisaoHabilitacao()"
                               />
                             </v-flex>
                           </v-layout>
@@ -377,7 +377,7 @@
                                 row-height="28"
                                 :counter="5000"
                                 :rules="[rules.required, rules.tamanhoMaximo5000Caracteres]"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="desabilitarRevisaoHabilitacao()"
                               />
                             </v-flex>
                           </v-layout>
@@ -393,7 +393,7 @@
                                 label="Houve alteração da pontuação?"
                                 :rules="[rules.required]"
                                 required
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="desabilitarRevisaoHabilitacao()"
                               >
                                 <v-radio
                                   value="1"
@@ -427,18 +427,30 @@
                                 mask="##"
                                 onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
                                 label="Informe a nova pontuação da organização/entidade cultural:"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador'"
+                                :disabled="desabilitarRevisaoHabilitacao()"
                               />
+                            </v-flex>
+                          </v-layout>
+                          <v-layout class="text-md-center">
+                            <v-flex class="pa-3">
+                              <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                  <v-checkbox
+                                    v-model="formulario.organizacaoHabilitacao.st_revisao_final"
+                                    class="text-md-center"
+                                    label="Revisão final"
+                                    v-on="on"
+                                  />
+                                </template>
+                                <span>Mensagem</span>
+                              </v-tooltip>
                             </v-flex>
                           </v-layout>
                         </v-container>
                       </v-card>
-                      {{formulario.organizacaoHabilitacao}}
                     </div>
                     <v-card-actions class="justify-center">
-                      <v-btn
-                        @click="dialog = false"
-                      >
+                      <v-btn @click="dialog = false">
                         <v-icon left>
                           undo
                         </v-icon>
@@ -449,23 +461,36 @@
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
-                        @click.native="abrirDialogo">
+                        @click.native="abrirDialogo"
+                      >
                         <v-icon left>
                           send
                         </v-icon>
                         Avaliar
                       </v-btn>
+                      <v-btn
+                        v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                        :loading="loading"
+                        :disabled="!valid || loading"
+                        color="primary"
+                        @click.native="abrirDialogo"
+                      >
+                        <v-icon left>
+                          send
+                        </v-icon>
+                        Revisar
+                      </v-btn>
                       <!--<v-btn-->
-                        <!--v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'"-->
-                        <!--:loading="loading"-->
-                        <!--:disabled="!valid || loading"-->
-                        <!--color="primary"-->
-                        <!--@click.native="abrirDialogo"-->
+                      <!--v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'"-->
+                      <!--:loading="loading"-->
+                      <!--:disabled="!valid || loading"-->
+                      <!--color="primary"-->
+                      <!--@click.native="abrirDialogo"-->
                       <!--&gt;-->
-                        <!--<v-icon left>-->
-                          <!--send-->
-                        <!--</v-icon>-->
-                        <!--Revisar-->
+                      <!--<v-icon left>-->
+                      <!--send-->
+                      <!--</v-icon>-->
+                      <!--Revisar-->
                       <!--</v-btn>-->
                     </v-card-actions>
                   </v-tab-item>
@@ -575,6 +600,7 @@ export default {
           co_organizacao: null,
           st_avaliacao: null,
           ds_parecer: null,
+          st_revisao_final: null,
         },
       },
       rules: {
@@ -636,12 +662,12 @@ export default {
         this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = this.formulario.pontuacao;
         this.possuiNovaPontuacao = '0';
       }
-
     },
   },
   methods: {
     ...mapActions({
       avaliarHabilitacao: 'organizacao/avaliarHabilitacao',
+      revisarHabilitacao: 'organizacao/revisarHabilitacao',
       obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
       downloadArquivo: 'shared/downloadArquivo',
     }),
@@ -696,14 +722,22 @@ export default {
       }
       self.loading = true;
       self.formulario.organizacaoHabilitacao.co_organizacao = self.formulario.co_organizacao;
-      self.formulario.organizacaoHabilitacao.arquivosAvaliacao = self.arquivosAvaliacao;
-      this.avaliarHabilitacao(self.formulario.organizacaoHabilitacao)
-        .then(() => {
+      self.formulario.organizacaoHabilitacao.arquivosAvaliacao = Object.assign(self.arquivosAvaliacao);
+
+      if (!this.formulario.organizacaoHabilitacao.co_organizacao_habilitacao) {
+        this.avaliarHabilitacao(self.formulario.organizacaoHabilitacao).then((response) => {
           window.location.reload();
-        })
-        .finally(() => {
+        }).finally(() => {
           self.loading = false;
         });
+      } else {
+        this.revisarHabilitacao({
+          coOrganizacaoHabilitacao: self.formulario.organizacaoHabilitacao.co_organizacao_habilitacao,
+          organizacaoHabilitacao: self.formulario.organizacaoHabilitacao,
+        }).finally(() => {
+          window.location.reload();
+        });
+      }
       return true;
     },
     abrirDialogo() {
@@ -716,6 +750,9 @@ export default {
     },
     fecharDialogo() {
       this.modalConfirmacao = false;
+    },
+    desabilitarRevisaoHabilitacao() {
+      return !!this.formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador';
     },
   },
 };
