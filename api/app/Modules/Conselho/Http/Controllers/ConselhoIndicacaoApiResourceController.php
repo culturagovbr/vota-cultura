@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conselho\Http\Controllers;
 
+use App\Modules\Conselho\Http\Resources\Conselho;
 use App\Modules\Conselho\Service\ConselhoIndicacao;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,9 +24,13 @@ class ConselhoIndicacaoApiResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        return $this->sendResponse(
+            Conselho::collection($this->service->obterTodos()),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
     /**
