@@ -22,7 +22,6 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
     public function __construct(ConselhoIndicacao $service)
     {
         $this->middleware('auth:api');
-        $this->service = $service;
         return parent::__construct($service);
     }
 
@@ -60,9 +59,15 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        //
+        return $this->sendResponse(
+            new ConselhoIndicacaoResource(
+                $this->service->obterUm($id)
+            ),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
     /**
