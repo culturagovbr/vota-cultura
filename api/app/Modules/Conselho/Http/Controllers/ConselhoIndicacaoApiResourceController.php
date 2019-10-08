@@ -2,21 +2,23 @@
 
 namespace App\Modules\Conselho\Http\Controllers;
 
-use App\Modules\Conselho\Http\Resources\Conselho;
 use App\Modules\Conselho\Service\ConselhoIndicacao;
+USE \App\Modules\Conselho\Http\Resources\ConselhoIndicacao as ConselhoIndicacaoResource;
+use App\Modules\Core\Http\Controllers\AApiResourceController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 
-class ConselhoIndicacaoApiResourceController extends Controller
+class ConselhoIndicacaoApiResourceController extends AApiResourceController
 {
-    private $service;
+    /** @var ConselhoIndicacao ConselhoIndicacao  */
+    protected $service;
     public function __construct(ConselhoIndicacao $service)
     {
         $this->middleware('auth:api');
         $this->service = $service;
+        return parent::__construct($service);
     }
 
     /**
@@ -27,7 +29,7 @@ class ConselhoIndicacaoApiResourceController extends Controller
     public function index(): JsonResponse
     {
         return $this->sendResponse(
-            Conselho::collection($this->service->obterTodos()),
+            ConselhoIndicacaoResource::collection($this->service->obterTodos()),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );
@@ -78,7 +80,13 @@ class ConselhoIndicacaoApiResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+                return $this->sendResponse(
+            new RecursoInscricaoResource(
+                $this->service->atualizar($request, $identificador)
+            ),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
     /**
