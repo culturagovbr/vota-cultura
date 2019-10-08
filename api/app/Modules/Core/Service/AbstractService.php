@@ -31,7 +31,7 @@ abstract class AbstractService implements IServiceApiResource
         return $this->getModel()->get();
     }
 
-    public function atualizar(Request $request, int $identificador) : ?Model
+    public function atualizar(Request $request, int $identificador)
     {
         try {
             $modelPesquisada = $this->getModel()->find($identificador);
