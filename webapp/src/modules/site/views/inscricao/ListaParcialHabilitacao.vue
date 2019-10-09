@@ -128,7 +128,7 @@ export default {
           value: 'endereco.municipio.uf.regiao.no_regiao',
         },
         {
-          text: 'Resultado parcial da habilitação',
+          text: 'Resultado final da habilitação',
           value: 'conselhoHabilitacao.ds_avaliacao',
         },
       ],
