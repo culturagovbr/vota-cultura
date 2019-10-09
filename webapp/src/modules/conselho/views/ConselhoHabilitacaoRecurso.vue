@@ -175,12 +175,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Validate from '../../shared/util/validate';
-import File from '@/core/components/upload/File';
 import Carregando from '../../shared/components/CardCarregando';
 
 export default {
-  components: { Carregando, File },
+  components: { Carregando },
   data: () => ({
     loading: true,
     dialog: false,

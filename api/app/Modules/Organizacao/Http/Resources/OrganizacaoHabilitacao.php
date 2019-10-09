@@ -35,9 +35,11 @@ class OrganizacaoHabilitacao extends JsonResource
         return [
             'co_organizacao_habilitacao' => $this->co_organizacao_habilitacao,
             'co_organizacao' => $this->co_organizacao,
+            'co_usuario_avaliador' => $this->co_usuario_avaliador,
             'st_avaliacao' => $this->st_avaliacao,
             'ds_parecer' => $this->ds_parecer,
             'nu_nova_pontuacao' => $this->nu_nova_pontuacao,
+            'st_revisao_final' => $this->st_revisao_final,
             'arquivosAvaliacao' => RepresentanteArquivoAvaliacao::collection($this->representanteArquivoAvaliacao),
             'situacao_avaliacao' => $situacaoAvaliacao,
         ];
