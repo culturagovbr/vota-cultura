@@ -431,21 +431,6 @@
                               />
                             </v-flex>
                           </v-layout>
-                          <v-layout class="text-md-center">
-                            <v-flex class="pa-3">
-                              <v-tooltip bottom>
-                                <template v-slot:activator="{ on }">
-                                  <v-checkbox
-                                    v-model="formulario.organizacaoHabilitacao.st_revisao_final"
-                                    class="text-md-center"
-                                    label="Revisão final"
-                                    v-on="on"
-                                  />
-                                </template>
-                                <span>Mensagem</span>
-                              </v-tooltip>
-                            </v-flex>
-                          </v-layout>
                         </v-container>
                       </v-card>
                     </div>
@@ -469,7 +454,7 @@
                         Avaliar
                       </v-btn>
                       <v-btn
-                        v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                        v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && !desabilitarRevisaoHabilitacao()"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
@@ -480,18 +465,6 @@
                         </v-icon>
                         Revisar
                       </v-btn>
-                      <!--<v-btn-->
-                      <!--v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'"-->
-                      <!--:loading="loading"-->
-                      <!--:disabled="!valid || loading"-->
-                      <!--color="primary"-->
-                      <!--@click.native="abrirDialogo"-->
-                      <!--&gt;-->
-                      <!--<v-icon left>-->
-                      <!--send-->
-                      <!--</v-icon>-->
-                      <!--Revisar-->
-                      <!--</v-btn>-->
                     </v-card-actions>
                   </v-tab-item>
                   <v-tab-item value="tab-2">
@@ -513,14 +486,43 @@
     <v-layout justify-center>
       <v-dialog
         v-model="modalConfirmacao"
-        max-width="290"
+        max-width="390"
       >
         <v-card>
           <v-card-title class="headline">
-            Deseja realmente enviar?
+            Deseja realmente
+            <span v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'" style="margin-left:5px">
+              revisar
+            </span>
+            <span v-else style="margin-left:5px">
+              enviar
+            </span>
+            ?
           </v-card-title>
 
-          <v-card-text>
+          <v-card-text v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'">
+
+            <span class="subheading">
+              Indique abaixo se é uma revisão final:
+            </span>
+
+            <v-container>
+              <v-layout>
+                <v-flex>
+                  <v-checkbox
+                    v-model="formulario.organizacaoHabilitacao.st_revisao_final"
+                    class="text-md-center"
+                    label="Revisão final"
+                  />
+            <span class="body-1">
+              Atenção! Caso selecione que é uma revisão final não será
+              possível revisar novamente.
+            </span>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-text v-else>
             Os dados enviados não poderão ser alterados posteriormente.
           </v-card-text>
 
@@ -574,6 +576,7 @@ export default {
   data() {
     return {
       resultadoItens: [],
+      exibirBotaoRevisao: true,
       arquivosAvaliacaoInicial: {
         documento_identificacao_representante: {},
         comprovante_cnpj: {},
@@ -662,6 +665,9 @@ export default {
         this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = this.formulario.pontuacao;
         this.possuiNovaPontuacao = '0';
       }
+    },
+    modalConfirmacao(valor) {
+      this.formulario.organizacaoHabilitacao.st_revisao_final = null;
     },
   },
   methods: {
@@ -752,8 +758,14 @@ export default {
       this.modalConfirmacao = false;
     },
     desabilitarRevisaoHabilitacao() {
-      return !!this.formulario.organizacaoHabilitacao.co_organizacao_habilitacao && this.perfil.no_perfil !== 'administrador';
+      return !!this.formulario.organizacaoHabilitacao.co_organizacao_habilitacao
+        && this.perfil.no_perfil !== 'administrador'
+        || (
+          !!this.formulario.organizacaoHabilitacao.st_revisao_final
+          && this.perfil.no_perfil === 'administrador'
+        );
     },
+
   },
 };
 </script>
