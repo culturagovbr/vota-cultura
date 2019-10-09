@@ -39,4 +39,5 @@ export const mutations = {
     const index = state.usuarios.findIndex(usuario => usuario.co_usuario === usuarioEditado.co_usuario);
     Object.assign(state.usuarios[index], usuarioEditado);
   },
+  [types.REVISAR_HABILITACAO]() {},
 };

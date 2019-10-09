@@ -19,3 +19,8 @@ export const enviarDocumentacaoComprobatoria = payload => service.postRequest('/
 export const obterDocumentacaoComprobatoria = coOrganizacao => service.getRequest(`/organizacao/${coOrganizacao}/documentacao-comprobatoria`);
 export const obterOrganizacoesHabilitacao = () => service.getRequest('/organizacao/habilitacao');
 export const avaliarHabilitacao = organizacao => service.postRequest('/organizacao/habilitacao', organizacao);
+export const revisarHabilitacao = (coOrganizacaoHabilitacao, organizacaoHabilitacao) => service.putRequest(
+  '/organizacao/habilitacao',
+  coOrganizacaoHabilitacao,
+  organizacaoHabilitacao,
+);
