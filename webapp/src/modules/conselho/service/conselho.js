@@ -8,3 +8,4 @@ export const obterConselhos = () => service.getRequest('/conselho');
 export const obterConselhosHabilitacao = () => service.getRequest('/conselho/habilitacao');
 export const avaliarHabilitacao = conselho => service.postRequest('/conselho/habilitacao', conselho);
 export const obterConselhosParcialmenteHabilitados = () => service.getRequest('/conselho/habilitacao/lista-parcial');
+export const enviarIndicacaoConselho = payload => service.postRequest('/conselho/indicacao', payload);

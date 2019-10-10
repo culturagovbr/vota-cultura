@@ -1,11 +1,14 @@
 <template>
   <div id="app">
+      <!--:server="{url:'http://localhost:88/api/', restore: './restore.php?id='}"-->
     <file-pond
       ref="pond"
+      v-bind="$attrs"
       :max-file-size="maxFileSize"
       :accepted-file-types="acceptedFileTypes"
-      :files="file"
-      label-idle="Clique aqui para anexar"
+      :files="files"
+      :label-idle="labelIdle"
+      :allowDownloadByUrl="true"
       label-file-waiting-for-size="Calculando tamanho"
       label-invalid-field="Arquivo(s) invalido(s)"
       label-file-size-not-available="Tamanho não disponível"
@@ -39,7 +42,7 @@
 </template>
 
 <script>
-import vueFilePond, { setOptions } from 'vue-filepond';
+import vueFilePond, { setOptions, registerPlugin} from 'vue-filepond';
 
 import 'filepond/dist/filepond.min.css';
 
@@ -49,24 +52,24 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import FilePondPluginGetFile from 'filepond-plugin-get-file';
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview,
   FilePondPluginFileEncode,
   FilePondPluginFileValidateSize,
+  FilePondPluginGetFile,
 );
 
+
 export default {
-  name: 'Arquivo',
+  name: 'File',
   components: {
     FilePond,
   },
   props: {
-    value: {
-      type: Object,
-      default: () => {},
-    },
+    value: {},
     acceptedFileTypes: {
       type: Array,
       default: () => [
@@ -76,6 +79,10 @@ export default {
         'application/x-rar-compressed',
         'application/vnd.rar',
       ],
+    },
+    labelIdle: {
+      type: String,
+      default: 'Clique aqui para anexar',
     },
     maxFileSize: {
       type: String,
@@ -95,10 +102,32 @@ export default {
       type: Object,
       default: () => {},
     },
+    // server: {
+    //   type: Object,
+    //   default: () => {},
+    // },
+    files: {
+      type: Array,
+      // default: () => [],
+      default: () => [
+        // {
+        //   source: 'https://www.google.com/logos/doodles/2018/baba-amtes-104th-birthday-6729609885253632-s.png',
+        //   options: {
+        //     type: 'remote',
+        //   },
+        // },
+
+        // {
+        //   source: 'blob:http://localhost:8080/cc34373e-db63-488f-8c48-97d921d81054',
+        //   options: {
+        //     type: 'remote',
+        //   },
+        // },
+      ],
+    },
   },
   data() {
     return {
-      file: [],
       self: {},
     };
   },
@@ -112,6 +141,9 @@ export default {
     self(val) {
       this.$emit('input', val);
     },
+    files(val) {
+      console.log(val)
+    },
   },
   mounted() {
     setOptions(this.options);
@@ -120,6 +152,9 @@ export default {
     setFileMetaData() {
       try {
         this.self = this.$refs.pond.getFile();
+        if (!!this.$refs.pond.allowMultiple) {
+          this.self = this.$refs.pond.getFiles();
+        }
       } catch (Exception) {
         this.self = {};
       }
@@ -127,3 +162,8 @@ export default {
   },
 };
 </script>
+<style lang="stylus" scoped>
+  .filepond--action-process-item{
+    visibility:hidden;
+  }
+</style>

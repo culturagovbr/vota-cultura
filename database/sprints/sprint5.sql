@@ -33,3 +33,6 @@ COMMENT ON COLUMN public.tb_conselho_indicacao.dt_nascimento_indicado IS 'Data d
 
 ALTER TABLE public.tb_conselho_indicacao OWNER TO votacultura;
 GRANT ALL ON TABLE public.tb_conselho_indicacao TO votacultura;
+
+ALTER TABLE public.tb_endereco ALTER COLUMN nu_cep DROP NOT NULL;
+ALTER TABLE public.tb_endereco ALTER COLUMN ds_logradouro DROP NOT NULL;

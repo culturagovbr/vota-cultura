@@ -238,6 +238,12 @@ export default {
           name: 'ConselhoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Conselho');
+        this.definirItemMenu({
+          title: 'Indicação',
+          group: 'apps',
+          name: 'ConselhoIndicacaoRoute',
+          icon: 'person_pin',
+        }, 'Conselho');
       }
     },
     carregarMenusOrganizacao() {

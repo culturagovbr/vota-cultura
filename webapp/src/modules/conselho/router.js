@@ -68,6 +68,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoListaHabilitacao.vue'),
       },
+      {
+        path: '/conselho/indicacao',
+        name: 'ConselhoIndicacaoRoute',
+        meta: {
+          title: 'Indicação - Conselho de cultura',
+          group: 'apps',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "conselho-indicacao" */ '@/modules/conselho/views/ConselhoIndicacao.vue'),
+      },
     ],
   },
 ];

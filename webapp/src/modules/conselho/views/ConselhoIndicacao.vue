@@ -1,0 +1,699 @@
+<template>
+  <v-container>
+    <v-card>
+      <v-toolbar
+        dark
+        color="primary"
+      >
+        <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+      </v-toolbar>
+      <v-card-text>
+        <v-layout class="pl-4">
+          <v-flex
+            xs12
+            sm6
+          >
+            <div class="ma-12 text-justify subheading grey--text">
+              <span class="font-weight-bold">Nome do conselho:</span> aaa
+            </div>
+          </v-flex>
+        </v-layout>
+
+
+        <v-layout class="pa-4">
+          <v-flex
+            md12
+            subheading
+            grey--text
+            mt-2
+            d-inline-flex
+          >
+            <div class="md6">
+              <span class="font-weight-bold">CNPJ do órgão gestor do conselho:</span> aa
+            </div>
+
+            <div class="md6">
+              <span class="font-weight-bold">Nome do órgão Gestor:</span>aaa
+            </div>
+          </v-flex>
+        </v-layout>
+
+        <v-card>
+          <v-toolbar
+            color="white elevation-1"
+          >
+            <v-toolbar-title>Indicação</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <v-container
+              grid-list-md
+            >
+              <!--text-xs-center-->
+              <b>Critérios para as indicações - Item 5.3 do edital:</b>
+              <p>
+                5.3.1 - Os conselhos de cultura habilitados estarão aptos a indicar de <b>três a cinco
+                  representantes</b> da sociedade civil, membros ou não do respectivo conselho, para
+                concorrer às vagas descritas no subitem 2.2.2. do edital.
+              </p>
+
+              <p>
+                5.3.2 - Os indicados deverão cumprir os seguintes requisitos:
+                a. mínimo de 3 anos de atuação comprovada no campo cultural;
+                b. ser maior de 18 anos;
+                c. residir na unidade da federação ou macrorregião do conselho de cultura que
+                o indicou; e
+                d. não ser ocupante de função de confiança ou cargo comissionado no setor
+                público.
+              </p>
+              <v-card>
+                <v-toolbar
+                  color="white elevation-0"
+                >
+                  <v-toolbar-title>Lista dos indicados</v-toolbar-title>
+                  <v-spacer />
+                  <v-btn
+                    tiny
+                    round
+                    outline
+                    color="indigo"
+                    @click="abrirDialogo"
+                  >
+                    <v-icon>add</v-icon>
+                    Indicar
+                  </v-btn>
+                </v-toolbar>
+                <v-card-text class="pa-0">
+                  <v-data-table
+                    :headers="headers"
+                    :items="[]"
+                    :pagination.sync="pagination_conselho"
+                    :total-items="totalItems"
+                    :loading="loading"
+                    item-key="co_usuario"
+                    class="elevation-1"
+                  >
+                    <template
+                      slot="items"
+                      slot-scope="props"
+                    >
+                      <td />
+                      <td>{{ props.item.cnpj_formatado }}</td>
+                      <td>{{ props.item.no_conselho }}</td>
+                      <td>
+                        <v-chip
+                          dark
+                          color="primary"
+                        >
+                          {{ props.item.endereco.municipio.uf.no_uf }}
+                        </v-chip>
+                      </td>
+                      <td>
+                        <v-chip>
+                          {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
+                        </v-chip>
+                      </td>
+                      <td v-if="souAdministrador">
+                        <v-btn
+                          depressed
+                          outline
+                          icon
+                          fab
+                          dark
+                          color="primary"
+                          small
+                          @click="visualizarItemModal('conselho', props.item.co_conselho)"
+                        >
+                          <v-icon>search</v-icon>
+                        </v-btn>
+                      </td>
+                    </template>
+                  </v-data-table>
+                </v-card-text>
+              </v-card>
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-card-text>
+      <v-layout
+        align-center
+        justify-center
+        row
+        fill-height
+      >
+        <v-btn
+          href="/"
+        >
+          Cancelar
+        </v-btn>
+        <v-btn
+          color="primary"
+          :loading="loading"
+          @click="abrirDialogo"
+        >
+          Enviar
+        </v-btn>
+      </v-layout>
+    </v-card>
+
+
+    <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-toolbar
+          dark
+          color="primary"
+        >
+          <v-btn
+            icon
+            dark
+            @click="dialog = false"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+
+          <v-toolbar-title>
+            Cadastrar
+          </v-toolbar-title>
+
+          <v-spacer />
+        </v-toolbar>
+        <v-card-text>
+          <v-container>
+            <v-card>
+              <v-toolbar
+                color="white elevation-1"
+              >
+                <v-toolbar-title>Indicação</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
+                <v-container
+                  grid-list-md
+                >
+                  <v-layout
+                    row
+                    wrap
+                  >
+                    <v-flex>
+                      <v-card>
+                        <v-toolbar
+                          color="white elevation-0"
+                        >
+                          <v-toolbar-title>Dados básicos</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-container
+                            grid-list-md
+                          >
+                            <v-layout>
+                              <v-flex md3>
+                                <v-text-field
+                                  v-model="indicado.nu_cpf_indicado"
+                                  placeholder="999.999.999-99"
+                                  append-icon="person"
+                                  name="login"
+                                  label="*CPF"
+                                  mask="###.###.###-##"
+                                  :error-messages="nomeIndicadoErros"
+                                  validate-on-blur
+                                  type="text"
+                                />
+                              </v-flex>
+                              <v-flex
+                                md3
+                                offset-md7
+                                style="margin-bottom: -272px; top: -86px; position: relative;"
+                              >
+                                <file
+                                  v-model="indicado_foto_rosto"
+                                  style-panel-layout="compact circle"
+                                  style-load-indicator-position="center bottom"
+                                  style-progress-indicator-position="right bottom"
+                                  style-button-remove-item-position="left bottom"
+                                  style-button-process-item-position="right bottom"
+                                  label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG))"
+                                  :accepted-file-types="['image/jpeg']"
+                                />
+                              </v-flex>
+                            </v-layout>
+
+                            <v-layout>
+                              <v-flex md9>
+                                <v-text-field
+                                  v-model="indicado.no_indicado"
+                                  append-icon="person_outline"
+                                  name="login"
+                                  label="*Nome completo"
+                                  :error-messages="nomeIndicadoErros"
+                                  validate-on-blur
+                                  type="text"
+                                  :disabled="true"
+                                />
+                              </v-flex>
+                            </v-layout>
+
+                            <v-layout>
+                              <v-flex md3>
+                                <v-select
+                                  v-model="indicado.endereco.co_ibge"
+                                  :items="listaUF"
+                                  label="*Unidade da federação em que reside"
+                                  append-icon="place"
+                                  item-value="co_ibge"
+                                  item-text="no_uf"
+                                  required
+                                  box
+                                />
+                              </v-flex>
+                              <v-flex
+                                md3
+                              >
+                                <v-select
+                                  v-model="indicado.endereco.co_municipio"
+                                  :items="listaMunicipios"
+                                  label="*Cidade em que reside"
+                                  append-icon="place"
+                                  item-value="co_municipio"
+                                  item-text="no_municipio"
+                                  box
+                                  :disabled="indicado.endereco.co_ibge < 1 || indicado.endereco.co_ibge == null"
+                                />
+                              </v-flex>
+                              <v-flex md3>
+                                <template activator="{ on }">
+                                  <v-menu
+                                    ref="menu"
+                                    v-model="menu"
+                                    lazy
+                                    transition="scale-transition"
+                                    :close-on-content-click="false"
+                                    offset-y
+                                    full-width
+                                    min-width="290px"
+                                  >
+                                    <template v-slot:activator="{ on }">
+                                      <v-text-field
+                                        v-model="indicado.dt_nascimento"
+                                        label="*Data de Nascimento"
+                                        append-icon="event"
+                                        placeholder="ex: 01/12/2019"
+                                        return-masked-value
+                                        mask="##/##/####"
+                                        required
+                                        v-on="on"
+                                      />
+                                    </template>
+                                    <v-date-picker
+                                      v-model="date"
+                                      locale="pt-BR"
+                                      scrollable
+                                    >
+                                      <v-spacer />
+                                      <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="menu = false"
+                                      >
+                                        Cancel
+                                      </v-btn>
+                                      <v-btn
+                                        flat
+                                        color="primary"
+                                        @click="$refs.menu.save(date)"
+                                      >
+                                        OK
+                                      </v-btn>
+                                    </v-date-picker>
+                                  </v-menu>
+                                </template>
+                              </v-flex>
+                            </v-layout>
+
+                            <v-layout>
+                              <v-flex md12>
+                                <v-textarea
+                                  label="* Currículo resumido para a candidatura"
+                                  rows="13"
+                                  row-height="28"
+                                  :counter="1000"
+                                  box
+                                  auto-grow
+                                />
+                                <span>
+                                  Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
+                                </span>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+
+                    <v-flex>
+                      <v-card>
+                        <v-toolbar
+                          color="white elevation-0"
+                        >
+                          <v-toolbar-title>Documentação</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-container
+                            grid-list-md
+                          >
+                            <div class="text-md-center grey--text title mb-9">
+                              Envie os documentos no formato PDF (preferencialmente), JPEG, <br>
+                              ZIP ou RAR para enviar mais de um arquivo.<br>
+
+                              <br>
+                              <b>ATENÇÃO</b>
+                              <br>
+                              Anexe arquivos com tamanho até 40MB
+                            </div>
+
+                            <div class="ma-4 text-justify">
+                              <v-toolbar color="white darken-3 title">
+                                Documentação
+                              </v-toolbar>
+                              <v-card class="elevation-1">
+                                <v-container
+                                  fluid
+                                  grid-list-xl
+                                >
+                                  <v-layout>
+                                    <v-flex class="pa-3">
+                                      <v-list two-line>
+                                        <template
+                                          v-for="documento in documentos"
+                                        >
+                                          <v-list-tile
+                                            avatar
+                                            @click=""
+                                          >
+                                            <v-list-tile-content>
+                                              <v-list-tile-title
+                                                v-html="`
+                                              ${!!(documento.obrigatorio) ? '*' : ''} ${documento.descricao}`"
+                                              />
+                                            </v-list-tile-content>
+                                            <v-list-tile-action />
+                                          </v-list-tile>
+                                          <file
+                                            v-if="!documento.multiplo"
+                                            v-model="anexos[documento.slug]"
+                                          />
+                                          <file
+                                            :files="testea"
+                                            v-else
+                                            v-model="anexos[documento.slug]"
+                                            :allow-multiple="true"
+                                            label-idle="Clique aqui para anexar até 5 arquivos"
+                                            :max-files="5"
+                                          />
+                                        </template>
+                                      </v-list>
+                                    </v-flex>
+                                  </v-layout>
+                                </v-container>
+                              </v-card>
+                            </div>
+                          </v-container>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-text>
+              <v-card-actions class="justify-center">
+                <v-btn
+                  @click="dialog = false"
+                >
+                  <v-icon left>
+                    undo
+                  </v-icon>
+                  Voltar
+                </v-btn>
+                <v-btn
+                  :loading="loading"
+                  :disabled="loading"
+                  color="primary"
+                  @click.native="salvar"
+                >
+                  <v-icon left>
+                    send
+                  </v-icon>
+                  Salvar
+                </v-btn>
+                <v-btn
+                  :loading="loading"
+                  :disabled="loading"
+                  color="primary"
+                  @click.native="debug"
+                >
+                  <v-icon left>
+                    send
+                  </v-icon>
+                  debug
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </v-container>
+</template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex';
+import File from '@/core/components/upload/File';
+import Validate from '../../shared/util/validate';
+
+export default {
+  name: 'ConselhoIndicacao',
+  components: { File },
+  data: () => ({
+    testea: [],
+    menu: false,
+    date: '',
+    dateFormatted: '',
+    indicado_foto_rosto: {},
+    anexos: {},
+    nomeIndicadoErros: '',
+    listaUF: [],
+    loading: false,
+    dialog: true,
+    pagination_conselho: {
+      page: 1,
+      rowsPerPage: 10,
+      sortBy: 'no_conselho',
+      descending: false,
+    },
+    totalItems: 0,
+    documentos: [
+      {
+        slug: 'indicado_curriculo',
+        descricao: 'b) currículo.',
+        obrigatorio: true,
+        multiplo: false,
+      },
+      {
+        slug: 'indicado_portfolio',
+        descricao: 'd) Portfólio.',
+        obrigatorio: true,
+        multiplo: true,
+      },
+      {
+        slug: 'indicado_comprovacao_colegiadas',
+        descricao: 'e) Comprovação, por meio de portaria de designação ou termo de posse, de atuação em instâncias colegiadas nos últimos 10 anos, se houver.',
+        obrigatorio: false,
+        multiplo: true,
+      },
+      {
+        slug: 'indicado_copia_identificacao',
+        descricao: 'f) Cópia do documento de identificação (conforme item 2.5.2 deste edital) e CPF.',
+        obrigatorio: true,
+        multiplo: false,
+      },
+      {
+        slug: 'indicado_comprovante_residencia',
+        descricao: 'g) Comprovante de residência no nome do indicado.',
+        obrigatorio: true,
+        multiplo: false,
+      },
+      {
+        slug: 'indicado_declaracao_autorizacao_ministerio',
+        descricao: 'h) Declaração que autoriza o Ministério da Cidadania a divulgar as imagens e informações contidas na inscrição e que responsabiliza o candidato pelos documentos e materiais apresentados (ANEXO 2).',
+        obrigatorio: true,
+        multiplo: false,
+      },
+      {
+        slug: 'indicado_declaracao_disponibilidade',
+        descricao: 'i) Declaração de que possui disponibilidade para compor o Conselho Nacional de Política Cultural no triênio 2019/2022 (ANEXO 2).',
+        obrigatorio: true,
+        multiplo: false,
+      },
+      {
+        slug: 'indicado_comprovacao_deliberacao',
+        descricao: 'j) Documento que comprove a deliberação do Conselho, presencial ou virtual, para indicação dos candidatos.',
+        obrigatorio: true,
+        multiplo: true,
+      },
+      {
+        slug: 'indicado_termo_representante_conselho',
+        descricao: 'k) Termo de indicação de representante do Conselho de Cultura assinado pelo presidente do conselho (ANEXO 5).',
+        obrigatorio: true,
+        multiplo: false,
+      },
+    ],
+    headers: [
+      {
+        text: '',
+        sortable: false,
+      },
+      {
+        text: 'CPF',
+        value: 'cnpj_formatado',
+      },
+      {
+        text: 'Nome',
+        value: 'no_conselho',
+      },
+      {
+        text: 'UF de federação em que reside',
+        value: 'endereco.municipio.uf.no_uf',
+      },
+      {
+        text: 'Data do cadastro',
+        value: 'endereco.municipio.uf.regiao.no_regiao',
+        sortable: false,
+      },
+      {
+        text: 'Ações',
+        value: 'endereco.municipio.uf.regiao.no_regiao',
+        sortable: false,
+      },
+    ],
+    listaMunicipios: [],
+    indicado: {
+      dt_nascimento: '',
+      nu_cpf_indicado: '',
+      no_indicado: '',
+      endereco: {
+        co_ibge: '',
+        co_municipio: '',
+      },
+      anexos: [],
+    },
+    listaIndicados: [],
+  }),
+  computed: {
+    ...mapGetters({
+      estadosGetter: 'localidade/estados',
+      municipiosGetter: 'localidade/municipios',
+    }),
+  },
+  watch: {
+    anexos: {
+      deep: true,
+      handler(newVal, a) {
+        console.log(newVal, a)
+      },
+    },
+    date() {
+      this.indicado.dt_nascimento = this.formatDate(this.date);
+    },
+    estadosGetter() {
+      this.listaUF = this.estadosGetter;
+    },
+    municipiosGetter() {
+      this.listaMunicipios = this.municipiosGetter;
+    },
+    'indicado.endereco.co_ibge': function (coIBGE) {
+      this.obterMunicipios(coIBGE);
+    },
+    'indicado.nu_cpf_indicado': function (value) {
+      const self = this;
+      self.indicado.no_indicado = '';
+      this.nomeIndicadoErros = 'CPF inválido';
+      if (value.length === 11 && Validate.isCpfValido(value)) {
+        this.consultarCPF(value).then((response) => {
+          const { data } = response.data;
+          self.indicado.no_indicado = data.nmPessoaFisica;
+        });
+        this.nomeIndicadoErros = '';
+      }
+    },
+  },
+  methods: {
+    ...mapActions({
+      consultarCPF: 'pessoa/consultarCPF',
+      obterEstados: 'localidade/obterEstados',
+      obterMunicipios: 'localidade/obterMunicipios',
+      enviarIndicacaoConselho: 'conselho/enviarIndicacaoConselho',
+    }),
+    formatDate(date) {
+      if (!date) return null;
+      const [year, month, day] = date.split('-');
+      return `${day}/${month}/${year}`;
+    },
+    abrirDialogo() {
+      this.dialog = true;
+    },
+    fecharDialogo() {
+      this.dialog = false;
+    },
+    debug() {
+      // console.log(this.indicado);
+      this.testea = [{
+        // the server file reference
+        source: 'www.gooogle.com.br',
+
+        // set type to local to indicate an already uploaded file
+        options: {
+          type: 'remote',
+          file: {
+            name: 'Arquivo.png',
+            size: 3001025,
+            // type: 'image/png',
+            fake: true,
+          },
+        },
+      }];
+    },
+    salvar() {
+      this.indicado.anexos = [];
+
+      // this.indicado.anexos.push({
+      //   binario: this.indicado_foto_rosto.file,
+      //   slug: 'indicado_foto_rosto',
+      // });
+
+
+      Object.keys(this.anexos).forEach((slug) => {
+        if (Array.isArray(this.anexos[slug])) {
+          this.anexos[slug].forEach((arquivo) => {
+            this.indicado.anexos.push({
+              binario: arquivo.file,
+              slug,
+            });
+          });
+          return true;
+        }
+        this.indicado.anexos.push({
+          binario: this.anexos[slug].file,
+          slug,
+        });
+        return true;
+      });
+
+      this.enviarIndicacaoConselho(this.indicado);
+    },
+  },
+  mounted() {
+    this.obterEstados();
+  },
+};
+</script>
