@@ -4,6 +4,7 @@ namespace App\Modules\Conselho\Model;
 
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Localidade\Model\Endereco;
+use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
 
 class ConselhoIndicacao extends Model
@@ -36,6 +37,21 @@ class ConselhoIndicacao extends Model
             Conselho::class,
             'co_conselho',
             'co_conselho'
+        );
+    }
+
+    public function arquivos()
+    {
+        return $this->belongsToMany(
+            Arquivo::class,
+            'rl_conselho_indicacao_arquivo',
+            'co_conselho_indicacao',
+            'co_arquivo'
+        )->as('rl_conselho_indicacao_arquivo')->withPivot(
+            [
+                'tp_arquivo',
+                'co_conselho_indicacao'
+            ]
         );
     }
 
