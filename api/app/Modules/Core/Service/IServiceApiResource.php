@@ -14,7 +14,7 @@ interface IServiceApiResource extends IService
 
     public function obterTodos() : ?Collection;
 
-    public function atualizar(Request $request, int $identificador) : ?Model;
+    public function atualizar(Request $request, int $identificador) :  ?array;
 
     public function remover(Request $request, int $identificador);
 

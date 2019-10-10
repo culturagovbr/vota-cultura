@@ -92,11 +92,12 @@
                             </div>
                           </v-flex>
                         </v-layout>
-                        <v-layout v-if="!!formulario.organizacaoHabilitacao.nu_nova_pontuacao">
+
+                        <v-layout v-if="!!formulario.organizacaoHabilitacao && !!formulario.organizacaoHabilitacao.situacao_avaliacao">
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>Pontuação após análise:</b>
-                              {{ formulario.organizacaoHabilitacao.nu_nova_pontuacao }}
+                              {{!!formulario.organizacaoHabilitacao.nu_nova_pontuacao.toString() ? formulario.organizacaoHabilitacao.nu_nova_pontuacao:formulario.pontuacao}}
                             </div>
                           </v-flex>
                         </v-layout>
@@ -374,9 +375,9 @@
                                 name="input-7-4"
                                 rows="13"
                                 row-height="28"
-                                :counter="5000"
-                                :rules="[rules.required, rules.tamanhoMaximo5000Caracteres]"
-                                :disabled="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                                :counter="15000"
+                                :rules="[rules.required, rules.tamanhoMaximo15000Caracteres]"
+                                :readonly="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
                               />
                             </v-flex>
                           </v-layout>
@@ -447,8 +448,7 @@
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
-                        @click.native="abrirDialogo"
-                      >
+                        @click.native="abrirDialogo">
                         <v-icon left>
                           send
                         </v-icon>
@@ -576,12 +576,11 @@ export default {
           ds_parecer: null,
         },
       },
-      formulario: {},
       rules: {
         required: value => !!value || 'Este campo é obrigatório',
         minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
         tamanhoMaximo3000Caracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
-        tamanhoMaximo5000Caracteres: value => (!!value && value.length <= 5000) || 'Máximo 5000 caracteres',
+        tamanhoMaximo15000Caracteres: value => (!!value && value.length <= 15000) || 'Máximo 15000 caracteres',
         tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'Máximo 500 caracteres',
       },
     };
@@ -599,6 +598,7 @@ export default {
       if (!valor) {
         this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
         this.inicializarValoresComponente();
+        this.$refs.form_recurso.reset();
       }
     },
     dialog(valor) {
@@ -630,6 +630,12 @@ export default {
       if (valor === '0') {
         this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = String();
       }
+
+      if (this.formulario.organizacaoHabilitacao.nu_nova_pontuacao === null) {
+        this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = this.formulario.pontuacao;
+        this.possuiNovaPontuacao = '0';
+      }
+
     },
   },
   methods: {
@@ -678,7 +684,7 @@ export default {
         this.arquivosAvaliacao[item.tp_arquivo] = Object.assign({}, item);
       });
       this.possuiNovaPontuacao = '0';
-      if (organizacaoHabilitacao.nu_nova_pontuacao > 0) {
+      if (organizacaoHabilitacao.nu_nova_pontuacao >= 0) {
         this.possuiNovaPontuacao = '1';
       }
     },

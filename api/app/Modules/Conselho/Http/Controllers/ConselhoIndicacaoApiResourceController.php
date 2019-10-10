@@ -5,6 +5,8 @@ namespace App\Modules\Conselho\Http\Controllers;
 use App\Modules\Conselho\Service\ConselhoIndicacao;
 USE \App\Modules\Conselho\Http\Resources\ConselhoIndicacao as ConselhoIndicacaoResource;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
+use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
+use App\Modules\Core\Http\Controllers\Traits\TApiResourceUpdate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -12,12 +14,14 @@ use Illuminate\Http\Response;
 
 class ConselhoIndicacaoApiResourceController extends AApiResourceController
 {
+    use TApiResourceUpdate,
+        TApiResourceDestroy;
+
     /** @var ConselhoIndicacao ConselhoIndicacao  */
     protected $service;
     public function __construct(ConselhoIndicacao $service)
     {
         $this->middleware('auth:api');
-        $this->service = $service;
         return parent::__construct($service);
     }
 
@@ -55,9 +59,15 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        //
+        return $this->sendResponse(
+            new ConselhoIndicacaoResource(
+                $this->service->obterUm($id)
+            ),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -72,17 +82,16 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     * @throws \HttpException
      */
     public function update(Request $request, $id)
     {
-                return $this->sendResponse(
-            new RecursoInscricaoResource(
-                $this->service->atualizar($request, $identificador)
+        return $this->sendResponse(
+            new ConselhoIndicacaoResource(
+                $this->service->atualizar($request, $id)
             ),
             "Operação realizada com sucesso",
             Response::HTTP_OK
@@ -90,13 +99,14 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     * @throws \HttpException
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $this->service->remover($request, $id);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
