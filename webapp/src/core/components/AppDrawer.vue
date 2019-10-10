@@ -169,7 +169,7 @@ export default {
           name: 'inscricao-lista-parcial-route',
         },
         {
-          title: 'Lista parcial dos habilitados',
+          title: 'Lista final dos habilitados',
           group: 'apps',
           icon: 'list',
           name: 'inscricao-lista-parcial-habilitacao-route',
@@ -237,13 +237,6 @@ export default {
           group: 'apps',
           name: 'ConselhoDetalhesInscricaoRoute',
           icon: 'group',
-        }, 'Conselho');
-
-        this.definirItemMenu({
-          title: 'Recurso da habilitação',
-          group: 'apps',
-          name: 'ConselhoHabilitacaoRecursoRoute',
-          icon: 'gavel',
         }, 'Conselho');
       }
     },

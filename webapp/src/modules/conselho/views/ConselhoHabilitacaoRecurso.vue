@@ -255,10 +255,8 @@ export default {
   },
 
   beforeUpdate(){
-    if (!this.usuario.co_conselho) {
-        this.definirMensagemErro('Acesso restrito aos conselhos de cultura');
-        this.$router.push('/');
-    }
+    this.definirMensagemErro('O prazo de envio do recurso da habilitação expirou');
+    this.$router.push('/');
   },
   mounted() {
     const self = this;
