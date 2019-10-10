@@ -3,6 +3,7 @@
 namespace App\Modules\Conselho\Providers;
 
 use App\Modules\Conselho\Mail\Conselho\CadastroComSucesso;
+use App\Modules\Conselho\Mail\Conselho\CadastroConselhoIndicacaoSucesso;
 use App\Modules\Conselho\Mail\Conselho\CadastroHabilitacaoRecursoSucesso;
 use App\Modules\Conselho\Model\ConselhoIndicacao;
 use Caffeinated\Modules\Support\ServiceProvider;
@@ -39,6 +40,11 @@ class ModuleServiceProvider extends ServiceProvider
         $this->app->bind(CadastroHabilitacaoRecursoSucesso::class, function ($app, $parametros) {
             return new CadastroHabilitacaoRecursoSucesso( $parametros);
         });
+
+        $this->app->bind(CadastroConselhoIndicacaoSucesso::class, function ($app, $parametros) {
+            return new CadastroConselhoIndicacaoSucesso( $parametros);
+        });
+
         $this->app->bind(ConselhoModel::class, function ($app, $parametros) {
             if($parametros instanceof ConselhoModel) {
                 return $parametros;

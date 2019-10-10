@@ -5,10 +5,10 @@ namespace App\Modules\Conselho\Service;
 use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\ConselhoIndicacao as ConselhoIndicacaoModel;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
-use App\Modules\Organizacao\Mail\Organizacao\CadastroConselhoIndicacaoSucesso;
-use App\Modules\Representacao\Model\Representante as RepresentanteModel;
+use App\Modules\Conselho\Mail\Conselho\CadastroConselhoIndicacaoSucesso;
 use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Mail;
 
 class ConselhoIndicacao extends AbstractService
 {
-
     public function __construct(ConselhoIndicacaoModel $model)
     {
         parent::__construct($model);
@@ -27,9 +26,12 @@ class ConselhoIndicacao extends AbstractService
 
     public function cadastrar(Collection $dados): ?Model
     {
+
+        $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
+
         try {
             DB::beginTransaction();
-            $this->getModel()->fill($dados->only(['co_conselho', 'nu_cpf_indicado', 'ds_curriculo']));
+            $this->getModel()->fill($dados->only(['co_conselho', 'nu_cpf_indicado', 'ds_curriculo', 'dt_nascimento_indicado'])->toArray());
             $quantidadeMaximaIndicadosExcedida = $this->getModel()->quantidadeMaximaIndicadosExcedida();
 
             if ($quantidadeMaximaIndicadosExcedida) {
@@ -56,6 +58,16 @@ class ConselhoIndicacao extends AbstractService
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
+        }
+    }
+
+    private function validarIdadeMinimaIndicado($idadeIndicado)
+    {
+        $hoje = Carbon::now();
+        $nascimentoIndicado = Carbon::create($idadeIndicado);
+
+        if ($hoje->diff($nascimentoIndicado)->y < 18) {
+            throw new EParametrosInvalidos('A idade mínima permitida são 18 anos.');
         }
     }
 
@@ -112,8 +124,9 @@ class ConselhoIndicacao extends AbstractService
     private function recuperarDadosConselhoUsuarioLogado()
     {
         $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
-        return $this->getModel()->where([
-            'co_organizacao' => $usuarioAutenticado['co_conselho']
+        $modelConselho = app(\App\Modules\Conselho\Model\Conselho::class);
+        return $modelConselho->where([
+            'co_conselho' => $usuarioAutenticado['co_conselho']
         ])->first();
     }
 }

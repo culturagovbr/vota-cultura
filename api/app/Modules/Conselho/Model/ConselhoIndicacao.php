@@ -18,6 +18,8 @@ class ConselhoIndicacao extends Model
         'nu_cpf_indicado',
         'no_indicado',
         'co_endereco',
+        'dt_nascimento_indicado',
+        'ds_curriculo',
     ];
 
     public $timestamps = false;
