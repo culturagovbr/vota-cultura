@@ -21,6 +21,10 @@
               Conselho
               <v-icon>group</v-icon>
             </v-tab>
+            <v-tab href="#organizacao">
+              Organização
+              <v-icon>group</v-icon>
+            </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tp_inscricao">
             <v-tab-item value="conselho">
@@ -70,7 +74,7 @@
                       <td>
                         <v-chip
                           dark
-                          color="primary"
+                          :color="(props.item.conselhoHabilitacao.ds_avaliacao === 'Habilitado') ? 'primary' : 'error'"
                         >
                           {{ props.item.conselhoHabilitacao.ds_avaliacao }}
                         </v-chip>
@@ -79,6 +83,9 @@
                   </v-data-table>
                 </v-card-text>
               </v-card>
+            </v-tab-item>
+            <v-tab-item value="organizacao">
+              <organizacao-lista-habilitacao :exibirTitulo="false" :exibirColunaAcoes="false" />
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -89,9 +96,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import OrganizacaoListaHabilitacao from '../../../organizacao/views/OrganizacaoListaHabilitacao';
 
 export default {
   name: 'ListaParcialHabilitacao',
+  components: { OrganizacaoListaHabilitacao },
   data() {
     return {
       tp_inscricao: null,
