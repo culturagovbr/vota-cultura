@@ -49,7 +49,7 @@ class ConselhoIndicacao extends AbstractService
 
             $conselhoUsuarioLogado = $this->recuperarDadosConselhoUsuarioLogado();
 
-            $this->cadastrarArquivosIndicacao($dados->only('arquivo'), $conselhoUsuarioLogado);
+            $this->cadastrarArquivosIndicacao($dados->only('anexos'), $conselhoUsuarioLogado);
             $this->enviarEmailConfirmacaoConselhoIndicacao($conselhoUsuarioLogado);
 
              $dadosCadastrados = parent::cadastrar($dados);
@@ -67,7 +67,7 @@ class ConselhoIndicacao extends AbstractService
         $nascimentoIndicado = Carbon::create($idadeIndicado);
 
         if ($hoje->diff($nascimentoIndicado)->y < 18) {
-            throw new EParametrosInvalidos('A idade mínima permitida são 18 anos.');
+            throw new EParametrosInvalidos('A idade mínima permitida é 18 anos.');
         }
     }
 
@@ -90,13 +90,13 @@ class ConselhoIndicacao extends AbstractService
                 'conselho/indicacao/'
             );
 
-            $this->salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $conselho, $uploadedFile->tpArquivo);
+            $this->salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $conselho, $uploadedFile->slug);
 
         }
 //        return $arquivoArmazenado->co_arquivo;
     }
 
-    private function salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $conselho)
+    private function salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $conselho, $slugArquivo)
     {
         $conselhoIndicacaoModel = app(ConselhoIndicacaoModel::class);
         /** @var ConselhoIndicacaoModel $conselhoIndicacao */
@@ -106,7 +106,7 @@ class ConselhoIndicacao extends AbstractService
         $conselhoIndicacao->arquivos()->attach(
             $arquivoArmazenado->co_arquivo,
             [
-                'tp_arquivo' => 'recurso_habilitacao_conselho',
+                'tp_arquivo' => $slugArquivo,
             ]
         );
     }
