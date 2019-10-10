@@ -11,7 +11,7 @@ CREATE TABLE public.tb_conselho_indicacao (
                                               dh_indicacao timestamp NOT NULL DEFAULT now(), -- Data da indicação.
                                               ds_curriculo varchar(1000) NULL, -- Currículo do indicado pelo conselho.
                                               co_arquivo int4 NULL, -- Código do arquivo da foto do indicado, referente à tabela tb_arquivo
-                                              dt_nascimento_indicado date NULL, -- Data de nascimento do indicado
+                                              dt_nascimento_indicado date NOT NULL, -- Data de nascimento do indicado
                                               CONSTRAINT pk_conselho_indicacao PRIMARY KEY (co_conselho_indicacao),
                                               CONSTRAINT uk_conselho_indicacao UNIQUE (nu_cpf_indicado, co_conselho),
                                               CONSTRAINT fk_conselho_indicacao_arquivo FOREIGN KEY (co_arquivo) REFERENCES tb_arquivo(co_arquivo),
