@@ -4,7 +4,7 @@
       <v-card-title>
         <div class="layout column align-center">
           <h2 class="flex my-2 primary--text">
-            {{ $route.meta.title }}
+            Lista {{ (tp_inscricao === 'conselho') ? 'final' : 'parcial' }} dos habilitados
           </h2>
         </div>
       </v-card-title>
