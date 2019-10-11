@@ -13,3 +13,8 @@ COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_organizacao_habil
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_organizacao IS 'Chave estrangeira referente a organização';
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_recurso IS 'Descrição do recurso';
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.dh_cadastro_recurso IS 'Data de cadastro do recurso';
+
+--#############
+ALTER TABLE public.tb_conselho RENAME COLUMN st_inscricao TO st_indicacao;
+ALTER TABLE public.tb_conselho ALTER COLUMN st_indicacao SET DEFAULT 'a';
+COMMENT ON COLUMN public.tb_conselho.st_indicacao IS 'situação em que se encontra o período de indicados do conselho. Possíveis opções: a = aberto, f = fechado';
