@@ -23,11 +23,13 @@
         <v-spacer />
       </v-toolbar>
       <v-card-text>
+
         <v-form
           ref="form_recurso"
           v-model="valid"
         >
           <v-container v-if="!!arquivosAvaliacao.documento_identificacao_representante">
+
             <v-card>
               <v-card-text>
                 <v-tabs
@@ -47,7 +49,11 @@
                   >
                     Dados da organização
                   </v-tab>
+                  <v-tab href="#tab-3" v-if="possuoHistoricoRevisoes">
+                    Histórico de revisões
+                  </v-tab>
                 </v-tabs>
+
                 <v-tabs-items
                   v-model="model"
                   class="white elevation-1"
@@ -475,6 +481,14 @@
                       <organizacao-detalhes-inscricao-visualizacao />
                     </v-card>
                   </v-tab-item>
+                  <v-tab-item value="tab-3" v-if="possuoHistoricoRevisoes">
+                    <v-card
+                      flat
+                      class="pa-4"
+                    >
+                      <organizacao-lista-habilitacao-historico :historico="formulario.organizacaoHabilitacao.historico" />
+                    </v-card>
+                  </v-tab-item>
                 </v-tabs-items>
               </v-card-text>
             </v-card>
@@ -491,17 +505,22 @@
         <v-card>
           <v-card-title class="headline">
             Deseja realmente
-            <span v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'" style="margin-left:5px">
+            <span
+              v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'"
+              style="margin-left:5px"
+            >
               revisar
             </span>
-            <span v-else style="margin-left:5px">
+            <span
+              v-else
+              style="margin-left:5px"
+            >
               enviar
             </span>
             ?
           </v-card-title>
 
           <v-card-text v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'">
-
             <span class="subheading">
               Indique abaixo se é uma revisão final:
             </span>
@@ -514,10 +533,10 @@
                     class="text-md-center"
                     label="Revisão final"
                   />
-            <span class="body-1">
-              Atenção! Caso selecione que é uma revisão final não será
-              possível revisar novamente.
-            </span>
+                  <span class="body-1">
+                    Atenção! Caso selecione que é uma revisão final não será
+                    possível revisar novamente.
+                  </span>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -557,10 +576,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import OrganizacaoDetalhesInscricaoVisualizacao from './OrganizacaoDetalhesInscricaoVisualizacao';
+import OrganizacaoListaHabilitacaoHistorico from "./OrganizacaoListaHabilitacaoHistorico";
 
 export default {
   name: 'OrganizacaoListaHabilitacaoDialog',
   components: {
+    OrganizacaoListaHabilitacaoHistorico,
     OrganizacaoDetalhesInscricaoVisualizacao,
   },
   props: {
@@ -621,6 +642,9 @@ export default {
       perfisInscricao: 'conta/perfisInscricao',
       perfil: 'conta/perfil',
     }),
+    possuoHistoricoRevisoes() {
+      return !!this.formulario.organizacaoHabilitacao && this.formulario.organizacaoHabilitacao.historico.length > 0;
+    },
   },
   watch: {
     value(valor) {

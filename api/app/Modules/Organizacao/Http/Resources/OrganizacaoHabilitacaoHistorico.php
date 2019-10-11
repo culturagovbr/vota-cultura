@@ -9,11 +9,10 @@ use App\Modules\Representacao\Http\Resources\Representante;
 use App\Modules\Representacao\Http\Resources\RepresentanteArquivoAvaliacao;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizacaoHabilitacao extends JsonResource
+class OrganizacaoHabilitacaoHistorico extends JsonResource
 {
     public function toArray($request): array
     {
-
         switch ($this->st_avaliacao) {
             case \App\Modules\Organizacao\Model\OrganizacaoHabilitacao::SITUACAO_AVALIACAO_INABILITADA:
                 $situacaoAvaliacao = 'Inabilitada';
@@ -33,16 +32,18 @@ class OrganizacaoHabilitacao extends JsonResource
         }
 
         return [
+            'co_organizacao_habilitacao_historico' => $this->co_organizacao_habilitacao_historico,
             'co_organizacao_habilitacao' => $this->co_organizacao_habilitacao,
             'co_organizacao' => $this->co_organizacao,
-            'co_usuario_avaliador' => $this->co_usuario_avaliador,
             'st_avaliacao' => $this->st_avaliacao,
             'ds_parecer' => $this->ds_parecer,
+            'dh_avaliacao' => $this->dh_avaliacao,
             'nu_nova_pontuacao' => $this->nu_nova_pontuacao,
+            'co_usuario_avaliador' => $this->co_usuario_avaliador,
             'st_revisao_final' => $this->st_revisao_final,
-            'arquivosAvaliacao' => RepresentanteArquivoAvaliacao::collection($this->representanteArquivoAvaliacao),
             'situacao_avaliacao' => $situacaoAvaliacao,
-            'historico' => OrganizacaoHabilitacaoHistorico::collection($this->historico),
+            'usuarioAvaliador' => (new Usuario($this->usuarioAvaliador)),
+            'data_avaliacao_formatada' => $this->dh_avaliacao->format('d/m/Y h:i:s'),
         ];
     }
 }
