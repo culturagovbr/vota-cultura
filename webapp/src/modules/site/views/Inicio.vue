@@ -147,6 +147,47 @@
                   </div>
                 </v-card>
               </v-flex>
+
+              <v-flex
+                xs12
+                md4
+              >
+
+                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      list
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Organização / entidade cultural
+                    </div>
+                  </v-card-title>
+                  <v-card-text class="text-xs-center">
+                    Cadastre aqui o recurso referente à etapa<br />
+                    de habilitação das <br />organizações / entidades culturais.
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
+                      color="green darken-4"
+                      to="/organizacao/habilitacao-recurso"
+                      dark
+                      style="margin-top: 32px"
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
             </v-layout>
           </v-container>
         </v-flex>
