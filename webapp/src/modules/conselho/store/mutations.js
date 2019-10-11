@@ -17,4 +17,13 @@ export const mutations = {
   [types.MOSTRAR_MODAL_VISUALIZACAO](state, dados) {
     state.modalVisualizacaoConselhoAdministrador = dados;
   },
+  [types.LISTAR_INDICACOES_CONSELHO](state, dados) {
+    state.listarIndicacaoConselho = dados;
+  },
+  [types.DELETAR_INDICACAO_CONSELHO](state, coConselhoIndicacao) {
+    const index = state.listarIndicacaoConselho.findIndex(
+      indicado => indicado.co_conselho_indicacao === coConselhoIndicacao,
+    );
+    state.listarIndicacaoConselho.splice(index, 1);
+  },
 };

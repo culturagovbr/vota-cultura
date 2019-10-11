@@ -90,7 +90,27 @@ export const obterConselhosParcialmenteHabilitados = async ({ commit }) => {
 };
 
 export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselho(payload).then(response => {
-  console.log(response);
+  dispatch(
+    'conselho/obterListaIndicacaoConselho',
+    {},
+    { root: true },
+  );
   return response;
 }).catch((error) => {
+
+});
+
+export const obterListaIndicacaoConselho = async ({ commit }, payload) => conselhoService.obterListaIndicacaoConselho(payload).then(response => {
+  const { data } = response.data;
+  commit(types.LISTAR_INDICACOES_CONSELHO, data);
+
+
+}).catch((error) => {
+
+});
+
+export const deletarIndicacaoConselho = async ({ commit }, coConselhoIndicacao) => conselhoService.deletarIndicacaoConselho(coConselhoIndicacao).then(response => {
+  commit(types.DELETAR_INDICACAO_CONSELHO, coConselhoIndicacao);
+}).catch((error) => {
+
 });

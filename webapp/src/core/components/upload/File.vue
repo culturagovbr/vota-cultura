@@ -52,14 +52,12 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
-import FilePondPluginGetFile from 'filepond-plugin-get-file';
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview,
   FilePondPluginFileEncode,
   FilePondPluginFileValidateSize,
-  FilePondPluginGetFile,
 );
 
 
@@ -162,8 +160,3 @@ export default {
   },
 };
 </script>
-<style lang="stylus" scoped>
-  .filepond--action-process-item{
-    visibility:hidden;
-  }
-</style>

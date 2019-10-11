@@ -12,7 +12,15 @@ class ConselhoIndicacao extends Model
     const QUANTIDADE_MAXIMA_INDICADOS = 5;
 
     protected $table = 'tb_conselho_indicacao';
+
     protected $primaryKey = 'co_conselho_indicacao';
+
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
+    protected $dates = [
+        'dt_nascimento_indicado',
+    ];
+
     protected $fillable = [
         'co_conselho',
         'nu_cpf_indicado',
@@ -22,7 +30,7 @@ class ConselhoIndicacao extends Model
         'ds_curriculo',
     ];
 
-    public $timestamps = false;
+    public $timestamps = FALSE;
 
     public function endereco()
     {

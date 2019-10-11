@@ -5,7 +5,7 @@ Route::group([
 ], function () {
     Route::get('{co_conselho}', 'ConselhoApiResourceController@show')->where('co_conselho', '[0-9]+');
     Route::apiResource('/', 'ConselhoApiResourceController');
-    Route::apiResource('/conselho-indicacao', 'ConselhoIndicacaoApiResourceController');
+    Route::apiResource('/indicacao', 'ConselhoIndicacaoApiResourceController');
 
     Route::group([
         'prefix' => 'habilitacao'

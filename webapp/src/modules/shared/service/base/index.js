@@ -48,15 +48,37 @@ instance.interceptors.response.use(response => response, (error) => {
   return Promise.reject(error);
 });
 
-export const buildData = (params) => {
-  // console.log(Object.keys(params));
-  const bodyFormData = new FormData();
+export const buildData = function(obj, form, namespace) {
 
-  Object.keys(params).forEach((key) => {
-    bodyFormData.append(key, params[key]);
-  });
+  const fd = form || new FormData();
+  var formKey;
 
-  return bodyFormData;
+  for(var property in obj) {
+    if(obj.hasOwnProperty(property)) {
+
+      if(namespace) {
+        formKey = namespace + '[' + property + ']';
+      } else {
+        formKey = property;
+      }
+
+      // if the property is an object, but not a File,
+      // use recursivity.
+      if(typeof obj[property] === 'object' && !(obj[property] instanceof File)) {
+
+        buildData(obj[property], fd, property);
+
+      } else {
+
+        // if it's a string or a File object
+        fd.append(formKey, obj[property]);
+      }
+
+    }
+  }
+
+  return fd;
+
 };
 
 export const getRequest = (path, config = {}) => instance.get(path, config);

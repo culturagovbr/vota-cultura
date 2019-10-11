@@ -6,10 +6,12 @@ use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\ConselhoIndicacao as ConselhoIndicacaoModel;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Conselho\Mail\Conselho\CadastroConselhoIndicacaoSucesso;
+use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -24,14 +26,30 @@ class ConselhoIndicacao extends AbstractService
         parent::__construct($model);
     }
 
+    public function obterTodos() : ?Collection
+    {
+        $conselhoUsuarioLogado = $this->recuperarDadosConselhoUsuarioLogado();
+        return $this->getModel()->where([
+            'co_conselho' => $conselhoUsuarioLogado->co_conselho
+        ])->get();
+    }
+
     public function cadastrar(Collection $dados): ?Model
     {
 
-        $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
+//        $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
 
         try {
             DB::beginTransaction();
-            $this->getModel()->fill($dados->only(['co_conselho', 'nu_cpf_indicado', 'ds_curriculo', 'dt_nascimento_indicado'])->toArray());
+            $conselhoUsuarioLogado = $this->recuperarDadosConselhoUsuarioLogado();
+
+            $this->getModel()->fill($dados->only([
+                'nu_cpf_indicado',
+                'ds_curriculo',
+                'dt_nascimento_indicado'
+            ])->toArray());
+            $this->getModel()->co_conselho = $conselhoUsuarioLogado->co_conselho;
+
             $quantidadeMaximaIndicadosExcedida = $this->getModel()->quantidadeMaximaIndicadosExcedida();
 
             if ($quantidadeMaximaIndicadosExcedida) {
@@ -47,10 +65,19 @@ class ConselhoIndicacao extends AbstractService
                 );
             }
 
-            $conselhoUsuarioLogado = $this->recuperarDadosConselhoUsuarioLogado();
+            $serviceEndereco = app(Endereco::class);
+            $endereco = $serviceEndereco->cadastrar(collect($dados['endereco']));
 
-            $this->cadastrarArquivosIndicacao($dados->only('anexos'), $conselhoUsuarioLogado);
-            $this->enviarEmailConfirmacaoConselhoIndicacao($conselhoUsuarioLogado);
+            if (!$endereco) {
+                throw new EParametrosInvalidos('Não foi possível cadastrar o endereço.');
+            }
+
+            $dados['co_endereco'] = $endereco->co_endereco;
+
+
+//            $this->cadastrarArquivosIndicacao($dados->only('anexos'), $conselhoUsuarioLogado);
+
+//            $this->enviarEmailConfirmacaoConselhoIndicacao($conselhoUsuarioLogado);
 
              $dadosCadastrados = parent::cadastrar($dados);
              DB::commit();
@@ -128,5 +155,35 @@ class ConselhoIndicacao extends AbstractService
         return $modelConselho->where([
             'co_conselho' => $usuarioAutenticado['co_conselho']
         ])->first();
+    }
+
+    public function remover(Request $request, int $identificador)
+    {
+        try {
+            $indicado = $this->obterUm($identificador);
+            if (!$indicado) {
+                throw new \HttpException(
+                    'Dados não localizados.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+
+            $conselho = (new \App\Modules\Conselho\Model\Conselho())->find($indicado->co_conselho);
+            if (!$conselho) {
+                throw new EParametrosInvalidos('Conselho não encontrado');
+            }
+
+            $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
+            if ($conselho->co_conselho !== $usuarioAutenticado['co_conselho']) {
+                throw new EParametrosInvalidos('Você não possui permissão para realizar esta ação.');
+            }
+
+            DB::beginTransaction();
+            $indicado->delete();
+            DB::commit();
+        } catch (\HttpException $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
     }
 }

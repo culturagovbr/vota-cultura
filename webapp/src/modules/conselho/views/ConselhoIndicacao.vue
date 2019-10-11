@@ -72,6 +72,7 @@
                   <v-toolbar-title>Lista dos indicados</v-toolbar-title>
                   <v-spacer />
                   <v-btn
+                    v-if="listarIndicacaoConselhoGetter.length < 5"
                     tiny
                     round
                     outline
@@ -85,9 +86,10 @@
                 <v-card-text class="pa-0">
                   <v-data-table
                     :headers="headers"
-                    :items="[]"
+                    :items="listarIndicacaoConselhoGetter"
                     :pagination.sync="pagination_conselho"
                     :total-items="totalItems"
+                    hide-actions
                     :loading="loading"
                     item-key="co_usuario"
                     class="elevation-1"
@@ -97,8 +99,8 @@
                       slot-scope="props"
                     >
                       <td />
-                      <td>{{ props.item.cnpj_formatado }}</td>
-                      <td>{{ props.item.no_conselho }}</td>
+                      <td>{{ props.item.nu_cpf_indicado }}</td>
+                      <td>{{ props.item.no_indicado }}</td>
                       <td>
                         <v-chip
                           dark
@@ -112,7 +114,7 @@
                           {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
                         </v-chip>
                       </td>
-                      <td v-if="souAdministrador">
+                      <td>
                         <v-btn
                           depressed
                           outline
@@ -121,10 +123,35 @@
                           dark
                           color="primary"
                           small
-                          @click="visualizarItemModal('conselho', props.item.co_conselho)"
                         >
-                          <v-icon>search</v-icon>
+                          <v-icon>remove_red_eye</v-icon>
                         </v-btn>
+
+                        <v-btn
+                          depressed
+                          outline
+                          icon
+                          fab
+                          dark
+                          color="primary"
+                          small
+                        >
+                          <v-icon>edit</v-icon>
+                        </v-btn>
+
+                        <v-btn
+                          depressed
+                          outline
+                          icon
+                          fab
+                          dark
+                          color="error"
+                          small
+                          @click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"
+                        >
+                          <v-icon>delete</v-icon>
+                        </v-btn>
+
                       </td>
                     </template>
                   </v-data-table>
@@ -296,7 +323,7 @@
                                   >
                                     <template v-slot:activator="{ on }">
                                       <v-text-field
-                                        v-model="indicado.dt_nascimento"
+                                        v-model="indicado.dt_nascimento_indicado"
                                         label="*Data de Nascimento"
                                         append-icon="event"
                                         placeholder="ex: 01/12/2019"
@@ -335,6 +362,7 @@
                             <v-layout>
                               <v-flex md12>
                                 <v-textarea
+                                  v-model="indicado.ds_curriculo"
                                   label="* Currículo resumido para a candidatura"
                                   rows="13"
                                   row-height="28"
@@ -405,9 +433,9 @@
                                             v-model="anexos[documento.slug]"
                                           />
                                           <file
-                                            :files="testea"
                                             v-else
                                             v-model="anexos[documento.slug]"
+                                            :files="testea"
                                             :allow-multiple="true"
                                             label-idle="Clique aqui para anexar até 5 arquivos"
                                             :max-files="5"
@@ -478,13 +506,12 @@ export default {
     testea: [],
     menu: false,
     date: '',
-    dateFormatted: '',
     indicado_foto_rosto: {},
     anexos: {},
     nomeIndicadoErros: '',
     listaUF: [],
     loading: false,
-    dialog: true,
+    dialog: false,
     pagination_conselho: {
       page: 1,
       rowsPerPage: 10,
@@ -562,7 +589,7 @@ export default {
         value: 'no_conselho',
       },
       {
-        text: 'UF de federação em que reside',
+        text: 'Unidade da federação em que reside',
         value: 'endereco.municipio.uf.no_uf',
       },
       {
@@ -578,9 +605,10 @@ export default {
     ],
     listaMunicipios: [],
     indicado: {
-      dt_nascimento: '',
+      dt_nascimento_indicado: '',
       nu_cpf_indicado: '',
       no_indicado: '',
+      ds_curriculo: '',
       endereco: {
         co_ibge: '',
         co_municipio: '',
@@ -593,17 +621,18 @@ export default {
     ...mapGetters({
       estadosGetter: 'localidade/estados',
       municipiosGetter: 'localidade/municipios',
+      listarIndicacaoConselhoGetter: 'conselho/listarIndicacaoConselho',
     }),
   },
   watch: {
-    anexos: {
-      deep: true,
-      handler(newVal, a) {
-        console.log(newVal, a)
-      },
-    },
+    // anexos: {
+    //   deep: true,
+    //   handler(newVal, a) {
+    //     console.log(newVal, a);
+    //   },
+    // },
     date() {
-      this.indicado.dt_nascimento = this.formatDate(this.date);
+      this.indicado.dt_nascimento_indicado = this.formatDate(this.date);
     },
     estadosGetter() {
       this.listaUF = this.estadosGetter;
@@ -633,6 +662,8 @@ export default {
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       enviarIndicacaoConselho: 'conselho/enviarIndicacaoConselho',
+      obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
+      deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
     }),
     formatDate(date) {
       if (!date) return null;
@@ -689,10 +720,18 @@ export default {
         return true;
       });
 
-      this.enviarIndicacaoConselho(this.indicado);
+      var indicadoPayload = this.indicado;
+      indicadoPayload.dt_nascimento_indicado = this.formatarDataCarbon(this.indicado.dt_nascimento_indicado);
+      this.enviarIndicacaoConselho(indicadoPayload);
+    },
+    formatarDataCarbon(data) {
+      const [dia, mes, ano] = data.split('/');
+
+      return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },
   },
   mounted() {
+    this.obterListaIndicacaoConselho();
     this.obterEstados();
   },
 };
