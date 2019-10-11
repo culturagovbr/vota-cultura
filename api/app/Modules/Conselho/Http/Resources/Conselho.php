@@ -25,7 +25,7 @@ class Conselho extends JsonResource
             'representante' => (new Representante($this->representante)),
             'usuario' => (new UsuarioSomenteLeitura($this->usuario)),
             'ds_sitio_eletronico' => $this->ds_sitio_eletronico,
-            'st_inscricao' => $this->st_inscricao,
+            'st_indicacao' => $this->st_indicacao,
             'dh_cadastro' => $this->dh_cadastro,
             'conselhoHabilitacao' => (new ConselhoHabilitacao($this->conselhoHabilitacao)),
         );
