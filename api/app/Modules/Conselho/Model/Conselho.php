@@ -25,7 +25,7 @@ class Conselho extends Model
         'co_representante',
         'co_usuario',
         'ds_sitio_eletronico',
-        'st_inscricao',
+        'st_indicacao',
     ];
 
     public $timestamps = false;

@@ -36,3 +36,9 @@ GRANT ALL ON TABLE public.tb_conselho_indicacao TO votacultura;
 
 ALTER TABLE public.tb_endereco ALTER COLUMN nu_cep DROP NOT NULL;
 ALTER TABLE public.tb_endereco ALTER COLUMN ds_logradouro DROP NOT NULL;
+
+--#############
+ALTER TABLE public.tb_conselho RENAME COLUMN st_inscricao TO st_indicacao;
+ALTER TABLE public.tb_conselho ALTER COLUMN st_indicacao SET DEFAULT 'a';
+COMMENT ON COLUMN public.tb_conselho.st_indicacao IS 'situação em que se encontra o período de indicados do conselho. Possíveis opções: a = aberto, f = fechado';
+
