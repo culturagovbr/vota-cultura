@@ -97,20 +97,33 @@ export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselho
   );
   return response;
 }).catch((error) => {
-
+  dispatch(
+      'app/setMensagemErro',
+      error.response.data.error,
+      { root: true },
+  );
+  throw new TypeError(error, 'enviarIndicacaoConselho', 10);
 });
 
 export const obterListaIndicacaoConselho = async ({ commit }, payload) => conselhoService.obterListaIndicacaoConselho(payload).then(response => {
   const { data } = response.data;
   commit(types.LISTAR_INDICACOES_CONSELHO, data);
-
-
 }).catch((error) => {
-
+  dispatch(
+      'app/setMensagemErro',
+      error.response.data.error,
+      { root: true },
+  );
+  throw new TypeError(error, 'obterListaIndicacaoConselho', 10);
 });
 
 export const deletarIndicacaoConselho = async ({ commit }, coConselhoIndicacao) => conselhoService.deletarIndicacaoConselho(coConselhoIndicacao).then(response => {
   commit(types.DELETAR_INDICACAO_CONSELHO, coConselhoIndicacao);
 }).catch((error) => {
-
+  dispatch(
+      'app/setMensagemErro',
+      error.response.data.error,
+      { root: true },
+  );
+  throw new TypeError(error, 'deletarIndicacaoConselho', 10);
 });
