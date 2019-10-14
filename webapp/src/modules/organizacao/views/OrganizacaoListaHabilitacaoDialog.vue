@@ -482,6 +482,7 @@
                     </v-card>
                   </v-tab-item>
                   <v-tab-item value="tab-3" v-if="possuoHistoricoRevisoes">
+
                     <v-card
                       flat
                       class="pa-4"
@@ -643,7 +644,9 @@ export default {
       perfil: 'conta/perfil',
     }),
     possuoHistoricoRevisoes() {
-      return !!this.formulario.organizacaoHabilitacao && this.formulario.organizacaoHabilitacao.historico.length > 0;
+      const { historico } = (this.formulario || {}).organizacaoHabilitacao || {};
+
+      return historico.length > 0;
     },
   },
   watch: {
