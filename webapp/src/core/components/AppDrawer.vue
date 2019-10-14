@@ -231,7 +231,7 @@ export default {
       }
     },
     carregarMenusConselho() {
-      if (this.perfil.no_perfil === 'conselho') {
+      if (!!this.usuario.co_conselho && this.usuario.co_conselho > 0) {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
           group: 'apps',
@@ -247,7 +247,7 @@ export default {
       }
     },
     carregarMenusOrganizacao() {
-      if (this.perfil.no_perfil === 'organizacao') {
+      if (!!this.usuario.co_organizacao && this.usuario.co_organizacao > 0) {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
           group: 'apps',
