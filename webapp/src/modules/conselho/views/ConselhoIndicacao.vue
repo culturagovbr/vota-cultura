@@ -151,7 +151,6 @@
                         >
                           <v-icon>delete</v-icon>
                         </v-btn>
-
                       </td>
                     </template>
                   </v-data-table>
@@ -231,152 +230,164 @@
                         >
                           <v-toolbar-title>Dados básicos</v-toolbar-title>
                         </v-toolbar>
-                        <v-card-text>
-                          <v-container
-                            grid-list-md
-                          >
-                            <v-layout>
-                              <v-flex md3>
-                                <v-text-field
-                                  v-model="indicado.nu_cpf_indicado"
-                                  placeholder="999.999.999-99"
-                                  append-icon="person"
-                                  name="login"
-                                  label="*CPF"
-                                  mask="###.###.###-##"
-                                  :error-messages="nomeIndicadoErros"
-                                  validate-on-blur
-                                  type="text"
-                                />
-                              </v-flex>
-                              <v-flex
-                                md3
-                                offset-md7
-                                style="margin-bottom: -272px; top: -86px; position: relative;"
-                              >
-                                <file
-                                  v-model="indicado_foto_rosto"
-                                  style-panel-layout="compact circle"
-                                  style-load-indicator-position="center bottom"
-                                  style-progress-indicator-position="right bottom"
-                                  style-button-remove-item-position="left bottom"
-                                  style-button-process-item-position="right bottom"
-                                  label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG))"
-                                  :accepted-file-types="['image/jpeg']"
-                                />
-                              </v-flex>
-                            </v-layout>
+                        <v-form
+                          ref="form"
+                          v-model="formulario_valido"
+                          id="formulario"
+                          lazy-validation
+                        >
+                          <v-card-text>
+                            <v-container
+                            >
+                              <v-layout>
+                                <v-flex md3>
+                                  <v-text-field
+                                    v-model="indicado.nu_cpf_indicado"
+                                    placeholder="999.999.999-99"
+                                    append-icon="person"
+                                    name="login"
+                                    label="*CPF"
+                                    mask="###.###.###-##"
+                                    :error-messages="nomeIndicadoErros"
+                                    validate-on-blur
+                                    type="text"
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                                <v-flex
+                                  md3
+                                  offset-md7
+                                  style="margin-bottom: -272px; top: -86px; position: relative;"
+                                >
+                                  <file
+                                    v-model="indicado_foto_rosto"
+                                    style-panel-layout="compact circle"
+                                    style-load-indicator-position="center bottom"
+                                    style-progress-indicator-position="right bottom"
+                                    style-button-remove-item-position="left bottom"
+                                    style-button-process-item-position="right bottom"
+                                    label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"
+                                    :accepted-file-types="['image/jpeg']"
+                                  />
+                                </v-flex>
+                              </v-layout>
 
-                            <v-layout>
-                              <v-flex md9>
-                                <v-text-field
-                                  v-model="indicado.no_indicado"
-                                  append-icon="person_outline"
-                                  name="login"
-                                  label="*Nome completo"
-                                  :error-messages="nomeIndicadoErros"
-                                  validate-on-blur
-                                  type="text"
-                                  :disabled="true"
-                                />
-                              </v-flex>
-                            </v-layout>
+                              <v-layout>
+                                <v-flex md9>
+                                  <v-text-field
+                                    v-model="indicado.no_indicado"
+                                    append-icon="person_outline"
+                                    name="login"
+                                    label="*Nome completo"
+                                    :error-messages="nomeIndicadoErros"
+                                    validate-on-blur
+                                    type="text"
+                                    :disabled="true"
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                              </v-layout>
 
-                            <v-layout>
-                              <v-flex md3>
-                                <v-select
-                                  v-model="indicado.endereco.co_ibge"
-                                  :items="listaUF"
-                                  label="*Unidade da federação em que reside"
-                                  append-icon="place"
-                                  item-value="co_ibge"
-                                  item-text="no_uf"
-                                  required
-                                  box
-                                />
-                              </v-flex>
-                              <v-flex
-                                md3
-                              >
-                                <v-select
-                                  v-model="indicado.endereco.co_municipio"
-                                  :items="listaMunicipios"
-                                  label="*Cidade em que reside"
-                                  append-icon="place"
-                                  item-value="co_municipio"
-                                  item-text="no_municipio"
-                                  box
-                                  :disabled="indicado.endereco.co_ibge < 1 || indicado.endereco.co_ibge == null"
-                                />
-                              </v-flex>
-                              <v-flex md3>
-                                <template activator="{ on }">
-                                  <v-menu
-                                    ref="menu"
-                                    v-model="menu"
-                                    lazy
-                                    transition="scale-transition"
-                                    :close-on-content-click="false"
-                                    offset-y
-                                    full-width
-                                    min-width="290px"
-                                  >
-                                    <template v-slot:activator="{ on }">
-                                      <v-text-field
-                                        v-model="indicado.dt_nascimento_indicado"
-                                        label="*Data de Nascimento"
-                                        append-icon="event"
-                                        placeholder="ex: 01/12/2019"
-                                        return-masked-value
-                                        mask="##/##/####"
-                                        required
-                                        v-on="on"
-                                      />
-                                    </template>
-                                    <v-date-picker
-                                      v-model="date"
-                                      locale="pt-BR"
-                                      scrollable
+                              <v-layout>
+                                <v-flex md3>
+                                  <v-select
+                                    v-model="indicado.endereco.co_ibge"
+                                    :items="listaUF"
+                                    label="*Unidade da federação em que reside"
+                                    append-icon="place"
+                                    item-value="co_ibge"
+                                    item-text="no_uf"
+                                    required
+                                    box
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                                <v-flex
+                                  md3
+                                >
+                                  <v-select
+                                    v-model="indicado.endereco.co_municipio"
+                                    :items="listaMunicipios"
+                                    label="*Cidade em que reside"
+                                    append-icon="place"
+                                    item-value="co_municipio"
+                                    item-text="no_municipio"
+                                    box
+                                    :disabled="indicado.endereco.co_ibge < 1 || indicado.endereco.co_ibge == null"
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                                <v-flex md3>
+                                  <template activator="{ on }">
+                                    <v-menu
+                                      ref="menu"
+                                      v-model="menu"
+                                      lazy
+                                      transition="scale-transition"
+                                      :close-on-content-click="false"
+                                      offset-y
+                                      full-width
+                                      min-width="290px"
                                     >
-                                      <v-spacer />
-                                      <v-btn
-                                        flat
-                                        color="primary"
-                                        @click="menu = false"
+                                      <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                          v-model="indicado.dt_nascimento_indicado"
+                                          label="*Data de Nascimento"
+                                          append-icon="event"
+                                          placeholder="ex: 01/12/2019"
+                                          return-masked-value
+                                          mask="##/##/####"
+                                          required
+                                          :rules="[rules.required, rules.dataAniversario]"
+                                          v-on="on"
+                                        />
+                                      </template>
+                                      <v-date-picker
+                                        v-model="date"
+                                        locale="pt-BR"
+                                        scrollable
                                       >
-                                        Cancel
-                                      </v-btn>
-                                      <v-btn
-                                        flat
-                                        color="primary"
-                                        @click="$refs.menu.save(date)"
-                                      >
-                                        OK
-                                      </v-btn>
-                                    </v-date-picker>
-                                  </v-menu>
-                                </template>
-                              </v-flex>
-                            </v-layout>
+                                        <v-spacer />
+                                        <v-btn
+                                          flat
+                                          color="primary"
+                                          @click="menu = false"
+                                        >
+                                          Cancel
+                                        </v-btn>
+                                        <v-btn
+                                          flat
+                                          color="primary"
+                                          @click="$refs.menu.save(date)"
+                                        >
+                                          OK
+                                        </v-btn>
+                                      </v-date-picker>
+                                    </v-menu>
+                                  </template>
+                                </v-flex>
+                              </v-layout>
 
-                            <v-layout>
-                              <v-flex md12>
-                                <v-textarea
-                                  v-model="indicado.ds_curriculo"
-                                  label="* Currículo resumido para a candidatura"
-                                  rows="13"
-                                  row-height="28"
-                                  :counter="1000"
-                                  box
-                                  auto-grow
-                                />
-                                <span>
-                                  Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
-                                </span>
-                              </v-flex>
-                            </v-layout>
-                          </v-container>
-                        </v-card-text>
+                              <v-layout>
+                                <v-flex md12>
+                                  <v-textarea
+                                    v-model="indicado.ds_curriculo"
+                                    label="* Currículo resumido para a candidatura"
+                                    rows="13"
+                                    row-height="28"
+                                    :counter="1000"
+                                    box
+                                    auto-grow
+                                    :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
+                                  />
+                                  <span>
+                                    Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
+                                  </span>
+                                </v-flex>
+                              </v-layout>
+                            </v-container>
+                          </v-card-text>
+                        </v-form>
                       </v-card>
                     </v-flex>
 
@@ -435,7 +446,6 @@
                                           <file
                                             v-else
                                             v-model="anexos[documento.slug]"
-                                            :files="testea"
                                             :allow-multiple="true"
                                             label-idle="Clique aqui para anexar até 5 arquivos"
                                             :max-files="5"
@@ -465,25 +475,14 @@
                 </v-btn>
                 <v-btn
                   :loading="loading"
-                  :disabled="loading"
                   color="primary"
-                  @click.native="salvar"
+                  :disabled="!formulario_valido"
+                  @click="salvar"
                 >
                   <v-icon left>
                     send
                   </v-icon>
                   Salvar
-                </v-btn>
-                <v-btn
-                  :loading="loading"
-                  :disabled="loading"
-                  color="primary"
-                  @click.native="debug"
-                >
-                  <v-icon left>
-                    send
-                  </v-icon>
-                  debug
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -503,7 +502,39 @@ export default {
   name: 'ConselhoIndicacao',
   components: { File },
   data: () => ({
+    rules: {
+      required: v => !!v || 'Campo não preenchido',
+      tamanhoMaximoCaracteres: value => (!!value && value.length <= 1000) || 'Máximo 1000 caracteres',
+      dataAniversario: (value) => {
+        if (value.length === 0 || !value.trim()) {
+          return false;
+        }
+        // eslint-disable-next-line
+        var padraoDataValida = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])      [\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+
+        if (!value.match(padraoDataValida)) {
+          return 'Data inválida';
+        }
+
+        let [dia, mes, ano] = value.split('/');
+
+        const hoje = new Date();
+        const dataAniversario = new Date(ano, mes - 1, dia);
+
+        ano = hoje.getFullYear() - dataAniversario.getFullYear();
+        mes = hoje.getMonth() - dataAniversario.getMonth();
+        if (mes < 0 || (mes === 0 && hoje.getDate() < dataAniversario.getDate())) {
+          ano--;
+        }
+
+        if (ano > 100 || ano < 18) {
+          return 'É necessário ser maior de 18 anos';
+        }
+        return true;
+      },
+    },
     testea: [],
+    formulario_valido: false,
     menu: false,
     date: '',
     indicado_foto_rosto: {},
@@ -625,12 +656,12 @@ export default {
     }),
   },
   watch: {
-    // anexos: {
-    //   deep: true,
-    //   handler(newVal, a) {
-    //     console.log(newVal, a);
-    //   },
-    // },
+    dialog(valor) {
+      if (!valor) {
+        this.$refs.form.reset();
+        this.nomeIndicadoErros = '';
+      }
+    },
     date() {
       this.indicado.dt_nascimento_indicado = this.formatDate(this.date);
     },
@@ -695,6 +726,14 @@ export default {
       }];
     },
     salvar() {
+      this.loading = true;
+      if (!this.$refs.form.validate()) {
+        this.$vuetify.goTo('#formulario');
+        console.log('aaaaaaaaaaa')
+        this.loading = false;
+        return;
+      }
+
       this.indicado.anexos = [];
 
       // this.indicado.anexos.push({
@@ -720,9 +759,12 @@ export default {
         return true;
       });
 
-      var indicadoPayload = this.indicado;
+      const indicadoPayload = this.indicado;
       indicadoPayload.dt_nascimento_indicado = this.formatarDataCarbon(this.indicado.dt_nascimento_indicado);
-      this.enviarIndicacaoConselho(indicadoPayload);
+      this.enviarIndicacaoConselho(indicadoPayload).then((response) => {
+        this.loading = false;
+        this.fecharDialogo();
+      });
     },
     formatarDataCarbon(data) {
       const [dia, mes, ano] = data.split('/');
