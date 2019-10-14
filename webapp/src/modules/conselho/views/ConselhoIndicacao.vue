@@ -46,8 +46,7 @@
           </v-toolbar>
           <v-card-text>
             <v-container
-              grid-list-md
-            >
+              grid-list-md>
               <!--text-xs-center-->
               <b>Critérios para as indicações - Item 5.3 do edital:</b>
               <p>
@@ -123,6 +122,7 @@
                           dark
                           color="primary"
                           small
+                          @click="itemSelecionado = props.item; dialogVisualizar = true; "
                         >
                           <v-icon>remove_red_eye</v-icon>
                         </v-btn>
@@ -217,8 +217,7 @@
               </v-toolbar>
               <v-card-text>
                 <v-container
-                  grid-list-md
-                >
+                  grid-list-md>
                   <v-layout
                     row
                     wrap
@@ -399,8 +398,7 @@
                           <v-toolbar-title>Documentação</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
-                          <v-container
-                            grid-list-md
+                          <v-container grid-list-md
                           >
                             <div class="text-md-center grey--text title mb-9">
                               Envie os documentos no formato PDF (preferencialmente), JPEG, <br>
@@ -490,6 +488,9 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <conselho-indicacao-dialogo
+      :v-model="dialogVisualizar"
+      :conselho="itemSelecionado"></conselho-indicacao-dialogo>
   </v-container>
 </template>
 
@@ -497,10 +498,11 @@
 import { mapActions, mapGetters } from 'vuex';
 import File from '@/core/components/upload/File';
 import Validate from '../../shared/util/validate';
+import ConselhoIndicacaoDialogo from './ConselhoIndicacaoDialogo';
 
 export default {
   name: 'ConselhoIndicacao',
-  components: { File },
+  components: { ConselhoIndicacaoDialogo, File },
   data: () => ({
     rules: {
       required: v => !!v || 'Campo não preenchido',
@@ -543,6 +545,7 @@ export default {
     listaUF: [],
     loading: false,
     dialog: false,
+    dialogVisualizar: false,
     pagination_conselho: {
       page: 1,
       rowsPerPage: 10,
@@ -635,6 +638,7 @@ export default {
       },
     ],
     listaMunicipios: [],
+    itemSelecionado: {},
     indicado: {
       dt_nascimento_indicado: '',
       nu_cpf_indicado: '',

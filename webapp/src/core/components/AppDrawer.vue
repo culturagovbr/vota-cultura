@@ -221,7 +221,13 @@ export default {
       return true;
     },
     carregarMenusEleitor() {
-      if (this.usuario.co_eleitor && this.usuario.co_eleitor > 0) {
+      const grupoValidacoes = [
+        !!this.usuario.co_eleitor,
+        this.usuario.co_eleitor > 0,
+      ];
+      const souValido = grupoValidacoes.indexOf(false) === -1;
+
+      if (souValido) {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
           group: 'apps',
@@ -231,7 +237,13 @@ export default {
       }
     },
     carregarMenusConselho() {
-      if (!!this.usuario.co_conselho && this.usuario.co_conselho > 0) {
+      const grupoValidacoes = [
+        !!this.usuario.co_conselho,
+        this.usuario.co_conselho > 0,
+      ];
+      const souValido = grupoValidacoes.indexOf(false) === -1;
+
+      if (souValido) {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
           group: 'apps',
@@ -247,7 +259,13 @@ export default {
       }
     },
     carregarMenusOrganizacao() {
-      if (!!this.usuario.co_organizacao && this.usuario.co_organizacao > 0) {
+      const grupoValidacoes = [
+        !!this.usuario.co_organizacao,
+        this.usuario.co_organizacao > 0,
+      ];
+      const souValido = grupoValidacoes.indexOf(false) === -1;
+
+      if (souValido) {
         this.definirItemMenu({
           title: 'Detalhes da inscrição',
           group: 'apps',
@@ -281,7 +299,12 @@ export default {
       }
     },
     carregarMenuHabilitacao() {
-      if (this.perfil.no_perfil === 'administrador' || this.perfil.no_perfil === 'avaliador') {
+      const grupoValidacoes = [
+        this.perfil.no_perfil === 'administrador',
+        this.perfil.no_perfil === 'avaliador',
+      ];
+      const souValido = grupoValidacoes.indexOf(true) !== -1;
+      if (souValido) {
         this.definirItemMenu({
           title: 'Habilitação de organização',
           group: 'apps',
