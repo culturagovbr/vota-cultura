@@ -695,6 +695,7 @@ export default {
       enviarIndicacaoConselho: 'conselho/enviarIndicacaoConselho',
       obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
       deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
+      notificarErro: 'app/setMensagemErro',
     }),
     formatDate(date) {
       if (!date) return null;
@@ -727,9 +728,13 @@ export default {
     },
     salvar() {
       this.loading = true;
+      if (!Object.keys(this.indicado_foto_rosto).length) {
+        this.loading = false;
+        this.notificarErro('A foto de rosto é obrigatória.');
+        return;
+      }
+
       if (!this.$refs.form.validate()) {
-        this.$vuetify.goTo('#formulario');
-        console.log('aaaaaaaaaaa')
         this.loading = false;
         return;
       }
@@ -761,7 +766,7 @@ export default {
 
       const indicadoPayload = this.indicado;
       indicadoPayload.dt_nascimento_indicado = this.formatarDataCarbon(this.indicado.dt_nascimento_indicado);
-      this.enviarIndicacaoConselho(indicadoPayload).then((response) => {
+      this.enviarIndicacaoConselho(indicadoPayload).then(() => {
         this.loading = false;
         this.fecharDialogo();
       });
