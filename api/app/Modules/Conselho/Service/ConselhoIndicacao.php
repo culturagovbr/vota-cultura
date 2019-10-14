@@ -74,6 +74,31 @@ class ConselhoIndicacao extends AbstractService
 
             $dados['co_endereco'] = $endereco->co_endereco;
 
+            $modeloUpload = [
+                'no_arquivo'  => $dados->indicado_foto_rosto->getClientOriginalName(),
+                'no_extensao'  => $dados->indicado_foto_rosto->getClientOriginalExtension(),
+                'no_mime_type'  => $dados->indicado_foto_rosto->getClientMimeType(),
+            ];
+
+            $modeloArquivo = app(Arquivo::class);
+
+            $modeloArquivo->fill($modeloUpload);
+
+            $serviceUpload = new Upload($modeloArquivo);
+
+            $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+                $dados->indicado_foto_rosto,
+                'conselho/' . 'indicado_foto_rosto'
+            );
+
+            $arquivoInserido = $conselhoUsuarioLogado->representante->arquivos()->attach(
+                $arquivoArmazenado->co_arquivo,
+                [
+                    'tp_arquivo' => 'indicado_foto_rosto',
+                    'tp_inscricao' => RepresentanteModel::TIPO_DOCUMENTACAO_COMPROBATORIA_ORGANIZACAO
+                ]
+            );
+            $dados['co_arquivo'] = $arquivoInserido;
 
 //            $this->cadastrarArquivosIndicacao($dados->only('anexos'), $conselhoUsuarioLogado);
 

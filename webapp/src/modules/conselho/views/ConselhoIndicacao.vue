@@ -476,7 +476,6 @@
                 <v-btn
                   :loading="loading"
                   color="primary"
-                  :disabled="!formulario_valido"
                   @click="salvar"
                 >
                   <v-icon left>
@@ -766,9 +765,13 @@ export default {
 
       const indicadoPayload = this.indicado;
       indicadoPayload.dt_nascimento_indicado = this.formatarDataCarbon(this.indicado.dt_nascimento_indicado);
+      indicadoPayload.indicado_foto_rosto = this.indicado_foto_rosto.file;
       this.enviarIndicacaoConselho(indicadoPayload).then(() => {
         this.loading = false;
-        this.fecharDialogo();
+        // this.fecharDialogo();
+      }).catch((error)=>{
+        console.log('asasdasdasd');
+        console.log(error.response.data.error);
       });
     },
     formatarDataCarbon(data) {
