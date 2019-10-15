@@ -34,10 +34,10 @@ export default [
         component: () => import(/* webpackChunkName: "site-inscricao-lista-parcial" */ '@/modules/site/views/inscricao/ListaParcial.vue'),
       },
       {
-        path: 'inscricao/lista-parcial-habilitados',
+        path: 'inscricao/lista-final-habilitados',
         name: 'inscricao-lista-parcial-habilitacao-route',
         meta: {
-          title: 'Lista parcial dos habilitados',
+          title: 'Lista final dos habilitados',
           group: 'apps',
           icon: 'dashboard',
           public: true,

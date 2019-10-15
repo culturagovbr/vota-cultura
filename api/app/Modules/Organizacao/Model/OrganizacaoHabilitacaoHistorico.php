@@ -3,31 +3,25 @@
 namespace App\Modules\Organizacao\Model;
 
 use App\Modules\Conta\Model\Usuario;
-use App\Modules\Representacao\Model\RepresentanteArquivoAvaliacao;
 use Illuminate\Database\Eloquent\Model;
 
-class OrganizacaoHabilitacao extends Model
+class OrganizacaoHabilitacaoHistorico extends Model
 {
-    const SITUACAO_AVALIACAO_INABILITADA = '0';
-    const SITUACAO_AVALIACAO_HABILITADA_DESCLASSIFICADA = '1';
-    const SITUACAO_AVALIACAO_HABILITADA_CLASSIFICADA = '2';
-    const SITUACAO_AVALIACAO_HABILITADA = '3';
-
-    protected $table = 'tb_organizacao_habilitacao';
-    protected $primaryKey = 'co_organizacao_habilitacao';
+    protected $table = 'tb_organizacao_habilitacao_historico';
+    protected $primaryKey = 'co_organizacao_habilitacao_historico';
 
     protected $dates = [
         'dh_avaliacao',
     ];
 
     protected $fillable = [
+        'co_organizacao_habilitacao',
         'co_organizacao',
         'st_avaliacao',
         'ds_parecer',
         'dh_avaliacao',
         'nu_nova_pontuacao',
         'co_usuario_avaliador',
-        'st_revisao_final',
     ];
 
     public $timestamps = FALSE;
@@ -41,19 +35,10 @@ class OrganizacaoHabilitacao extends Model
         );
     }
 
-    public function representanteArquivoAvaliacao()
+    public function habilitacao()
     {
-        return $this->hasMany(
-            RepresentanteArquivoAvaliacao::class,
-            'co_organizacao_habilitacao',
-            'co_organizacao_habilitacao'
-        );
-    }
-
-    public function historico()
-    {
-        return $this->hasmany(
-            OrganizacaoHabilitacaoHistorico::class,
+        return $this->hasOne(
+            OrganizacaoHabilitacao::class,
             'co_organizacao_habilitacao',
             'co_organizacao_habilitacao'
         );
