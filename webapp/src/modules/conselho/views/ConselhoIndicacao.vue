@@ -68,17 +68,17 @@
 
               <div>
                 5.3.2 - Os indicados deverão cumprir os seguintes requisitos:
-                <br />
+                <br>
                 <p class="ma-3">
-                    a. mínimo de 3 anos de atuação comprovada no campo cultural;
-                  <br />
-                    b. ser maior de 18 anos;
-                  <br />
-                    c. residir na unidade da federação ou macrorregião do conselho de cultura que
-                    o indicou; e
-                  <br />
-                    d. não ser ocupante de função de confiança ou cargo comissionado no setor
-                    público.
+                  a. mínimo de 3 anos de atuação comprovada no campo cultural;
+                  <br>
+                  b. ser maior de 18 anos;
+                  <br>
+                  c. residir na unidade da federação ou macrorregião do conselho de cultura que
+                  o indicou; e
+                  <br>
+                  d. não ser ocupante de função de confiança ou cargo comissionado no setor
+                  público.
                 </p>
               </div>
               <v-alert
@@ -89,11 +89,11 @@
               >
                 <p class="font-weight-bold">
                   Atenção!
-                  <br />
+                  <br>
                   1º - Faça o cadastro de cada indicado (no mínimo 3 e no máximo 5);
-                  <br />
+                  <br>
                   2º - Envie a relação dos indicados até o prazo final estabelecido no cronograma do edital.
-                  <br />
+                  <br>
                   Somente após o envio da relação que as indicações serão efetivadas.
                 </p>
               </v-alert>
@@ -196,6 +196,7 @@
         <v-btn
           color="primary"
           :loading="loading"
+          :disabled="listarIndicacaoConselhoGetter.length < 3"
           @click="abrirDialogo"
         >
           Enviar
