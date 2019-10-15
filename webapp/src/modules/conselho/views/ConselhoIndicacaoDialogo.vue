@@ -287,7 +287,7 @@ export default {
     },
     conselho(valor) {
       if (Object.keys(valor).length > 0) {
-        this.formulario = valor || {}
+        this.formulario = valor || {};
       }
     },
     estadosGetter() {
