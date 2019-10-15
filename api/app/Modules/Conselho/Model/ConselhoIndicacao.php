@@ -19,6 +19,7 @@ class ConselhoIndicacao extends Model
 
     protected $dates = [
         'dt_nascimento_indicado',
+        'dh_indicacao',
     ];
 
     protected $fillable = [
@@ -29,6 +30,7 @@ class ConselhoIndicacao extends Model
         'dt_nascimento_indicado',
         'co_arquivo',
         'ds_curriculo',
+        'dh_indicacao',
     ];
 
     public $timestamps = FALSE;

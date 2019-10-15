@@ -36,7 +36,7 @@
               <v-flex>
                 <v-card>
                   <v-toolbar
-                    color="white elevation-0"
+                    color="white elevation-1"
                   >
                     <v-toolbar-title>Dados básicos</v-toolbar-title>
                   </v-toolbar>
@@ -45,109 +45,103 @@
                       grid-list-md
                     >
                       <v-layout>
-                        <v-flex md12>
-                          <v-text-field
-                            v-model="formulario.nu_cpf_indicado"
-                            placeholder="999.999.999-99"
-                            append-icon="person"
-                            name="login"
-                            label="*CPF"
-                            mask="###.###.###-##"
-                            validate-on-blur
-                            type="text"
-                            disabled
-                          />
-                        </v-flex>
-                      </v-layout>
-                      <!--<v-flex-->
-                      <!--md3-->
-                      <!--offset-md7-->
-                      <!--style="margin-bottom: -272px; top: -86px; position: relative;"-->
-                      <!--&gt;-->
-                      <!--&lt;!&ndash;<file&ndash;&gt;-->
-                      <!--&lt;!&ndash;v-model="indicado_foto_rosto"&ndash;&gt;-->
-                      <!--&lt;!&ndash;style-panel-layout="compact circle"&ndash;&gt;-->
-                      <!--&lt;!&ndash;style-load-indicator-position="center bottom"&ndash;&gt;-->
-                      <!--&lt;!&ndash;style-progress-indicator-position="right bottom"&ndash;&gt;-->
-                      <!--&lt;!&ndash;style-button-remove-item-position="left bottom"&ndash;&gt;-->
-                      <!--&lt;!&ndash;style-button-process-item-position="right bottom"&ndash;&gt;-->
-                      <!--&lt;!&ndash;label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG))"&ndash;&gt;-->
-                      <!--&lt;!&ndash;:accepted-file-types="['image/jpeg']"&ndash;&gt;-->
-                      <!--&lt;!&ndash;/>&ndash;&gt;-->
-                      <!--</v-flex>-->
+                        <v-flex md8>
 
-                      <v-layout>
-                        <v-flex md12>
-                          <v-text-field
-                            v-model="formulario.no_indicado"
-                            append-icon="person_outline"
-                            name="login"
-                            label="*Nome completo"
-                            validate-on-blur
-                            type="text"
-                            :disabled="true"
-                          />
-                        </v-flex>
-                      </v-layout>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-text-field
+                                v-model="formulario.nu_cpf_indicado"
+                                placeholder="999.999.999-99"
+                                append-icon="person"
+                                name="login"
+                                label="*CPF"
+                                mask="###.###.###-##"
+                                validate-on-blur
+                                type="text"
+                                disabled
+                              />
+                            </v-flex>
+                          </v-layout>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-text-field
+                                v-model="formulario.no_indicado"
+                                append-icon="person_outline"
+                                name="login"
+                                label="*Nome completo"
+                                validate-on-blur
+                                type="text"
+                                :disabled="true"
+                              />
+                            </v-flex>
+                          </v-layout>
 
-                      <v-layout>
-                        <v-flex md12>
-                          <v-select
-                            v-model="(formulario.endereco || {}).co_ibge"
-                            :items="listaUF"
-                            label="*Unidade da federação em que reside"
-                            append-icon="place"
-                            item-value="co_ibge"
-                            item-text="no_uf"
-                            disabled
-                            box
-                          />
-                        </v-flex>
-                      </v-layout>
-                      <v-layout>
-                        <v-flex md12>
-                          <v-select
-                            v-model="(formulario.endereco || {} ).co_municipio"
-                            :items="listaMunicipios"
-                            label="*Cidade em que reside"
-                            append-icon="place"
-                            item-value="co_municipio"
-                            item-text="no_municipio"
-                            box
-                            disabled
-                          />
-                        </v-flex>
-                      </v-layout>
-                      <v-layout>
-                        <v-flex md12>
-                                <v-text-field
-                                  v-model="formulario.dt_nascimento_indicado"
-                                  label="*Data de Nascimento"
-                                  append-icon="event"
-                                  placeholder="ex: 01/12/2019"
-                                  return-masked-value
-                                  mask="##/##/####"
-                                  disabled
-                                />
-                        </v-flex>
-                      </v-layout>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-select
+                                v-model="(formulario.endereco || {}).co_ibge"
+                                :items="listaUF"
+                                label="*Unidade da federação em que reside"
+                                append-icon="place"
+                                item-value="co_ibge"
+                                item-text="no_uf"
+                                disabled
+                                box
+                              />
+                            </v-flex>
+                          </v-layout>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-select
+                                v-model="(formulario.endereco || {} ).co_municipio"
+                                :items="listaMunicipios"
+                                label="*Cidade em que reside"
+                                append-icon="place"
+                                item-value="co_municipio"
+                                item-text="no_municipio"
+                                box
+                                disabled
+                              />
+                            </v-flex>
+                          </v-layout>
+                          <v-layout>
+                            <v-flex md12>
+                                    <v-text-field
+                                      v-model="formulario.dt_nascimento_indicado"
+                                      label="*Data de Nascimento"
+                                      append-icon="event"
+                                      placeholder="ex: 01/12/2019"
+                                      return-masked-value
+                                      mask="##/##/####"
+                                      disabled
+                                    />
+                            </v-flex>
+                          </v-layout>
 
-                      <v-layout>
-                        <v-flex md12>
-                          <v-textarea
-                            v-model="formulario.ds_curriculo"
-                            label="* Currículo resumido para a candidatura"
-                            rows="13"
-                            row-height="28"
-                            :counter="1000"
-                            box
-                            auto-grow
-                            disabled
-                          />
-                          <span>
-                            Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
-                          </span>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-textarea
+                                v-model="formulario.ds_curriculo"
+                                label="* Currículo resumido para a candidatura"
+                                rows="13"
+                                row-height="28"
+                                :counter="1000"
+                                box
+                                auto-grow
+                                disabled
+                              />
+                              <span>
+                                Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
+                              </span>
+                            </v-flex>
+                          </v-layout>
                         </v-flex>
+                        <v-flex md4 class="text-md-right">
+                          <v-avatar :size="256">
+                            <img :src="(formulario || {}).foto_indicado" />
+                          </v-avatar>
+                        </v-flex>
+
                       </v-layout>
                     </v-container>
                   </v-card-text>
@@ -157,7 +151,7 @@
               <v-flex v-if="(formulario.arquivos || []).length > 0">
                 <v-card>
                   <v-toolbar
-                    color="white elevation-0"
+                    color="white elevation-1"
                   >
                     <v-toolbar-title>Documentação</v-toolbar-title>
                   </v-toolbar>
@@ -268,6 +262,7 @@ export default {
         tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'Máximo 500 caracteres',
       },
       usuarioLogado: {},
+      fotoIndicado: {},
     };
   },
   computed: {
@@ -296,10 +291,18 @@ export default {
     municipiosGetter() {
       this.listaMunicipios = this.municipiosGetter;
     },
+    formulario() {
+      console.log((this.formulario || {}));
+      this.co_arquivo = (this.formulario || {}).co_arquivo;
+      // this.obterBinarioArquivo(this.co_arquivo).then((response) => {
+      //   console.log(response);
+      // });
+    },
   },
   methods: {
     ...mapActions({
       downloadArquivo: 'shared/downloadArquivo',
+      // obterBinarioArquivo: 'shared/obterBinarioArquivo',
     }),
     obterDescricaoDocumento(tpArquivo) {
       const indiceDocumento = documentosIndicacao.findIndex(elemento => (elemento || {}).slug === tpArquivo);

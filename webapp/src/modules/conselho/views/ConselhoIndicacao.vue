@@ -112,7 +112,7 @@
                       </td>
                       <td>
                         <v-chip>
-                          {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
+                          {{ props.item.data_indicacao_formatada }}
                         </v-chip>
                       </td>
                       <td>
@@ -654,7 +654,7 @@ export default {
       }
     },
     itemSelecionado(valor) {
-      console.log(valor)
+
     },
   },
   methods: {
