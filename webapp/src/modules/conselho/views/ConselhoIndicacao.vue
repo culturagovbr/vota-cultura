@@ -58,21 +58,45 @@
             >
               <!--text-xs-center-->
               <b>Critérios para as indicações - Item 5.3 do edital:</b>
-              <p>
-                5.3.1 - Os conselhos de cultura habilitados estarão aptos a indicar de <b>três a cinco
-                  representantes</b> da sociedade civil, membros ou não do respectivo conselho, para
-                concorrer às vagas descritas no subitem 2.2.2. do edital.
-              </p>
+              <div class="mt-3">
+                <p>
+                  5.3.1 - Os conselhos de cultura habilitados estarão aptos a indicar de <b>três a cinco
+                    representantes</b> da sociedade civil, membros ou não do respectivo conselho, para
+                  concorrer às vagas descritas no subitem 2.2.2. do edital.
+                </p>
+              </div>
 
-              <p>
+              <div>
                 5.3.2 - Os indicados deverão cumprir os seguintes requisitos:
-                a. mínimo de 3 anos de atuação comprovada no campo cultural;
-                b. ser maior de 18 anos;
-                c. residir na unidade da federação ou macrorregião do conselho de cultura que
-                o indicou; e
-                d. não ser ocupante de função de confiança ou cargo comissionado no setor
-                público.
-              </p>
+                <br />
+                <p class="ma-3">
+                    a. mínimo de 3 anos de atuação comprovada no campo cultural;
+                  <br />
+                    b. ser maior de 18 anos;
+                  <br />
+                    c. residir na unidade da federação ou macrorregião do conselho de cultura que
+                    o indicou; e
+                  <br />
+                    d. não ser ocupante de função de confiança ou cargo comissionado no setor
+                    público.
+                </p>
+              </div>
+              <v-alert
+                :value="true"
+                icon="warning"
+                color="yellow lighten-3"
+                class="black--text"
+              >
+                <p class="font-weight-bold">
+                  Atenção!
+                  <br />
+                  1º - Faça o cadastro de cada indicado (no mínimo 3 e no máximo 5);
+                  <br />
+                  2º - Envie a relação dos indicados até o prazo final estabelecido no cronograma do edital.
+                  <br />
+                  Somente após o envio da relação que as indicações serão efetivadas.
+                </p>
+              </v-alert>
               <v-card>
                 <v-toolbar
                   color="white elevation-0"
