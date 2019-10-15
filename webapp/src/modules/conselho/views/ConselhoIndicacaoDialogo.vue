@@ -4,7 +4,6 @@
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
-    v-if="formulario.length > 0"
   >
     <v-card>
       <v-toolbar
@@ -20,20 +19,13 @@
         </v-btn>
 
         <v-toolbar-title>
-          Cadastrar
+          Visualização de indicação
         </v-toolbar-title>
 
         <v-spacer />
       </v-toolbar>
       <v-card-text>
         <v-container>
-          <v-card>
-            <v-toolbar
-              color="white elevation-1"
-            >
-              <v-toolbar-title>Indicação</v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
               <v-container
                 grid-list-md
               >
@@ -53,7 +45,7 @@
                           grid-list-md
                         >
                           <v-layout>
-                            <v-flex md3>
+                            <v-flex md12>
                               <v-text-field
                                 v-model="formulario.nu_cpf_indicado"
                                 placeholder="999.999.999-99"
@@ -66,26 +58,26 @@
                                 disabled
                               />
                             </v-flex>
-                            <v-flex
-                              md3
-                              offset-md7
-                              style="margin-bottom: -272px; top: -86px; position: relative;"
-                            >
-                              <!--<file-->
-                                <!--v-model="indicado_foto_rosto"-->
-                                <!--style-panel-layout="compact circle"-->
-                                <!--style-load-indicator-position="center bottom"-->
-                                <!--style-progress-indicator-position="right bottom"-->
-                                <!--style-button-remove-item-position="left bottom"-->
-                                <!--style-button-process-item-position="right bottom"-->
-                                <!--label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG))"-->
-                                <!--:accepted-file-types="['image/jpeg']"-->
-                              <!--/>-->
-                            </v-flex>
                           </v-layout>
+                          <!--<v-flex-->
+                            <!--md3-->
+                            <!--offset-md7-->
+                            <!--style="margin-bottom: -272px; top: -86px; position: relative;"-->
+                          <!--&gt;-->
+                            <!--&lt;!&ndash;<file&ndash;&gt;-->
+                            <!--&lt;!&ndash;v-model="indicado_foto_rosto"&ndash;&gt;-->
+                            <!--&lt;!&ndash;style-panel-layout="compact circle"&ndash;&gt;-->
+                            <!--&lt;!&ndash;style-load-indicator-position="center bottom"&ndash;&gt;-->
+                            <!--&lt;!&ndash;style-progress-indicator-position="right bottom"&ndash;&gt;-->
+                            <!--&lt;!&ndash;style-button-remove-item-position="left bottom"&ndash;&gt;-->
+                            <!--&lt;!&ndash;style-button-process-item-position="right bottom"&ndash;&gt;-->
+                            <!--&lt;!&ndash;label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG))"&ndash;&gt;-->
+                            <!--&lt;!&ndash;:accepted-file-types="['image/jpeg']"&ndash;&gt;-->
+                            <!--&lt;!&ndash;/>&ndash;&gt;-->
+                          <!--</v-flex>-->
 
                           <v-layout>
-                            <v-flex md9>
+                            <v-flex md12>
                               <v-text-field
                                 v-model="formulario.no_indicado"
                                 append-icon="person_outline"
@@ -99,7 +91,7 @@
                           </v-layout>
 
                           <v-layout>
-                            <v-flex md3>
+                            <v-flex md12>
                               <v-select
                                 v-model="formulario.endereco.co_ibge"
                                 :items="listaUF"
@@ -107,13 +99,13 @@
                                 append-icon="place"
                                 item-value="co_ibge"
                                 item-text="no_uf"
-                                required
+                                disabled
                                 box
                               />
                             </v-flex>
-                            <v-flex
-                              md3
-                            >
+                          </v-layout>
+                          <v-layout>
+                            <v-flex md12>
                               <v-select
                                 v-model="formulario.endereco.co_municipio"
                                 :items="listaMunicipios"
@@ -122,10 +114,12 @@
                                 item-value="co_municipio"
                                 item-text="no_municipio"
                                 box
-                                :disabled="formulario.endereco.co_ibge < 1 || formulario.endereco.co_ibge == null"
+                                disabled
                               />
                             </v-flex>
-                            <v-flex md3>
+                          </v-layout>
+                          <v-layout>
+                            <v-flex md12>
                               <template activator="{ on }">
                                 <v-menu
                                   ref="menu"
@@ -145,7 +139,7 @@
                                       placeholder="ex: 01/12/2019"
                                       return-masked-value
                                       mask="##/##/####"
-                                      required
+                                      disabled
                                       v-on="on"
                                     />
                                   </template>
@@ -185,6 +179,7 @@
                                 :counter="1000"
                                 box
                                 auto-grow
+                                disabled
                               />
                               <span>
                                   Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
@@ -254,18 +249,20 @@
                   </v-flex>
                 </v-layout>
               </v-container>
-            </v-card-text>
-            <v-card-actions class="justify-center">
-              <v-btn
-                @click="dialog = false"
-              >
-                <v-icon left>
-                  undo
-                </v-icon>
-                Voltar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+          <v-footer
+            height="auto"
+            color="white lighten-1 justify-center"
+          >
+
+            <v-btn
+              @click="dialog = false"
+            >
+              <v-icon left>
+                undo
+              </v-icon>
+              Voltar
+            </v-btn>
+          </v-footer>
         </v-container>
       </v-card-text>
     </v-card>
@@ -306,6 +303,7 @@ export default {
         tamanhoMaximo3000Caracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
         tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'Máximo 500 caracteres',
       },
+      usuarioLogado: {},
     };
   },
   computed: {
@@ -318,16 +316,14 @@ export default {
   },
   watch: {
     value(valor) {
-      console.log(valor);
       this.dialog = valor;
     },
     dialog(valor) {
-      console.log(valor);
       this.$emit('input', valor);
     },
     conselho(valor) {
       console.log(valor)
-      if (Object.keys(valor).length) {
+      if (Object.keys(valor).length > 0) {
         this.formulario = Object.assign({}, valor);
       }
     },
@@ -343,5 +339,9 @@ export default {
       downloadArquivo: 'shared/downloadArquivo',
     }),
   },
+  mounted() {
+    this.usuarioLogado = this.usuario;
+  },
+
 };
 </script>

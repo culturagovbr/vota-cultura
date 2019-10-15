@@ -14,7 +14,8 @@
             sm6
           >
             <div class="ma-12 text-justify subheading grey--text">
-              <span class="font-weight-bold">Nome do conselho:</span> aaa
+              <span class="font-weight-bold">Nome do conselho:</span>
+              <span style="margin-left: 4px" v-html="conselhoGetter.no_conselho"></span>
             </div>
           </v-flex>
         </v-layout>
@@ -29,11 +30,12 @@
             d-inline-flex
           >
             <div class="md6">
-              <span class="font-weight-bold">CNPJ do órgão gestor do conselho:</span> aa
+              <span class="font-weight-bold">CNPJ do órgão gestor do conselho:</span>
+              <span> {{conselhoGetter.cnpj_formatado}}</span>
             </div>
-
             <div class="md6">
-              <span class="font-weight-bold">Nome do órgão Gestor:</span>aaa
+              <span class="font-weight-bold">Nome do órgão gestor do conselho:</span>
+              <span style="margin-left: 4px" v-html="conselhoGetter.no_orgao_gestor"></span>
             </div>
           </v-flex>
         </v-layout>
@@ -100,7 +102,7 @@
                       <td />
                       <td>{{ props.item.nu_cpf_indicado }}</td>
                       <td>{{ props.item.no_indicado }}</td>
-                      <td>
+                      <td class="text-md-center">
                         <v-chip
                           dark
                           color="primary"
@@ -122,7 +124,7 @@
                           dark
                           color="primary"
                           small
-                          @click="itemSelecionado = props.item; dialogVisualizar = true; "
+                          @click="abrirDialogoVisualizacao(props.item)"
                         >
                           <v-icon>remove_red_eye</v-icon>
                         </v-btn>
@@ -488,7 +490,7 @@
       </v-card>
     </v-dialog>
     <conselho-indicacao-dialogo
-      :v-model="dialogVisualizar"
+      v-model="dialogVisualizar"
       :conselho="itemSelecionado"></conselho-indicacao-dialogo>
   </v-container>
 </template>
@@ -616,24 +618,29 @@ export default {
       {
         text: 'CPF',
         value: 'cnpj_formatado',
+        align: 'center',
       },
       {
         text: 'Nome',
         value: 'no_conselho',
+        align: 'left',
       },
       {
         text: 'Unidade da federação em que reside',
         value: 'endereco.municipio.uf.no_uf',
+        align: 'center',
       },
       {
         text: 'Data do cadastro',
         value: 'endereco.municipio.uf.regiao.no_regiao',
         sortable: false,
+        align: 'center',
       },
       {
         text: 'Ações',
         value: 'endereco.municipio.uf.regiao.no_regiao',
         sortable: false,
+        align: 'center',
       },
     ],
     listaMunicipios: [],
@@ -650,12 +657,15 @@ export default {
       anexos: [],
     },
     listaIndicados: [],
+    usuarioLogado: {},
   }),
   computed: {
     ...mapGetters({
       estadosGetter: 'localidade/estados',
       municipiosGetter: 'localidade/municipios',
       listarIndicacaoConselhoGetter: 'conselho/listarIndicacaoConselho',
+      conselhoGetter: 'conselho/conselho',
+      usuario: 'conta/usuario',
     }),
   },
   watch: {
@@ -689,12 +699,24 @@ export default {
         this.nomeIndicadoErros = '';
       }
     },
+    usuario(valor) {
+      this.usuarioLogado = valor;
+    },
+    usuarioLogado(usuario) {
+      if (usuario.co_conselho) {
+        this.obterDadosConselho(usuario.co_conselho);
+      }
+    },
+    itemSelecionado(valor) {
+      console.log(valor)
+    },
   },
   methods: {
     ...mapActions({
       consultarCPF: 'pessoa/consultarCPF',
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
+      obterDadosConselho: 'conselho/obterDadosConselho',
       enviarIndicacaoConselho: 'conselho/enviarIndicacaoConselho',
       obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
       deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
@@ -783,10 +805,19 @@ export default {
 
       return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },
+    abrirDialogoVisualizacao(valor) {
+      this.itemSelecionado = valor;
+      this.dialogVisualizar = true;
+    },
   },
   mounted() {
     this.obterListaIndicacaoConselho();
     this.obterEstados();
+    this.usuarioLogado = this.usuario;
+    this.dialogVisualizar = false;
+  },
+  beforeDestroy() {
+    this.dialogVisualizar = false;
   },
 };
 </script>
