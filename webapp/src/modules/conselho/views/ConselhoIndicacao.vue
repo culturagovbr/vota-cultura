@@ -47,11 +47,6 @@
         </v-layout>
 
         <v-card>
-          <v-toolbar
-            color="white elevation-1"
-          >
-            <v-toolbar-title>Indicação</v-toolbar-title>
-          </v-toolbar>
           <v-card-text>
             <v-container
               grid-list-md
@@ -87,15 +82,22 @@
                 color="yellow lighten-3"
                 class="black--text"
               >
-                <p class="font-weight-bold">
-                  Atenção!
-                  <br>
-                  1º - Faça o cadastro de cada indicado (no mínimo 3 e no máximo 5);
-                  <br>
-                  2º - Envie a relação dos indicados até o prazo final estabelecido no cronograma do edital.
-                  <br>
-                  Somente após o envio da relação que as indicações serão efetivadas.
-                </p>
+                Atenção!
+                <ol
+                  style="list-style-type:number;"
+                  type="1"
+                >
+                  <li>
+                    Faça o cadastro de cada indicado (no mínimo 3 e no máximo 5);
+                  </li>
+                  <li>
+                    Envie a relação dos indicados até o prazo final estabelecido no cronograma do edital.
+                    Somente após o envio da relação que as indicações serão efetivadas.
+                  </li>
+                  <li>
+                    Confira o recebimento do e-mail de confirmação.
+                  </li>
+                </ol>
               </v-alert>
               <v-card>
                 <v-toolbar
@@ -131,7 +133,7 @@
                       slot="items"
                       slot-scope="props"
                     >
-                      <td />
+                      <td>&nbsp;</td>
                       <td>{{ props.item.nu_cpf_indicado }}</td>
                       <td>{{ props.item.no_indicado }}</td>
                       <td class="text-md-center">
@@ -147,7 +149,7 @@
                           {{ props.item.data_indicacao_formatada }}
                         </v-chip>
                       </td>
-                      <td>
+                      <td class="text-md-center">
                         <v-btn
                           depressed
                           outline
@@ -267,268 +269,284 @@
           </v-btn>
 
           <v-toolbar-title>
-            Cadastrar
+            Cadastrar indicado - Conselho de cultura
           </v-toolbar-title>
 
           <v-spacer />
         </v-toolbar>
         <v-card-text>
           <v-container>
-            <v-card>
-              <v-toolbar
-                color="white elevation-1"
+            <v-container
+              grid-list-md
+            >
+              <v-layout
+                row
+                wrap
               >
-                <v-toolbar-title>Indicação</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                <v-container
-                  grid-list-md
-                >
-                  <v-layout
-                    row
-                    wrap
-                  >
-                    <v-flex>
-                      <v-card>
-                        <v-toolbar
-                          color="white elevation-0"
-                        >
-                          <v-toolbar-title>Dados básicos</v-toolbar-title>
-                        </v-toolbar>
-                        <v-form
-                          id="formulario"
-                          ref="form"
-                          v-model="formulario_valido"
-                          lazy-validation
-                        >
-                          <v-card-text>
-                            <v-container>
-                              <v-layout>
-                                <v-flex md3>
-                                  <v-text-field
-                                    v-model="indicado.nu_cpf_indicado"
-                                    placeholder="999.999.999-99"
-                                    append-icon="person"
-                                    name="login"
-                                    label="*CPF"
-                                    mask="###.###.###-##"
-                                    :error-messages="nomeIndicadoErros"
-                                    validate-on-blur
-                                    type="text"
-                                    :rules="[rules.required]"
-                                  />
-                                </v-flex>
-                                <v-flex
-                                  md3
-                                  offset-md7
-                                  style="margin-bottom: -272px; top: -86px; position: relative;"
+                <v-flex>
+                  <v-card>
+                    <v-toolbar
+                      color="white elevation-0"
+                    >
+                      <v-toolbar-title>Dados básicos</v-toolbar-title>
+                    </v-toolbar>
+                    <v-form
+                      id="formulario"
+                      ref="form"
+                      v-model="formulario_valido"
+                      lazy-validation
+                    >
+                      <v-card-text>
+                        <v-container>
+                          <v-layout>
+                            <v-flex md8>
+                          <v-layout>
+                            <v-flex md6>
+                              <v-text-field
+                                v-model="indicado.nu_cpf_indicado"
+                                placeholder="999.999.999-99"
+                                append-icon="person"
+                                name="login"
+                                label="*CPF"
+                                mask="###.###.###-##"
+                                :error-messages="nomeIndicadoErros"
+                                validate-on-blur
+                                type="text"
+                                :rules="[rules.required]"
+                              />
+                            </v-flex>
+                            <v-flex md6>
+                              <template activator="{ on }">
+                                <v-menu
+                                  ref="menu"
+                                  v-model="menu"
+                                  lazy
+                                  transition="scale-transition"
+                                  :close-on-content-click="false"
+                                  offset-y
+                                  full-width
+                                  min-width="290px"
                                 >
-                                  <file
-                                    v-model="indicado_foto_rosto"
-                                    style-panel-layout="compact circle"
-                                    style-load-indicator-position="center bottom"
-                                    style-progress-indicator-position="right bottom"
-                                    style-button-remove-item-position="left bottom"
-                                    style-button-process-item-position="right bottom"
-                                    label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"
-                                    :accepted-file-types="['image/jpeg']"
-                                  />
-                                </v-flex>
-                              </v-layout>
-
-                              <v-layout>
-                                <v-flex md9>
-                                  <v-text-field
-                                    v-model="indicado.no_indicado"
-                                    append-icon="person_outline"
-                                    name="login"
-                                    label="*Nome completo"
-                                    :error-messages="nomeIndicadoErros"
-                                    validate-on-blur
-                                    type="text"
-                                    :disabled="true"
-                                    :rules="[rules.required]"
-                                  />
-                                </v-flex>
-                              </v-layout>
-
-                              <v-layout>
-                                <v-flex md3>
-                                  <v-select
-                                    v-model="indicado.endereco.co_ibge"
-                                    :items="listaUF"
-                                    label="*Unidade da federação em que reside"
-                                    append-icon="place"
-                                    item-value="co_ibge"
-                                    item-text="no_uf"
-                                    required
-                                    box
-                                    :rules="[rules.required]"
-                                  />
-                                </v-flex>
-                                <v-flex
-                                  md3
-                                >
-                                  <v-select
-                                    v-model="indicado.endereco.co_municipio"
-                                    :items="listaMunicipios"
-                                    label="*Cidade em que reside"
-                                    append-icon="place"
-                                    item-value="co_municipio"
-                                    item-text="no_municipio"
-                                    box
-                                    :disabled="indicado.endereco.co_ibge < 1 || indicado.endereco.co_ibge == null"
-                                    :rules="[rules.required]"
-                                  />
-                                </v-flex>
-                                <v-flex md3>
-                                  <template activator="{ on }">
-                                    <v-menu
-                                      ref="menu"
-                                      v-model="menu"
-                                      lazy
-                                      transition="scale-transition"
-                                      :close-on-content-click="false"
-                                      offset-y
-                                      full-width
-                                      min-width="290px"
-                                    >
-                                      <template v-slot:activator="{ on }">
-                                        <v-text-field
-                                          v-model="indicado.dt_nascimento_indicado"
-                                          label="*Data de Nascimento"
-                                          append-icon="event"
-                                          placeholder="ex: 01/12/2019"
-                                          return-masked-value
-                                          mask="##/##/####"
-                                          required
-                                          :rules="[rules.required, rules.dataAniversario]"
-                                          v-on="on"
-                                        />
-                                      </template>
-                                      <v-date-picker
-                                        v-model="date"
-                                        locale="pt-BR"
-                                        scrollable
-                                      >
-                                        <v-spacer />
-                                        <v-btn
-                                          flat
-                                          color="primary"
-                                          @click="menu = false"
-                                        >
-                                          Cancel
-                                        </v-btn>
-                                        <v-btn
-                                          flat
-                                          color="primary"
-                                          @click="$refs.menu.save(date)"
-                                        >
-                                          OK
-                                        </v-btn>
-                                      </v-date-picker>
-                                    </v-menu>
+                                  <template v-slot:activator="{ on }">
+                                    <v-text-field
+                                      v-model="indicado.dt_nascimento_indicado"
+                                      label="*Data de nascimento"
+                                      append-icon="event"
+                                      placeholder="ex: 01/12/2019"
+                                      return-masked-value
+                                      mask="##/##/####"
+                                      required
+                                      :rules="[rules.required, rules.dataAniversario]"
+                                      v-on="on"
+                                    />
                                   </template>
-                                </v-flex>
-                              </v-layout>
+                                  <v-date-picker
+                                    v-model="date"
+                                    locale="pt-BR"
+                                    scrollable
+                                  >
+                                    <v-spacer />
+                                    <v-btn
+                                      flat
+                                      color="primary"
+                                      @click="menu = false"
+                                    >
+                                      Cancel
+                                    </v-btn>
+                                    <v-btn
+                                      flat
+                                      color="primary"
+                                      @click="$refs.menu.save(date)"
+                                    >
+                                      OK
+                                    </v-btn>
+                                  </v-date-picker>
+                                </v-menu>
+                              </template>
+                            </v-flex>
+                            <!--<v-flex-->
+                            <!--md3-->
+                            <!--offset-md7-->
+                            <!--style="margin-bottom: -272px; top: -86px; position: relative;"-->
+                            <!--&gt;-->
+                            <!--<file-->
+                            <!--v-model="indicado_foto_rosto"-->
+                            <!--style-panel-layout="compact circle"-->
+                            <!--style-load-indicator-position="center bottom"-->
+                            <!--style-progress-indicator-position="right bottom"-->
+                            <!--style-button-remove-item-position="left bottom"-->
+                            <!--style-button-process-item-position="right bottom"-->
+                            <!--label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"-->
+                            <!--:accepted-file-types="['image/jpeg']"-->
+                            <!--/>-->
+                            <!--</v-flex>-->
+                          </v-layout>
 
-                              <v-layout>
-                                <v-flex md12>
-                                  <v-textarea
-                                    v-model="indicado.ds_curriculo"
-                                    label="* Currículo resumido para a candidatura"
-                                    rows="13"
-                                    row-height="28"
-                                    :counter="1000"
-                                    box
-                                    auto-grow
-                                    :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
-                                  />
-                                  <span>
-                                    Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
-                                  </span>
-                                </v-flex>
-                              </v-layout>
-                            </v-container>
-                          </v-card-text>
-                        </v-form>
-                      </v-card>
-                    </v-flex>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-text-field
+                                v-model="indicado.no_indicado"
+                                append-icon="person_outline"
+                                name="login"
+                                label="*Nome completo"
+                                :error-messages="nomeIndicadoErros"
+                                validate-on-blur
+                                type="text"
+                                :disabled="true"
+                                :rules="[rules.required]"
+                              />
+                            </v-flex>
+                          </v-layout>
 
-                    <v-flex>
-                      <v-card>
-                        <v-toolbar
-                          color="white elevation-0"
+                          <v-layout>
+                            <v-flex md12>
+                              <v-select
+                                v-model="indicado.endereco.co_ibge"
+                                :items="listaUF"
+                                label="*Unidade da federação em que reside"
+                                append-icon="place"
+                                item-value="co_ibge"
+                                item-text="no_uf"
+                                required
+                                box
+                                :rules="[rules.required]"
+                              />
+                            </v-flex>
+                          </v-layout>
+
+                          <v-layout>
+                            <v-flex
+                              md12
+                              ma3
+                            >
+                              <v-select
+                                v-model="indicado.endereco.co_municipio"
+                                :items="listaMunicipios"
+                                label="*Cidade em que reside"
+                                append-icon="place"
+                                item-value="co_municipio"
+                                item-text="no_municipio"
+                                box
+                                :disabled="indicado.endereco.co_ibge < 1 || indicado.endereco.co_ibge == null"
+                                :rules="[rules.required]"
+                              />
+                            </v-flex>
+                          </v-layout>
+                            </v-flex>
+                            <v-flex md4>
+                              <file
+                              v-model="indicado_foto_rosto"
+                              style-panel-layout="compact circle"
+                              style-load-indicator-position="center bottom"
+                              style-progress-indicator-position="right bottom"
+                              style-button-remove-item-position="left bottom"
+                              style-button-process-item-position="right bottom"
+                              label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"
+                              :accepted-file-types="['image/jpeg']"
+                              />
+                            </v-flex>
+                          </v-layout>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-textarea
+                                v-model="indicado.ds_curriculo"
+                                label="* Currículo resumido para a candidatura"
+                                rows="13"
+                                row-height="28"
+                                :counter="1000"
+                                box
+                                auto-grow
+                                :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
+                              />
+                              <v-alert
+                                :value="true"
+                                icon="warning"
+                                color="yellow lighten-3"
+                                class="black--text"
+                              >
+                                Atenção! O texto do currículo resumido ficará disponível na
+                                plataforma de votação e será a defesa da candidatura do indicado.
+                              </v-alert>
+                            </v-flex>
+                          </v-layout>
+                        </v-container>
+                      </v-card-text>
+                    </v-form>
+                  </v-card>
+                </v-flex>
+
+                <v-flex>
+                  <v-card>
+                    <v-toolbar
+                      color="white elevation-0"
+                    >
+                      <v-toolbar-title>Documentação</v-toolbar-title>
+                    </v-toolbar>
+                    <v-card-text>
+                      <v-container
+                        grid-list-md
+                      >
+                        <v-alert
+                          :value="true"
+                          icon="warning"
+                          color="yellow lighten-3"
+                          class="black--text"
                         >
-                          <v-toolbar-title>Documentação</v-toolbar-title>
-                        </v-toolbar>
-                        <v-card-text>
+                          Atenção! Anexe arquivos com tamanho até 40MB.
+                          <br>
+                          Envie os documentos no formato <b>PDF</b> (preferencialmente), <b>JPEG</b>,
+                          <b>ZIP</b> ou <b>RAR</b> para enviar mais de um arquivo.
+                        </v-alert>
+
+                        <div class="ma-4 text-justify">
                           <v-container
-                            grid-list-md
+                            fluid
+                            grid-list-xl
                           >
-                            <div class="text-md-center grey--text title mb-9">
-                              Envie os documentos no formato PDF (preferencialmente), JPEG, <br>
-                              ZIP ou RAR para enviar mais de um arquivo.<br>
-
-                              <br>
-                              <b>ATENÇÃO</b>
-                              <br>
-                              Anexe arquivos com tamanho até 40MB
-                            </div>
-
-                            <div class="ma-4 text-justify">
-                              <v-toolbar color="white darken-3 title">
-                                Documentação
-                              </v-toolbar>
-                              <v-card class="elevation-1">
-                                <v-container
-                                  fluid
-                                  grid-list-xl
-                                >
-                                  <v-layout>
-                                    <v-flex class="pa-3">
-                                      <v-list two-line>
-                                        <template
-                                          v-for="documento in documentos"
-                                        >
-                                          <v-list-tile
-                                            avatar
-                                            @click=""
-                                          >
-                                            <v-list-tile-content>
-                                              <v-list-tile-title
-                                                v-html="`
+                            <v-layout>
+                              <v-flex class="pa-3">
+                                <v-list two-line>
+                                  <template
+                                    v-for="documento in documentos"
+                                  >
+                                    <v-list-tile
+                                      avatar
+                                      @click=""
+                                    >
+                                      <v-list-tile-content>
+                                        <v-list-tile-title
+                                          v-html="`
                                               ${!!(documento.obrigatorio) ? '*' : ''} ${documento.descricao}`"
-                                              />
-                                            </v-list-tile-content>
-                                            <v-list-tile-action />
-                                          </v-list-tile>
-                                          <file
-                                            v-if="!documento.multiplo"
-                                            v-model="anexos[documento.slug]"
-                                          />
-                                          <file
-                                            v-else
-                                            v-model="anexos[documento.slug]"
-                                            :allow-multiple="true"
-                                            label-idle="Clique aqui para anexar até 5 arquivos"
-                                            :max-files="5"
-                                          />
-                                        </template>
-                                      </v-list>
-                                    </v-flex>
-                                  </v-layout>
-                                </v-container>
-                              </v-card>
-                            </div>
+                                        />
+                                      </v-list-tile-content>
+                                      <v-list-tile-action />
+                                    </v-list-tile>
+                                    <file
+                                      v-if="!documento.multiplo"
+                                      v-model="anexos[documento.slug]"
+                                    />
+                                    <file
+                                      v-else
+                                      v-model="anexos[documento.slug]"
+                                      :allow-multiple="true"
+                                      label-idle="Clique aqui para anexar até 5 arquivos"
+                                      :max-files="5"
+                                    />
+                                  </template>
+                                </v-list>
+                              </v-flex>
+                            </v-layout>
                           </v-container>
-                        </v-card-text>
-                      </v-card>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card-text>
-              <v-card-actions class="justify-center">
+                        </div>
+                      </v-container>
+                    </v-card-text>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+              <v-footer
+                color="white"
+                class="justify-center ma-3"
+              >
                 <v-btn
                   @click="dialog = false"
                 >
@@ -547,8 +565,8 @@
                   </v-icon>
                   Salvar
                 </v-btn>
-              </v-card-actions>
-            </v-card>
+              </v-footer>
+            </v-container>
           </v-container>
         </v-card-text>
       </v-card>
@@ -629,7 +647,7 @@ export default {
       {
         text: 'CPF',
         value: 'cnpj_formatado',
-        align: 'center',
+        align: 'left',
         sortable: false,
 
       },
@@ -656,6 +674,7 @@ export default {
         text: 'Ações',
         value: 'endereco.municipio.uf.regiao.no_regiao',
         sortable: false,
+        align: 'center',
       },
     ],
     listaMunicipios: [],
