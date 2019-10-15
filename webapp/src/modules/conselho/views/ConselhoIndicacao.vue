@@ -602,6 +602,9 @@ export default {
       },
       anexos: [],
     },
+    arquivos: {
+        anexos : []
+    },
     listaIndicados: [],
     usuarioLogado: {},
   }),
@@ -664,6 +667,7 @@ export default {
       obterMunicipios: 'localidade/obterMunicipios',
       obterDadosConselho: 'conselho/obterDadosConselho',
       enviarIndicacaoConselho: 'conselho/enviarIndicacaoConselho',
+      enviarIndicacaoConselhoArquivo: 'conselho/enviarIndicacaoConselhoArquivo',
       obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
       deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
       notificarErro: 'app/setMensagemErro',
@@ -721,14 +725,14 @@ export default {
       Object.keys(this.anexos).forEach((slug) => {
         if (Array.isArray(this.anexos[slug])) {
           this.anexos[slug].forEach((arquivo) => {
-            this.indicado.anexos.push({
+            this.arquivos.anexos.push({
               binario: arquivo.file,
               slug,
             });
           });
           return true;
         }
-        this.indicado.anexos.push({
+        this.arquivos.anexos.push({
           binario: this.anexos[slug].file,
           slug,
         });
@@ -738,12 +742,18 @@ export default {
       const indicadoPayload = this.indicado;
       indicadoPayload.dt_nascimento_indicado = this.formatarDataCarbon(this.indicado.dt_nascimento_indicado);
       indicadoPayload.indicado_foto_rosto = this.indicado_foto_rosto.file;
-      this.enviarIndicacaoConselho(indicadoPayload).then(() => {
-        this.loading = false;
+      this.enviarIndicacaoConselho(indicadoPayload).then((response) => {
         // this.fecharDialogo();
-      }).catch((error)=>{
-        console.log('asasdasdasd');
-        console.log(error.response.data.error);
+        let { co_conselho_indicacao } = response.data.data;
+        let promises = [];
+        this.arquivos.anexos.forEach(anexo => {
+          anexo = Object.assign(anexo, {co_conselho_indicacao});
+          promises.push(this.enviarIndicacaoConselhoArquivo(anexo));
+        });
+
+        Promise.all(promises).then(response => {
+
+        })
       });
     },
     formatarDataCarbon(data) {

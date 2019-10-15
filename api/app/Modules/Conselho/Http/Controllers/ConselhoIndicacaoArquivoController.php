@@ -5,39 +5,46 @@ namespace App\Modules\Conselho\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Conselho\Model\ConselhoIndicacao;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Upload\Model\Arquivo;
+use App\Modules\Upload\Service\Upload;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ConselhoIndicacaoArquivoController extends Controller
 {
     public function store(Request $request)
     {
-        if(empty($request->anexos)) {
+        $dados = $request->all();
+        
+        if(empty($dados['binario'])) {
           throw new EParametrosInvalidos('Nenhum anexo informado')  ;
         }
-
-        $anexos = $request->anexos;
-        /** @var UploadedFile $uploadedFile */
-        DB::beginTransaction();
+        
         try {
-            foreach($anexos as $uploadedFile) {
-                $modeloUpload = [
-                    'no_arquivo'  => $uploadedFile->getClientOriginalName(),
-                    'no_extensao'  => $uploadedFile->getClientOriginalExtension(),
-                    'no_mime_type'  => $uploadedFile->getClientMimeType(),
-                ];
-    
-                $modeloArquivo = app(Arquivo::class);
-                $modeloArquivo->fill($modeloUpload);
-                $serviceUpload = new Upload($modeloArquivo);
-    
-                $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-                    $uploadedFile,
-                    'conselho/indicacao/'
-                );
-                $this->salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $uploadedFile->slug);
-            }
+            
+            DB::beginTransaction();
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $request['binario'];
+            $slug = $request['slug'];
+            $coConselhoIndicacao = $request['co_conselho_indicacao'];
+            $modeloUpload = [
+                'no_arquivo'  => $uploadedFile->getClientOriginalName(),
+                'no_extensao'  => $uploadedFile->getClientOriginalExtension(),
+                'no_mime_type'  => $uploadedFile->getClientMimeType(),
+            ];
+
+            $modeloArquivo = app(Arquivo::class);
+            $modeloArquivo->fill($modeloUpload);
+            $serviceUpload = new Upload($modeloArquivo);
+
+            $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
+                $uploadedFile,
+                'conselho/indicacao'
+            );
+            $this->salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $slug, $coConselhoIndicacao);
             DB::commit();
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
@@ -45,23 +52,24 @@ class ConselhoIndicacaoArquivoController extends Controller
         }
     }
     
-    private function salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $slugArquivo)
+    private function salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $slugArquivo, $coConselhoIndicacao)
     {
-        $conselhoIndicacaoModel = app(ConselhoIndicacaoModel::class);
+        $conselhoIndicacaoModel = app(ConselhoIndicacao::class);
         $conselhoUsuarioLogado = $this->recuperarDadosConselhoUsuarioLogado();
-        /** @var ConselhoIndicacaoModel $conselhoIndicacao */
+        /** @var ConselhoIndicacao $conselhoIndicacao */
         $conselhoIndicacao = $conselhoIndicacaoModel->where([
-            'co_conselho' => $conselhoUsuarioLogado['co_conselho']
+            'co_conselho' => $conselhoUsuarioLogado->co_conselho
         ])->first();
         $conselhoIndicacao->arquivos()->attach(
             $arquivoArmazenado->co_arquivo,
             [
                 'tp_arquivo' => $slugArquivo,
+                'co_conselho_indicacao' => $coConselhoIndicacao
             ]
         );
     }
 
-    private function recuperarDadosConselhoUsuarioLogado() : array
+    private function recuperarDadosConselhoUsuarioLogado()
     {
         $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
         $modelConselho = app(\App\Modules\Conselho\Model\Conselho::class);
