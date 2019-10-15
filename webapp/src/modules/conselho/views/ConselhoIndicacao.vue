@@ -663,6 +663,7 @@ export default {
       obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
       deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
       notificarErro: 'app/setMensagemErro',
+      definirMensagemSucesso: 'app/setMensagemSucesso',
     }),
     formatDate(date) {
       if (!date) return null;
@@ -717,9 +718,13 @@ export default {
           anexo = Object.assign(anexo, {co_conselho_indicacao});
           promises.push(this.enviarIndicacaoConselhoArquivo(anexo));
         });
-      }).then(() => {
-        this.loading = false;
-        this.fecharDialogo();
+        
+        Promise.all(promises).then(() => {
+          this.definirMensagemSucesso('Operação realizada com sucesso');
+          this.loading = false;
+          this.fecharDialogo();
+        });
+
       });
     },
     formatarDataCarbon(data) {
