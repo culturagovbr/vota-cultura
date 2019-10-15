@@ -50,20 +50,8 @@ class ConselhoIndicacao extends AbstractService
             ])->toArray());
             $this->getModel()->co_conselho = $conselhoUsuarioLogado->co_conselho;
 
-            $quantidadeMaximaIndicadosExcedida = $this->getModel()->quantidadeMaximaIndicadosExcedida();
-
-            if ($quantidadeMaximaIndicadosExcedida) {
-                throw new EParametrosInvalidos('O conselho já atingiu o limite de indicados.');
-            }
-
-            $indicacaoJaCadastrada = $this->getModel()->indicacaoJaCadastrada();
-
-            if ($indicacaoJaCadastrada) {
-                throw new EParametrosInvalidos(
-                    'O indicado já está cadastrado.',
-                    Response::HTTP_NOT_ACCEPTABLE
-                );
-            }
+            $this->validarQuantidadeMaximaIndicados();
+            $this->validarIndicacaoJaCadastrada();
 
             $serviceEndereco = app(Endereco::class);
             $endereco = $serviceEndereco->cadastrar(collect($dados['endereco']));
@@ -91,13 +79,13 @@ class ConselhoIndicacao extends AbstractService
                 'conselho/' . 'indicado_foto_rosto'
             );
 
-            $arquivoInserido = $conselhoUsuarioLogado->representante->arquivos()->attach(
+            $arquivoInserido = $conselhoUsuarioLogado->conselhoIndicacao->fotoUsuario()->attach(
                 $arquivoArmazenado->co_arquivo,
                 [
-                    'tp_arquivo' => 'indicado_foto_rosto',
-                    'tp_inscricao' => RepresentanteModel::TIPO_DOCUMENTACAO_COMPROBATORIA_ORGANIZACAO
+                    'tp_arquivo' => 'indicado_foto_rosto'
                 ]
             );
+
             $dados['co_arquivo'] = $arquivoInserido;
 
 //            $this->cadastrarArquivosIndicacao($dados->only('anexos'), $conselhoUsuarioLogado);
@@ -110,6 +98,26 @@ class ConselhoIndicacao extends AbstractService
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
+        }
+    }
+
+    private function validarIndicacaoJaCadastrada()
+    {
+        $indicacaoJaCadastrada = $this->getModel()->indicacaoJaCadastrada();
+
+        if ($indicacaoJaCadastrada) {
+            throw new EParametrosInvalidos(
+                'O indicado já está cadastrado.',
+                Response::HTTP_NOT_ACCEPTABLE
+            );
+        }
+    }
+
+    private function validarQuantidadeMaximaIndicados()
+    {
+        $quantidadeMaximaIndicadosExcedida = $this->getModel()->quantidadeMaximaIndicadosExcedida();
+        if ($quantidadeMaximaIndicadosExcedida) {
+            throw new EParametrosInvalidos('O conselho já atingiu o limite de indicados.');
         }
     }
 

@@ -17,6 +17,8 @@ class ConselhoIndicacao extends JsonResource
             'dt_nascimento_indicado' => $this->dt_nascimento_indicado->format('d/m/Y'),
             'endereco' => (new Endereco($this->endereco)),
             'conselho' => (new Conselho($this->conselho)),
+            'arquivos' => ConselhoIndicacaoArquivo::collection($this->arquivos),
+            'foto_indicado' => $this->fotoUsuario
         ];
     }
 }
