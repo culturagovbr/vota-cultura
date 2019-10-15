@@ -66,10 +66,26 @@ class Upload extends AbstractService
     private function obterArquivo($identificador) : ?ArquivoModel
     {
         $usuario = Auth::user();
+
         if ($usuario->possoFazerDownload()) {
             return $this->getModel()->find($identificador);
         }
+
+        $dadosUsuario = Auth::user()->dadosUsuarioAutenticado();
+        
+        if($dadosUsuario['co_conselho']) {
+            return $this->obterArquivoConselhoIndicacao($identificador, $dadosUsuario);
+        }
+
         return $this->obterArquivoRepresentante($identificador);
+    }
+
+    private function obterArquivoConselhoIndicacao($identificador, $usuario) : ?ArquivoModel
+    {
+        $arquivoIndicacao = $this->getModel()->find($identificador)->arquivoIndicacao()->get()->toArray()[0];
+        if($arquivoIndicacao['co_conselho'] === $usuario['co_conselho']) {
+            return $this->getModel()->find($identificador);
+        }
     }
 
     private function obterArquivoRepresentante($identificador) : ?ArquivoModel

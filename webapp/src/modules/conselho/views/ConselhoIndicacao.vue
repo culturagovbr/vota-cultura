@@ -215,7 +215,7 @@
           </v-card-title>
 
           <v-card-text>
-            Os dados enviados não poderão ser recuperados posteriormente.
+            Os dados excluídos não poderão ser recuperados posteriormente.
           </v-card-text>
 
           <v-card-actions>
