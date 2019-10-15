@@ -135,18 +135,6 @@
                           icon
                           fab
                           dark
-                          color="primary"
-                          small
-                        >
-                          <v-icon>edit</v-icon>
-                        </v-btn>
-
-                        <v-btn
-                          depressed
-                          outline
-                          icon
-                          fab
-                          dark
                           color="error"
                           small
                           @click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"
