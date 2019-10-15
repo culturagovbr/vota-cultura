@@ -27,6 +27,7 @@ class ConselhoIndicacao extends Model
         'no_indicado',
         'co_endereco',
         'dt_nascimento_indicado',
+        'co_arquivo',
         'ds_curriculo',
     ];
 

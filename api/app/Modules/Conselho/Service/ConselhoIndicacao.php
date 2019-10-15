@@ -36,7 +36,6 @@ class ConselhoIndicacao extends AbstractService
 
     public function cadastrar(Collection $dados): ?Model
     {
-
 //        $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
 
         try {
@@ -63,9 +62,9 @@ class ConselhoIndicacao extends AbstractService
             $dados['co_endereco'] = $endereco->co_endereco;
 
             $modeloUpload = [
-                'no_arquivo'  => $dados->indicado_foto_rosto->getClientOriginalName(),
-                'no_extensao'  => $dados->indicado_foto_rosto->getClientOriginalExtension(),
-                'no_mime_type'  => $dados->indicado_foto_rosto->getClientMimeType(),
+                'no_arquivo'  => $dados['indicado_foto_rosto']->getClientOriginalName(),
+                'no_extensao'  => $dados['indicado_foto_rosto']->getClientOriginalExtension(),
+                'no_mime_type'  => $dados['indicado_foto_rosto']->getClientMimeType(),
             ];
 
             $modeloArquivo = app(Arquivo::class);
@@ -75,18 +74,11 @@ class ConselhoIndicacao extends AbstractService
             $serviceUpload = new Upload($modeloArquivo);
 
             $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-                $dados->indicado_foto_rosto,
-                'conselho/' . 'indicado_foto_rosto'
+                $dados['indicado_foto_rosto'],
+                'conselho/indicado_foto_rosto'
             );
 
-            $arquivoInserido = $conselhoUsuarioLogado->conselhoIndicacao->fotoUsuario()->attach(
-                $arquivoArmazenado->co_arquivo,
-                [
-                    'tp_arquivo' => 'indicado_foto_rosto'
-                ]
-            );
-
-            $dados['co_arquivo'] = $arquivoInserido;
+            $dados['co_arquivo'] = $arquivoArmazenado->co_arquivo;
 
 //            $this->cadastrarArquivosIndicacao($dados->only('anexos'), $conselhoUsuarioLogado);
 
