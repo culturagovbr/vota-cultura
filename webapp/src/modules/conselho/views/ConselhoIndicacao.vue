@@ -553,28 +553,32 @@ export default {
         text: 'CPF',
         value: 'cnpj_formatado',
         align: 'center',
+        sortable: false,
+
       },
       {
         text: 'Nome',
         value: 'no_conselho',
         align: 'left',
+        sortable: false,
+
       },
       {
         text: 'Unidade da federação em que reside',
         value: 'endereco.municipio.uf.no_uf',
         align: 'center',
+        sortable: false,
+
       },
       {
         text: 'Data do cadastro',
         value: 'endereco.municipio.uf.regiao.no_regiao',
         sortable: false,
-        align: 'center',
       },
       {
         text: 'Ações',
         value: 'endereco.municipio.uf.regiao.no_regiao',
         sortable: false,
-        align: 'center',
       },
     ],
     listaMunicipios: [],
@@ -671,24 +675,6 @@ export default {
     fecharDialogo() {
       this.dialog = false;
     },
-    debug() {
-      // console.log(this.indicado);
-      this.testea = [{
-        // the server file reference
-        source: 'www.gooogle.com.br',
-
-        // set type to local to indicate an already uploaded file
-        options: {
-          type: 'remote',
-          file: {
-            name: 'Arquivo.png',
-            size: 3001025,
-            // type: 'image/png',
-            fake: true,
-          },
-        },
-      }];
-    },
     salvar() {
       this.loading = true;
       if (!Object.keys(this.indicado_foto_rosto).length) {
@@ -703,12 +689,6 @@ export default {
       }
 
       this.indicado.anexos = [];
-
-      // this.indicado.anexos.push({
-      //   binario: this.indicado_foto_rosto.file,
-      //   slug: 'indicado_foto_rosto',
-      // });
-
 
       Object.keys(this.anexos).forEach((slug) => {
         if (Array.isArray(this.anexos[slug])) {
@@ -731,17 +711,15 @@ export default {
       indicadoPayload.dt_nascimento_indicado = this.formatarDataCarbon(this.indicado.dt_nascimento_indicado);
       indicadoPayload.indicado_foto_rosto = this.indicado_foto_rosto.file;
       this.enviarIndicacaoConselho(indicadoPayload).then((response) => {
-        // this.fecharDialogo();
         let { co_conselho_indicacao } = response.data.data;
         let promises = [];
         this.arquivos.anexos.forEach(anexo => {
           anexo = Object.assign(anexo, {co_conselho_indicacao});
           promises.push(this.enviarIndicacaoConselhoArquivo(anexo));
         });
-
-        Promise.all(promises).then(response => {
-
-        })
+      }).then(() => {
+        this.loading = false;
+        this.fecharDialogo();
       });
     },
     formatarDataCarbon(data) {
