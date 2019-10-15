@@ -46,7 +46,6 @@
                     >
                       <v-layout>
                         <v-flex md8>
-
                           <v-layout>
                             <v-flex md12>
                               <v-text-field
@@ -106,15 +105,15 @@
                           </v-layout>
                           <v-layout>
                             <v-flex md12>
-                                    <v-text-field
-                                      v-model="formulario.dt_nascimento_indicado"
-                                      label="*Data de Nascimento"
-                                      append-icon="event"
-                                      placeholder="ex: 01/12/2019"
-                                      return-masked-value
-                                      mask="##/##/####"
-                                      disabled
-                                    />
+                              <v-text-field
+                                v-model="formulario.dt_nascimento_indicado"
+                                label="*Data de Nascimento"
+                                append-icon="event"
+                                placeholder="ex: 01/12/2019"
+                                return-masked-value
+                                mask="##/##/####"
+                                disabled
+                              />
                             </v-flex>
                           </v-layout>
 
@@ -136,12 +135,14 @@
                             </v-flex>
                           </v-layout>
                         </v-flex>
-                        <v-flex md4 class="text-md-right">
+                        <v-flex
+                          md4
+                          class="text-md-right"
+                        >
                           <v-avatar :size="256">
-                            <img :src="(formulario || {}).foto_indicado" />
+                            <img :src="(formulario || {}).foto_indicado">
                           </v-avatar>
                         </v-flex>
-
                       </v-layout>
                     </v-container>
                   </v-card-text>
@@ -281,28 +282,27 @@ export default {
       this.$emit('input', valor);
     },
     conselho(valor) {
+      this.formulario.conselhoHabilitacao = valor || this.formularioInicial;
       if (Object.keys(valor).length > 0) {
         this.formulario = valor || {};
       }
     },
-    estadosGetter() {
-      this.listaUF = this.estadosGetter;
+    estadosGetter(value) {
+      this.listaUF = value;
     },
-    municipiosGetter() {
-      this.listaMunicipios = this.municipiosGetter;
+    municipiosGetter(valor) {
+      this.listaMunicipios = valor;
     },
-    formulario() {
-      console.log((this.formulario || {}));
-      this.co_arquivo = (this.formulario || {}).co_arquivo;
-      // this.obterBinarioArquivo(this.co_arquivo).then((response) => {
-      //   console.log(response);
-      // });
+    formulario(valor) {
+      if (this.listaMunicipios.length < 1 && Object.keys(this.formulario.endereco).length > 0) {
+        this.obterMunicipios(this.formulario.endereco.co_ibge);
+      }
     },
   },
   methods: {
     ...mapActions({
       downloadArquivo: 'shared/downloadArquivo',
-      // obterBinarioArquivo: 'shared/obterBinarioArquivo',
+      obterMunicipios: 'localidade/obterMunicipios',
     }),
     obterDescricaoDocumento(tpArquivo) {
       const indiceDocumento = documentosIndicacao.findIndex(elemento => (elemento || {}).slug === tpArquivo);
