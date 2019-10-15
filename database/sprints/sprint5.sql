@@ -42,3 +42,31 @@ ALTER TABLE public.tb_conselho RENAME COLUMN st_inscricao TO st_indicacao;
 ALTER TABLE public.tb_conselho ALTER COLUMN st_indicacao SET DEFAULT 'a';
 COMMENT ON COLUMN public.tb_conselho.st_indicacao IS 'situação em que se encontra o período de indicados do conselho. Possíveis opções: a = aberto, f = fechado';
 
+--#############
+
+-- Drop table
+
+-- DROP TABLE public.rl_conselho_indicacao_arquivo;
+
+CREATE TABLE public.rl_conselho_indicacao_arquivo (
+	co_conselho_indicacao_arquivo serial NOT NULL, -- chave primária da tabela
+	co_conselho_indicacao int4 NOT NULL, -- chave estrangeira referente a tabela tb_conselho_indicacao
+	co_arquivo int4 NOT NULL, -- chave estrangeira referente a tabela tb_arquivo
+	tp_arquivo varchar(255) NOT NULL, -- tipo do arquivo com slug do módulo.
+	CONSTRAINT pk_conselho_indicacao_arquivo PRIMARY KEY (co_conselho_indicacao_arquivo),
+	CONSTRAINT fk_conselho_indicacao_arquivo_arquivo FOREIGN KEY (co_arquivo) REFERENCES tb_arquivo(co_arquivo) ON DELETE CASCADE,
+	CONSTRAINT fk_conselho_indicacao_arquivo_conselho_indicacao FOREIGN KEY (co_conselho_indicacao) REFERENCES tb_conselho_indicacao(co_conselho_indicacao) ON DELETE CASCADE
+);
+
+-- Column comments
+
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.co_conselho_indicacao_arquivo IS 'chave primária da tabela';
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.co_conselho_indicacao IS 'chave estrangeira referente a tabela tb_conselho_indicacao';
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.co_arquivo IS 'chave estrangeira referente a tabela tb_arquivo';
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.tp_arquivo IS 'tipo do arquivo com slug do módulo.';
+
+-- Permissions
+
+ALTER TABLE public.rl_conselho_indicacao_arquivo OWNER TO votacultura;
+GRANT ALL ON TABLE public.rl_conselho_indicacao_arquivo TO votacultura;
+
