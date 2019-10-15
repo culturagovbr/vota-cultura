@@ -51,8 +51,7 @@
             <v-container
               grid-list-md
             >
-              <!--text-xs-center-->
-              <b>Critérios para as indicações - Item 5.3 do edital:</b>
+              <b>Critérios para as indicações de acordo com o item 5.3 do edital:</b>
               <div class="mt-3">
                 <p>
                   5.3.1 - Os conselhos de cultura habilitados estarão aptos a indicar de <b>três a cinco
@@ -91,11 +90,12 @@
                     Faça o cadastro de cada indicado (no mínimo 3 e no máximo 5);
                   </li>
                   <li>
-                    Envie a relação dos indicados até o prazo final estabelecido no cronograma do edital.
-                    Somente após o envio da relação que as indicações serão efetivadas.
+                    Conclua a indicação até o prazo final estabelecido no cronograma do edital.
+                    Somente após a conclusão que as indicações serão efetivadas;
                   </li>
                   <li>
-                    Confira o recebimento do e-mail de confirmação.
+                    Confira o recebimento do e-mail de confirmação na caixa de entrada do
+                    representante e/ou do conselho. Caso não localize, verifique a caixa de spam.
                   </li>
                 </ol>
               </v-alert>
@@ -133,7 +133,7 @@
                       slot-scope="props"
                     >
                       <td>&nbsp;</td>
-                      <td>{{ props.item.nu_cpf_indicado }}</td>
+                      <td>{{ props.item.cpf_indicado_formatado }}</td>
                       <td>{{ props.item.no_indicado }}</td>
                       <td class="text-md-center">
                         <v-chip
@@ -209,7 +209,7 @@
     <v-layout justify-center>
       <v-dialog
         v-model="dialogoConfirmacaoExclusao"
-        max-width="290"
+        max-width="360"
       >
         <v-card>
           <v-card-title class="headline">
@@ -643,7 +643,7 @@ export default {
       },
       {
         text: 'CPF',
-        value: 'cnpj_formatado',
+        value: 'cpf_indicado_formatado',
         align: 'left',
         sortable: false,
 
@@ -656,7 +656,7 @@ export default {
 
       },
       {
-        text: 'Unidade da federação em que reside',
+        text: 'UF em que reside',
         value: 'endereco.municipio.uf.no_uf',
         align: 'center',
         sortable: false,

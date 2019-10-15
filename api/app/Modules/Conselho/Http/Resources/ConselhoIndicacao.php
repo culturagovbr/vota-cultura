@@ -21,7 +21,8 @@ class ConselhoIndicacao extends JsonResource
             'endereco' => (new Endereco($this->endereco)),
             'conselho' => (new Conselho($this->conselho)),
             'arquivos' => ConselhoIndicacaoArquivo::collection($this->arquivos),
-            'foto_indicado' => asset($this->fotoUsuario->ds_localizacao)
+            'foto_indicado' => asset($this->fotoUsuario->ds_localizacao),
+            'cpf_indicado_formatado' => $this->cpf_indicado_formatado,
         ];
     }
 }
