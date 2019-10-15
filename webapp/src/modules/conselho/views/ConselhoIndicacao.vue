@@ -474,10 +474,6 @@
                             </div>
 
                             <div class="ma-4 text-justify">
-                              <v-toolbar color="white darken-3 title">
-                                Documentação
-                              </v-toolbar>
-                              <v-card class="elevation-1">
                                 <v-container
                                   fluid
                                   grid-list-xl
@@ -516,7 +512,6 @@
                                     </v-flex>
                                   </v-layout>
                                 </v-container>
-                              </v-card>
                             </div>
                           </v-container>
                         </v-card-text>
