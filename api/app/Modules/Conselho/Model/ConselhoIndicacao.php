@@ -50,6 +50,15 @@ class ConselhoIndicacao extends Model
         );
     }
 
+    public function fotoUsuario()
+    {
+        return $this->hasOne(
+            Arquivo::class,
+            'co_arquivo',
+            'co_arquivo'
+        );
+    }
+
     public function arquivos()
     {
         return $this->belongsToMany(
@@ -59,8 +68,8 @@ class ConselhoIndicacao extends Model
             'co_arquivo'
         )->as('rl_conselho_indicacao_arquivo')->withPivot(
             [
+                'co_conselho_indicacao',
                 'tp_arquivo',
-                'co_conselho_indicacao'
             ]
         );
     }

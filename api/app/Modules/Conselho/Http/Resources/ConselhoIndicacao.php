@@ -15,6 +15,8 @@ class ConselhoIndicacao extends JsonResource
             'dh_indicacao' => $this->dh_indicacao,
             'endereco' => (new Endereco($this->endereco)),
             'conselho' => (new Conselho($this->conselho)),
+            'arquivos' => ConselhoIndicacaoArquivo::collection($this->arquivos),
+            'foto_indicado' => $this->fotoUsuario
         ];
     }
 }
