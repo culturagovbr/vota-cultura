@@ -47,11 +47,6 @@
         </v-layout>
 
         <v-card>
-          <v-toolbar
-            color="white elevation-1"
-          >
-            <v-toolbar-title>Indicação</v-toolbar-title>
-          </v-toolbar>
           <v-card-text>
             <v-container
               grid-list-md
@@ -264,20 +259,13 @@
           </v-btn>
 
           <v-toolbar-title>
-            Cadastrar
+            Cadastrar indicado - Conselho de cultura
           </v-toolbar-title>
 
           <v-spacer />
         </v-toolbar>
         <v-card-text>
           <v-container>
-            <v-card>
-              <v-toolbar
-                color="white elevation-1"
-              >
-                <v-toolbar-title>Indicação</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
                 <v-container
                   grid-list-md
                 >
@@ -524,29 +512,27 @@
                       </v-card>
                     </v-flex>
                   </v-layout>
+                  <v-footer color="white" class="justify-center ma-3">
+                    <v-btn
+                      @click="dialog = false"
+                    >
+                      <v-icon left>
+                        undo
+                      </v-icon>
+                      Voltar
+                    </v-btn>
+                    <v-btn
+                      :loading="loading"
+                      color="primary"
+                      @click="salvar"
+                    >
+                      <v-icon left>
+                        send
+                      </v-icon>
+                      Salvar
+                    </v-btn>
+                  </v-footer>
                 </v-container>
-              </v-card-text>
-              <v-card-actions class="justify-center">
-                <v-btn
-                  @click="dialog = false"
-                >
-                  <v-icon left>
-                    undo
-                  </v-icon>
-                  Voltar
-                </v-btn>
-                <v-btn
-                  :loading="loading"
-                  color="primary"
-                  @click="salvar"
-                >
-                  <v-icon left>
-                    send
-                  </v-icon>
-                  Salvar
-                </v-btn>
-              </v-card-actions>
-            </v-card>
           </v-container>
         </v-card-text>
       </v-card>
