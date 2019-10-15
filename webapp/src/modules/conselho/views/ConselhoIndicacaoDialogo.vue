@@ -26,234 +26,197 @@
       </v-toolbar>
       <v-card-text>
         <v-container>
-              <v-container
-                grid-list-md
-              >
-                <v-layout
-                  row
-                  wrap
-                >
-                  <v-flex>
-                    <v-card>
-                      <v-toolbar
-                        color="white elevation-0"
-                      >
-                        <v-toolbar-title>Dados básicos</v-toolbar-title>
-                      </v-toolbar>
-                      <v-card-text>
-                        <v-container
-                          grid-list-md
-                        >
-                          <v-layout>
-                            <v-flex md12>
-                              <v-text-field
-                                v-model="formulario.nu_cpf_indicado"
-                                placeholder="999.999.999-99"
-                                append-icon="person"
-                                name="login"
-                                label="*CPF"
-                                mask="###.###.###-##"
-                                validate-on-blur
-                                type="text"
-                                disabled
-                              />
-                            </v-flex>
-                          </v-layout>
-                          <!--<v-flex-->
-                            <!--md3-->
-                            <!--offset-md7-->
-                            <!--style="margin-bottom: -272px; top: -86px; position: relative;"-->
-                          <!--&gt;-->
-                            <!--&lt;!&ndash;<file&ndash;&gt;-->
-                            <!--&lt;!&ndash;v-model="indicado_foto_rosto"&ndash;&gt;-->
-                            <!--&lt;!&ndash;style-panel-layout="compact circle"&ndash;&gt;-->
-                            <!--&lt;!&ndash;style-load-indicator-position="center bottom"&ndash;&gt;-->
-                            <!--&lt;!&ndash;style-progress-indicator-position="right bottom"&ndash;&gt;-->
-                            <!--&lt;!&ndash;style-button-remove-item-position="left bottom"&ndash;&gt;-->
-                            <!--&lt;!&ndash;style-button-process-item-position="right bottom"&ndash;&gt;-->
-                            <!--&lt;!&ndash;label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG))"&ndash;&gt;-->
-                            <!--&lt;!&ndash;:accepted-file-types="['image/jpeg']"&ndash;&gt;-->
-                            <!--&lt;!&ndash;/>&ndash;&gt;-->
-                          <!--</v-flex>-->
+          <v-container
+            grid-list-md
+          >
+            <v-layout
+              row
+              wrap
+            >
+              <v-flex>
+                <v-card>
+                  <v-toolbar
+                    color="white elevation-0"
+                  >
+                    <v-toolbar-title>Dados básicos</v-toolbar-title>
+                  </v-toolbar>
+                  <v-card-text>
+                    <v-container
+                      grid-list-md
+                    >
+                      <v-layout>
+                        <v-flex md12>
+                          <v-text-field
+                            v-model="formulario.nu_cpf_indicado"
+                            placeholder="999.999.999-99"
+                            append-icon="person"
+                            name="login"
+                            label="*CPF"
+                            mask="###.###.###-##"
+                            validate-on-blur
+                            type="text"
+                            disabled
+                          />
+                        </v-flex>
+                      </v-layout>
+                      <!--<v-flex-->
+                      <!--md3-->
+                      <!--offset-md7-->
+                      <!--style="margin-bottom: -272px; top: -86px; position: relative;"-->
+                      <!--&gt;-->
+                      <!--&lt;!&ndash;<file&ndash;&gt;-->
+                      <!--&lt;!&ndash;v-model="indicado_foto_rosto"&ndash;&gt;-->
+                      <!--&lt;!&ndash;style-panel-layout="compact circle"&ndash;&gt;-->
+                      <!--&lt;!&ndash;style-load-indicator-position="center bottom"&ndash;&gt;-->
+                      <!--&lt;!&ndash;style-progress-indicator-position="right bottom"&ndash;&gt;-->
+                      <!--&lt;!&ndash;style-button-remove-item-position="left bottom"&ndash;&gt;-->
+                      <!--&lt;!&ndash;style-button-process-item-position="right bottom"&ndash;&gt;-->
+                      <!--&lt;!&ndash;label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG))"&ndash;&gt;-->
+                      <!--&lt;!&ndash;:accepted-file-types="['image/jpeg']"&ndash;&gt;-->
+                      <!--&lt;!&ndash;/>&ndash;&gt;-->
+                      <!--</v-flex>-->
 
-                          <v-layout>
-                            <v-flex md12>
-                              <v-text-field
-                                v-model="formulario.no_indicado"
-                                append-icon="person_outline"
-                                name="login"
-                                label="*Nome completo"
-                                validate-on-blur
-                                type="text"
-                                :disabled="true"
-                              />
-                            </v-flex>
-                          </v-layout>
+                      <v-layout>
+                        <v-flex md12>
+                          <v-text-field
+                            v-model="formulario.no_indicado"
+                            append-icon="person_outline"
+                            name="login"
+                            label="*Nome completo"
+                            validate-on-blur
+                            type="text"
+                            :disabled="true"
+                          />
+                        </v-flex>
+                      </v-layout>
 
-                          <v-layout>
-                            <v-flex md12>
-                              <v-select
-                                v-model="formulario.endereco.co_ibge"
-                                :items="listaUF"
-                                label="*Unidade da federação em que reside"
-                                append-icon="place"
-                                item-value="co_ibge"
-                                item-text="no_uf"
-                                disabled
-                                box
-                              />
-                            </v-flex>
-                          </v-layout>
-                          <v-layout>
-                            <v-flex md12>
-                              <v-select
-                                v-model="formulario.endereco.co_municipio"
-                                :items="listaMunicipios"
-                                label="*Cidade em que reside"
-                                append-icon="place"
-                                item-value="co_municipio"
-                                item-text="no_municipio"
-                                box
-                                disabled
-                              />
-                            </v-flex>
-                          </v-layout>
-                          <v-layout>
-                            <v-flex md12>
-                              <template activator="{ on }">
-                                <v-menu
-                                  ref="menu"
-                                  v-model="menu"
-                                  lazy
-                                  transition="scale-transition"
-                                  :close-on-content-click="false"
-                                  offset-y
-                                  full-width
-                                  min-width="290px"
+                      <v-layout>
+                        <v-flex md12>
+                          <v-select
+                            v-model="(formulario.endereco || {}).co_ibge"
+                            :items="listaUF"
+                            label="*Unidade da federação em que reside"
+                            append-icon="place"
+                            item-value="co_ibge"
+                            item-text="no_uf"
+                            disabled
+                            box
+                          />
+                        </v-flex>
+                      </v-layout>
+                      <v-layout>
+                        <v-flex md12>
+                          <v-select
+                            v-model="(formulario.endereco || {} ).co_municipio"
+                            :items="listaMunicipios"
+                            label="*Cidade em que reside"
+                            append-icon="place"
+                            item-value="co_municipio"
+                            item-text="no_municipio"
+                            box
+                            disabled
+                          />
+                        </v-flex>
+                      </v-layout>
+                      <v-layout>
+                        <v-flex md12>
+                                <v-text-field
+                                  v-model="formulario.dt_nascimento_indicado"
+                                  label="*Data de Nascimento"
+                                  append-icon="event"
+                                  placeholder="ex: 01/12/2019"
+                                  return-masked-value
+                                  mask="##/##/####"
+                                  disabled
+                                />
+                        </v-flex>
+                      </v-layout>
+
+                      <v-layout>
+                        <v-flex md12>
+                          <v-textarea
+                            v-model="formulario.ds_curriculo"
+                            label="* Currículo resumido para a candidatura"
+                            rows="13"
+                            row-height="28"
+                            :counter="1000"
+                            box
+                            auto-grow
+                            disabled
+                          />
+                          <span>
+                            Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
+                          </span>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+
+              <v-flex v-if="(formulario.arquivos || []).length > 0">
+                <v-card>
+                  <v-toolbar
+                    color="white elevation-0"
+                  >
+                    <v-toolbar-title>Documentação</v-toolbar-title>
+                  </v-toolbar>
+                  <v-card-text>
+                    <v-container
+                      grid-list-md
+                    >
+                      <div class="ma-4 text-justify">
+                        <v-toolbar color="white darken-3 title">
+                          Documentação
+                        </v-toolbar>
+                        <v-card class="elevation-1">
+                          <v-container
+                            fluid
+                            grid-list-xl
+                          >
+                            <v-layout>
+                              <v-flex class="pa-3">
+                                <v-list
+                                  v-for="(documento, index) in formulario.arquivos"
+                                  :key="index"
+                                  two-line
                                 >
-                                  <template v-slot:activator="{ on }">
-                                    <v-text-field
-                                      v-model="formulario.dt_nascimento_indicado"
-                                      label="*Data de Nascimento"
-                                      append-icon="event"
-                                      placeholder="ex: 01/12/2019"
-                                      return-masked-value
-                                      mask="##/##/####"
-                                      disabled
-                                      v-on="on"
-                                    />
+                                  <template>
+                                    <v-layout>
+                                      <v-flex
+                                        class="text-md-center title"
+                                        sm10
+                                      >
+                                        <span v-html="obterDescricaoDocumento(documento.tp_arquivo)" />
+                                      </v-flex>
+                                      <v-flex sm1>
+                                        <v-icon
+                                          right
+                                          size="32px"
+                                          color="blue darken-4"
+                                          @click="downloadArquivo(documento.co_arquivo)"
+                                        >
+                                          cloud_download
+                                        </v-icon>
+                                      </v-flex>
+                                    </v-layout>
                                   </template>
-                                  <v-date-picker
-                                    v-model="date"
-                                    locale="pt-BR"
-                                    scrollable
-                                  >
-                                    <v-spacer />
-                                    <v-btn
-                                      flat
-                                      color="primary"
-                                      @click="menu = false"
-                                    >
-                                      Cancel
-                                    </v-btn>
-                                    <v-btn
-                                      flat
-                                      color="primary"
-                                      @click="$refs.menu.save(date)"
-                                    >
-                                      OK
-                                    </v-btn>
-                                  </v-date-picker>
-                                </v-menu>
-                              </template>
-                            </v-flex>
-                          </v-layout>
-
-                          <v-layout>
-                            <v-flex md12>
-                              <v-textarea
-                                v-model="formulario.ds_curriculo"
-                                label="* Currículo resumido para a candidatura"
-                                rows="13"
-                                row-height="28"
-                                :counter="1000"
-                                box
-                                auto-grow
-                                disabled
-                              />
-                              <span>
-                                  Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
-                                </span>
-                            </v-flex>
-                          </v-layout>
-                        </v-container>
-                      </v-card-text>
-                    </v-card>
-                  </v-flex>
-
-                  <v-flex>
-                    <v-card>
-                      <v-toolbar
-                        color="white elevation-0"
-                      >
-                        <v-toolbar-title>Documentação</v-toolbar-title>
-                      </v-toolbar>
-                      <v-card-text>
-                        <v-container
-                          grid-list-md
-                        >
-                          <div class="ma-4 text-justify">
-                            <v-toolbar color="white darken-3 title">
-                              Documentação
-                            </v-toolbar>
-                            <v-card class="elevation-1">
-                              <v-container
-                                fluid
-                                grid-list-xl
-                              >
-
-                                <v-layout>
-                                  <v-flex class="pa-3">
-                                    <v-list two-line>
-                                      <!--<template-->
-                                        <!--v-for="documento in documentos"-->
-                                      <!--&gt;-->
-                                        <!--&lt;!&ndash;<v-layout>&ndash;&gt;-->
-                                          <!--&lt;!&ndash;<v-flex&ndash;&gt;-->
-                                            <!--&lt;!&ndash;class="text-md-center title"&ndash;&gt;-->
-                                            <!--&lt;!&ndash;sm10&ndash;&gt;-->
-                                          <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-                                            <!--&lt;!&ndash;Ato normativo que constituiu o conselho&ndash;&gt;-->
-                                          <!--&lt;!&ndash;</v-flex>&ndash;&gt;-->
-                                          <!--&lt;!&ndash;<v-flex sm1>&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<v-icon&ndash;&gt;-->
-                                              <!--&lt;!&ndash;right&ndash;&gt;-->
-                                              <!--&lt;!&ndash;size="32px"&ndash;&gt;-->
-                                              <!--&lt;!&ndash;color="blue darken-4"&ndash;&gt;-->
-                                              <!--&lt;!&ndash;@click="downloadArquivo(arquivosAvaliacao.ata_reuniao_conselho.co_arquivo)"&ndash;&gt;-->
-                                            <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-                                              <!--&lt;!&ndash;cloud_download&ndash;&gt;-->
-                                            <!--&lt;!&ndash;</v-icon>&ndash;&gt;-->
-                                          <!--&lt;!&ndash;</v-flex>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;</v-layout>&ndash;&gt;-->
-                                      <!--</template>-->
-                                    </v-list>
-                                  </v-flex>
-                                </v-layout>
-                              </v-container>
-                            </v-card>
-                          </div>
-                        </v-container>
-                      </v-card-text>
-                    </v-card>
-                  </v-flex>
-                </v-layout>
-              </v-container>
+                                </v-list>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-card>
+                      </div>
+                    </v-container>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
           <v-footer
             height="auto"
             color="white lighten-1 justify-center"
           >
-
             <v-btn
               @click="dialog = false"
             >
@@ -270,6 +233,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { documentosIndicacao } from '../api/documentosIndicacao';
 
 export default {
   name: 'ConselhoIndicacaoDialogo',
@@ -322,9 +286,8 @@ export default {
       this.$emit('input', valor);
     },
     conselho(valor) {
-      console.log(valor)
       if (Object.keys(valor).length > 0) {
-        this.formulario = Object.assign({}, valor);
+        this.formulario = valor || {}
       }
     },
     estadosGetter() {
@@ -338,6 +301,13 @@ export default {
     ...mapActions({
       downloadArquivo: 'shared/downloadArquivo',
     }),
+    obterDescricaoDocumento(tpArquivo) {
+      const indiceDocumento = documentosIndicacao.findIndex(elemento => (elemento || {}).slug === tpArquivo);
+      if (!indiceDocumento) {
+        return 'Documento inválido';
+      }
+      return documentosIndicacao[indiceDocumento].descricao;
+    },
   },
   mounted() {
     this.usuarioLogado = this.usuario;
