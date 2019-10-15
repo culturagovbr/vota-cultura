@@ -15,7 +15,10 @@
           >
             <div class="ma-12 text-justify subheading grey--text">
               <span class="font-weight-bold">Nome do conselho:</span>
-              <span style="margin-left: 4px" v-html="conselhoGetter.no_conselho"></span>
+              <span
+                style="margin-left: 4px"
+                v-html="conselhoGetter.no_conselho"
+              />
             </div>
           </v-flex>
         </v-layout>
@@ -31,11 +34,14 @@
           >
             <div class="md6">
               <span class="font-weight-bold">CNPJ do órgão gestor do conselho:</span>
-              <span> {{conselhoGetter.cnpj_formatado}}</span>
+              <span> {{ conselhoGetter.cnpj_formatado }}</span>
             </div>
             <div class="md6">
               <span class="font-weight-bold">Nome do órgão gestor do conselho:</span>
-              <span style="margin-left: 4px" v-html="conselhoGetter.no_orgao_gestor"></span>
+              <span
+                style="margin-left: 4px"
+                v-html="conselhoGetter.no_orgao_gestor"
+              />
             </div>
           </v-flex>
         </v-layout>
@@ -48,7 +54,8 @@
           </v-toolbar>
           <v-card-text>
             <v-container
-              grid-list-md>
+              grid-list-md
+            >
               <!--text-xs-center-->
               <b>Critérios para as indicações - Item 5.3 do edital:</b>
               <p>
@@ -128,6 +135,7 @@
                         >
                           <v-icon>remove_red_eye</v-icon>
                         </v-btn>
+                        <!--@click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"-->
 
                         <v-btn
                           depressed
@@ -137,7 +145,7 @@
                           dark
                           color="error"
                           small
-                          @click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"
+                          @click="abrirDialogoConfirmacaoExclusao(props.item.co_conselho_indicacao)"
                         >
                           <v-icon>delete</v-icon>
                         </v-btn>
@@ -170,6 +178,45 @@
         </v-btn>
       </v-layout>
     </v-card>
+
+    <v-layout justify-center>
+      <v-dialog
+        v-model="dialogoConfirmacaoExclusao"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">
+            Deseja realmente excluir?
+          </v-card-title>
+
+          <v-card-text>
+            Os dados enviados não poderão ser recuperados posteriormente.
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer />
+
+            <v-btn
+              color="red darken-1"
+              text
+              flat
+              @click="fecharDialogoConfirmacaoExclusao"
+            >
+              Não
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              flat
+              @click="deletarIndicado"
+            >
+              Sim
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
 
 
     <v-dialog
@@ -207,7 +254,8 @@
               </v-toolbar>
               <v-card-text>
                 <v-container
-                  grid-list-md>
+                  grid-list-md
+                >
                   <v-layout
                     row
                     wrap
@@ -220,14 +268,13 @@
                           <v-toolbar-title>Dados básicos</v-toolbar-title>
                         </v-toolbar>
                         <v-form
+                          id="formulario"
                           ref="form"
                           v-model="formulario_valido"
-                          id="formulario"
                           lazy-validation
                         >
                           <v-card-text>
-                            <v-container
-                            >
+                            <v-container>
                               <v-layout>
                                 <v-flex md3>
                                   <v-text-field
@@ -388,7 +435,8 @@
                           <v-toolbar-title>Documentação</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
-                          <v-container grid-list-md
+                          <v-container
+                            grid-list-md
                           >
                             <div class="text-md-center grey--text title mb-9">
                               Envie os documentos no formato PDF (preferencialmente), JPEG, <br>
@@ -479,7 +527,8 @@
     </v-dialog>
     <conselho-indicacao-dialogo
       v-model="dialogVisualizar"
-      :conselho="itemSelecionado"></conselho-indicacao-dialogo>
+      :conselho="itemSelecionado"
+    />
   </v-container>
 </template>
 
@@ -526,7 +575,7 @@ export default {
       },
     },
     documentos: documentosIndicacao,
-    testea: [],
+    dialogoConfirmacaoExclusao: false,
     formulario_valido: false,
     menu: false,
     date: '',
@@ -595,7 +644,7 @@ export default {
       anexos: [],
     },
     arquivos: {
-        anexos : []
+      anexos: [],
     },
     listaIndicados: [],
     usuarioLogado: {},
@@ -712,19 +761,18 @@ export default {
       indicadoPayload.dt_nascimento_indicado = this.formatarDataCarbon(this.indicado.dt_nascimento_indicado);
       indicadoPayload.indicado_foto_rosto = this.indicado_foto_rosto.file;
       this.enviarIndicacaoConselho(indicadoPayload).then((response) => {
-        let { co_conselho_indicacao } = response.data.data;
-        let promises = [];
-        this.arquivos.anexos.forEach(anexo => {
-          anexo = Object.assign(anexo, {co_conselho_indicacao});
+        const { co_conselho_indicacao } = response.data.data;
+        const promises = [];
+        this.arquivos.anexos.forEach((anexo) => {
+          anexo = Object.assign(anexo, { co_conselho_indicacao });
           promises.push(this.enviarIndicacaoConselhoArquivo(anexo));
         });
-        
+
         Promise.all(promises).then(() => {
           this.definirMensagemSucesso('Operação realizada com sucesso');
           this.loading = false;
           this.fecharDialogo();
         });
-
       });
     },
     formatarDataCarbon(data) {
@@ -735,6 +783,17 @@ export default {
     abrirDialogoVisualizacao(valor) {
       this.itemSelecionado = valor;
       this.dialogVisualizar = true;
+    },
+    abrirDialogoConfirmacaoExclusao(itemParaExclusao) {
+      this.dialogoConfirmacaoExclusao = true;
+      this.itemParaExclusao = itemParaExclusao;
+    },
+    fecharDialogoConfirmacaoExclusao() {
+      this.dialogoConfirmacaoExclusao = false;
+    },
+    deletarIndicado() {
+      this.deletarIndicacaoConselho(this.itemParaExclusao);
+      this.dialogoConfirmacaoExclusao = false;
     },
   },
   mounted() {
