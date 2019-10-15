@@ -659,6 +659,7 @@ export default {
       obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
       deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
       notificarErro: 'app/setMensagemErro',
+      definirMensagemSucesso: 'app/setMensagemSucesso',
     }),
     formatDate(date) {
       if (!date) return null;
@@ -740,7 +741,9 @@ export default {
         });
 
         Promise.all(promises).then(response => {
-
+          this.definirMensagemSucesso('Operação realizada com sucesso');
+          this.loading = false;
+          this.fecharDialogo();
         })
       });
     },
