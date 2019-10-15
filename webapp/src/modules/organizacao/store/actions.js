@@ -1,8 +1,5 @@
 import * as organizacaoService from '../service/organizacao';
 import * as types from './types';
-import * as conselhoService from '../../conselho/service/conselho';
-import * as service from '../../shared/service/base';
-import * as usuarioService from '../../conta/service/usuario';
 
 // eslint-disable-next-line no-empty-pattern
 export const enviarDadosOrganizacao = async ({ commit }, organizacao) => {
