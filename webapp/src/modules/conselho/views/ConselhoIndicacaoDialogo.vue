@@ -19,7 +19,7 @@
         </v-btn>
 
         <v-toolbar-title>
-          Visualização de indicação
+          Visualizar indicado - Conselho de cultura
         </v-toolbar-title>
 
         <v-spacer />
@@ -74,6 +74,19 @@
                               />
                             </v-flex>
                           </v-layout>
+                          <v-layout>
+                            <v-flex md12>
+                              <v-text-field
+                                v-model="formulario.dt_nascimento_indicado"
+                                label="*Data de Nascimento"
+                                append-icon="event"
+                                placeholder="ex: 01/12/2019"
+                                return-masked-value
+                                mask="##/##/####"
+                                disabled
+                              />
+                            </v-flex>
+                          </v-layout>
 
                           <v-layout>
                             <v-flex md12>
@@ -103,19 +116,6 @@
                               />
                             </v-flex>
                           </v-layout>
-                          <v-layout>
-                            <v-flex md12>
-                              <v-text-field
-                                v-model="formulario.dt_nascimento_indicado"
-                                label="*Data de Nascimento"
-                                append-icon="event"
-                                placeholder="ex: 01/12/2019"
-                                return-masked-value
-                                mask="##/##/####"
-                                disabled
-                              />
-                            </v-flex>
-                          </v-layout>
 
                           <v-layout>
                             <v-flex md12>
@@ -137,11 +137,11 @@
                         </v-flex>
                         <v-flex
                           md4
-                          class="text-md-right"
+                          class="text-md-center"
                         >
-                          <v-avatar :size="256">
-                            <img :src="(formulario || {}).foto_indicado">
-                          </v-avatar>
+                          <v-content>
+                            <img width="260"  style="border-radius:50px;" :src="(formulario || {}).foto_indicado">
+                          </v-content>
                         </v-flex>
                       </v-layout>
                     </v-container>
