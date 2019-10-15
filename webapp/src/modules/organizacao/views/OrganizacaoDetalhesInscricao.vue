@@ -13,7 +13,7 @@
           >
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
             <v-spacer />
-                <v-chip color="success" v-if="organizacao.organizacaoHabilitacao.ds_parecer == 'habilitada'">
+                <v-chip color="success" v-if="organizacao.organizacaoHabilitacao.situacao_avaliacao == 'Habilitada'">
                   {{organizacao.organizacaoHabilitacao.situacao_avaliacao}}
                 </v-chip>
                 <v-chip color="warning" class="black--text"  v-else>
@@ -93,7 +93,6 @@
                       :value="organizacao.organizacaoHabilitacao.ds_parecer"
                       label="Parecer da etapa de habilitação"
                       append-icon="subject"
-                      disabled
                       color="red"
                     />
                   </v-flex>
