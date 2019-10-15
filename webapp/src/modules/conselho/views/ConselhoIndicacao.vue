@@ -441,9 +441,15 @@
                                     auto-grow
                                     :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
                                   />
-                                  <span>
-                                    Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
-                                  </span>
+                                  <v-alert
+                                    :value="true"
+                                    icon="warning"
+                                    color="yellow lighten-3"
+                                    class="black--text"
+                                  >
+                                    Atenção! O texto do currículo resumido ficará disponível na
+                                    plataforma de votação e será a defesa da candidatura do indicado.
+                                  </v-alert>
                                 </v-flex>
                               </v-layout>
                             </v-container>
