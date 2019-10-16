@@ -141,7 +141,11 @@ class Conselho extends AbstractService
             DB::beginTransaction();
             $modelPesquisada->fill($request->all());
             $modelPesquisada->save();
+            /** $conselhoIndicacaoService ConselhoIndicacao */
+            $conselhoIndicacaoService = app(ConselhoIndicacao::class);
+            $conselhoIndicacaoService->enviarEmailConfirmacaoConselhoIndicacao($modelPesquisada);
             DB::commit();
+            // dd($request->all());
             return $modelPesquisada->toArray();
         } catch (\HttpException $queryException) {
             DB::rollBack();
