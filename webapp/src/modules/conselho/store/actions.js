@@ -89,7 +89,7 @@ export const obterConselhosParcialmenteHabilitados = async ({ commit }) => {
   });
 };
 
-export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselho(payload).then(response => {
+export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselho(payload).then((response) => {
   dispatch(
     'conselho/obterListaIndicacaoConselho',
     {},
@@ -99,42 +99,68 @@ export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselho
 }).catch((error) => {
   dispatch(
       'app/setMensagemErro',
-      error.response.data.error,
+      error.response.data.message,
       { root: true },
   );
-  throw new TypeError(error, 'enviarIndicacaoConselho', 10);
+  throw new TypeError(error);
 });
 
 export const enviarIndicacaoConselhoArquivo = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselhoArquivo(payload)
   .then(response => response)
   .catch((error) => {
     dispatch(
-      'app/setMensagemErro',
-      error.response.data.error,
-      { root: true },
+        'app/setMensagemErro',
+        error.response.data.message,
+        { root: true },
     );
-    throw new TypeError(error, 'enviarIndicacaoConselhoArquivo', 10);
+    throw new TypeError(error);
   });
 
-export const obterListaIndicacaoConselho = async ({ commit, dispatch }, payload) => conselhoService.obterListaIndicacaoConselho(payload).then(response => {
+export const obterListaIndicacaoConselho = async ({ commit, dispatch }, payload) => conselhoService.obterListaIndicacaoConselho(payload).then((response) => {
   const { data } = response.data;
   commit(types.LISTAR_INDICACOES_CONSELHO, data);
 }).catch((error) => {
   dispatch(
-      'app/setMensagemErro',
-      error.response.data.error,
-      { root: true },
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
   );
-  throw new TypeError(error, 'obterListaIndicacaoConselho', 10);
+  throw new TypeError(error);
 });
 
-export const deletarIndicacaoConselho = async ({ commit, dispatch }, coConselhoIndicacao) => conselhoService.deletarIndicacaoConselho(coConselhoIndicacao).then(response => {
+export const deletarIndicacaoConselho = async ({ commit, dispatch }, coConselhoIndicacao) => conselhoService.deletarIndicacaoConselho(coConselhoIndicacao).then((response) => {
   commit(types.DELETAR_INDICACAO_CONSELHO, coConselhoIndicacao);
+  dispatch(
+    'app/setMensagemSucesso',
+    'Indicado excluído com sucesso.',
+    { root: true },
+  );
+  return response;
 }).catch((error) => {
   dispatch(
-      'app/setMensagemErro',
-      error.response.data.message,
-      { root: true },
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
   );
-  throw new TypeError(error, 'deletarIndicacaoConselho', 10);
+  throw new TypeError(error);
+});
+
+export const concluirIndicacao = async ({ commit, dispatch }, conselhoId) => conselhoService.atualizarConselho({
+  co_conselho: conselhoId,
+  st_indicacao: 'f',
+}).then((response) => {
+  commit(types.CONCLUIR_INDICACAO);
+  dispatch(
+    'app/setMensagemSucesso',
+    'Indicação concluída com sucesso.',
+    { root: true },
+  );
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
 });

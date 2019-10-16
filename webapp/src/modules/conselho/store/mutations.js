@@ -26,4 +26,7 @@ export const mutations = {
     );
     state.listarIndicacaoConselho.splice(index, 1);
   },
+  [types.CONCLUIR_INDICACAO](state) {
+    state.conselho.st_indicacao = 'f';
+  },
 };

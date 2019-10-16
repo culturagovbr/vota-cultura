@@ -7,7 +7,7 @@ Route::group([
     Route::apiResource('/', 'ConselhoApiResourceController');
     Route::apiResource('/indicacao', 'ConselhoIndicacaoApiResourceController');
     Route::post('/indicacao/arquivo', 'ConselhoIndicacaoArquivoController@store');
-    
+    Route::patch('{co_conselho}', 'ConselhoApiResourceController@update')->where('co_conselho', '[0-9]+');
     Route::group([
         'prefix' => 'habilitacao'
     ], function () {

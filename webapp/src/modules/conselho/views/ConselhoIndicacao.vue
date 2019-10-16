@@ -202,7 +202,7 @@
           color="primary"
           :loading="loading"
           :disabled="listarIndicacaoConselhoGetter.length < 3"
-          @click="abrirDialogo"
+          @click="concluirIndicacao(conselhoGetter.co_conselho)"
         >
           Concluir indicação
         </v-btn>
@@ -364,24 +364,7 @@
                                 </v-menu>
                               </template>
                             </v-flex>
-                            <!--<v-flex-->
-                            <!--md3-->
-                            <!--offset-md7-->
-                            <!--style="margin-bottom: -272px; top: -86px; position: relative;"-->
-                            <!--&gt;-->
-                            <!--<file-->
-                            <!--v-model="indicado_foto_rosto"-->
-                            <!--style-panel-layout="compact circle"-->
-                            <!--style-load-indicator-position="center bottom"-->
-                            <!--style-progress-indicator-position="right bottom"-->
-                            <!--style-button-remove-item-position="left bottom"-->
-                            <!--style-button-process-item-position="right bottom"-->
-                            <!--label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"-->
-                            <!--:accepted-file-types="['image/jpeg']"-->
-                            <!--/>-->
-                            <!--</v-flex>-->
                           </v-layout>
-
                           <v-layout>
                             <v-flex md12>
                               <v-text-field
@@ -435,14 +418,15 @@
                             </v-flex>
                             <v-flex md4>
                               <file
-                              v-model="indicado_foto_rosto"
-                              style-panel-layout="compact circle"
-                              style-load-indicator-position="center bottom"
-                              style-progress-indicator-position="right bottom"
-                              style-button-remove-item-position="left bottom"
-                              style-button-process-item-position="right bottom"
-                              label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"
-                              :accepted-file-types="['image/jpeg']"
+                                ref="indicado_foto_rosto"
+                                v-model="indicado_foto_rosto"
+                                style-panel-layout="compact circle"
+                                style-load-indicator-position="center bottom"
+                                style-progress-indicator-position="right bottom"
+                                style-button-remove-item-position="left bottom"
+                                style-button-process-item-position="right bottom"
+                                label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"
+                                :accepted-file-types="['image/jpeg']"
                               />
                             </v-flex>
                           </v-layout>
@@ -522,11 +506,13 @@
                                       <v-list-tile-action />
                                     </v-list-tile>
                                     <file
+                                      :ref="documento.slug"
                                       v-if="!documento.multiplo"
                                       v-model="anexos[documento.slug]"
                                     />
                                     <file
                                       v-else
+                                      :ref="documento.slug"
                                       v-model="anexos[documento.slug]"
                                       :allow-multiple="true"
                                       label-idle="Clique aqui para anexar até 5 arquivos"
@@ -709,7 +695,12 @@ export default {
     dialog(valor) {
       if (!valor) {
         this.$refs.form.reset();
+        this.$refs.form.resetValidation();
         this.nomeIndicadoErros = '';
+        this.$refs.indicado_foto_rosto.reset();
+        documentosIndicacao.forEach((documento) =>{
+          this.$refs[documento.slug][0].reset();
+        });
       }
     },
     date() {
@@ -744,8 +735,6 @@ export default {
         this.obterDadosConselho(usuario.co_conselho);
       }
     },
-    conselhoGetter(conselho) {
-    },
   },
   methods: {
     ...mapActions({
@@ -759,6 +748,7 @@ export default {
       deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
       notificarErro: 'app/setMensagemErro',
       definirMensagemSucesso: 'app/setMensagemSucesso',
+      concluirIndicacao: 'conselho/concluirIndicacao',
     }),
     formatDate(date) {
       if (!date) return null;
@@ -819,6 +809,9 @@ export default {
           this.loading = false;
           this.fecharDialogo();
         });
+      }).catch(() => {
+        this.loading = false;
+        this.fecharDialogo();
       });
     },
     formatarDataCarbon(data) {

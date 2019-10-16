@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-      <!--:server="{url:'http://localhost:88/api/', restore: './restore.php?id='}"-->
     <file-pond
       ref="pond"
       v-bind="$attrs"
@@ -19,7 +18,6 @@
       label-file-processing-aborted="Envio cancelado"
       @addfile="setFileMetaData"
       label-file-processing-error="Erro durante o envio"
-      @removefile="self = {}"
       label-file-processing-revert-error="Erro ao reverter"
       label-file-remove-error="Erro ao remover"
       label-tap-to-cancel="Clique para cancelar"
@@ -37,12 +35,14 @@
       label-max-file-size="Tamanho máximo é {filesize}"
       label-max-total-file-size-exceeded="Tamanho máximo excedido"
       label-max-total-file-size="Tamanho máximo de arquivos é {filesize}"
+      @removefile="self = {}; error=false"
+      @error="setError"
     />
   </div>
 </template>
 
 <script>
-import vueFilePond, { setOptions, registerPlugin} from 'vue-filepond';
+import vueFilePond, { setOptions } from 'vue-filepond';
 
 import 'filepond/dist/filepond.min.css';
 
@@ -127,6 +127,7 @@ export default {
   data() {
     return {
       self: {},
+      error: false,
     };
   },
   watch: {
@@ -156,6 +157,16 @@ export default {
       } catch (Exception) {
         this.self = {};
       }
+    },
+    reset() {
+      this.$refs.pond.removeFiles();
+      this.self = {};
+    },
+    setError() {
+      this.error = true;
+    },
+    fileHasError() {
+      return this.error;
     },
   },
 };

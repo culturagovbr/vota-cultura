@@ -12,3 +12,8 @@ export const enviarIndicacaoConselho = payload => service.postRequest('/conselho
 export const enviarIndicacaoConselhoArquivo = payload => service.postRequest('/conselho/indicacao/arquivo', service.buildData(payload));
 export const obterListaIndicacaoConselho = () => service.getRequest('/conselho/indicacao');
 export const deletarIndicacaoConselho = coConselhoIndicacao => service.deleteRequest('/conselho/indicacao', coConselhoIndicacao);
+export const atualizarConselho = conselho => service.patchRequest(
+  '/conselho',
+  conselho.co_conselho,
+  conselho,
+);
