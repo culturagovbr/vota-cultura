@@ -458,11 +458,6 @@
                               <file
                                 ref="indicado_foto_rosto"
                                 v-model="indicado_foto_rosto"
-                                style-panel-layout="compact circle"
-                                style-load-indicator-position="center bottom"
-                                style-progress-indicator-position="right bottom"
-                                style-button-remove-item-position="left bottom"
-                                style-button-process-item-position="right bottom"
                                 label-idle="Clique aqui para anexar foto do rosto (JPEG/JPG)"
                                 :accepted-file-types="['image/jpeg']"
                               />

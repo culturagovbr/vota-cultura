@@ -139,7 +139,7 @@
                           <v-content>
                             <img
                               width="260"
-                              style="border-radius:50px;"
+                              style="border-radius:10px;"
                               :src="(formulario || {}).foto_indicado"
                             >
                           </v-content>
