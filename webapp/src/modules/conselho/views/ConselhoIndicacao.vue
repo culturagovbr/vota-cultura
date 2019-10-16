@@ -202,7 +202,7 @@
           color="primary"
           :loading="loading"
           :disabled="listarIndicacaoConselhoGetter.length < 3"
-          @click="concluirIndicacao(conselhoGetter.co_conselho)"
+          @click="handleDialogConfirmarConcluirIndicacao"
         >
           Concluir indicação
         </v-btn>
@@ -210,6 +210,44 @@
     </v-card>
 
     <v-layout justify-center>
+
+<v-dialog
+        v-model="dialogConfirmarConcluirIndicacao"
+        max-width="360"
+      >
+        <v-card>
+          <v-card-title class="headline">
+            Deseja realmente concluir a indicação?
+          </v-card-title>
+
+          <v-card-text>
+            Os dados enviados não poderão ser alterados posteriormente.
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer />
+
+            <v-btn
+              color="red darken-1"
+              text
+              flat
+              @click="handleDialogConfirmarConcluirIndicacao"
+            >
+              Não
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              flat
+              @click="enviarConcluirIndicacao(conselhoGetter.co_conselho)"
+            >
+              Sim
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-dialog
         v-model="dialogoConfirmacaoExclusao"
         max-width="360"
@@ -681,6 +719,7 @@ export default {
     },
     listaIndicados: [],
     usuarioLogado: {},
+    dialogConfirmarConcluirIndicacao : false
   }),
   computed: {
     ...mapGetters({
@@ -750,6 +789,15 @@ export default {
       definirMensagemSucesso: 'app/setMensagemSucesso',
       concluirIndicacao: 'conselho/concluirIndicacao',
     }),
+    handleDialogConfirmarConcluirIndicacao() {
+        this.dialogConfirmarConcluirIndicacao = !this.dialogConfirmarConcluirIndicacao;
+    },
+    enviarConcluirIndicacao(coConselho) {
+        this.concluirIndicacao(coConselho).then(() => {
+            this.handleDialogConfirmarConcluirIndicacao();
+            this.loading = false;
+        })
+    },
     formatDate(date) {
       if (!date) return null;
       const [year, month, day] = date.split('-');
