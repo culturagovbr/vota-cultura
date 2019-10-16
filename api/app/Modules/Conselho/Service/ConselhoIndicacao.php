@@ -205,11 +205,11 @@ class ConselhoIndicacao extends AbstractService
                 throw new EParametrosInvalidos('Você não possui permissão para realizar esta ação.');
             }
 
-            
-
+            $coArquivo = $indicado->co_arquivo;
             DB::beginTransaction();
             $this->removerArquivosIndicacao($identificador);
             $indicado->delete();
+            $this->removerFotoUsuario($coArquivo);
             DB::commit();
         } catch (\HttpException $queryException) {
             DB::rollBack();
@@ -223,10 +223,18 @@ class ConselhoIndicacao extends AbstractService
         $arquivosIndicacao = $conselhoIndicacaoArquivoModel->where(['co_conselho_indicacao' => $identificador]);
         $arquivoModel = app(Arquivo::class);
         foreach($arquivosIndicacao->get()->toArray() as $arquivoIndicacao) {
-            $arquivo = $arquivoModel->find($arquivoIndicacao['co_arquivo'])->toArray();
-            Storage::delete($arquivo['ds_localizacao']);
+            $arquivo = $arquivoModel->find($arquivoIndicacao['co_arquivo']);
+            Storage::delete($arquivo->toArray()['ds_localizacao']);
             $arquivo->delete();
         }
         $arquivosIndicacao->delete();
+    }
+
+    private function removerFotoUsuario($coArquivoFotoUsuario)
+    {
+        $arquivoModel = app(Arquivo::class);
+        $fotoUsuario = $arquivoModel->find($coArquivoFotoUsuario);
+        Storage::delete($fotoUsuario->toArray()['ds_localizacao']);
+        $fotoUsuario->delete();
     }
 }
