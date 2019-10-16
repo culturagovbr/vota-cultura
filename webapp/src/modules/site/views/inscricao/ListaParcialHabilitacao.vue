@@ -22,8 +22,8 @@
               <v-icon>group</v-icon>
             </v-tab>
             <v-tab href="#organizacao">
-              Organização
-              <v-icon>group</v-icon>
+              Organização ou entidade
+              <v-icon>color_lens</v-icon>
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tp_inscricao">
