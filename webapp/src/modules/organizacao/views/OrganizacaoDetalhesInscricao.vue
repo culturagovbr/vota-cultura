@@ -94,6 +94,7 @@
                       label="Parecer da etapa de habilitação"
                       append-icon="subject"
                       color="red"
+                      disabled
                     />
                   </v-flex>
                 </v-layout>
