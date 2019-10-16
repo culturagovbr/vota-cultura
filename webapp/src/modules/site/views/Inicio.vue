@@ -129,7 +129,7 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
+                    Para eleger os representantes indicados pelos conselhos de cultura na etapa de votação
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
