@@ -125,47 +125,7 @@ class ConselhoIndicacao extends AbstractService
         }
     }
 
-    private function cadastrarArquivosIndicacao($anexos, $conselho)
-    {
-        /** @var UploadedFile $uploadedFile */
-        foreach($anexos as $uploadedFile) {
-            $modeloUpload = [
-                'no_arquivo'  => $uploadedFile->getClientOriginalName(),
-                'no_extensao'  => $uploadedFile->getClientOriginalExtension(),
-                'no_mime_type'  => $uploadedFile->getClientMimeType(),
-            ];
-
-            $modeloArquivo = app(Arquivo::class);
-            $modeloArquivo->fill($modeloUpload);
-            $serviceUpload = new Upload($modeloArquivo);
-
-            $arquivoArmazenado = $serviceUpload->uploadArquivoCodificado(
-                $uploadedFile,
-                'conselho/indicacao/'
-            );
-
-            $this->salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $conselho, $uploadedFile->slug);
-
-        }
-//        return $arquivoArmazenado->co_arquivo;
-    }
-
-    private function salvarRelacionamentoConselhoIndicacaoArquivo($arquivoArmazenado, $conselho, $slugArquivo)
-    {
-        $conselhoIndicacaoModel = app(ConselhoIndicacaoModel::class);
-        /** @var ConselhoIndicacaoModel $conselhoIndicacao */
-        $conselhoIndicacao = $conselhoIndicacaoModel->where([
-            'co_conselho' => $conselho['co_conselho']
-        ])->first();
-        $conselhoIndicacao->arquivos()->attach(
-            $arquivoArmazenado->co_arquivo,
-            [
-                'tp_arquivo' => $slugArquivo,
-            ]
-        );
-    }
-
-    private function enviarEmailConfirmacaoConselhoIndicacao(\App\Modules\Conselho\Model\Conselho $conselho)
+    public function enviarEmailConfirmacaoConselhoIndicacao(\App\Modules\Conselho\Model\Conselho $conselho)
     {
         Mail::to($conselho->representante->ds_email)
             ->bcc($conselho->ds_email)
