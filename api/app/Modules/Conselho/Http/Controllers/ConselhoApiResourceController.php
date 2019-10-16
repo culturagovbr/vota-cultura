@@ -18,7 +18,7 @@ class ConselhoApiResourceController extends AApiResourceController
 
     public function __construct(ConselhoService $service)
     {
-        $this->middleware('auth:api')->except(['store', 'index']);
+        $this->middleware('auth:api')->except(['store', 'index', 'update']);
         return parent::__construct($service);
     }
 
@@ -44,6 +44,15 @@ class ConselhoApiResourceController extends AApiResourceController
     {
         return $this->sendResponse(
             Conselho::collection($this->service->obterTodos()),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
+    }
+
+    public function update(Request $request, $identificador)
+    {
+        return $this->sendResponse(
+            $this->service->concluirIndicacao($request, $identificador),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );
