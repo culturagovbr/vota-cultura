@@ -35,7 +35,7 @@
       label-max-file-size="Tamanho máximo é {filesize}"
       label-max-total-file-size-exceeded="Tamanho máximo excedido"
       label-max-total-file-size="Tamanho máximo de arquivos é {filesize}"
-      @removefile="self = {}; error=false"
+      v-on:removefile="removefile"
       @error="setError"
     />
   </div>
@@ -84,7 +84,7 @@ export default {
     },
     maxFileSize: {
       type: String,
-      default: '80MB',
+      default: '40MB',
     },
     fileValidateTypeLabelExpectedTypesMap: {
       type: Object,
@@ -100,27 +100,9 @@ export default {
       type: Object,
       default: () => {},
     },
-    // server: {
-    //   type: Object,
-    //   default: () => {},
-    // },
     files: {
       type: Array,
-      // default: () => [],
       default: () => [
-        // {
-        //   source: 'https://www.google.com/logos/doodles/2018/baba-amtes-104th-birthday-6729609885253632-s.png',
-        //   options: {
-        //     type: 'remote',
-        //   },
-        // },
-
-        // {
-        //   source: 'blob:http://localhost:8080/cc34373e-db63-488f-8c48-97d921d81054',
-        //   options: {
-        //     type: 'remote',
-        //   },
-        // },
       ],
     },
   },
@@ -140,14 +122,20 @@ export default {
     self(val) {
       this.$emit('input', val);
     },
-    files(val) {
-      console.log(val)
-    },
   },
   mounted() {
     setOptions(this.options);
   },
   methods: {
+    removefile(error, file) {
+      if (Array.isArray(this.self)) {
+        const index = this.self.findIndex(arquivo => arquivo.id === file.id);
+        this.self.splice(index, 1);
+      } else {
+        this.self = {};
+      }
+      this.error = false;
+    },
     setFileMetaData() {
       try {
         this.self = this.$refs.pond.getFile();

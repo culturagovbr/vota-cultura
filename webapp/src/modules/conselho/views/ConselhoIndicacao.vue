@@ -300,121 +300,121 @@
                         <v-container>
                           <v-layout>
                             <v-flex md8>
-                          <v-layout>
-                            <v-flex md6>
-                              <v-text-field
-                                v-model="indicado.nu_cpf_indicado"
-                                placeholder="999.999.999-99"
-                                append-icon="person"
-                                name="login"
-                                label="*CPF"
-                                mask="###.###.###-##"
-                                :error-messages="nomeIndicadoErros"
-                                validate-on-blur
-                                type="text"
-                                :rules="[rules.required]"
-                              />
-                            </v-flex>
-                            <v-flex md6>
-                              <template activator="{ on }">
-                                <v-menu
-                                  ref="menu"
-                                  v-model="menu"
-                                  lazy
-                                  transition="scale-transition"
-                                  :close-on-content-click="false"
-                                  offset-y
-                                  full-width
-                                  min-width="290px"
-                                >
-                                  <template v-slot:activator="{ on }">
-                                    <v-text-field
-                                      v-model="indicado.dt_nascimento_indicado"
-                                      label="*Data de nascimento"
-                                      append-icon="event"
-                                      placeholder="ex: 01/12/2019"
-                                      return-masked-value
-                                      mask="##/##/####"
-                                      required
-                                      :rules="[rules.required, rules.dataAniversario]"
-                                      v-on="on"
-                                    />
+                              <v-layout>
+                                <v-flex md6>
+                                  <v-text-field
+                                    v-model="indicado.nu_cpf_indicado"
+                                    placeholder="999.999.999-99"
+                                    append-icon="person"
+                                    name="login"
+                                    label="*CPF"
+                                    mask="###.###.###-##"
+                                    :error-messages="nomeIndicadoErros"
+                                    validate-on-blur
+                                    type="text"
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                                <v-flex md6>
+                                  <template activator="{ on }">
+                                    <v-menu
+                                      ref="menu"
+                                      v-model="menu"
+                                      lazy
+                                      transition="scale-transition"
+                                      :close-on-content-click="false"
+                                      offset-y
+                                      full-width
+                                      min-width="290px"
+                                    >
+                                      <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                          v-model="indicado.dt_nascimento_indicado"
+                                          label="*Data de nascimento"
+                                          append-icon="event"
+                                          placeholder="ex: 01/12/2019"
+                                          return-masked-value
+                                          mask="##/##/####"
+                                          required
+                                          :rules="[rules.required, rules.dataAniversario]"
+                                          v-on="on"
+                                        />
+                                      </template>
+                                      <v-date-picker
+                                        v-model="date"
+                                        locale="pt-BR"
+                                        scrollable
+                                      >
+                                        <v-spacer />
+                                        <v-btn
+                                          flat
+                                          color="primary"
+                                          @click="menu = false"
+                                        >
+                                          Cancel
+                                        </v-btn>
+                                        <v-btn
+                                          flat
+                                          color="primary"
+                                          @click="$refs.menu.save(date)"
+                                        >
+                                          OK
+                                        </v-btn>
+                                      </v-date-picker>
+                                    </v-menu>
                                   </template>
-                                  <v-date-picker
-                                    v-model="date"
-                                    locale="pt-BR"
-                                    scrollable
-                                  >
-                                    <v-spacer />
-                                    <v-btn
-                                      flat
-                                      color="primary"
-                                      @click="menu = false"
-                                    >
-                                      Cancel
-                                    </v-btn>
-                                    <v-btn
-                                      flat
-                                      color="primary"
-                                      @click="$refs.menu.save(date)"
-                                    >
-                                      OK
-                                    </v-btn>
-                                  </v-date-picker>
-                                </v-menu>
-                              </template>
-                            </v-flex>
-                          </v-layout>
-                          <v-layout>
-                            <v-flex md12>
-                              <v-text-field
-                                v-model="indicado.no_indicado"
-                                append-icon="person_outline"
-                                name="login"
-                                label="*Nome completo"
-                                :error-messages="nomeIndicadoErros"
-                                validate-on-blur
-                                type="text"
-                                :disabled="true"
-                                :rules="[rules.required]"
-                              />
-                            </v-flex>
-                          </v-layout>
+                                </v-flex>
+                              </v-layout>
+                              <v-layout>
+                                <v-flex md12>
+                                  <v-text-field
+                                    v-model="indicado.no_indicado"
+                                    append-icon="person_outline"
+                                    name="login"
+                                    label="*Nome completo"
+                                    :error-messages="nomeIndicadoErros"
+                                    validate-on-blur
+                                    type="text"
+                                    :disabled="true"
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                              </v-layout>
 
-                          <v-layout>
-                            <v-flex md12>
-                              <v-select
-                                v-model="indicado.endereco.co_ibge"
-                                :items="listaUF"
-                                label="*Unidade da federação em que reside"
-                                append-icon="place"
-                                item-value="co_ibge"
-                                item-text="no_uf"
-                                required
-                                box
-                                :rules="[rules.required]"
-                              />
-                            </v-flex>
-                          </v-layout>
+                              <v-layout>
+                                <v-flex md12>
+                                  <v-select
+                                    v-model="indicado.endereco.co_ibge"
+                                    :items="listaUF"
+                                    label="*Unidade da federação em que reside"
+                                    append-icon="place"
+                                    item-value="co_ibge"
+                                    item-text="no_uf"
+                                    required
+                                    box
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                              </v-layout>
 
-                          <v-layout>
-                            <v-flex
-                              md12
-                              ma3
-                            >
-                              <v-select
-                                v-model="indicado.endereco.co_municipio"
-                                :items="listaMunicipios"
-                                label="*Cidade em que reside"
-                                append-icon="place"
-                                item-value="co_municipio"
-                                item-text="no_municipio"
-                                box
-                                :disabled="indicado.endereco.co_ibge < 1 || indicado.endereco.co_ibge == null"
-                                :rules="[rules.required]"
-                              />
-                            </v-flex>
-                          </v-layout>
+                              <v-layout>
+                                <v-flex
+                                  md12
+                                  ma3
+                                >
+                                  <v-select
+                                    v-model="indicado.endereco.co_municipio"
+                                    :items="listaMunicipios"
+                                    label="*Cidade em que reside"
+                                    append-icon="place"
+                                    item-value="co_municipio"
+                                    item-text="no_municipio"
+                                    box
+                                    :disabled="indicado.endereco.co_ibge < 1 || indicado.endereco.co_ibge == null"
+                                    :rules="[rules.required]"
+                                  />
+                                </v-flex>
+                              </v-layout>
                             </v-flex>
                             <v-flex md4>
                               <file
@@ -506,8 +506,8 @@
                                       <v-list-tile-action />
                                     </v-list-tile>
                                     <file
-                                      :ref="documento.slug"
                                       v-if="!documento.multiplo"
+                                      :ref="documento.slug"
                                       v-model="anexos[documento.slug]"
                                     />
                                     <file
@@ -698,7 +698,7 @@ export default {
         this.$refs.form.resetValidation();
         this.nomeIndicadoErros = '';
         this.$refs.indicado_foto_rosto.reset();
-        documentosIndicacao.forEach((documento) =>{
+        documentosIndicacao.forEach((documento) => {
           this.$refs[documento.slug][0].reset();
         });
       }
@@ -763,8 +763,9 @@ export default {
     },
     salvar() {
       this.loading = true;
-      if (!Object.keys(this.indicado_foto_rosto).length) {
+      if (!Object.keys(this.indicado_foto_rosto).length || this.$refs.indicado_foto_rosto.fileHasError()) {
         this.loading = false;
+        this.$refs.form.validate();
         this.notificarErro('A foto de rosto é obrigatória.');
         return;
       }
@@ -775,6 +776,14 @@ export default {
       }
 
       this.indicado.anexos = [];
+
+      const erro = this.validarEnvioAnexosObrigatorios();
+
+      if (erro) {
+        this.loading = false;
+        this.notificarErro('Preencha todos os anexos obrigatórios corretamente.');
+        return;
+      }
 
       Object.keys(this.anexos).forEach((slug) => {
         if (Array.isArray(this.anexos[slug])) {
@@ -813,6 +822,23 @@ export default {
         this.loading = false;
         this.fecharDialogo();
       });
+    },
+    validarEnvioAnexosObrigatorios() {
+      let erro = false;
+      documentosIndicacao.forEach((arquivo) => {
+        if (arquivo.obrigatorio) {
+          if (
+            this.anexos[arquivo.slug] == null
+              || !(!!Object.keys(this.anexos[arquivo.slug]).length || !!(this.anexos[arquivo.slug]).length)
+          ) {
+            erro = true;
+          }
+        }
+        if (this.$refs[arquivo.slug][0].error) {
+          erro = true;
+        }
+      });
+      return erro;
     },
     formatarDataCarbon(data) {
       const [dia, mes, ano] = data.split('/');
