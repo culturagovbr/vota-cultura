@@ -301,7 +301,7 @@
           <v-btn
             icon
             dark
-            @click="dialog = false"
+            @click="fecharDialogo"
           >
             <v-icon>close</v-icon>
           </v-btn>
@@ -864,6 +864,7 @@ export default {
         Promise.all(promises).then(() => {
           this.definirMensagemSucesso('Operação realizada com sucesso');
           this.loading = false;
+          window.location.reload();
           this.fecharDialogo();
         });
       }).catch(() => {
