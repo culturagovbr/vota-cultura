@@ -80,15 +80,13 @@
                     class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Conselho de cultura
+                      Lista de habilitação
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    <div class="text-xs-center">
-                      Lista final de habilitação
-                    </div>
-                    <div style="margin-top: 49px" class="subheading text-xs-center">
-                      Consulte aqui
+                    <div class="text-xs-center mt-4">
+                      Consulte aqui a lista final da habilitação de Conselho de cultura e a parcial
+                      de Organização ou entidade cultural
                     </div>
                   </v-card-text>
                   <div class="text-xs-center pb-4">
@@ -126,12 +124,12 @@
                   >
                     <div class="headline text-xs-center">
                       Inscrição
-                      <br />
-                      Eleitor
+                      do
+                      eleitor
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Cidadão brasileiro com idade mínima de 18 anos na data da inscrição
+                    Para eleger os representantes indicados pelos conselhos de cultura na etapa de votação
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn

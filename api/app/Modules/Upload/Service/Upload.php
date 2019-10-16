@@ -56,29 +56,39 @@ class Upload extends AbstractService
 
     public function downloadArquivo($identificador)
     {
-        $arquivo = $this->_obterArquivo($identificador);
+        $arquivo = $this->obterArquivo($identificador);
         if (empty($arquivo)) {
             throw new EParametrosInvalidos("O arquivo solicitado não existe.");
         }
         return Storage::download($arquivo->ds_localizacao, $arquivo->no_arquivo);
     }
 
-    private function _obterArquivo($identificador) : ?ArquivoModel
+    private function obterArquivo($identificador) : ?ArquivoModel
     {
         $usuario = Auth::user();
+
         if ($usuario->possoFazerDownload()) {
-            return $this->_obterArquivoAdministrador($identificador);
+            return $this->getModel()->find($identificador);
         }
-        return $this->_obterArquivoRepresentante($identificador);
+
+        $dadosUsuario = Auth::user()->dadosUsuarioAutenticado();
+        
+        if($dadosUsuario['co_conselho']) {
+            return $this->obterArquivoConselhoIndicacao($identificador, $dadosUsuario);
+        }
+
+        return $this->obterArquivoRepresentante($identificador);
     }
 
-    private function _obterArquivoAdministrador($identificador) : ?ArquivoModel
+    private function obterArquivoConselhoIndicacao($identificador, $usuario) : ?ArquivoModel
     {
-        $arquivoModel = app(ArquivoModel::class);
-        return $arquivoModel->find($identificador);
+        $arquivoIndicacao = $this->getModel()->find($identificador)->arquivoIndicacao()->get()->toArray()[0];
+        if($arquivoIndicacao['co_conselho'] === $usuario['co_conselho']) {
+            return $this->getModel()->find($identificador);
+        }
     }
 
-    private function _obterArquivoRepresentante($identificador) : ?ArquivoModel
+    private function obterArquivoRepresentante($identificador) : ?ArquivoModel
     {
         $usuario = Auth::user();
         $representanteModel = app(RepresentanteModel::class);

@@ -19,7 +19,7 @@ class ConselhoSeeder extends Seeder
             'co_representante' => 1,
             'co_usuario' => 1,
             'ds_sitio_eletronico' => 'https://jsonplaceholder.typicode.com',
-            'st_inscricao' => 'A'
+            'st_indicacao' => 'a'
         ]);
     }
 }

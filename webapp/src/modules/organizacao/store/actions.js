@@ -1,6 +1,5 @@
 import * as organizacaoService from '../service/organizacao';
 import * as types from './types';
-import * as conselhoService from "../../conselho/service/conselho";
 
 // eslint-disable-next-line no-empty-pattern
 export const enviarDadosOrganizacao = async ({ commit }, organizacao) => {
@@ -91,9 +90,7 @@ export const obterOrganizacoesHabilitacao = async ({ commit }) => {
   });
 };
 
-export const avaliarHabilitacao = async ({ dispatch }, organizacaoHabilitacao) => organizacaoService.avaliarHabilitacao(organizacaoHabilitacao).then((response) => {
-  return response;
-}).catch((error) => {
+export const avaliarHabilitacao = async ({ dispatch }, organizacaoHabilitacao) => organizacaoService.avaliarHabilitacao(organizacaoHabilitacao).then(response => response).catch((error) => {
   dispatch(
     'app/setMensagemErro',
     error.response.data.message,
@@ -107,4 +104,11 @@ export const modalVisualizacaoOrganizacaoAdministrador = async ({ commit }, dado
   if (!dado) {
     commit(types.DEFINIR_ORGANIZACAO, {});
   }
+};
+
+export const revisarHabilitacao = async ({ commit }, { coOrganizacaoHabilitacao, organizacaoHabilitacao }) =>  {
+  return organizacaoService.revisarHabilitacao(coOrganizacaoHabilitacao, organizacaoHabilitacao).then((response) => {
+    commit(types.REVISAR_HABILITACAO);
+    return response;
+  });
 };

@@ -53,6 +53,15 @@
                   </v-chip>
                 </td>
                 <td>
+                  <v-chip v-if="!!props.item.conselhoHabilitacao"
+                    dark
+                    :color="(props.item.conselhoHabilitacao.ds_avaliacao === 'Habilitado') ? 'primary' : 'error'"
+                  >
+                    {{ props.item.conselhoHabilitacao.ds_avaliacao }}
+                  </v-chip>
+                  <span v-else>-</span>
+                </td>
+                <td>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn
@@ -66,8 +75,12 @@
                         v-on="on"
                         @click="editarItemModal(props.item);"
                       >
-                        <v-icon v-if="props.item.conselhoHabilitacao === null">gavel</v-icon>
-                        <v-icon v-else>remove_red_eye</v-icon>
+                        <v-icon v-if="props.item.conselhoHabilitacao === null">
+                          gavel
+                        </v-icon>
+                        <v-icon v-else>
+                          remove_red_eye
+                        </v-icon>
                       </v-btn>
                     </template>
                     <span v-if="props.item.conselhoHabilitacao === null">Avaliar</span>
@@ -129,14 +142,18 @@ export default {
         text: 'Região',
         value: 'endereco.municipio.uf.regiao.no_regiao',
       },
+      {
+        text: 'Resultado final da habilitação',
+        value: 'conselhoHabilitacao.ds_avaliacao',
+      },
     ],
   }),
-  watch:{
-    mostrarModalEdicao(valor){
-      if(!valor){
+  watch: {
+    mostrarModalEdicao(valor) {
+      if (!valor) {
         this.itemEditado = Object.assign({});
       }
-    }
+    },
   },
   computed: {
     ...mapGetters({

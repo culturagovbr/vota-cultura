@@ -34,6 +34,9 @@ class ModuleServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(UsuarioResource::class, function ($app, $parametros) {
+            if($parametros instanceof UsuarioModel) {
+                return new UsuarioResource($parametros);
+            }
             return new UsuarioResource(app(UsuarioModel::class, $parametros));
         });
 

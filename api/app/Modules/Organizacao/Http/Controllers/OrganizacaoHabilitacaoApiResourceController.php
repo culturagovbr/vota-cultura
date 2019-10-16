@@ -16,7 +16,7 @@ class OrganizacaoHabilitacaoApiResourceController extends AApiResourceController
 
     public function __construct(OrganizacaoHabilitacao $service)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except(['index']);
         return parent::__construct($service);
     }
 
@@ -41,7 +41,18 @@ class OrganizacaoHabilitacaoApiResourceController extends AApiResourceController
 
     public function show($identificador): JsonResponse
     {
-        throw new EMetodoIndisponivel("E-mail não definido.");
+        throw new EMetodoIndisponivel("Funcionalidade indisponível.");
+    }
+
+    public function update(Request $request, \App\Modules\Organizacao\Model\OrganizacaoHabilitacao $habilitacao)
+    {
+        return $this->sendResponse(
+            new \App\Modules\Organizacao\Http\Resources\OrganizacaoHabilitacao (
+                $this->service->revisarAvaliacao($request, $habilitacao)
+            ),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
 }

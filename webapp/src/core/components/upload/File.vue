@@ -2,10 +2,12 @@
   <div id="app">
     <file-pond
       ref="pond"
+      v-bind="$attrs"
       :max-file-size="maxFileSize"
       :accepted-file-types="acceptedFileTypes"
-      :files="file"
-      label-idle="Clique aqui para anexar"
+      :files="files"
+      :label-idle="labelIdle"
+      :allowDownloadByUrl="true"
       label-file-waiting-for-size="Calculando tamanho"
       label-invalid-field="Arquivo(s) invalido(s)"
       label-file-size-not-available="Tamanho não disponível"
@@ -16,7 +18,6 @@
       label-file-processing-aborted="Envio cancelado"
       @addfile="setFileMetaData"
       label-file-processing-error="Erro durante o envio"
-      @removefile="self = {}"
       label-file-processing-revert-error="Erro ao reverter"
       label-file-remove-error="Erro ao remover"
       label-tap-to-cancel="Clique para cancelar"
@@ -34,6 +35,8 @@
       label-max-file-size="Tamanho máximo é {filesize}"
       label-max-total-file-size-exceeded="Tamanho máximo excedido"
       label-max-total-file-size="Tamanho máximo de arquivos é {filesize}"
+      v-on:removefile="removefile"
+      @error="setError"
     />
   </div>
 </template>
@@ -57,16 +60,14 @@ const FilePond = vueFilePond(
   FilePondPluginFileValidateSize,
 );
 
+
 export default {
-  name: 'Arquivo',
+  name: 'File',
   components: {
     FilePond,
   },
   props: {
-    value: {
-      type: Object,
-      default: () => {},
-    },
+    value: {},
     acceptedFileTypes: {
       type: Array,
       default: () => [
@@ -77,9 +78,13 @@ export default {
         'application/vnd.rar',
       ],
     },
+    labelIdle: {
+      type: String,
+      default: 'Clique aqui para anexar',
+    },
     maxFileSize: {
       type: String,
-      default: '80MB',
+      default: '40MB',
     },
     fileValidateTypeLabelExpectedTypesMap: {
       type: Object,
@@ -95,11 +100,16 @@ export default {
       type: Object,
       default: () => {},
     },
+    files: {
+      type: Array,
+      default: () => [
+      ],
+    },
   },
   data() {
     return {
-      file: [],
       self: {},
+      error: false,
     };
   },
   watch: {
@@ -117,12 +127,34 @@ export default {
     setOptions(this.options);
   },
   methods: {
+    removefile(error, file) {
+      if (Array.isArray(this.self)) {
+        const index = this.self.findIndex(arquivo => arquivo.id === file.id);
+        this.self.splice(index, 1);
+      } else {
+        this.self = {};
+      }
+      this.error = false;
+    },
     setFileMetaData() {
       try {
         this.self = this.$refs.pond.getFile();
+        if (!!this.$refs.pond.allowMultiple) {
+          this.self = this.$refs.pond.getFiles();
+        }
       } catch (Exception) {
         this.self = {};
       }
+    },
+    reset() {
+      this.$refs.pond.removeFiles();
+      this.self = {};
+    },
+    setError() {
+      this.error = true;
+    },
+    fileHasError() {
+      return this.error;
     },
   },
 };

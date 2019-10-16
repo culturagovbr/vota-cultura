@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card-title>
+    <v-card-title v-if="exibirTitulo">
       <div class="layout column align-center">
         <h2 class="flex my-2 primary--text">
           {{ $route.meta.title }}
@@ -59,7 +59,7 @@
             />
             <span v-else>-</span>
           </td>
-          <td>
+          <td v-if="exibirColunaAcoes">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <v-btn
@@ -73,7 +73,7 @@
                   v-on="on"
                   @click="editarItemModal(props.item);"
                 >
-                  <v-icon v-if="props.item.organizacaoHabilitacao === null">
+                  <v-icon v-if="props.item.organizacaoHabilitacao === null || (!!props.item.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador' && props.item.organizacaoHabilitacao.st_revisao_final !== true)">
                     gavel
                   </v-icon>
                   <v-icon v-else>
@@ -100,9 +100,19 @@ import { mapActions, mapGetters } from 'vuex';
 import OrganizacaoListaHabilitacaoDialog from './OrganizacaoListaHabilitacaoDialog';
 
 export default {
-  name: 'OrganizacaoLista',
+  name: 'OrganizacaoListaHabilitacao',
   components: {
     OrganizacaoListaHabilitacaoDialog,
+  },
+  props: {
+    exibirTitulo: {
+      type: Boolean,
+      default: true,
+    },
+    exibirColunaAcoes: {
+      type: Boolean,
+      default: true,
+    },
   },
   data: () => ({
     loading: true,
@@ -160,6 +170,7 @@ export default {
   computed: {
     ...mapGetters({
       organizacoesGetter: 'organizacao/organizacoes',
+      perfil: 'conta/perfil',
     }),
   },
   methods: {
@@ -177,10 +188,12 @@ export default {
     self.obterOrganizacoesHabilitacao().finally(() => {
       self.loading = false;
     });
-    this.headers.push({
-      text: 'Ações',
-      sortable: false,
-    });
+    if(self.exibirColunaAcoes) {
+      this.headers.push({
+        text: 'Ações',
+        sortable: false,
+      });
+    }
   },
 };
 </script>
