@@ -24,8 +24,9 @@ export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
     }).catch((error) => {
       dispatch(
         'app/setMensagemErro',
-        { text: error.response.data.error },
-        // {callbackAfterHide: () => {alert(1)}},
+        { text: error.response.data.error,
+          //callbackAfterHide: () => {alert(1)}
+          },
         { root: true },
       );
       throw new TypeError(error, 'autenticarUsuario', 10);

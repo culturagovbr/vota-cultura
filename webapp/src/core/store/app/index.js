@@ -17,7 +17,7 @@ const getters = {
   mode: state => state.mode,
 };
 
-const definirMensagem = ({ commit, state }, text, { color, callbackAfterHide }) => {
+const definirMensagem = ({ commit, state }, { text, color, callbackAfterHide }) => {
   commit('definirSnackBar', {
     show: true,
     color,
