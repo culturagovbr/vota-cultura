@@ -3,6 +3,7 @@
 namespace App\Modules\Conselho\Model;
 
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
+use App\Modules\Core\Helper\CPF;
 use App\Modules\Localidade\Model\Endereco;
 use App\Modules\Upload\Model\Arquivo;
 use Illuminate\Database\Eloquent\Model;
@@ -109,5 +110,10 @@ class ConselhoIndicacao extends Model
         }
 
         return true;
+    }
+
+    public function getCpfIndicadoFormatadoAttribute()
+    {
+        return CPF::adicionarMascara($this->nu_cpf_indicado);
     }
 }
