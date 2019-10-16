@@ -129,9 +129,6 @@
                                 auto-grow
                                 disabled
                               />
-                              <span>
-                                Atenção! O texto do currículo resumido ficará disponível na plataforma de votação e será a defesa da candidatura do indicado.
-                              </span>
                             </v-flex>
                           </v-layout>
                         </v-flex>
@@ -154,13 +151,6 @@
               </v-flex>
 
               <v-flex v-if="(formulario.arquivos || []).length > 0">
-                <v-card>
-                  <v-toolbar
-                    color="white elevation-1"
-                  >
-                    <v-toolbar-title>Documentação</v-toolbar-title>
-                  </v-toolbar>
-                  <v-card-text>
                     <v-container
                       grid-list-md
                     >
@@ -208,8 +198,6 @@
                         </v-card>
                       </div>
                     </v-container>
-                  </v-card-text>
-                </v-card>
               </v-flex>
             </v-layout>
           </v-container>
