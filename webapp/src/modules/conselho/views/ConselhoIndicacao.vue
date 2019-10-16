@@ -106,7 +106,8 @@
                   <v-toolbar-title>Lista dos indicados</v-toolbar-title>
                   <v-spacer />
                   <v-btn
-                    v-if="listarIndicacaoConselhoGetter.length < 5"
+                    v-if="(conselhoGetter || {}).st_indicacao === 'a'"
+                    :disabled="loading || listarIndicacaoConselhoGetter.length >= 5"
                     tiny
                     round
                     outline
@@ -164,6 +165,7 @@
                         <!--@click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"-->
 
                         <v-btn
+                          v-if="(conselhoGetter || {}).st_indicacao === 'a'"
                           depressed
                           outline
                           icon
@@ -185,6 +187,7 @@
         </v-card>
       </v-card-text>
       <v-layout
+        v-if="(conselhoGetter || {}).st_indicacao === 'a'"
         align-center
         justify-center
         row
@@ -201,7 +204,7 @@
           :disabled="listarIndicacaoConselhoGetter.length < 3"
           @click="abrirDialogo"
         >
-          Enviar
+          Concluir indicação
         </v-btn>
       </v-layout>
     </v-card>
@@ -741,8 +744,7 @@ export default {
         this.obterDadosConselho(usuario.co_conselho);
       }
     },
-    itemSelecionado(valor) {
-
+    conselhoGetter(conselho) {
     },
   },
   methods: {
@@ -841,7 +843,10 @@ export default {
     },
   },
   mounted() {
-    this.obterListaIndicacaoConselho();
+    this.loading = true;
+    this.obterListaIndicacaoConselho().finally(() => {
+      this.loading = false;
+    });
     this.obterEstados();
     this.usuarioLogado = this.usuario;
     this.dialogVisualizar = false;
