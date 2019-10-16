@@ -15,7 +15,7 @@ export const enviarDadosRecursoInscricao = async ({ commit, dispatch }, recurso)
   return recursoService.enviarDadosRecursoInscricao(recurso).catch((error) => {
     dispatch(
       'app/setMensagemErro',
-      error.response.data.message,
+      { text: error.response.data.message },
       { root: true },
     );
     throw new TypeError(error, 'enviarDadosRecursoInscricao', 10);
@@ -37,7 +37,7 @@ export const obterDadosRecurso = async ({ commit, dispatch }, coRecurso) => {
     .catch((error) => {
       dispatch(
         'app/setMensagemErro',
-        error.response.data.error,
+        { text: error.response.data.error },
         { root: true },
       );
       throw new TypeError(error, 'obterDadosRecurso', 10);
@@ -57,14 +57,14 @@ export const avaliarRecursoInscricao = async ({ commit, dispatch }, recurso) => 
 
   dispatch(
     'app/setMensagemSucesso',
-    'Recurso avaliado com sucesso!',
+    { text: 'Recurso avaliado com sucesso!' },
     { root: true },
   );
   return response;
 }).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);

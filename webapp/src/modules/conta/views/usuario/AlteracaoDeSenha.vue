@@ -136,8 +136,8 @@ export default {
   methods: {
     ...mapActions({
       alterarSenha: 'conta/usuarioAlterarSenha',
-      mensagemErro: 'app/setMensagemErro',
-      mensagemSucesso: 'app/setMensagemSucesso',
+      setMensagemErro: 'app/setMensagemErro',
+      setMensagemSucesso: 'app/setMensagemSucesso',
     }),
     alterar() {
       if (!this.$refs.form.validate()) {
@@ -154,12 +154,12 @@ export default {
         },
       )
         .then(() => {
-          this.mensagemSucesso('Senha alterada com sucesso');
+          this.setMensagemSucesso({ text: 'Senha alterada com sucesso' });
           this.$router.push('/conta/sair');
         })
         .catch((error) => {
           this.loading = false;
-          this.mensagemErro(error.response.data.message);
+          this.setMensagemErro({ text: error.response.data.message });
         });
     },
   },

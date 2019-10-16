@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
 
     next(proximaPagina);
   }).catch((Exception) => {
-    store.dispatch('app/setMensagemErro', `Erro: ${Exception}`, { root: true });
+    store.dispatch('app/setMensagemErro', { text: `Erro: ${Exception}` }, { root: true });
     return next('/conta/autenticar');
   });
 });

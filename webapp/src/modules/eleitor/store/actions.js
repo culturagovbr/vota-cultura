@@ -29,7 +29,7 @@ export const obterDadosEleitor = async ({ commit, dispatch }, coEleitor) => {
     .catch((error) => {
       dispatch(
         'app/setMensagemErro',
-        error.response.data.error,
+        { text: error.response.data.error },
         { root: true },
       );
       throw new TypeError(error, 'obterDadosEleitor', 10);

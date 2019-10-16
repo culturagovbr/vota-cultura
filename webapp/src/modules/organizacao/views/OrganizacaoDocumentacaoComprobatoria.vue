@@ -363,8 +363,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      notificarErro: 'app/setMensagemErro',
-      notificarSucesso: 'app/setMensagemSucesso',
+      setMensagemErro: 'app/setMensagemErro',
+      setMensagemSucesso: 'app/setMensagemSucesso',
       enviarDocumentacaoComprobatoria: 'organizacao/enviarDocumentacaoComprobatoria',
       obterDocumentacaoComprobatoria: 'organizacao/obterDocumentacaoComprobatoria',
     }),
@@ -411,17 +411,17 @@ export default {
       });
 
       if (!this.valid_anexo) {
-        this.notificarErro('Anexe os documentos obrigatórios!');
+        this.setMensagemErro({ text: 'Anexe os documentos obrigatórios!' });
         this.loading = false;
         return false;
       }
 
       this.enviarDocumentacaoComprobatoria(this.organizacao).then((response) => {
         const { data } = response;
-        self.notificarSucesso(data.message);
+        self.setMensagemSucesso({ text: data.message });
         window.location.reload();
       }).catch((error) => {
-        self.notificarErro(error);
+        self.setMensagemErro({ text: error });
         this.loading = false;
       });
       return true;
@@ -429,13 +429,13 @@ export default {
   },
   mounted() {
     // if (!this.usuarioGetter) {
-    //   this.notificarErro('É necessário autenticação');
+    //   this.setMensagemErro({ text: 'É necessário autenticação' });
     //   this.$router.push('/conta/autenticar');
     // }
     this.$router.push('/');
-    this.notificarErro('Prazo para envio da documentação expirou.');
+    this.setMensagemErro({ text: 'Prazo para envio da documentação expirou.' });
     if (this.usuarioGetter.co_organizacao === null) {
-      this.notificarErro('Acesso restrito para organização e entidades culturais.');
+      this.setMensagemErro({ text: 'Acesso restrito para organização e entidades culturais.' });
       this.$router.push('/');
     }
 

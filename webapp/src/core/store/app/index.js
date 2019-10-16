@@ -17,48 +17,53 @@ const getters = {
   mode: state => state.mode,
 };
 
+const definirMensagem = ({ commit, state }, text, { color, callbackAfterHide }) => {
+  commit('definirSnackBar', {
+    show: true,
+    color,
+    text,
+  });
+
+  setTimeout(() => {
+    commit('definirSnackBar', {
+      show: false,
+    });
+    if (callbackAfterHide) {
+      callbackAfterHide.call(this);
+    }
+  }, state.snackbar.timeout, state);
+};
+
 const actions = {
-  setSnackbar({ commit }, params) {
-    commit('setSnackBar', params);
-
-    setTimeout(() => {
-      commit('setSnackBar', {
-        show: false,
-      });
-    }, state.snackbar.timeout, state);
+  setMensagemErro({ commit, state }, { text, callbackAfterHide }) {
+    definirMensagem(
+      { commit, state },
+      {
+        text,
+        color: 'error',
+        callbackAfterHide,
+      },
+    );
   },
-  setMensagemErro({ commit, state }, message) {
-    commit('setSnackBar', {
-      show: true,
-      color: 'error',
-      text: message,
-    });
-
-    setTimeout(() => {
-      commit('setSnackBar', {
-        show: false,
-      });
-    }, state.snackbar.timeout, state);
+  setMensagemSucesso({ commit, state }, { text, callbackAfterHide }) {
+    definirMensagem(
+      { commit, state },
+      {
+        text,
+        color: 'success',
+        callbackAfterHide,
+      },
+    );
   },
-  setMensagemSucesso({ commit }, message) {
-    commit('setSnackBar', {
-      show: true,
-      color: 'success',
-      text: message,
-    });
-
-    setTimeout(() => {
-      commit('setSnackBar', {
-        show: false,
-      });
-    }, state.snackbar.timeout, state);
-  },
-  setMensagemInfo({ commit }, message) {
-    commit('setSnackBar', {
-      show: true,
-      color: 'info',
-      text: message,
-    });
+  setMensagemInfo({ commit, state }, { text, callbackAfterHide }) {
+    definirMensagem(
+      { commit, state },
+      {
+        text,
+        color: 'info',
+        callbackAfterHide,
+      },
+    );
   },
 };
 
@@ -66,7 +71,7 @@ const mutations = {
   setThemeColor(state, payload) {
     state.themeColor = payload;
   },
-  setSnackBar(state, payload) {
+  definirSnackBar(state, payload) {
     state.snackbar = Object.assign({}, state.snackbar, payload);
   },
 };

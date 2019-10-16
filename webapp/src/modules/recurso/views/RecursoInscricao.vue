@@ -325,8 +325,8 @@ export default {
     ...mapActions({
       consultarCNPJ: 'pessoa/consultarCNPJ',
       consultarCPF: 'pessoa/consultarCPF',
-      definirMensagemSucesso: 'app/setMensagemSucesso',
-      definirMensagemErro: 'app/setMensagemErro',
+      setMensagemSucesso: 'app/setMensagemSucesso',
+      setMensagemErro: 'app/setMensagemErro',
       enviarDadosRecursoInscricao: 'recurso/enviarDadosRecursoInscricao',
     }),
     validarIrProximaEtapa(formRef) {
@@ -341,7 +341,7 @@ export default {
 
       this.enviarDadosRecursoInscricao(this.recursoInscricao)
         .then((response) => {
-          this.definirMensagemSucesso(response.data.message);
+          this.setMensagemSucesso({ text: response.data.message });
           this.$router.push('/');
         }).finally(() => {
           this.loading = false;
@@ -360,7 +360,7 @@ export default {
     },
   },
   mounted() {
-    this.definirMensagemErro('O prazo de recurso expirou!');
+    this.setMensagemErro({ text: 'O prazo de recurso expirou!' });
     this.$router.push('/');
   },
 };

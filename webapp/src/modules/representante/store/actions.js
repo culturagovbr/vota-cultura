@@ -25,7 +25,7 @@ export const obterDadosRepresentante = async ({ commit, dispatch }, coRepresenta
     .catch((error) => {
       dispatch(
         'app/setMensagemErro',
-        error.response.data.error,
+        { text: error.response.data.error },
         { root: true },
       );
       throw new TypeError(error, 'obterDadosRepresentante', 10);

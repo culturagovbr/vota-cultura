@@ -182,7 +182,7 @@ export default {
   methods: {
     ...mapActions({
       solicitarPrimeiroAcesso: 'conta/solicitarPrimeiroAcesso',
-      mensagemErro: 'app/setMensagemErro',
+      setMensagemErro: 'app/setMensagemErro',
     }),
     solicitarAcesso() {
       this.loading = true;
@@ -193,7 +193,7 @@ export default {
         })
         .catch((error) => {
           this.loading = false;
-          this.mensagemErro(error.response.data.message);
+          this.setMensagemErro({ text: error.response.data.message });
         });
     },
   },
