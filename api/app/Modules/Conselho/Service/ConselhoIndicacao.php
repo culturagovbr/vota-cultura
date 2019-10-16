@@ -6,6 +6,7 @@ use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\ConselhoIndicacao as ConselhoIndicacaoModel;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Conselho\Mail\Conselho\CadastroConselhoIndicacaoSucesso;
+use App\Modules\Conselho\Model\ConselhoIndicacaoArquivo;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
@@ -18,6 +19,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ConselhoIndicacao extends AbstractService
 {
@@ -36,7 +38,7 @@ class ConselhoIndicacao extends AbstractService
 
     public function cadastrar(Collection $dados): ?Model
     {
-//        $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
+       $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
 
         try {
             DB::beginTransaction();
@@ -203,12 +205,28 @@ class ConselhoIndicacao extends AbstractService
                 throw new EParametrosInvalidos('Você não possui permissão para realizar esta ação.');
             }
 
+            
+
             DB::beginTransaction();
+            $this->removerArquivosIndicacao($identificador);
             $indicado->delete();
             DB::commit();
         } catch (\HttpException $queryException) {
             DB::rollBack();
             throw $queryException;
         }
+    }
+    
+    private function removerArquivosIndicacao($identificador)
+    {
+        $conselhoIndicacaoArquivoModel = app(ConselhoIndicacaoArquivo::class);
+        $arquivosIndicacao = $conselhoIndicacaoArquivoModel->where(['co_conselho_indicacao' => $identificador]);
+        $arquivoModel = app(Arquivo::class);
+        foreach($arquivosIndicacao->get()->toArray() as $arquivoIndicacao) {
+            $arquivo = $arquivoModel->find($arquivoIndicacao['co_arquivo'])->toArray();
+            Storage::delete($arquivo['ds_localizacao']);
+            $arquivo->delete();
+        }
+        $arquivosIndicacao->delete();
     }
 }

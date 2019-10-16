@@ -49,11 +49,6 @@ class Arquivo extends Model
 
     public function arquivoIndicacao()
     {
-        // return $this->hasOne(
-        //     ConselhoIndicacaoArquivo::class,
-        //     'co_arquivo',
-        //     'co_arquivo'
-        // );
         return $this->belongsToMany(
             \App\Modules\Conselho\Model\ConselhoIndicacao::class,
             'rl_conselho_indicacao_arquivo',
