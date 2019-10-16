@@ -56,7 +56,7 @@ services:
     working_dir: /application
     volumes:
     - ./api:/application
-    #- ./api/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+    - ./api/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
     environment:
     - APP_ENV=local
     depends_on:

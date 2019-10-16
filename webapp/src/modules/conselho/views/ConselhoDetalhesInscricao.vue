@@ -6,8 +6,8 @@
       >
         <card-carregando v-if="isLoading" />
         <v-card
-          max-width="900"
           v-if="!isLoading"
+          max-width="900"
         >
           <v-toolbar
             dark
@@ -21,32 +21,40 @@
               <div v-if="dadosHabilitacao">
                 <v-layout>
                   <v-flex>
-
                     <div class="layout">
                       <div class="flex">
                         <div
-                          class="v-input v-text-field v-input--is-label-active v-input--is-dirty v-input--is-disabled theme--light">
+                          class="v-input v-text-field v-input--is-label-active v-input--is-dirty v-input--is-disabled theme--light"
+                        >
                           <div class="v-input__control">
                             <div class="v-input__slot">
                               <div class="v-text-field__slot">
-                                <label aria-hidden="true"
-                                       class="v-label v-label--active v-label--is-disabled theme--light"
-                                       style="left: 0px; right: auto; position: absolute;">Resultado da habilitação</label>
+                                <label
+                                  aria-hidden="true"
+                                  class="v-label v-label--active v-label--is-disabled theme--light"
+                                  style="left: 0px; right: auto; position: absolute;"
+                                >Resultado da habilitação</label>
                                 <input
-                                  aria-label="RG" disabled="disabled" type="text" maxlength="12"
+                                  aria-label="RG"
+                                  disabled="disabled"
+                                  type="text"
+                                  maxlength="12"
                                   :value="!parseInt(dadosHabilitacao.st_avaliacao, 10) ? 'Inabilitado' : 'Habilitado'"
                                   :class="!parseInt(dadosHabilitacao.st_avaliacao, 10) ? 'color : red--text' : 'color : green--text'"
                                 >
                               </div>
                               <div class="v-input__append-inner">
                                 <div class="v-input__icon v-input__icon--append">
-                                  <i aria-hidden="true" class="v-icon v-icon--disabled material-icons theme--light">gavel</i>
+                                  <i
+                                    aria-hidden="true"
+                                    class="v-icon v-icon--disabled material-icons theme--light"
+                                  >gavel</i>
                                 </div>
                               </div>
                             </div>
                             <div class="v-text-field__details">
                               <div class="v-messages theme--light">
-                                <div class="v-messages__wrapper"></div>
+                                <div class="v-messages__wrapper" />
                               </div>
                             </div>
                           </div>
@@ -67,7 +75,6 @@
                   </v-flex>
                 </v-layout>
               </div>
-
             </v-container>
           </v-card-text>
         </v-card>
@@ -81,16 +88,17 @@ import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
 import ConselhoDetalhesInscricaoVisualizacao from './ConselhoDetalhesInscricaoVisualizacao';
 import CardCarregando from '@/modules/shared/components/CardCarregando';
+
 export default {
   name: 'ConselhoDetalhesInscricao',
   components: {
     ConselhoDetalhesInscricaoVisualizacao,
-    CardCarregando
+    CardCarregando,
   },
   data: () => ({
     usuarioLogado: {},
-    dadosHabilitacao : {},
-    isLoading: true
+    dadosHabilitacao: {},
+    isLoading: true,
   }),
   computed: {
     ...mapGetters({
@@ -108,8 +116,8 @@ export default {
       }
     },
     conselhoGetter(valor) {
-        this.dadosHabilitacao = valor.conselhoHabilitacao;
-        this.isLoading = false;
+      this.dadosHabilitacao = valor.conselhoHabilitacao;
+      this.isLoading = false;
     },
   },
   methods: {
@@ -119,7 +127,7 @@ export default {
   },
   mounted() {
     this.usuarioLogado = this.usuario;
-    if(this.conselhoGetter.conselhoHabilitacao) {
+    if ((this.conselhoGetter || {}).conselhoHabilitacao) {
       this.dadosHabilitacao = this.conselhoGetter.conselhoHabilitacao;
     }
   },

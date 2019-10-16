@@ -205,7 +205,7 @@ class Usuario extends AbstractService
             ->get();
     }
 
-    public function atualizar(Request $request, int $identificador) : ?Model
+    public function atualizar(Request $request, int $identificador) : ?array
     {
         $dados = collect(
             $request->only([
@@ -221,8 +221,6 @@ class Usuario extends AbstractService
                     'co_usuario'
                 ])->toArray()
             )->first();
-
-
 
             if (empty($usuario)) {
                 throw new EParametrosInvalidos(
@@ -248,6 +246,7 @@ class Usuario extends AbstractService
                  Response::HTTP_NOT_ACCEPTABLE
                 );
             }
+
             DB::beginTransaction();
             $usuario->fill($dados->toArray());
             $horarioAtual = Carbon::now();
@@ -259,30 +258,10 @@ class Usuario extends AbstractService
 
 
             DB::commit();
-            return $usuario;
+            return $usuario->toArray();
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
         }
-
-
-        try {
-            $modelPesquisada = $this->getModel()->find($identificador);
-            if (!$modelPesquisada) {
-                throw new \HttpException(
-                    'Dados não encontrados.',
-                    Response::HTTP_NOT_ACCEPTABLE
-                );
-            }
-            DB::beginTransaction();
-            $modelPesquisada->fill($request->all());
-            $modelPesquisada->save();
-            DB::commit();
-            return $modelPesquisada->toArray();
-        } catch (\HttpException $queryException) {
-            DB::rollBack();
-            throw $queryException;
-        }
     }
-
 }

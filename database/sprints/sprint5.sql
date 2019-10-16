@@ -1,3 +1,75 @@
+-- Drop table
+
+-- DROP TABLE public.tb_conselho_indicacao;
+
+CREATE TABLE public.tb_conselho_indicacao (
+    co_conselho_indicacao serial NOT NULL,
+    nu_cpf_indicado varchar(11) NOT NULL, -- Número do CPF do indicado.
+    no_indicado text NOT NULL, -- Nome do indicado.
+    co_endereco int4 NOT NULL, -- Código referente ao endereço do indicado.
+    co_conselho int4 NOT NULL, -- Código do conselho.
+    dh_indicacao timestamp NOT NULL DEFAULT now(), -- Data da indicação.
+    ds_curriculo varchar(1000) NULL, -- Currículo do indicado pelo conselho.
+    co_arquivo int4 NULL, -- Código do arquivo da foto do indicado, referente à tabela tb_arquivo
+    dt_nascimento_indicado date NOT NULL, -- Data de nascimento do indicado
+    CONSTRAINT pk_conselho_indicacao PRIMARY KEY (co_conselho_indicacao),
+    CONSTRAINT uk_conselho_indicacao UNIQUE (nu_cpf_indicado, co_conselho),
+    CONSTRAINT fk_conselho_indicacao_arquivo FOREIGN KEY (co_arquivo) REFERENCES tb_arquivo(co_arquivo),
+    CONSTRAINT fk_conselho_indicacao_endereco FOREIGN KEY (co_endereco) REFERENCES tb_endereco(co_endereco)
+);
+
+-- Column comments
+
+COMMENT ON COLUMN public.tb_conselho_indicacao.nu_cpf_indicado IS 'Número do CPF do indicado.';
+COMMENT ON COLUMN public.tb_conselho_indicacao.no_indicado IS 'Nome do indicado.';
+COMMENT ON COLUMN public.tb_conselho_indicacao.co_endereco IS 'Código referente ao endereço do indicado.';
+COMMENT ON COLUMN public.tb_conselho_indicacao.co_conselho IS 'Código do conselho.';
+COMMENT ON COLUMN public.tb_conselho_indicacao.dh_indicacao IS 'Data da indicação.';
+COMMENT ON COLUMN public.tb_conselho_indicacao.ds_curriculo IS 'Currículo do indicado pelo conselho.';
+COMMENT ON COLUMN public.tb_conselho_indicacao.co_arquivo IS 'Código do arquivo da foto do indicado, referente à tabela tb_arquivo';
+COMMENT ON COLUMN public.tb_conselho_indicacao.dt_nascimento_indicado IS 'Data de nascimento do indicado';
+
+-- Permissions
+
+ALTER TABLE public.tb_conselho_indicacao OWNER TO votacultura;
+GRANT ALL ON TABLE public.tb_conselho_indicacao TO votacultura;
+
+ALTER TABLE public.tb_endereco ALTER COLUMN nu_cep DROP NOT NULL;
+ALTER TABLE public.tb_endereco ALTER COLUMN ds_logradouro DROP NOT NULL;
+
+--#############
+ALTER TABLE public.tb_conselho RENAME COLUMN st_inscricao TO st_indicacao;
+ALTER TABLE public.tb_conselho ALTER COLUMN st_indicacao SET DEFAULT 'a';
+COMMENT ON COLUMN public.tb_conselho.st_indicacao IS 'situação em que se encontra o período de indicados do conselho. Possíveis opções: a = aberto, f = fechado';
+
+--#############
+
+-- Drop table
+
+-- DROP TABLE public.rl_conselho_indicacao_arquivo;
+
+CREATE TABLE public.rl_conselho_indicacao_arquivo (
+	co_conselho_indicacao_arquivo serial NOT NULL, -- chave primária da tabela
+	co_conselho_indicacao int4 NOT NULL, -- chave estrangeira referente a tabela tb_conselho_indicacao
+	co_arquivo int4 NOT NULL, -- chave estrangeira referente a tabela tb_arquivo
+	tp_arquivo varchar(255) NOT NULL, -- tipo do arquivo com slug do módulo.
+	CONSTRAINT pk_conselho_indicacao_arquivo PRIMARY KEY (co_conselho_indicacao_arquivo),
+	CONSTRAINT fk_conselho_indicacao_arquivo_arquivo FOREIGN KEY (co_arquivo) REFERENCES tb_arquivo(co_arquivo) ON DELETE CASCADE,
+	CONSTRAINT fk_conselho_indicacao_arquivo_conselho_indicacao FOREIGN KEY (co_conselho_indicacao) REFERENCES tb_conselho_indicacao(co_conselho_indicacao) ON DELETE CASCADE
+);
+
+-- Column comments
+
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.co_conselho_indicacao_arquivo IS 'chave primária da tabela';
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.co_conselho_indicacao IS 'chave estrangeira referente a tabela tb_conselho_indicacao';
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.co_arquivo IS 'chave estrangeira referente a tabela tb_arquivo';
+COMMENT ON COLUMN public.rl_conselho_indicacao_arquivo.tp_arquivo IS 'tipo do arquivo com slug do módulo.';
+
+-- Permissions
+
+ALTER TABLE public.rl_conselho_indicacao_arquivo OWNER TO votacultura;
+GRANT ALL ON TABLE public.rl_conselho_indicacao_arquivo TO votacultura;
+
 CREATE TABLE public.tb_organizacao_habilitacao_historico
 (
     co_organizacao_habilitacao_historico serial PRIMARY KEY NOT NULL,
@@ -31,3 +103,5 @@ ALTER TABLE public.tb_organizacao_habilitacao_historico ADD st_revisao_final boo
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_historico.st_revisao_final IS 'null - Sem avaliação
 false - Não é revisão final
 true - Última revisão da habilitação';
+
+UPDATE public.tb_conselho SET st_indicacao = 'a';
