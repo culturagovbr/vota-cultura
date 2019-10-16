@@ -4,7 +4,7 @@
       <v-card-title>
         <div class="layout column align-center">
           <h2 class="flex my-2 primary--text">
-            {{ $route.meta.title }}
+            Lista {{ (tp_inscricao === 'conselho') ? 'final' : 'parcial' }} dos habilitados
           </h2>
         </div>
       </v-card-title>
@@ -20,6 +20,10 @@
             <v-tab href="#conselho">
               Conselho
               <v-icon>group</v-icon>
+            </v-tab>
+            <v-tab href="#organizacao">
+              Organização ou entidade
+              <v-icon>color_lens</v-icon>
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tp_inscricao">
@@ -70,7 +74,7 @@
                       <td>
                         <v-chip
                           dark
-                          color="primary"
+                          :color="(props.item.conselhoHabilitacao.ds_avaliacao === 'Habilitado') ? 'primary' : 'error'"
                         >
                           {{ props.item.conselhoHabilitacao.ds_avaliacao }}
                         </v-chip>
@@ -79,6 +83,9 @@
                   </v-data-table>
                 </v-card-text>
               </v-card>
+            </v-tab-item>
+            <v-tab-item value="organizacao">
+              <organizacao-lista-habilitacao :exibirTitulo="false" :exibirColunaAcoes="false" />
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -89,9 +96,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import OrganizacaoListaHabilitacao from '../../../organizacao/views/OrganizacaoListaHabilitacao';
 
 export default {
   name: 'ListaParcialHabilitacao',
+  components: { OrganizacaoListaHabilitacao },
   data() {
     return {
       tp_inscricao: null,
