@@ -140,7 +140,11 @@
                           class="text-md-center"
                         >
                           <v-content>
-                            <img width="260"  style="border-radius:50px;" :src="(formulario || {}).foto_indicado">
+                            <img
+                              width="260"
+                              style="border-radius:50px;"
+                              :src="(formulario || {}).foto_indicado"
+                            >
                           </v-content>
                         </v-flex>
                       </v-layout>
@@ -172,14 +176,15 @@
                             <v-layout>
                               <v-flex class="pa-3">
                                 <v-list
-                                  v-for="(documento, index) in formulario.arquivos"
-                                  :key="index"
                                   two-line
                                 >
                                   <template>
-                                    <v-layout>
+                                    <v-layout
+                                      v-for="(documento, index) in formulario.arquivos"
+                                      :key="index"
+                                    >
                                       <v-flex
-                                        class="text-md-center title"
+                                        class="text-md-left"
                                         sm10
                                       >
                                         <span v-html="obterDescricaoDocumento(documento.tp_arquivo)" />
@@ -306,7 +311,7 @@ export default {
     }),
     obterDescricaoDocumento(tpArquivo) {
       const indiceDocumento = documentosIndicacao.findIndex(elemento => (elemento || {}).slug === tpArquivo);
-      if (!indiceDocumento) {
+      if (indiceDocumento === -1) {
         return 'Documento inválido';
       }
       return documentosIndicacao[indiceDocumento].descricao;
