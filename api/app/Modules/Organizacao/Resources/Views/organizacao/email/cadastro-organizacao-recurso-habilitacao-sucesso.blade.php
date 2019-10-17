@@ -40,7 +40,7 @@
 </p>
 <p>
     <b>
-        Recurso
+        Recurso:
     </b>
     {{ $organizacao['ds_recurso'] }}
 </p>
