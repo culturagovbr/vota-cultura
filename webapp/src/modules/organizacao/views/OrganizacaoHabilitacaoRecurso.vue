@@ -157,7 +157,7 @@
     <v-layout justify-center>
       <v-dialog
         v-model="dialog"
-        max-width="290"
+        max-width="360"
       >
         <v-card>
           <v-card-title class="headline">
