@@ -17,7 +17,7 @@
         align-center
       >
         <v-flex xs12>
-          <v-container grid-list-xl>
+          <v-container grid-list-xl fluid>
             <v-layout
               row
               align-center
@@ -115,7 +115,7 @@
                       x-large
                       class="text--lighten-2"
                     >
-                      thumbs_up_down
+                      list
                     </v-icon>
                   </v-card-text>
                   <v-card-title
@@ -123,20 +123,18 @@
                     class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Inscrição
-                      do
-                      eleitor
+                      Organização / entidade cultural
                     </div>
                   </v-card-title>
-                  <v-card-text>
-                    Para eleger os representantes indicados pelos conselhos de cultura na etapa de votação
+                  <v-card-text class="text-xs-center">
+                    Cadastre aqui o recurso referente à etapa<br />
+                    de habilitação das <br />organizações / entidades culturais.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
                       color="green darken-4"
-                      to="/eleitor/inscricao"
+                      to="/organizacao/habilitacao-recurso"
                       dark
-                      style="margin-top: 32px"
                     >
                       <v-icon>
                         call_made
@@ -157,7 +155,7 @@
                       x-large
                       class="text--lighten-2"
                     >
-                      list
+                      thumbs_up_down
                     </v-icon>
                   </v-card-text>
                   <v-card-title
@@ -165,17 +163,18 @@
                     class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Organização / entidade cultural
+                      Inscrição
+                      do
+                      eleitor
                     </div>
                   </v-card-title>
-                  <v-card-text class="text-xs-center">
-                    Cadastre aqui o recurso referente à etapa<br />
-                    de habilitação das <br />organizações / entidades culturais.
+                  <v-card-text>
+                    Para eleger os representantes indicados pelos conselhos de cultura na etapa de votação
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
                       color="green darken-4"
-                      to="/organizacao/habilitacao-recurso"
+                      to="/eleitor/inscricao"
                       dark
                       style="margin-top: 32px"
                     >
@@ -245,6 +244,7 @@
           wrap
           class="my-5"
           align-center
+
         >
           <v-flex
             xs12
