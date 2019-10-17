@@ -10,4 +10,5 @@ Route::group([
     Route::apiResource('criterio', 'CriterioApiResourceController')->only('index', 'show');
     Route::apiResource('segmento', 'SegmentoApiResourceController')->only('index', 'show');
     Route::apiResource('habilitacao', 'OrganizacaoHabilitacaoApiResourceController');
+    Route::post('habilitacao-recurso', 'OrganizacaoHabilitacaoRecursoController@store');
 });

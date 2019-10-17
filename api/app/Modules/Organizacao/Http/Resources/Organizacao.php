@@ -31,6 +31,7 @@ class Organizacao extends JsonResource
             'endereco' => (new Endereco($this->endereco)),
             'representante' => (new Representante($this->representante)),
             'organizacaoHabilitacao' => (new OrganizacaoHabilitacao($this->organizacaoHabilitacao)),
+            'habilitacaoRecurso' => (new OrganizacaoHabilitacaoRecurso($this->habilitacaoRecurso))
         ];
     }
 
