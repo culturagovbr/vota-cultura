@@ -25,6 +25,17 @@ export default [
         component: () => import(/* webpackChunkName: "organizacao-inscricao" */ '@/modules/organizacao/views/Organizacao.vue'),
       },
       {
+        path: '/organizacao/habilitacao-recurso',
+        name: 'OrganizacaoHabilitacaoRecursoRoute',
+        meta: {
+          title: 'Recurso da habilitação',
+          group: 'apps',
+          icon: 'gavel',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "organizacao-cadastra-recurso-habilitacao" */ '@/modules/organizacao/views/OrganizacaoHabilitacaoRecurso.vue'),
+      },
+      {
         path: '/organizacao/revisao-organizacao',
         name: 'InscricaoOrganizacaoRevisao',
         meta: {

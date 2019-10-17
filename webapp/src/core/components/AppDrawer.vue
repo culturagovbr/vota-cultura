@@ -272,6 +272,13 @@ export default {
           name: 'OrganizacaoDetalhesInscricaoRoute',
           icon: 'group',
         }, 'Organizacao');
+
+        this.definirItemMenu({
+            title: 'Recurso da habilitação',
+            group: 'apps',
+            name: 'OrganizacaoHabilitacaoRecursoRoute',
+            icon: 'gavel',
+        }, 'Organizacao');
       }
     },
     carregarMenuAdministrador() {
