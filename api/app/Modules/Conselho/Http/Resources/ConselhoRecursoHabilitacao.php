@@ -8,7 +8,6 @@ class ConselhoHabilitacaoRecurso extends JsonResource
 {
     public function toArray($request): array
     {
-
         return [
             'co_conselho_habilitacao_recurso' => $this->co_conselho_habilitacao_recurso,
             'co_conselho' => $this->co_conselho,

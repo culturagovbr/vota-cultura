@@ -6284,3 +6284,5 @@ ALTER TABLE public.tb_conselho_habilitacao_recurso OWNER TO votacultura;
 GRANT ALL ON TABLE public.tb_conselho_habilitacao_recurso TO votacultura;
 
 ALTER TABLE public.tb_representante_arquivo_avaliacao ALTER COLUMN co_conselho_habilitacao DROP NOT NULL;
+
+ALTER TABLE public.tb_conselho_habilitacao_recurso DROP COLUMN co_arquivo;

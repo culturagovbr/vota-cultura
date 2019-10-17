@@ -12,7 +12,6 @@ class ConselhoHabilitacaoRecurso extends Model
 
     protected $fillable = [
         'ds_recurso',
-        'co_arquivo',
         'co_conselho',
     ];
 
@@ -24,15 +23,6 @@ class ConselhoHabilitacaoRecurso extends Model
             Conselho::class,
             'co_conselho',
             'co_conselho'
-        );
-    }
-
-    public function anexoRecurso()
-    {
-        return $this->hasOne(
-            Arquivo::class,
-            'co_arquivo',
-            'co_arquivo'
         );
     }
 }

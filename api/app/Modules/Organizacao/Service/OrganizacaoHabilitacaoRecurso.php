@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Modules\Conselho\Service;
+namespace App\Modules\Organizacao\Service;
 
 use App\Core\Service\AbstractService;
-use App\Modules\Conselho\Mail\Conselho\CadastroHabilitacaoRecursoSucesso;
-use App\Modules\Conselho\Model\ConselhoHabilitacaoRecurso as ConselhoHabilitacaoRecursoModel;
+use App\Modules\Organizacao\Mail\Organizacao\CadastroOrganizacaoHabilitacaoRecursoSucesso;
+use \App\Modules\Organizacao\Model\OrganizacaoHabilitacaoRecurso as OrganizacaoHabilitacaoRecursoModel;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class ConselhoHabilitacaoRecurso extends AbstractService
+class OrganizacaoHabilitacaoRecurso extends AbstractService
 {
-    public function __construct(ConselhoHabilitacaoRecursoModel $model)
+    public function __construct(OrganizacaoHabilitacaoRecursoModel $model)
     {
         parent::__construct($model);
     }
@@ -32,19 +32,19 @@ class ConselhoHabilitacaoRecurso extends AbstractService
         try {
             DB::beginTransaction();
             $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
-            $coConselho = $usuarioAutenticado['co_conselho'];
+            $coOrganizacao = $usuarioAutenticado['co_organizacao'];
             $dsRecurso = $requestParams['dsRecurso'];
             $dadosHabilitacaoRecurso = [];
-            $dadosHabilitacaoRecurso['co_conselho'] = $coConselho;
+            $dadosHabilitacaoRecurso['co_organizacao'] = $coOrganizacao;
             $dadosHabilitacaoRecurso['ds_recurso'] = $dsRecurso;
             $habilitacaoRecursoModel = $this->getModel();
             $habilitacaoRecursoModel->fill($dadosHabilitacaoRecurso);
 
             $habilitacaoRecursoModel->save();
 
-            /** @var \App\Modules\Conselho\Model\Conselho $conselhoModel */
-            $conselho = app(\App\Modules\Conselho\Model\Conselho::class)->find($coConselho);
-            $this->enviarEmailConfirmacao($conselho, $dsRecurso);
+            /** @var \App\Modules\Organizacao\Model\Organizacao $organizacao */
+            $organizacao = app(\App\Modules\Organizacao\Model\Organizacao::class)->find($coOrganizacao);
+            $this->enviarEmailConfirmacao($organizacao, $dsRecurso);
             DB::commit();
             return $habilitacaoRecursoModel;
         } catch(EParametrosInvalidos $exception) {
@@ -58,20 +58,23 @@ class ConselhoHabilitacaoRecurso extends AbstractService
      * @param string $dsRecurso
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    private function enviarEmailConfirmacao(\App\Modules\Conselho\Model\Conselho $conselho, string $dsRecurso) : void
+    private function enviarEmailConfirmacao(\App\Modules\Organizacao\Model\Organizacao $organizacao, string $dsRecurso) : void
     {
-        $corpoEmail = $conselho->toArray();
+        $corpoEmail = $organizacao->toArray();
         $corpoEmail['ds_recurso'] = $dsRecurso;
+        $corpoEmail['nu_cnpj'] = $organizacao->getCnpjFormatadoAttribute();
         $corpoEmail['representante'] = [
-            'no_nome' => $conselho->representante->no_nome,
-            'ds_email' => $conselho->representante->ds_email
+            'no_nome' => $organizacao->representante->no_nome,
+            'ds_email' => $organizacao->representante->ds_email
         ];
 
-        Mail::to($conselho->representante->ds_email)
-            ->bcc($conselho->ds_email)
+        $corpoEmail['segmento']['ds_detalhamento'] = $organizacao->segmento->ds_detalhamento;
+
+        Mail::to($organizacao->representante->ds_email)
+            ->bcc($organizacao->ds_email)
             ->bcc(env('EMAIL_ACOMPANHAMENTO'))
             ->send(
-                app()->make(CadastroHabilitacaoRecursoSucesso::class, $corpoEmail)
+                app()->make(CadastroOrganizacaoHabilitacaoRecursoSucesso::class, $corpoEmail)
             );
     }
 }

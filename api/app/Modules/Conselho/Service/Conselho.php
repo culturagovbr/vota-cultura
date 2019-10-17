@@ -15,6 +15,7 @@ use App\Modules\Representacao\Service\Representante;
 use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -125,5 +126,30 @@ class Conselho extends AbstractService
     public function obterTodosParcialmenteHabilitados()
     {
         return $this->getModel()->has('conselhoHabilitacao')->get();
+    }
+
+    public function concluirIndicacao(Request $request, int $identificador) : ?array
+    {
+        try {
+            $modelPesquisada = $this->getModel()->find($identificador);
+            if (!$modelPesquisada) {
+                throw new \HttpException(
+                    'Dados não encontrados.',
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+            DB::beginTransaction();
+            $modelPesquisada->fill($request->all());
+            $modelPesquisada->save();
+            /** $conselhoIndicacaoService ConselhoIndicacao */
+            $conselhoIndicacaoService = app(ConselhoIndicacao::class);
+            $conselhoIndicacaoService->enviarEmailConfirmacaoConselhoIndicacao($modelPesquisada);
+            DB::commit();
+            // dd($request->all());
+            return $modelPesquisada->toArray();
+        } catch (\HttpException $queryException) {
+            DB::rollBack();
+            throw $queryException;
+        }
     }
 }

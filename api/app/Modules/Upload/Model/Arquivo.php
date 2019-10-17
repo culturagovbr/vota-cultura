@@ -2,6 +2,8 @@
 
 namespace App\Modules\Upload\Model;
 
+use App\Modules\Conselho\Model\ConselhoIndicacaoArquivo;
+use App\Modules\Conselho\Model\ConselhoIndicacao;
 use Illuminate\Database\Eloquent\Model;
 
 class Arquivo extends Model
@@ -43,5 +45,15 @@ class Arquivo extends Model
             'co_eleitor',
             'co_arquivo'
         )->withPivot(['tp_arquivo']);
+    }
+
+    public function arquivoIndicacao()
+    {
+        return $this->belongsToMany(
+            \App\Modules\Conselho\Model\ConselhoIndicacao::class,
+            'rl_conselho_indicacao_arquivo',
+            'co_arquivo',
+            'co_conselho_indicacao',
+        )->as('rl_conselho_indicacao_arquivo')->withPivot('tp_arquivo', 'co_conselho_indicacao');
     }
 }
