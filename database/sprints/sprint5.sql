@@ -112,3 +112,14 @@ COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_organizacao_habil
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_organizacao IS 'Chave estrangeira referente a organização';
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_recurso IS 'Descrição do recurso';
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.dh_cadastro_recurso IS 'Data de cadastro do recurso';
+
+--################## Avaliação do recurso das organizações
+
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD ds_parecer text NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_parecer IS 'Parecer do recurso';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD st_parecer char(1) NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.st_parecer IS '0 - Inabilitada, 1 = habilitada e desclassificada, 2 habilitada e classificada';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD st_avaliacao_final integer NOT NULL DEFAULT 0;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.st_avaliacao_final IS 'Valida se o usuário selecionou o recurso como concluído.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD nu_pontuacao integer NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.nu_pontuacao IS 'Nova pontuação após avaliação do recurso.';

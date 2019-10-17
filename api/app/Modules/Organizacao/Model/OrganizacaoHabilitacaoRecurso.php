@@ -13,6 +13,10 @@ class OrganizacaoHabilitacaoRecurso extends Model
     protected $fillable = [
         'ds_recurso',
         'co_organizacao',
+        'ds_parecer',
+        'st_parecer',
+        'st_avaliacao',
+        'nu_pontuacao',
     ];
 
     public $timestamps = false;

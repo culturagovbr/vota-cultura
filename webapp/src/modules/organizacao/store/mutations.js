@@ -1,6 +1,11 @@
 import * as types from './types';
 
 export const mutations = {
+  [types.DEFINIR_ORGANIZACOES_RECURSO](state, dados) {
+    state.organizacoesRecurso = dados.data.filter(recurso => {
+      return recurso.habilitacaoRecurso ? recurso : null
+    });
+  },
   [types.OBTER_SEGMENTOS](state, dados) {
     state.segmentos = dados.data;
   },
