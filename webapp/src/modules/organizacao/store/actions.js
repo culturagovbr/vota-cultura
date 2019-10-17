@@ -1,8 +1,5 @@
 import * as organizacaoService from '../service/organizacao';
 import * as types from './types';
-import * as conselhoService from '../../conselho/service/conselho';
-import * as service from '../../shared/service/base';
-import * as usuarioService from '../../conta/service/usuario';
 
 // eslint-disable-next-line no-empty-pattern
 export const enviarDadosOrganizacao = async ({ commit }, organizacao) => {
@@ -28,7 +25,7 @@ export const confirmarOrganizacao = async ({ commit }, organizacao) => {
 
 export const obterDadosOrganizacao = async ({ commit, dispatch }, coOrganizacao) => {
   commit(types.OBTER_DADOS_ORGANIZACAO, coOrganizacao);
-  organizacaoService.obterDadosOrganizacao(coOrganizacao)
+  return organizacaoService.obterDadosOrganizacao(coOrganizacao)
     .then((response) => {
       const { data } = response.data;
       if (!data) {
@@ -53,6 +50,8 @@ export const obterOrganizacoes = async ({ commit }) => {
     commit(types.DEFINIR_ORGANIZACOES, response.data);
   });
 };
+
+export const enviarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.enviarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
 
 export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {
   let respondendo = String();

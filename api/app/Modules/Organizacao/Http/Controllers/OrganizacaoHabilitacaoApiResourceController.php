@@ -16,7 +16,7 @@ class OrganizacaoHabilitacaoApiResourceController extends AApiResourceController
 
     public function __construct(OrganizacaoHabilitacao $service)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except(['index']);
         return parent::__construct($service);
     }
 

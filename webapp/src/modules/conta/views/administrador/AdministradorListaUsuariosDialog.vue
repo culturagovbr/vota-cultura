@@ -18,10 +18,10 @@
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title v-if="!!formulario.hasOwnProperty('co_usuario')">
-          Editar Usuário
+          Editar usuário
         </v-toolbar-title>
         <v-toolbar-title v-else>
-          Cadastrar Usuário
+          Cadastrar usuário
         </v-toolbar-title>
         <v-spacer />
       </v-toolbar>

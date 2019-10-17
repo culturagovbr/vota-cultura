@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organizacao\Model;
 
+use App\Modules\Conselho\Model\ConselhoHabilitacaoRecurso;
 use App\Modules\Conta\Model\Usuario;
 use App\Modules\Core\Helper\CNPJ;
 use App\Modules\Localidade\Model\Endereco;
@@ -81,6 +82,15 @@ class Organizacao extends Model
     {
         return $this->hasOne(
             OrganizacaoHabilitacao::class,
+            'co_organizacao',
+            'co_organizacao'
+        );
+    }
+
+    public function habilitacaoRecurso()
+    {
+        return $this->hasOne(
+            OrganizacaoHabilitacaoRecurso::class,
             'co_organizacao',
             'co_organizacao'
         );

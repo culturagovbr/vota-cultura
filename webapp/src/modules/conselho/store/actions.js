@@ -88,3 +88,79 @@ export const obterConselhosParcialmenteHabilitados = async ({ commit }) => {
     commit(types.LISTAR_CONSELHOS_PARCIALMENTE_HABILITADOS, data);
   });
 };
+
+export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselho(payload).then((response) => {
+  dispatch(
+    'conselho/obterListaIndicacaoConselho',
+    {},
+    { root: true },
+  );
+  return response;
+}).catch((error) => {
+  dispatch(
+      'app/setMensagemErro',
+      error.response.data.message,
+      { root: true },
+  );
+  throw new TypeError(error);
+});
+
+export const enviarIndicacaoConselhoArquivo = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselhoArquivo(payload)
+  .then(response => response)
+  .catch((error) => {
+    dispatch(
+        'app/setMensagemErro',
+        error.response.data.message,
+        { root: true },
+    );
+    throw new TypeError(error);
+  });
+
+export const obterListaIndicacaoConselho = async ({ commit, dispatch }, payload) => conselhoService.obterListaIndicacaoConselho(payload).then((response) => {
+  const { data } = response.data;
+  commit(types.LISTAR_INDICACOES_CONSELHO, data);
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});
+
+export const deletarIndicacaoConselho = async ({ commit, dispatch }, coConselhoIndicacao) => conselhoService.deletarIndicacaoConselho(coConselhoIndicacao).then((response) => {
+  commit(types.DELETAR_INDICACAO_CONSELHO, coConselhoIndicacao);
+  dispatch(
+    'app/setMensagemSucesso',
+    'Indicado excluído com sucesso.',
+    { root: true },
+  );
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});
+
+export const concluirIndicacao = async ({ commit, dispatch }, conselhoId) => conselhoService.atualizarConselho({
+  co_conselho: conselhoId,
+  st_indicacao: 'f',
+}).then((response) => {
+  commit(types.CONCLUIR_INDICACAO);
+  dispatch(
+    'app/setMensagemSucesso',
+    'Indicação concluída com sucesso.',
+    { root: true },
+  );
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});
