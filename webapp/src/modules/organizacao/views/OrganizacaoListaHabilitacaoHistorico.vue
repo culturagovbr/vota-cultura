@@ -13,9 +13,43 @@
         <td class="text-md-center">{{ props.item.usuarioAvaliador.no_nome }}</td>
         <td class="text-md-center">{{ props.item.nu_nova_pontuacao }}</td>
         <td class="text-md-center">{{ props.item.situacao_avaliacao }}</td>
-        <td class="text-md-center">{{ props.item.ds_parecer }}</td>
+        <td class="text-md-center">
+          <v-btn outline color="indigo" small fab @click="detalharParecer(props.item.ds_parecer)">
+            <v-icon>remove_red_eye</v-icon>
+          </v-btn>
+        </td>
       </template>
     </v-data-table>
+    <v-dialog
+      v-model="dialog"
+      transition="dialog-bottom-transition"
+      width="600"
+    >
+      <v-card>
+        <v-toolbar
+          dark
+          color="primary"
+        >
+          <v-btn
+            icon
+            dark
+            @click="dialog = false"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>
+            Detalhamento do parecer
+          </v-toolbar-title>
+          <v-spacer />
+        </v-toolbar>
+        <v-card-text>
+          <v-container>
+            {{textoParecer}}
+          </v-container>
+        </v-card-text>
+      </v-card>
+
+    </v-dialog>
   </v-container>
 </template>
 
@@ -29,6 +63,8 @@ export default {
     },
   },
   data: () => ({
+    dialog: false,
+    textoParecer: '',
     headers: [
       {
         text: 'Data',
@@ -57,5 +93,11 @@ export default {
       },
     ],
   }),
+  methods: {
+    detalharParecer(textoParecer) {
+      this.dialog = true;
+      this.textoParecer = textoParecer;
+    },
+  },
 };
 </script>

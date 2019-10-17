@@ -28,7 +28,7 @@
           ref="form_recurso"
           v-model="valid"
         >
-          <v-container v-if="!!arquivosAvaliacao.documento_identificacao_representante">
+          <v-container v-if="!!(arquivosAvaliacao || {} ).documento_identificacao_representante">
 
             <v-card>
               <v-card-text>
@@ -50,7 +50,7 @@
                     Dados da organização
                   </v-tab>
                   <v-tab href="#tab-3" v-if="possuoHistoricoRevisoes">
-                    Histórico de revisões
+                    Histórico
                   </v-tab>
                 </v-tabs>
 
@@ -74,13 +74,13 @@
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>Nome da organização/entidade cultural:</b>
-                              {{ formulario.no_organizacao }}
+                              {{ (formulario || {}).no_organizacao }}
                             </div>
                           </v-flex>
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>CNPJ:</b>
-                              {{ formulario.cnpj_formatado }}
+                              {{ (formulario || {}).cnpj_formatado }}
                             </div>
                           </v-flex>
                         </v-layout>
@@ -88,22 +88,22 @@
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>Pontuação inicial:</b>
-                              {{ formulario.pontuacao }}
+                              {{ (formulario || {}).pontuacao }}
                             </div>
                           </v-flex>
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>Segmento cultural:</b>
-                              {{ formulario.segmento.ds_detalhamento }}
+                              {{ ((formulario || {}).segmento || {}).ds_detalhamento }}
                             </div>
                           </v-flex>
                         </v-layout>
 
-                        <v-layout v-if="!!formulario.organizacaoHabilitacao && !!formulario.organizacaoHabilitacao.situacao_avaliacao">
+                        <v-layout v-if="!!((formulario || {}).organizacaoHabilitacao || {} ).situacao_avaliacao">
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>Pontuação após análise:</b>
-                              {{ !!formulario.organizacaoHabilitacao.nu_nova_pontuacao.toString() ? formulario.organizacaoHabilitacao.nu_nova_pontuacao:formulario.pontuacao }}
+                              {{ !!(formulario || {}).organizacaoHabilitacao.nu_nova_pontuacao.toString() ? (formulario || {}).organizacaoHabilitacao.nu_nova_pontuacao : (formulario || {}).pontuacao }}
                             </div>
                           </v-flex>
                         </v-layout>
@@ -124,7 +124,7 @@
                           fluid
                           grid-list-xl
                         >
-                          <v-layout v-if="!!formulario.representante.arquivos && !!formulario.representante.arquivos.length > 0">
+                          <v-layout v-if="!!((formulario || {}).representante || {} ).arquivos && !!((formulario || {}).representante || {} ).arquivos.length > 0">
                             <v-flex class="pa-3">
                               <v-list two-line>
                                 <template>
@@ -360,7 +360,7 @@
                           <v-layout>
                             <v-flex sm6>
                               <v-select
-                                v-model="formulario.organizacaoHabilitacao.st_avaliacao"
+                                v-model="((formulario || {}).organizacaoHabilitacao || {} ).st_avaliacao"
                                 :items="resultadoItens"
                                 item-value="valor"
                                 item-text="descricao"
@@ -375,7 +375,7 @@
                           <v-layout>
                             <v-flex class="pa-3">
                               <v-textarea
-                                v-model="formulario.organizacaoHabilitacao.ds_parecer"
+                                v-model="((formulario || {}).organizacaoHabilitacao || {} ).ds_parecer"
                                 box
                                 label="* Parecer"
                                 name="input-7-4"
@@ -425,7 +425,7 @@
                               sm7
                             >
                               <v-text-field
-                                v-model="formulario.organizacaoHabilitacao.nu_nova_pontuacao"
+                                v-model="((formulario || {}).organizacaoHabilitacao || {} ).nu_nova_pontuacao"
                                 type="number"
                                 min="0"
                                 max="99"
@@ -448,7 +448,7 @@
                         Voltar
                       </v-btn>
                       <v-btn
-                        v-if="!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                        v-if="!((formulario || {}).organizacaoHabilitacao || {} ).co_organizacao_habilitacao"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
@@ -460,7 +460,7 @@
                         Avaliar
                       </v-btn>
                       <v-btn
-                        v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && !desabilitarRevisaoHabilitacao()"
+                        v-if="!!((formulario || {}).organizacaoHabilitacao || {} ).co_organizacao_habilitacao && !desabilitarRevisaoHabilitacao()"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
@@ -487,7 +487,7 @@
                       flat
                       class="pa-4"
                     >
-                      <organizacao-lista-habilitacao-historico :historico="formulario.organizacaoHabilitacao.historico" />
+                      <organizacao-lista-habilitacao-historico :historico="((formulario || {}).organizacaoHabilitacao || {} ).historico" />
                     </v-card>
                   </v-tab-item>
                 </v-tabs-items>
@@ -507,7 +507,7 @@
           <v-card-title class="headline">
             Deseja realmente
             <span
-              v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'"
+              v-if="!!((formulario || {}).organizacaoHabilitacao || {} ).co_organizacao_habilitacao && perfil.no_perfil === 'administrador'"
               style="margin-left:5px"
             >
               revisar
@@ -521,7 +521,7 @@
             ?
           </v-card-title>
 
-          <v-card-text v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'">
+          <v-card-text v-if="!!((formulario || {}).organizacaoHabilitacao || {} ).co_organizacao_habilitacao && perfil.no_perfil === 'administrador'">
             <span class="subheading">
               Indique abaixo se é uma revisão final:
             </span>
@@ -530,7 +530,7 @@
               <v-layout>
                 <v-flex>
                   <v-checkbox
-                    v-model="formulario.organizacaoHabilitacao.st_revisao_final"
+                    v-model="((formulario || {}).organizacaoHabilitacao || {} ).st_revisao_final"
                     class="text-md-center"
                     label="Revisão final"
                   />
@@ -619,6 +619,7 @@ export default {
       dialog: false,
       loading: false,
       valid: false,
+      formulario: {},
       formularioInicial: {
         organizacaoHabilitacao: {
           co_organizacao_habilitacao: null,
@@ -653,6 +654,7 @@ export default {
     value(valor) {
       this.dialog = valor;
       if (!valor) {
+        this.formulario = Object.assign({}, this.formulario);
         this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
         this.inicializarValoresComponente();
         this.$refs.form_recurso.reset();
@@ -664,8 +666,7 @@ export default {
     organizacao(valor) {
       if (Object.keys(valor).length) {
         this.formulario = Object.assign({}, valor);
-
-        if (this.formulario.organizacaoHabilitacao === null) {
+        if ((this.formulario || {}).organizacaoHabilitacao === null) {
           this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
         }
 
