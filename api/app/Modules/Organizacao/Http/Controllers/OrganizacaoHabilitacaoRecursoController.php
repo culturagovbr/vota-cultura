@@ -13,7 +13,7 @@ class OrganizacaoHabilitacaoRecursoController extends Controller
 {
 
     /**
-     * @var ConselhoHabilitacaoRecurso
+     * @var OrganizacaoHabilitacaoRecurso
      */
     protected $service;
 
