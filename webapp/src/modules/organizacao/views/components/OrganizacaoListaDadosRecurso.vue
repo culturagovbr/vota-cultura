@@ -196,6 +196,7 @@ export default {
       pontuacaoFinal: { value: "", error: false },
       anexo: {}
     },
+    recurso : {},
     itemsResultadoHabilitacao: [
       { value: "", text: "" },
       { value: '0', text: "Inabilitada" },
@@ -213,6 +214,23 @@ export default {
       type: Object,
       default: () => {}
     }
+  },
+  watch: {
+    organizacao(organizacao) {
+     let recurso = organizacao.habilitacaoRecurso;
+
+      this.formulario = {
+        dsParecer: {value : recurso.ds_parecer, error: false},
+        resultadoHabilitacao: {value:  parseInt(recurso.st_parecer, 10), error: false},
+        pontuacaoFinal: {value : recurso.nu_pontuacao, error: false},
+      }
+      console.log('------------------------------------');
+      console.log(this.formulario );
+      console.log('------------------------------------');
+    }
+  },
+  mounted: () => {
+
   },
   components: {
     File

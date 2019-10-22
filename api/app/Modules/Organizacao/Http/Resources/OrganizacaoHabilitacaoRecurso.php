@@ -19,7 +19,7 @@ class OrganizacaoHabilitacaoRecurso extends JsonResource
             'st_parecer' => $this->st_parecer,
             'st_avaliacao_final' => $this->st_avaliacao_final,
             'nu_pontuacao' => $this->nu_pontuacao,
-            'co_arquivo' => new Arquivo($this->co_arquivo)
+            'co_arquivo' => $this->co_arquivo
         ];
     }
 }
