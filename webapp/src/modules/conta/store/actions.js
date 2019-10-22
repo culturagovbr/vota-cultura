@@ -1,4 +1,3 @@
-import { remove, includes } from 'lodash';
 import * as usuarioService from '../service/usuario';
 import * as types from './types';
 import { obterInformacoesJWT } from '../../shared/service/helpers/jwt';
@@ -16,7 +15,7 @@ export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
 
       dispatch(
         'app/setMensagemSucesso',
-        'Login efetuado com sucesso!',
+        { text: 'Login efetuado com sucesso!' },
         { root: true },
       );
       dispatch('conta/tratarUsuarioLogado', null, { root: true });
@@ -25,7 +24,9 @@ export const autenticarUsuario = async ({ commit, dispatch }, usuario) => {
     }).catch((error) => {
       dispatch(
         'app/setMensagemErro',
-        error.response.data.error,
+        { text: error.response.data.error,
+          //callbackAfterHide: () => {alert(1)}
+          },
         { root: true },
       );
       throw new TypeError(error, 'autenticarUsuario', 10);
@@ -55,14 +56,14 @@ export const cadastrarUsuario = async ({ commit, dispatch }, usuario) => usuario
   commit(types.ATRIBUIR_USUARIO_CADASTRADO_LISTA, data);
   dispatch(
     'app/setMensagemSucesso',
-    'Usuário cadastrado com sucesso!',
+    { text: 'Usuário cadastrado com sucesso!' },
     { root: true },
   );
   return response;
 }).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);
@@ -74,14 +75,14 @@ export const atualizarUsuario = async ({ commit, dispatch }, usuario) => usuario
 
   dispatch(
     'app/setMensagemSucesso',
-    'Usuário atualizado com sucesso.',
+    { text: 'Usuário atualizado com sucesso.' },
     { root: true },
   );
   return response;
 }).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);

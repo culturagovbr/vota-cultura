@@ -75,8 +75,8 @@ export default {
   methods: {
     ...mapActions({
       alterarSenha: 'conta/alterarSenha',
-      mensagemErro: 'app/setMensagemErro',
-      mensagemSucesso: 'app/setMensagemSucesso',
+      setMensagemErro: 'app/setMensagemErro',
+      setMensagemSucesso: 'app/setMensagemSucesso',
     }),
     alterar() {
       if (!this.$refs.form.validate()) {
@@ -87,11 +87,11 @@ export default {
         codigoAlteracao: this.$route.params.ds_codigo_ativacao,
         usuario: this.usuario,
       }).then(() => {
-        this.mensagemSucesso('Senha criada com sucesso');
+        this.setMensagemSucesso({ text: 'Senha criada com sucesso' });
         this.$router.push('/conta/autenticar');
       }).catch((error) => {
         this.loading = false;
-        this.mensagemErro(error.response.data.message);
+        this.setMensagemErro({ text: error.response.data.message });
       });
     },
   },

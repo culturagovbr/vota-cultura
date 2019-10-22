@@ -210,8 +210,7 @@
     </v-card>
 
     <v-layout justify-center>
-
-<v-dialog
+      <v-dialog
         v-model="dialogConfirmarConcluirIndicacao"
         max-width="360"
       >
@@ -714,7 +713,7 @@ export default {
     },
     listaIndicados: [],
     usuarioLogado: {},
-    dialogConfirmarConcluirIndicacao : false
+    dialogConfirmarConcluirIndicacao: false,
   }),
   computed: {
     ...mapGetters({
@@ -780,18 +779,18 @@ export default {
       enviarIndicacaoConselhoArquivo: 'conselho/enviarIndicacaoConselhoArquivo',
       obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
       deletarIndicacaoConselho: 'conselho/deletarIndicacaoConselho',
-      notificarErro: 'app/setMensagemErro',
-      definirMensagemSucesso: 'app/setMensagemSucesso',
+      setMensagemErro: 'app/setMensagemErro',
+      setMensagemSucesso: 'app/setMensagemSucesso',
       concluirIndicacao: 'conselho/concluirIndicacao',
     }),
     handleDialogConfirmarConcluirIndicacao() {
-        this.dialogConfirmarConcluirIndicacao = !this.dialogConfirmarConcluirIndicacao;
+      this.dialogConfirmarConcluirIndicacao = !this.dialogConfirmarConcluirIndicacao;
     },
     enviarConcluirIndicacao(coConselho) {
-        this.concluirIndicacao(coConselho).then(() => {
-            this.handleDialogConfirmarConcluirIndicacao();
-            this.loading = false;
-        })
+      this.concluirIndicacao(coConselho).then(() => {
+        this.handleDialogConfirmarConcluirIndicacao();
+        this.loading = false;
+      });
     },
     formatDate(date) {
       if (!date) return null;
@@ -809,7 +808,7 @@ export default {
       if (!Object.keys(this.indicado_foto_rosto).length || this.$refs.indicado_foto_rosto.fileHasError()) {
         this.loading = false;
         this.$refs.form.validate();
-        this.notificarErro('A foto de rosto é obrigatória.');
+        this.setMensagemErro({ text: 'A foto de rosto é obrigatória.' });
         return;
       }
 
@@ -824,7 +823,7 @@ export default {
 
       if (erro) {
         this.loading = false;
-        this.notificarErro('Preencha todos os anexos obrigatórios corretamente.');
+        this.setMensagemErro({ text: 'Preencha todos os anexos obrigatórios corretamente.' });
         return;
       }
 
@@ -857,7 +856,7 @@ export default {
         });
 
         Promise.all(promises).then(() => {
-          this.definirMensagemSucesso('Operação realizada com sucesso');
+          this.setMensagemSucesso({ text: 'Operação realizada com sucesso' });
           this.loading = false;
           window.location.reload();
           this.fecharDialogo();

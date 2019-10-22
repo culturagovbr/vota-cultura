@@ -4,11 +4,18 @@
       <v-window-item :value="1">
         <v-card-title>
           <div class="layout column align-center">
-            <h2 class="flex my-2 primary--text">{{$route.meta.title}}</h2>
+            <h2 class="flex my-2 primary--text">
+              {{ $route.meta.title }}
+            </h2>
           </div>
         </v-card-title>
         <v-card-text>
-          <v-form ref="form" v-model="valid" lazy-validation autocomplete="off">
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+            autocomplete="off"
+          >
             <v-text-field
               v-model="usuario.nu_cpf"
               prepend-icon="account_circle"
@@ -48,9 +55,12 @@
                     prepend-icon="event"
                     :rules="[rules.required]"
                     v-on="on"
-                  ></v-text-field>
+                  />
                 </template>
-                <v-date-picker v-model="date" @input="menu = false"></v-date-picker>
+                <v-date-picker
+                  v-model="date"
+                  @input="menu = false"
+                />
               </v-menu>
             </template>
             <v-text-field
@@ -79,8 +89,8 @@
               :type="mostrarSenha ? 'text' : 'password'"
               label="Senha"
               name="password"
-              @click:append="mostrarSenha = !mostrarSenha"
               :rules="[rules.required, rules.minCaracter, rules.senhaValida]"
+              @click:append="mostrarSenha = !mostrarSenha"
             />
             <v-text-field
               id="confirm_password"
@@ -90,8 +100,8 @@
               :type="mostrarSenha ? 'text' : 'password'"
               label="Confirmar senha"
               name="confirm_password"
-              @click:append="mostrarSenha = !mostrarSenha"
               :rules="[rules.required, rules.confirmaSenha(usuario.confirma_senha, usuario.ds_senha)]"
+              @click:append="mostrarSenha = !mostrarSenha"
             />
           </v-form>
           <span class="grey--text">Todos os campos são obrigatórios</span>
@@ -104,24 +114,45 @@
             color="primary"
             :loading="loading"
             @click="login"
-          >Cadastrar</v-btn>
+          >
+            Cadastrar
+          </v-btn>
           <v-spacer />
-          <v-btn block color="default" :to="{ name: 'conta-autenticar' }">Voltar</v-btn>
+          <v-btn
+            block
+            color="default"
+            :to="{ name: 'conta-autenticar' }"
+          >
+            Voltar
+          </v-btn>
         </div>
         <!-- </v-card-actions> -->
       </v-window-item>
       <v-window-item :value="2">
         <v-card-text>
           <div class="text-xs-center">
-            <v-icon size="80px" color="primary">check_circle</v-icon>
-            <h3 class="title font-weight-light mb-2">Cadastro realizado com sucesso</h3>
+            <v-icon
+              size="80px"
+              color="primary"
+            >
+              check_circle
+            </v-icon>
+            <h3 class="title font-weight-light mb-2">
+              Cadastro realizado com sucesso
+            </h3>
             <span
               class="caption grey--text"
-            >Um link para ativação da sua conta foi enviado para o e-mail {{usuario.no_email}}.</span>
+            >Um link para ativação da sua conta foi enviado para o e-mail {{ usuario.no_email }}.</span>
           </div>
         </v-card-text>
         <!-- <v-card-actions> -->
-        <v-btn block color="primary" :to="{ name: 'conta-autenticar' }">Login</v-btn>
+        <v-btn
+          block
+          color="primary"
+          :to="{ name: 'conta-autenticar' }"
+        >
+          Login
+        </v-btn>
         <!-- </v-card-actions> -->
       </v-window-item>
     </v-window>
@@ -129,8 +160,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import Validate from "@/modules/shared/util/validate";
+import { mapActions } from 'vuex';
+import Validate from '@/modules/shared/util/validate';
 
 export default {
   data: () => ({
@@ -142,39 +173,36 @@ export default {
     dataFormatada: '',
     step: 1,
     usuario: {
-      no_cpf: "",
-      no_nome: "",
-      dt_nascimento: "",
-      no_email: "",
-      ds_senha: ""
+      no_cpf: '',
+      no_nome: '',
+      dt_nascimento: '',
+      no_email: '',
+      ds_senha: '',
     },
     rules: {
-      required: value => !!value || "Este campo é obrigatório",
-      validarCPF: value => Validate.isCpfValido(value) || "CPF inválido",
-      emailValido: value => Validate.isEmailValido(value) || "E-mail inválido",
-      confirmaEmail: (confirma_email, no_email) =>
-        confirma_email === no_email || "O E-mail não confere",
-      minCaracter: value => value.length >= 8 || "Mínimo 8 caracteres",
-      senhaValida: value =>
-        Validate.isSenhaValida(value) ||
-        "Mínimo uma letra maiúscula, uma minúscula e um número",
-      confirmaSenha: (confirma_senha, ds_senha) =>
-        confirma_senha === ds_senha || "A senha não confere"
-    }
+      required: value => !!value || 'Este campo é obrigatório',
+      validarCPF: value => Validate.isCpfValido(value) || 'CPF inválido',
+      emailValido: value => Validate.isEmailValido(value) || 'E-mail inválido',
+      confirmaEmail: (confirma_email, no_email) => confirma_email === no_email || 'O E-mail não confere',
+      minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
+      senhaValida: value => Validate.isSenhaValida(value)
+        || 'Mínimo uma letra maiúscula, uma minúscula e um número',
+      confirmaSenha: (confirma_senha, ds_senha) => confirma_senha === ds_senha || 'A senha não confere',
+    },
   }),
   watch: {
     date() {
       this.dataFormatada = this.formatDate(this.date);
-    }
+    },
   },
   methods: {
     ...mapActions({
-      cadastrarUsuario: "conta/cadastrarUsuario",
-      mensagemErro: "app/setMensagemErro"
+      cadastrarUsuario: 'conta/cadastrarUsuario',
+      setMensagemErro: 'app/setMensagemErro',
     }),
     formatDate(date) {
       if (!date) return null;
-      const [year, month, day] = date.split("-");
+      const [year, month, day] = date.split('-');
       return `${day}/${month}/${year}`;
     },
     login() {
@@ -183,7 +211,7 @@ export default {
       }
       this.loading = true;
 
-      const [dia, mes, ano] = this.dataFormatada.split("/");
+      const [dia, mes, ano] = this.dataFormatada.split('/');
       this.usuario.dt_nascimento = `${ano}-${mes}-${dia}`;
 
       this.cadastrarUsuario(this.usuario)
@@ -191,11 +219,11 @@ export default {
           this.loading = false;
           this.step = 2;
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false;
-          this.mensagemErro(error.response.data.message);
+          this.setMensagemErro({ text: error.response.data.message });
         });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -38,7 +38,7 @@ export const obterDadosOrganizacao = async ({ commit, dispatch }, coOrganizacao)
     .catch((error) => {
       dispatch(
         'app/setMensagemErro',
-        error.response.data.error,
+        { text: error.response.data.error },
         { root: true },
       );
       throw new TypeError(error, 'obterDadosOrganizacao', 10);
@@ -93,7 +93,7 @@ export const obterOrganizacoesHabilitacao = async ({ commit }) => {
 export const avaliarHabilitacao = async ({ dispatch }, organizacaoHabilitacao) => organizacaoService.avaliarHabilitacao(organizacaoHabilitacao).then(response => response).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);

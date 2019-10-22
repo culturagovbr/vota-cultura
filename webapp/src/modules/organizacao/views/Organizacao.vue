@@ -810,7 +810,7 @@ export default {
       const faseOrganizacao = data.find(fase => fase.tp_fase === faseSlug);
 
       if ((!faseOrganizacao || Object.keys(faseOrganizacao).length === 0) && self.perfil.no_perfil !== 'administrador') {
-        self.mensagemErro('O prazo de inscrições expirou!');
+        self.setMensagemErro({ text: 'O prazo de inscrições expirou!'});
         self.$router.push('/');
       }
       self.dataDentroPrazoInscricao = true;
@@ -837,7 +837,7 @@ export default {
   methods: {
     ...mapActions({
       validarDataDentroPrazoFasePorSlug: 'fase/validarDataDentroPrazoFasePorSlug',
-      mensagemErro: 'app/setMensagemErro',
+      setMensagemErro: 'app/setMensagemErro',
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       obterCriterios: 'organizacao/obterCriterios',

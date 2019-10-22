@@ -28,7 +28,7 @@ export const obterDadosConselho = async ({ commit, dispatch }, coConselho) => {
     .catch((error) => {
       dispatch(
         'app/setMensagemErro',
-        error.response.data.error,
+        { text: error.response.data.error },
         { root: true },
       );
       throw new TypeError(error, 'obterDadosConselho', 10);
@@ -47,7 +47,7 @@ export const obterDadosRecurso = async ({ commit, dispatch }, coConselho) => con
   .catch((error) => {
     dispatch(
       'app/setMensagemErro',
-      error.response.data.error,
+      { text: error.response.data.error },
       { root: true },
     );
     throw new TypeError(error, 'obterDadosRecurso', 10);
@@ -70,7 +70,7 @@ export const obterConselhosHabilitacao = async ({ commit }) => {
 export const avaliarHabilitacao = async ({ dispatch }, conselhoHabilitacao) => conselhoService.avaliarHabilitacao(conselhoHabilitacao).then(response => response).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);
@@ -98,9 +98,9 @@ export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselho
   return response;
 }).catch((error) => {
   dispatch(
-      'app/setMensagemErro',
-      error.response.data.message,
-      { root: true },
+    'app/setMensagemErro',
+    { text: error.response.data.message },
+    { root: true },
   );
   throw new TypeError(error);
 });
@@ -109,9 +109,9 @@ export const enviarIndicacaoConselhoArquivo = async ({ dispatch }, payload) => c
   .then(response => response)
   .catch((error) => {
     dispatch(
-        'app/setMensagemErro',
-        error.response.data.message,
-        { root: true },
+      'app/setMensagemErro',
+      { text: error.response.data.message },
+      { root: true },
     );
     throw new TypeError(error);
   });
@@ -122,7 +122,7 @@ export const obterListaIndicacaoConselho = async ({ commit, dispatch }, payload)
 }).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);
@@ -132,14 +132,14 @@ export const deletarIndicacaoConselho = async ({ commit, dispatch }, coConselhoI
   commit(types.DELETAR_INDICACAO_CONSELHO, coConselhoIndicacao);
   dispatch(
     'app/setMensagemSucesso',
-    'Indicado excluído com sucesso.',
+    { text: 'Indicado excluído com sucesso.' },
     { root: true },
   );
   return response;
 }).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);
@@ -152,14 +152,14 @@ export const concluirIndicacao = async ({ commit, dispatch }, conselhoId) => con
   commit(types.CONCLUIR_INDICACAO);
   dispatch(
     'app/setMensagemSucesso',
-    'Indicação concluída com sucesso.',
+    { text: 'Indicação concluída com sucesso.'},
     { root: true },
   );
   return response;
 }).catch((error) => {
   dispatch(
     'app/setMensagemErro',
-    error.response.data.message,
+    { text: error.response.data.message },
     { root: true },
   );
   throw new TypeError(error);

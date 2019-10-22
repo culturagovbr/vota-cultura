@@ -71,16 +71,16 @@ export default {
   created() {
     const self = this;
     eventHub.$on('eventoErro', (payload) => {
-      self.notificarErro(payload);
+      self.setMensagemErro({ text: payload });
     });
     eventHub.$on('eventoSucesso', (payload) => {
-      self.notificarSucesso(payload);
+      self.setMensagemSucesso({ text: payload });
     });
   },
   methods: {
     ...mapActions({
-      notificarErro: 'app/setMensagemErro',
-      notificarSucesso: 'app/setMensagemSucesso',
+      setMensagemErro: 'app/setMensagemErro',
+      setMensagemSucesso: 'app/setMensagemSucesso',
     }),
     openThemeSettings() {
       this.$vuetify.goTo(0);

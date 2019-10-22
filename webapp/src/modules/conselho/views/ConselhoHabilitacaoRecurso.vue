@@ -222,8 +222,8 @@ export default {
       obterDadosConselho: 'conselho/obterDadosConselho',
       obterHabilitacaoRecurso: 'conselho/obterHabilitacaoRecurso',
       enviarDadosRecursoConselhoHabilitacao: 'conselho/enviarDadosRecursoConselhoHabilitacao',
-      definirMensagemSucesso: 'app/setMensagemSucesso',
-      definirMensagemErro: 'app/setMensagemErro',
+      setMensagemSucesso: 'app/setMensagemSucesso',
+      setMensagemErro: 'app/setMensagemErro',
     }),
     salvar() {
       this.loading = true;
@@ -233,7 +233,7 @@ export default {
 
       this.enviarDadosRecursoConselhoHabilitacao(dadosSubmit)
         .then((response) => {
-          this.definirMensagemSucesso(response.data.message);
+          this.setMensagemSucesso({ text: response.data.message });
           this.$router.push('/');
         }).finally(() => {
           this.loading = false;
@@ -253,7 +253,7 @@ export default {
   },
 
   beforeUpdate(){
-    this.definirMensagemErro('O prazo de envio do recurso da habilitação expirou');
+    this.setMensagemErro({ text: 'O prazo de envio do recurso da habilitação expirou'});
     this.$router.push('/');
   },
   mounted() {

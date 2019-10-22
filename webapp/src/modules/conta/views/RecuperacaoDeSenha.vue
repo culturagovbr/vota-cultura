@@ -124,7 +124,7 @@ export default {
   methods: {
     ...mapActions({
       recuperarSenha: 'conta/recuperarSenha',
-      mensagemErro: 'app/setMensagemErro',
+      setMensagemErro: 'app/setMensagemErro',
     }),
     recuperar() {
       if (!this.$refs.form.validate()) {
@@ -137,7 +137,7 @@ export default {
           this.step = 2;
         })
         .catch((error) => {
-          this.mensagemErro(error.response.data.message);
+          this.setMensagemErro({ text: error.response.data.message });
         }).finally(() => {
           this.loading = false;
         });
