@@ -123,3 +123,7 @@ ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD st_avaliacao_final int
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.st_avaliacao_final IS 'Valida se o usuário selecionou o recurso como concluído.';
 ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD nu_pontuacao integer NULL;
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.nu_pontuacao IS 'Nova pontuação após avaliação do recurso.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD co_arquivo integer NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_arquivo IS 'Código do arquivo referente a tabela tb_arquivo.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD CONSTRAINT fk_organizacao_habilitacao_recurso_arquivo FOREIGN KEY (co_arquivo) REFERENCES public.tb_arquivo(co_arquivo);
+

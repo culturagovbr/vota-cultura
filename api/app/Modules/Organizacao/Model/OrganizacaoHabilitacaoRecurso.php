@@ -17,6 +17,7 @@ class OrganizacaoHabilitacaoRecurso extends Model
         'st_parecer',
         'st_avaliacao',
         'nu_pontuacao',
+        'co_arquivo'
     ];
 
     public $timestamps = false;
@@ -27,6 +28,15 @@ class OrganizacaoHabilitacaoRecurso extends Model
             Organizacao::class,
             'co_organizacao',
             'co_organizacao'
+        );
+    }
+
+    public function arquivo()
+    {
+        return $this->hasOne(
+            Arquivo::class,
+            'co_arquivo',
+            'co_arquivo'
         );
     }
 }

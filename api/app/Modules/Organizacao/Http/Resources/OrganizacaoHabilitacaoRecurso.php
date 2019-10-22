@@ -2,6 +2,7 @@
 
 namespace App\Modules\Organizacao\Http\Resources;
 
+use App\Modules\Upload\Http\Resources\Arquivo;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrganizacaoHabilitacaoRecurso extends JsonResource
@@ -18,6 +19,7 @@ class OrganizacaoHabilitacaoRecurso extends JsonResource
             'st_parecer' => $this->st_parecer,
             'st_avaliacao_final' => $this->st_avaliacao_final,
             'nu_pontuacao' => $this->nu_pontuacao,
+            'co_arquivo' => new Arquivo($this->co_arquivo)
         ];
     }
 }

@@ -64,6 +64,7 @@
       ref="form_recurso_habilitacao_avaliacao"
       v-model="valid"
       lazy-validation
+      enctype="multipart/form-data"
     >
       <v-container fluid subheading mt-2 text-xs-left>
         <v-layout row wrap>
@@ -239,15 +240,12 @@ export default {
 
     enviar() {
       let dadosSubmit = {
-        dsParecer : this.formulario.dsParecer.value,
-        stParecer : this.formulario.resultadoHabilitacao.value,
-        nuPontuacao : this.formulario.pontuacaoFinal.value,
-        coOrganizacaoHabilitacaoRecurso : this.organizacao.habilitacaoRecurso.co_organizacao_habilitacao_recurso
+        ds_parecer : this.formulario.dsParecer.value,
+        st_parecer : this.formulario.resultadoHabilitacao.value,
+        nu_pontuacao : this.formulario.pontuacaoFinal.value,
+        co_organizacao_habilitacao_recurso : this.organizacao.habilitacaoRecurso.co_organizacao_habilitacao_recurso,
+        method : 'PATCH'
       };
-
-      console.log('------------------------------------');
-      console.log(this.formulario.anexo);
-      console.log('------------------------------------');
 
       if (this.formulario.anexo) {
           dadosSubmit.anexo = this.formulario.anexo.file;
