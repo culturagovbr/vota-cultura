@@ -284,10 +284,10 @@ export default {
       self.obterDadosOrganizacao(this.usuario.co_organizacao).then((dadosOrganizacao) => {
         if (typeof dadosOrganizacao.habilitacaoRecurso !== undefined) {
             const recurso = dadosOrganizacao.habilitacaoRecurso;
-          self.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
-            self.habilitacaoRecurso.isLocked = true;
+            self.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
         }
       }).finally(() => {
+      self.habilitacaoRecurso.isLocked = true;
       self.loading = false;
     });
   },
