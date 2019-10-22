@@ -285,7 +285,6 @@ export default {
         if (typeof dadosOrganizacao.habilitacaoRecurso !== undefined) {
             const recurso = dadosOrganizacao.habilitacaoRecurso;
             self.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
-            self.habilitacaoRecurso.isLocked = false;
         }
       }).finally(() => {
       self.habilitacaoRecurso.isLocked = true;
