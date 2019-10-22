@@ -84,8 +84,11 @@
                       @click="editarItemModal(props.item);"
                     >
                       <v-icon
-                        v-if="!((props.item.habilitacaoRecurso || {})).st_avaliacao_final && !((props.item.habilitacaoRecurso || {})).st_parecer"
-                      >gavel</v-icon>
+                        title='Revisar'
+                        v-if="!((props.item.habilitacaoRecurso || {})).st_avaliacao_final"
+                      >
+                        gavel
+                      </v-icon>
                       <v-icon v-else>remove_red_eye</v-icon>
                     </v-btn>
                   </template>
@@ -176,7 +179,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      obterOrganizacoesRecurso: "organizacao/obterOrganizacoesRecurso"
+      obterOrganizacoesRecurso: "organizacao/obterOrganizacoesRecurso",
     }),
     editarItemModal(item) {
       this.itemEditado = item;

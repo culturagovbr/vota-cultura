@@ -41,7 +41,7 @@
                   class="white elevation-1"
                 >
                   <v-tab-item value="tab-1">
-                    <organizacao-lista-dados-recurso />
+                    <organizacao-lista-dados-recurso :organizacao="organizacao" />
                   </v-tab-item>
                 </v-tabs-items>
               </v-card-text>
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       valid: true,
-      dialog: true,
+      dialog: false,
       modelTabs : 'tab-1',
       formularioInicial: {
         recursoHabilitacao: {
@@ -93,6 +93,7 @@ export default {
   },
   computed: {
     ...mapGetters({})
+
   },
   watch: {
     value(valor) {

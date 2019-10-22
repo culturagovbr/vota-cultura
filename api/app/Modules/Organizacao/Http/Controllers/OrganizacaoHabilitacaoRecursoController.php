@@ -13,7 +13,7 @@ class OrganizacaoHabilitacaoRecursoController extends Controller
 {
 
     /**
-     * @var ConselhoHabilitacaoRecurso
+     * @var OrganizacaoHabilitacaoRecurso
      */
     protected $service;
 
@@ -33,6 +33,20 @@ class OrganizacaoHabilitacaoRecursoController extends Controller
     {
         return $this->sendResponse(
             $this->service->cadastrarHabilitacaoRecurso($request->only(['dsRecurso'])),
+            'Operação realizada com sucesso',
+            Response::HTTP_CREATED
+        );
+    }
+    
+    public function update(Request $request)
+    {
+        var_dump($request->input('dsParecer'));
+        die();
+        return $this->sendResponse(
+            $this->service->alterarHabilitacaoRecurso($request->only([
+                'dsRecurso', 'dsParecer', 'stParecer', 'nuPontuacao', 'anexo'
+                ])
+            ),
             'Operação realizada com sucesso',
             Response::HTTP_CREATED
         );

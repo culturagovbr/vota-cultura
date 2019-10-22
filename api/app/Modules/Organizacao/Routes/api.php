@@ -11,4 +11,5 @@ Route::group([
     Route::apiResource('segmento', 'SegmentoApiResourceController')->only('index', 'show');
     Route::apiResource('habilitacao', 'OrganizacaoHabilitacaoApiResourceController');
     Route::post('habilitacao-recurso', 'OrganizacaoHabilitacaoRecursoController@store');
+    Route::patch('habilitacao-recurso/{coOrganizacaoHabilitacaoRecurso}', 'OrganizacaoHabilitacaoRecursoController@update');
 });

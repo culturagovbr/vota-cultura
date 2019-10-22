@@ -16,3 +16,9 @@ export const revisarHabilitacao = (coOrganizacaoHabilitacao, organizacaoHabilita
   organizacaoHabilitacao,
 );
 export const enviarDadosOrganizacaoHabilitacaoRecurso = organizacao => service.postRequest('/organizacao/habilitacao-recurso', service.buildData(organizacao));
+
+export const alterarDadosOrganizacaoHabilitacaoRecurso = dadosRecurso => service.patchRequest(
+  '/organizacao/habilitacao-recurso',
+  dadosRecurso.coOrganizacaoHabilitacaoRecurso,
+  service.buildData(dadosRecurso),
+);

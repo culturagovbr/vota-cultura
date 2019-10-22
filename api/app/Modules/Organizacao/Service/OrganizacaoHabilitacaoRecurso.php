@@ -17,6 +17,11 @@ class OrganizacaoHabilitacaoRecurso extends AbstractService
         parent::__construct($model);
     }
 
+    public function alterarHabilitacaoRecurso($requestParams)
+    {
+        dd($requestParams);
+    }
+
     /**
      * @param $requestParams
      * @return \Illuminate\Database\Eloquent\Model|null
