@@ -62,10 +62,9 @@
               </td>
               <td class="text-md-center">
                 <v-chip dark color="primary">
-                  <span
-                    v-if="!!props.item.habilitacaoRecurso && !!props.item.habilitacaoRecurso.ds_recurso"
-                    v-html="props.item.habilitacaoRecurso.ds_recurso"
-                  />
+                  <span v-if="!!props.item.habilitacaoRecurso && !!props.item.habilitacaoRecurso.st_parecer">
+                      {{itemsResultadoHabilitacao[props.item.habilitacaoRecurso.st_parecer]}}
+                  </span>
                   <span v-else>-</span>
                 </v-chip>
               </td>
@@ -102,7 +101,7 @@
           <v-dialog v-model="mostrarModalEdicao" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
               <v-toolbar dark color="primary">
-                <v-btn icon dark @click="mostrarModalEdicao = false">
+                <v-btn icon dark href="/organizacao/lista-recurso-habilitacao">
                   <v-icon>close</v-icon>
                 </v-btn>
                 <v-toolbar-title>Avaliar recurso</v-toolbar-title>
@@ -124,7 +123,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import OrganizacaoListaHabilitacaoRecursoDialog from "./OrganizacaoListaHabilitacaoRecursoDialog";
-import OrganizacaoDetalhesInscricaoVisualizacao from "./OrganizacaoDetalhesInscricaoVisualizacao";
+// import OrganizacaoDetalhesInscricaoVisualizacao from "./OrganizacaoDetalhesInscricaoVisualizacao";
 
 export default {
   name: "OrganizacaoListaHabilitacaoRecurso",
@@ -132,6 +131,11 @@ export default {
     OrganizacaoListaHabilitacaoRecursoDialog
   },
   data: () => ({
+    itemsResultadoHabilitacao: [
+      'Inabilitada',
+      'Habilitada e desclassificada',
+      'Habilitada e classificada',
+    ],
     loading: true,
     pesquisar: "",
     itemEditado: {},
@@ -170,8 +174,8 @@ export default {
         text: "Resultado final",
         value: "habilitacaoRecurso.ds_recurso",
         align: "center"
-      }
-    ]
+      },
+    ],
   }),
   watch: {
   },

@@ -17,7 +17,7 @@
       <v-flex xs6>
         Resultado parcial da habilitação:
         <span
-          :class="((organizacao || {}).organizacaoHabilitacao || {}).st_avaliacao === 0 ? 'red--text' : 'green--text'"
+          :class="((organizacao || {}).organizacaoHabilitacao || {}).st_avaliacao == 0 ? 'red--text' : 'green--text'"
         >{{ ((organizacao || {}).organizacaoHabilitacao || {}).situacao_avaliacao }}</span>
       </v-flex>
     </v-layout>
@@ -40,8 +40,7 @@
               <div class="grey--text">
                 Ilmo Sr. Secretário da Diversidade Cultural.
                 <div class="mt-4 p4">
-                  Com base no item 6 desta CHAMADA PÚBLICA PARA COMPOSIÇÃO DO CONSELHO NACIONAL DE POLÍTICA CULTURAL
-                  <br />(CNPC) NO TRIÊNIO 2019/2022, venho interpor recurso em face do resultado, na etapa de habilitação, pelos motivos abaixo descritos:
+                  Com base no item 6 desta CHAMADA PÚBLICA PARA COMPOSIÇÃO DO CONSELHO NACIONAL DE POLÍTICA CULTURAL (CNPC) NO TRIÊNIO 2019/2022, venho interpor recurso em face do resultado, na etapa de habilitação, pelos motivos abaixo descritos:
                 </div>
                 <div class="mt-4">
                   <v-textarea
@@ -134,11 +133,10 @@
                 Anexo
                 <div mt-2 class="text-xs-center" v-if="!(formulario.anexo || {}).no_arquivo">
                   <span mt-2>Caso seja necessário, anexe o documento no formato PDF</span>
-                  {{formulario.anexo}}
                   <v-flex mt-2>
                     <file
                       v-model="formulario.anexo"
-                      :accepted-file-types="['application/*.pdf']"
+                      :accepted-file-types="['application/pdf']"
                       label-idle="Clique para anexar"
                       :disabled="formulario.readOnly"
                       :readonly="formulario.readOnly"
@@ -172,20 +170,20 @@
         </v-layout>
 
         <v-layout mt-4 align-center justify-center row fill-height>
-          <v-btn href="/">Cancelar</v-btn>
+          <v-btn href="/organizacao/lista-recurso-habilitacao">Cancelar</v-btn>
           <v-btn
             color="primary"
             :loading="loading"
             @click="validarFormulario"
             :disabled="formulario.readOnly"
-          >{{this.strAcao}}</v-btn>
+          >{{strAcao}}</v-btn>
         </v-layout>
       </v-container>
       <v-layout justify-center>
         <v-dialog v-model="dialogConfirmarAvaliacao" max-width="360">
           <v-card>
-            <v-card-title class="headline">Deseja realmente {{this.strAcao}}?</v-card-title>
-            <v-card-text v-if="this.strAcao === 'revisar'">
+            <v-card-title class="headline">Deseja realmente {{strAcao}}?</v-card-title>
+            <v-card-text v-if="strAcao === 'revisar'">
               Indique abaixo se é uma revisão final
               <div mt2>
                 <v-checkbox v-model="formulario.st_avaliacao_final" label="Revisão Final"></v-checkbox>
@@ -299,7 +297,7 @@ export default {
         co_organizacao_habilitacao_recurso: this.organizacao.habilitacaoRecurso
           .co_organizacao_habilitacao_recurso,
         method: "PATCH",
-        st_avaliacao_final: this.formulario.st_avaliacao_final  ? 1 : 0
+        st_avaliacao_final: this.formulario.st_avaliacao_final ? 1 : 0,
       };
 
       if (this.formulario.anexo && this.formulario.anexoAlterado) {
@@ -309,7 +307,7 @@ export default {
       this.enviarDadosOrganizacaoHabilitacaoRecurso(dadosSubmit)
         .then(response => {
           this.definirMensagemSucesso(response.data.message);
-          this.$router.push("/");
+          this.$router.go(this.$router.currentRoute);
         })
         .finally(() => {
           this.loading = false;
