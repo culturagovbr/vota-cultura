@@ -84,11 +84,9 @@
                       @click="editarItemModal(props.item);"
                     >
                       <v-icon
-                        title='Revisar'
+                        title="Revisar"
                         v-if="!((props.item.habilitacaoRecurso || {})).st_avaliacao_final"
-                      >
-                        gavel
-                      </v-icon>
+                      >gavel</v-icon>
                       <v-icon v-else>remove_red_eye</v-icon>
                     </v-btn>
                   </template>
@@ -101,11 +99,22 @@
             </template>
           </v-data-table>
 
-            <organizacao-lista-habilitacao-recurso-dialog
-              v-model="mostrarModalEdicao"
-              :organizacao="itemEditado"
-            />
-
+          <v-dialog v-model="mostrarModalEdicao" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <v-card>
+              <v-toolbar dark color="primary">
+                <v-btn icon dark @click="mostrarModalEdicao = false">
+                  <v-icon>close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Avaliar recurso</v-toolbar-title>
+                <v-spacer />
+              </v-toolbar>
+              <v-card-text>
+                <organizacao-lista-habilitacao-recurso-dialog
+                  :organizacao="itemEditado"
+                />
+              </v-card-text>
+            </v-card>
+          </v-dialog>
         </v-tab-item>
       </v-tabs-items>
     </v-card>
@@ -165,11 +174,6 @@ export default {
     ]
   }),
   watch: {
-    mostrarModalEdicao(valor) {
-      if (!valor) {
-        this.itemEditado = Object.assign({});
-      }
-    }
   },
   computed: {
     ...mapGetters({
@@ -179,7 +183,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      obterOrganizacoesRecurso: "organizacao/obterOrganizacoesRecurso",
+      obterOrganizacoesRecurso: "organizacao/obterOrganizacoesRecurso"
     }),
     editarItemModal(item) {
       this.itemEditado = item;
@@ -189,6 +193,7 @@ export default {
   mounted() {
     const self = this;
     self.loading = true;
+    this.mostrarModalEdicao = false;
     self.obterOrganizacoesRecurso().finally(() => {
       self.loading = false;
     });
@@ -196,6 +201,9 @@ export default {
       text: "Ações",
       sortable: false
     });
+  },
+  beforeDestroy() {
+    this.mostrarModalEdicao = false;
   }
 };
 </script>
