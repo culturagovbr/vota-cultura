@@ -79,6 +79,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "organizacao-documentacao-comprobatoria" */ '@/modules/organizacao/views/OrganizacaoDocumentacaoComprobatoria.vue'),
       },
+      {
+        path: '/organizacao/lista-recurso-habilitacao',
+        name: 'AdministradorAvaliadorHabilitacaoRecursoRoute',
+        meta: {
+          title: 'Recurso da habilitação',
+          group: 'apps',
+          icon: 'gavel',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "administrador-avaliador-recurso-habilitacao" */ '@/modules/organizacao/views/OrganizacaoListaHabilitacaoRecurso.vue'),
+      },
     ],
   },
 ];

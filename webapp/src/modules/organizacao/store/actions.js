@@ -45,6 +45,13 @@ export const obterDadosOrganizacao = async ({ commit, dispatch }, coOrganizacao)
     });
 };
 
+export const obterOrganizacoesRecurso = async ({ commit }) => {
+  organizacaoService.obterOrganizacoes().then((response) => {
+    commit(types.DEFINIR_ORGANIZACOES_RECURSO, response.data);
+  });
+};
+
+
 export const obterOrganizacoes = async ({ commit }) => {
   organizacaoService.obterOrganizacoes().then((response) => {
     commit(types.DEFINIR_ORGANIZACOES, response.data);
@@ -52,6 +59,7 @@ export const obterOrganizacoes = async ({ commit }) => {
 };
 
 export const enviarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.enviarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
+export const alterarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.alterarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
 
 export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {
   let respondendo = String();

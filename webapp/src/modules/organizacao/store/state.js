@@ -3,6 +3,7 @@
 export const state = {
   organizacao: {},
   organizacoes: [],
+  organizacoesRecurso: [],
   segmentos: [],
   criterios: [],
   documentacaoComprobatoria: [],

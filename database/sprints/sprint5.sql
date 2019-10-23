@@ -124,7 +124,16 @@ COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_organizacao IS 'C
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_recurso IS 'Descrição do recurso';
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.dh_cadastro_recurso IS 'Data de cadastro do recurso';
 
--- Permissions
+--################## Avaliação do recurso das organizações
 
-ALTER TABLE public.tb_organizacao_habilitacao_recurso OWNER TO votacultura;
-GRANT ALL ON TABLE public.tb_organizacao_habilitacao_recurso TO votacultura;
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD ds_parecer text NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_parecer IS 'Parecer do recurso';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD st_parecer char(1) NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.st_parecer IS '0 - Inabilitada, 1 = habilitada e desclassificada, 2 habilitada e classificada';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD st_avaliacao_final integer NOT NULL DEFAULT 0;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.st_avaliacao_final IS 'Valida se o usuário selecionou o recurso como concluído.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD nu_pontuacao integer NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.nu_pontuacao IS 'Nova pontuação após avaliação do recurso.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD co_arquivo integer NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_arquivo IS 'Código do arquivo referente a tabela tb_arquivo.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD CONSTRAINT fk_organizacao_habilitacao_recurso_arquivo FOREIGN KEY (co_arquivo) REFERENCES public.tb_arquivo(co_arquivo);

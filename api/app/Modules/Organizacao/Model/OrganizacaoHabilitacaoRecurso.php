@@ -13,6 +13,12 @@ class OrganizacaoHabilitacaoRecurso extends Model
     protected $fillable = [
         'ds_recurso',
         'co_organizacao',
+        'ds_parecer',
+        'st_parecer',
+        'st_avaliacao',
+        'nu_pontuacao',
+        'co_arquivo',
+        'st_avaliacao_final'
     ];
 
     public $timestamps = false;
@@ -23,6 +29,15 @@ class OrganizacaoHabilitacaoRecurso extends Model
             Organizacao::class,
             'co_organizacao',
             'co_organizacao'
+        );
+    }
+
+    public function arquivo()
+    {
+        return $this->hasOne(
+            Arquivo::class,
+            'co_arquivo',
+            'co_arquivo'
         );
     }
 }
