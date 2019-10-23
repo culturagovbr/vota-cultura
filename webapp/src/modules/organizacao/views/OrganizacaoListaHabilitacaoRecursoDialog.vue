@@ -43,6 +43,17 @@
                   <v-tab-item value="tab-1">
                     <organizacao-lista-dados-recurso :organizacao="organizacao" />
                   </v-tab-item>
+
+                  <v-tab-item value='tab-2'>
+                      <organizacao-lista-dados-habilitacao :formulario="organizacao" />
+                  </v-tab-item>
+
+                  <v-tab-item value="tab-3">
+                    <v-container>
+                      <organizacao-detalhes-inscricao-visualizacao />
+                    </v-container>
+                  </v-tab-item>
+
                 </v-tabs-items>
               </v-card-text>
              </v-card>
@@ -56,13 +67,16 @@
 
 import { mapGetters, mapActions } from "vuex";
 import OrganizacaoListaDadosRecurso from './components/OrganizacaoListaDadosRecurso';
+import OrganizacaoListaDadosHabilitacao from './components/OrganizacaoListaDadosHabilitacao';
+import OrganizacaoDetalhesInscricaoVisualizacao from './OrganizacaoDetalhesInscricaoVisualizacao';
 // import OrganizacaoDetalhesInscricaoVisualizacao from './OrganizacaoDetalhesInscricaoVisualizacao';
 
 export default {
   name: "OrganizacaoListaHabilitacaoDialog",
   components: {
-    OrganizacaoListaDadosRecurso
-    // OrganizacaoDetalhesInscricaoVisualizacao,
+    OrganizacaoListaDadosRecurso,
+    OrganizacaoListaDadosHabilitacao,
+    OrganizacaoDetalhesInscricaoVisualizacao
   },
   props: {
     value: {
@@ -92,7 +106,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({})
+    ...mapGetters({
+      organizacaoGetter: 'organizacao/organizacao',
+      criteriosGetter: 'organizacao/criterios',
+    })
 
   },
   watch: {
@@ -106,12 +123,17 @@ export default {
         this.$refs.form_recurso_habilitacao.reset();
       }
     },
+    organizacao(valor){
+      this.obterDadosOrganizacao(valor.co_organizacao);
+    },
     dialog(valor) {
       this.$emit("input", valor);
     }
   },
   methods: {
-    ...mapActions({})
+    ...mapActions({
+      obterDadosOrganizacao: 'organizacao/obterDadosOrganizacao',
+    })
   }
 };
 </script>

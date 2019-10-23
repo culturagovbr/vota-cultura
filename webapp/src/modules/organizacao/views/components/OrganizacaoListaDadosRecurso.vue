@@ -261,11 +261,6 @@ export default {
         anexoAlterado : !recurso.arquivo ? true : false,
         st_avaliacao_final: recurso.st_avaliacao_final ? 1 : 0
       };
-
-
-      console.log('------------------------------------');
-      console.log(this.formulario);
-      console.log('------------------------------------');
       this.strAcao = recurso.st_parecer === null ? "enviar" : "revisar";
     },
 
