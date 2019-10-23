@@ -29,4 +29,7 @@ export const mutations = {
   [types.CONCLUIR_INDICACAO](state) {
     state.conselho.st_indicacao = 'f';
   },
+  [types.ENVIAR_AVALIACAO_HABILITACAO_INDICADO](state, dados) {
+    console.log(dados);
+  },
 };

@@ -714,7 +714,7 @@ export default {
     },
     listaIndicados: [],
     usuarioLogado: {},
-    dialogConfirmarConcluirIndicacao : false
+    dialogConfirmarConcluirIndicacao: false,
   }),
   computed: {
     ...mapGetters({
@@ -784,6 +784,9 @@ export default {
       definirMensagemSucesso: 'app/setMensagemSucesso',
       concluirIndicacao: 'conselho/concluirIndicacao',
     }),
+    testando(){
+      console.log('asdasdasd')
+    },
     handleDialogConfirmarConcluirIndicacao() {
         this.dialogConfirmarConcluirIndicacao = !this.dialogConfirmarConcluirIndicacao;
     },

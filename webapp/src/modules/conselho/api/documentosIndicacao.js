@@ -1,7 +1,7 @@
 export const documentosIndicacao = [
   {
     slug: 'indicado_curriculo',
-    descricao: 'b) currículo.',
+    descricao: 'b) Currículo.',
     obrigatorio: true,
     multiplo: false,
   },

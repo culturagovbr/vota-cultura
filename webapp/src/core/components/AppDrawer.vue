@@ -324,6 +324,12 @@ export default {
           name: 'ConselhoListaHabilitacaoRoute',
           icon: 'list',
         }, 'Habilitação');
+        this.definirItemMenu({
+          title: 'Habilitação de indicados',
+          group: 'apps',
+          name: 'ConselhoIndicacaoHabilitacaoRoute',
+          icon: 'list',
+        }, 'Habilitação');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {

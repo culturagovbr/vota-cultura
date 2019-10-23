@@ -126,5 +126,61 @@ COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.dh_cadastro_recurso 
 
 -- Permissions
 
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD ds_parecer text NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_parecer IS 'Parecer do recurso';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD st_parecer char(1) NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.st_parecer IS '0 - Inabilitada, 1 = habilitada e desclassificada, 2 habilitada e classificada';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD st_avaliacao_final integer NOT NULL DEFAULT 0;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.st_avaliacao_final IS 'Valida se o usuário selecionou o recurso como concluído.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD nu_pontuacao integer NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.nu_pontuacao IS 'Nova pontuação após avaliação do recurso.';
+
 ALTER TABLE public.tb_organizacao_habilitacao_recurso OWNER TO votacultura;
 GRANT ALL ON TABLE public.tb_organizacao_habilitacao_recurso TO votacultura;
+
+-- Habilitação dos indicados
+
+CREATE TABLE public.tb_conselho_indicacao_habilitacao
+(
+    co_conselho_indicacao_habilitacao serial PRIMARY KEY NOT NULL,
+    co_indicado int NOT NULL,
+    st_avaliacao char(1) NOT NULL,
+    ds_parecer text NOT NULL,
+    dh_avaliacao timestamp DEFAULT now() NOT NULL,
+    co_usuario_avaliador int NOT NULL,
+    st_revisao_final boolean,
+    CONSTRAINT tb_conselho_indicacao_habilitacao_tb_usuario_co_usuario_fk FOREIGN KEY (co_usuario_avaliador) REFERENCES public.tb_usuario (co_usuario),
+    CONSTRAINT tb_conselho_indicacao_habilitacao_tb_conselho_indicacao_co_conselho_indicacao_fk FOREIGN KEY (co_indicado) REFERENCES public.tb_conselho_indicacao (co_conselho_indicacao)
+);
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao.co_conselho_indicacao_habilitacao IS 'chave primaria da tabela';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao.co_indicado IS 'código do indicado pelo conselho de cultura';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao.st_avaliacao IS 'situação da avaliação do indicado';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao.ds_parecer IS 'Descrição do parecer feito pelo avaliador';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao.dh_avaliacao IS 'data e hora da avaliação';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao.co_usuario_avaliador IS 'Código do usuario avaliador do indicado';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao.st_revisao_final IS 'null - Sem avaliação
+false - Não é revisão final
+true - Última revisão da habilitação';
+COMMENT ON TABLE public.tb_conselho_indicacao_habilitacao IS 'registro sobre avaliação dos indicados de cada conselho';
+
+-- Habilitação dos indicados (histórico)
+
+CREATE TABLE public.tb_conselho_indicacao_habilitacao_historico
+(
+    co_conselho_indicacao_habilitacao_historico serial PRIMARY KEY NOT NULL,
+    co_indicado int NOT NULL,
+    st_avaliacao char(1) NOT NULL,
+    ds_parecer text NOT NULL,
+    dh_avaliacao timestamp NOT NULL,
+    co_usuario_avaliador int NOT NULL,
+    CONSTRAINT tb_conselho_indicacao_habilitacao_historico_tb_usuario_co_usuario_fk FOREIGN KEY (co_usuario_avaliador) REFERENCES public.tb_usuario (co_usuario),
+    CONSTRAINT tb_conselho_indicacao_habilitacao_historico_tb_conselho_indicacao_co_conselho_indicacao_fk FOREIGN KEY (co_indicado) REFERENCES public.tb_conselho_indicacao (co_conselho_indicacao)
+);
+
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.co_conselho_indicacao_habilitacao_historico IS 'chave primaria da tabela';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.co_indicado IS 'código do indicado pelo conselho de cultura';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.st_avaliacao IS 'situação da avaliação do indicado';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.ds_parecer IS 'Descrição do parecer feito pelo avaliador';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.dh_avaliacao IS 'data e hora da avaliação';
+COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.co_usuario_avaliador IS 'Código do usuario avaliador do indicado';
+COMMENT ON TABLE public.tb_conselho_indicacao_habilitacao_historico IS 'registro sobre avaliação dos indicados de cada conselho';

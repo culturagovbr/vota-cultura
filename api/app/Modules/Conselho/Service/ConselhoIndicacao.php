@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +30,11 @@ class ConselhoIndicacao extends AbstractService
     public function obterTodos() : ?Collection
     {
         $conselhoUsuarioLogado = $this->recuperarDadosConselhoUsuarioLogado();
+
+        //colocar também admin na clausula
+        if(empty($conselhoUsuarioLogado)){
+            return parent::obterTodos();
+        }
         return $this->getModel()->where([
             'co_conselho' => $conselhoUsuarioLogado->co_conselho
         ])->get();
