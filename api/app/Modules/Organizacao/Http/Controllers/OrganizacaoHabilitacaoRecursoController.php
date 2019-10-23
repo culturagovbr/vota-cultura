@@ -31,8 +31,16 @@ class OrganizacaoHabilitacaoRecursoController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->method) {
+            return $this->sendResponse(
+                $this->service->cadastrarHabilitacaoRecurso($request->only(['dsRecurso'])),
+                'Operação realizada com sucesso',
+                Response::HTTP_CREATED
+            );
+        }
+
         return $this->sendResponse(
-            $this->service->cadastrarHabilitacaoRecurso($request->only(['dsRecurso'])),
+            $this->service->alterarHabilitacaoRecurso($request),
             'Operação realizada com sucesso',
             Response::HTTP_CREATED
         );
