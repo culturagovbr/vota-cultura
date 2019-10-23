@@ -17,7 +17,8 @@ class OrganizacaoHabilitacaoRecurso extends Model
         'st_parecer',
         'st_avaliacao',
         'nu_pontuacao',
-        'co_arquivo'
+        'co_arquivo',
+        'st_avaliacao_final'
     ];
 
     public $timestamps = false;

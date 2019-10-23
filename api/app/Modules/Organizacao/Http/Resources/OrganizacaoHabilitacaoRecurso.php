@@ -9,7 +9,6 @@ class OrganizacaoHabilitacaoRecurso extends JsonResource
 {
     public function toArray($request): array
     {
-
         return [
             'co_organizacao_habilitacao_recurso' => $this->co_organizacao_habilitacao_recurso,
             'co_organizacao' => $this->co_organizacao,
@@ -19,7 +18,7 @@ class OrganizacaoHabilitacaoRecurso extends JsonResource
             'st_parecer' => $this->st_parecer,
             'st_avaliacao_final' => $this->st_avaliacao_final,
             'nu_pontuacao' => $this->nu_pontuacao,
-            'co_arquivo' => $this->co_arquivo
+            'arquivo' => $this->arquivo
         ];
     }
 }

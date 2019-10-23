@@ -211,7 +211,7 @@
 
     <v-layout justify-center>
 
-<v-dialog
+      <v-dialog
         v-model="dialogConfirmarConcluirIndicacao"
         max-width="360"
       >

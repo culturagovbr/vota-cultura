@@ -22,6 +22,8 @@ class OrganizacaoHabilitacaoRecurso extends AbstractService
 
     public function alterarHabilitacaoRecurso($requestParams)
     {
+
+        // echo print_r($requestParams->toArray());exit;
         try {
             DB::beginTransaction();
             $recurso = app(OrganizacaoHabilitacaoRecursoModel::class)->find($requestParams['co_organizacao_habilitacao_recurso']);

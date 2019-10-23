@@ -37,7 +37,6 @@ class OrganizacaoHabilitacaoRecursoController extends Controller
                 'Operação realizada com sucesso',
                 Response::HTTP_CREATED
             );
-            
         }
 
         return $this->sendResponse(

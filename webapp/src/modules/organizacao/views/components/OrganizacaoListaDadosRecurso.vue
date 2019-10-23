@@ -76,6 +76,8 @@
                   <div mt-2 md12>
                     <v-select
                       v-model="formulario.resultadoHabilitacao.value"
+                      :disabled="formulario.readOnly"
+                      :readonly="formulario.readOnly"
                       :items="itemsResultadoHabilitacao"
                       label="*Resultado final da habilitação"
                       append-icon="place"
@@ -89,6 +91,8 @@
                   <div class="mt-2">
                     <v-textarea
                       v-model="formulario.dsParecer.value"
+                      :disabled="formulario.readOnly"
+                      :readonly="formulario.readOnly"
                       placeholder="*Parecer"
                       rows="13"
                       row-height="28"
@@ -103,6 +107,8 @@
                   <v-flex class="mt-2" sm2>
                     <v-text-field
                       v-model="formulario.pontuacaoFinal.value"
+                      :disabled="formulario.readOnly"
+                      :readonly="formulario.readOnly"
                       type="number"
                       min="0"
                       max="99"
@@ -126,11 +132,39 @@
             <v-card>
               <v-card-text class="grey--text">
                 Anexo
-                <div mt-2 class="text-xs-center">
+                <div mt-2 class="text-xs-center" v-if="!(formulario.anexo || {}).no_arquivo">
                   <span mt-2>Caso seja necessário, anexe o documento no formato PDF</span>
+                  {{formulario.anexo}}
                   <v-flex mt-2>
-                    <file v-model="formulario.anexo" :accepted-file-types="['application/pdf']" />
+                    <file
+                      v-model="formulario.anexo"
+                      :accepted-file-types="['application/*.pdf']"
+                      label-idle="Clique para anexar"
+                      :disabled="formulario.readOnly"
+                      :readonly="formulario.readOnly"
+                    />
                   </v-flex>
+                </div>
+
+                <div mt-2 class="text-xs-center black--text" v-else>
+                  <v-layout align-center justify-center>
+                    <v-flex sm6>
+                      <v-layout>
+                        <v-flex class="text-md-center title">
+                          {{formulario.anexo.no_arquivo}}
+                        </v-flex>
+                        <div sm1>
+                          <v-icon
+                            size="32px"
+                            color="blue darken-4"
+                            @click="downloadArquivo(formulario.anexo.co_arquivo)"
+                          >
+                            cloud_download
+                          </v-icon>
+                        </div>
+                      </v-layout>
+                    </v-flex>
+                  </v-layout>
                 </div>
               </v-card-text>
             </v-card>
@@ -139,69 +173,65 @@
 
         <v-layout mt-4 align-center justify-center row fill-height>
           <v-btn href="/">Cancelar</v-btn>
-          <v-btn color="primary" :loading="loading" @click="validarFormulario">Avaliar</v-btn>
+          <v-btn
+            color="primary"
+            :loading="loading"
+            @click="validarFormulario"
+            :disabled="formulario.readOnly"
+          >{{this.strAcao}}</v-btn>
         </v-layout>
       </v-container>
       <v-layout justify-center>
-      <v-dialog
-        v-model="dialogConfirmarAvaliacao"
-        max-width="360"
-      >
-        <v-card>
-          <v-card-title class="headline">
-            Deseja realmente enviar?
-          </v-card-title>
-          <v-card-actions>
-            <v-spacer />
-
-            <v-btn
-              color="red darken-1"
-              text
-              flat
-              @click="handleDialogConcluirAvaliacao"
-            >
-              Não
-            </v-btn>
-
-            <v-btn
-              color="green darken-1"
-              text
-              flat
-              @click="enviar"
-            >
-              Sim
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+        <v-dialog v-model="dialogConfirmarAvaliacao" max-width="360">
+          <v-card>
+            <v-card-title class="headline">Deseja realmente {{this.strAcao}}?</v-card-title>
+            <v-card-text v-if="this.strAcao === 'revisar'">
+              Indique abaixo se é uma revisão final
+              <div mt2>
+                <v-checkbox v-model="formulario.st_avaliacao_final" label="Revisão Final"></v-checkbox>
+              </div>
+              <div
+                mt2
+              >Atenção! Caso selecione que é uma revisão final não será possível revisar novamente.</div>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn color="red darken-1" text flat @click="handleDialogConcluirAvaliacao">Não</v-btn>
+              <v-btn color="green darken-1" text flat @click="enviar">Sim</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
     </v-form>
   </v-container>
-
 </template>
 
 <script>
 import File from "@/core/components/upload/File";
-import Validate from '../../../shared/util/validate';
+import Validate from "../../../shared/util/validate";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-    data: () => ({
+  data: () => ({
     valid: false,
     loading: false,
-    dialogConfirmarAvaliacao : false,
+    dialogConfirmarAvaliacao: false,
+    strAcao: 'enviar',
     formulario: {
-      dsParecer: { value: "", error: false },
-      resultadoHabilitacao: { value: "", error: false },
-      pontuacaoFinal: { value: "", error: false },
-      anexo: {}
+      dsParecer: { value: '', error: false },
+      resultadoHabilitacao: { value: '', error: false },
+      pontuacaoFinal: { value: '', error: false },
+      anexo: {},
+      anexoAlterado : false,
+      readOnly: false,
+      revisaoFinal: false
     },
-    recurso : {},
+    recurso: {},
     itemsResultadoHabilitacao: [
-      { value: "", text: "" },
-      { value: '0', text: "Inabilitada" },
-      { value: 1, text: "Habilitada e desclassificada" },
-      { value: 2, text: "Habilitada e classificada" }
+      { value: '', text: '' },
+      { value: '0', text: 'Inabilitada' },
+      { value: '1', text: 'Habilitada e desclassificada' },
+      { value: '2', text: 'Habilitada e classificada' }
     ],
     rules: {
       required: v => !!v || "Campo não preenchido",
@@ -217,21 +247,31 @@ export default {
   },
   watch: {
     organizacao(organizacao) {
-     let recurso = organizacao.habilitacaoRecurso;
+      let recurso = organizacao.habilitacaoRecurso;
 
       this.formulario = {
-        dsParecer: {value : recurso.ds_parecer, error: false},
-        resultadoHabilitacao: {value:  parseInt(recurso.st_parecer, 10), error: false},
-        pontuacaoFinal: {value : recurso.nu_pontuacao, error: false},
-      }
+        dsParecer: { value: recurso.ds_parecer || '', error: false },
+        resultadoHabilitacao: {
+          value: recurso.st_parecer,
+          error: false
+        },
+        readOnly: recurso.st_avaliacao_final === 1 ? true : false,
+        pontuacaoFinal: { value: recurso.nu_pontuacao || 0, error: false },
+        anexo: recurso.arquivo,
+        anexoAlterado : !recurso.arquivo ? true : false,
+        st_avaliacao_final: recurso.st_avaliacao_final ? 1 : 0
+      };
+
+
       console.log('------------------------------------');
-      console.log(this.formulario );
+      console.log(this.formulario);
       console.log('------------------------------------');
-    }
-  },
-  mounted: () => {
+      this.strAcao = recurso.st_parecer === null ? "enviar" : "revisar";
+    },
+
 
   },
+  mounted: () => {},
   components: {
     File
   },
@@ -241,39 +281,42 @@ export default {
       enviarDadosOrganizacaoHabilitacaoRecurso:
         "organizacao/alterarDadosOrganizacaoHabilitacaoRecurso",
       definirMensagemSucesso: "app/setMensagemSucesso",
-      definirMensagemErro: "app/setMensagemErro"
+      definirMensagemErro: "app/setMensagemErro",
+      downloadArquivo: "shared/downloadArquivo"
     }),
     handleDialogConcluirAvaliacao() {
       this.dialogConfirmarAvaliacao = !this.dialogConfirmarAvaliacao;
     },
 
     validarFormulario() {
-
       if (!this.$refs.form_recurso_habilitacao_avaliacao.validate()) {
         return false;
       }
 
-        this.handleDialogConcluirAvaliacao();
+      this.handleDialogConcluirAvaliacao();
     },
 
     enviar() {
       let dadosSubmit = {
-        ds_parecer : this.formulario.dsParecer.value,
-        st_parecer : this.formulario.resultadoHabilitacao.value,
-        nu_pontuacao : this.formulario.pontuacaoFinal.value,
-        co_organizacao_habilitacao_recurso : this.organizacao.habilitacaoRecurso.co_organizacao_habilitacao_recurso,
-        method : 'PATCH'
+        ds_parecer: this.formulario.dsParecer.value,
+        st_parecer: this.formulario.resultadoHabilitacao.value,
+        nu_pontuacao: this.formulario.pontuacaoFinal.value,
+        co_organizacao_habilitacao_recurso: this.organizacao.habilitacaoRecurso
+          .co_organizacao_habilitacao_recurso,
+        method: "PATCH",
+        st_avaliacao_final: this.formulario.st_avaliacao_final  ? 1 : 0
       };
 
-      if (this.formulario.anexo) {
-          dadosSubmit.anexo = this.formulario.anexo.file;
+      if (this.formulario.anexo && this.formulario.anexoAlterado) {
+        dadosSubmit.anexo = this.formulario.anexo.file;
       }
 
       this.enviarDadosOrganizacaoHabilitacaoRecurso(dadosSubmit)
-        .then((response) => {
+        .then(response => {
           this.definirMensagemSucesso(response.data.message);
-          this.$router.push('/');
-        }).finally(() => {
+          this.$router.push("/");
+        })
+        .finally(() => {
           this.loading = false;
           this.handleDialogConcluirAvaliacao();
         });
@@ -307,6 +350,6 @@ export default {
 
       return strParecer;
     }
-  },
+  }
 };
 </script>
