@@ -46,7 +46,9 @@
               <div class="md6">
                 <span class="font-weight-bold">Pontuação inicial:</span> {{ organizacao.pontuacao }}
               </div>
-              <v-spacer /> <v-spacer /> <v-spacer />              <v-spacer /> <v-spacer /> <v-spacer />
+              <v-spacer />
+              <v-spacer />
+              <v-spacer />
 
               <div class="md6">
                 <span class="font-weight-bold">Segmento cultural:</span> {{ organizacao.segmento ? organizacao.segmento.ds_detalhamento : ''}}
@@ -126,7 +128,7 @@
                 sm12
               >
                 <div class="ma-4 text-justify subheading grey--text">
-                  Caso seja necessário o envio de documentos, encaminhar para o e-mail <span class="font-weight-bold">votacultura@cidadania.gov.br</span> informando no assunto: Recurso de habilitação e o nome do conselho.
+                  Caso seja necessário o envio de documentos, encaminhar para o e-mail <span class="font-weight-bold">votacultura@cidadania.gov.br</span> informando no assunto: Recurso de habilitação e o nome da organização ou entidade cultural.
                 </div>
               </v-flex>
             </v-layout>
@@ -282,10 +284,10 @@ export default {
       self.obterDadosOrganizacao(this.usuario.co_organizacao).then((dadosOrganizacao) => {
         if (typeof dadosOrganizacao.habilitacaoRecurso !== undefined) {
             const recurso = dadosOrganizacao.habilitacaoRecurso;
-          self.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
-            self.habilitacaoRecurso.isLocked = true;
+            self.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
         }
       }).finally(() => {
+      self.habilitacaoRecurso.isLocked = true;
       self.loading = false;
     });
   },
