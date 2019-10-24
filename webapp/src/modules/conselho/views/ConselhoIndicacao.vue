@@ -104,19 +104,6 @@
                   color="white elevation-0"
                 >
                   <v-toolbar-title>Lista dos indicados</v-toolbar-title>
-                  <v-spacer />
-                  <v-btn
-                    v-if="(conselhoGetter || {}).st_indicacao === 'a'"
-                    :disabled="loading || listarIndicacaoConselhoGetter.length >= 5"
-                    tiny
-                    round
-                    outline
-                    color="indigo"
-                    @click="abrirDialogo"
-                  >
-                    <v-icon>add</v-icon>
-                    Indicar
-                  </v-btn>
                 </v-toolbar>
                 <v-card-text class="pa-0">
                   <v-data-table
@@ -197,14 +184,6 @@
           href="/"
         >
           Cancelar
-        </v-btn>
-        <v-btn
-          color="primary"
-          :loading="loading"
-          :disabled="listarIndicacaoConselhoGetter.length < 3"
-          @click="handleDialogConfirmarConcluirIndicacao"
-        >
-          Concluir indicação
         </v-btn>
       </v-layout>
     </v-card>
