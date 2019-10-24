@@ -93,11 +93,11 @@
                           </v-flex>
                         </v-layout>
 
-                        <v-layout v-if="!!formulario.organizacaoHabilitacao && !!formulario.organizacaoHabilitacao.situacao_avaliacao">
+                        <v-layout v-if="!!formulario.organizacaoHabilitacao && !!(formulario.organizacaoHabilitacao || {}).situacao_avaliacao">
                           <v-flex sm6>
                             <div class="ma-2 text-justify subheading grey--text">
                               <b>Pontuação após análise:</b>
-                              {{ !!formulario.organizacaoHabilitacao.nu_nova_pontuacao.toString() ? formulario.organizacaoHabilitacao.nu_nova_pontuacao:formulario.pontuacao }}
+                              {{ !!(formulario.organizacaoHabilitacao || {}).nu_nova_pontuacao.toString() ? (formulario.organizacaoHabilitacao || {}).nu_nova_pontuacao: formulario.pontuacao }}
                             </div>
                           </v-flex>
                         </v-layout>
@@ -354,7 +354,7 @@
                           <v-layout>
                             <v-flex sm6>
                               <v-select
-                                v-model="formulario.organizacaoHabilitacao.st_avaliacao"
+                                v-model="(formulario.organizacaoHabilitacao || {}).st_avaliacao"
                                 :items="resultadoItens"
                                 item-value="valor"
                                 item-text="descricao"
@@ -369,7 +369,7 @@
                           <v-layout>
                             <v-flex class="pa-3">
                               <v-textarea
-                                v-model="formulario.organizacaoHabilitacao.ds_parecer"
+                                v-model="(formulario.organizacaoHabilitacao || {}).ds_parecer"
                                 box
                                 label="* Parecer"
                                 name="input-7-4"
@@ -419,7 +419,7 @@
                               sm7
                             >
                               <v-text-field
-                                v-model="formulario.organizacaoHabilitacao.nu_nova_pontuacao"
+                                v-model="(formulario.organizacaoHabilitacao ||{}).nu_nova_pontuacao"
                                 type="number"
                                 min="0"
                                 max="99"
@@ -442,7 +442,7 @@
                         Voltar
                       </v-btn>
                       <v-btn
-                        v-if="!formulario.organizacaoHabilitacao.co_organizacao_habilitacao"
+                        v-if="!(formulario.organizacaoHabilitacao || {}).co_organizacao_habilitacao"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
@@ -454,7 +454,7 @@
                         Avaliar
                       </v-btn>
                       <v-btn
-                        v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && !desabilitarRevisaoHabilitacao()"
+                        v-if="!!(formulario.organizacaoHabilitacao || {}).co_organizacao_habilitacao && !desabilitarRevisaoHabilitacao()"
                         :loading="loading"
                         :disabled="!valid || loading"
                         color="primary"
@@ -491,7 +491,7 @@
         <v-card>
           <v-card-title class="headline">
             Deseja realmente
-            <span v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'" style="margin-left:5px">
+            <span v-if="!!(formulario.organizacaoHabilitacao || {}).co_organizacao_habilitacao && perfil.no_perfil === 'administrador'" style="margin-left:5px">
               revisar
             </span>
             <span v-else style="margin-left:5px">
@@ -500,7 +500,7 @@
             ?
           </v-card-title>
 
-          <v-card-text v-if="!!formulario.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador'">
+          <v-card-text v-if="!!(formulario.organizacaoHabilitacao || {}).co_organizacao_habilitacao && perfil.no_perfil === 'administrador'">
 
             <span class="subheading">
               Indique abaixo se é uma revisão final:
@@ -510,7 +510,7 @@
               <v-layout>
                 <v-flex>
                   <v-checkbox
-                    v-model="formulario.organizacaoHabilitacao.st_revisao_final"
+                    v-model="(formulario.organizacaoHabilitacao || {}).st_revisao_final"
                     class="text-md-center"
                     label="Revisão final"
                   />
@@ -658,16 +658,16 @@ export default {
     },
     possuiNovaPontuacao(valor) {
       if (valor === '0') {
-        this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = String();
+        (this.formulario.organizacaoHabilitacao || {}).nu_nova_pontuacao = String();
       }
 
-      if (this.formulario.organizacaoHabilitacao.nu_nova_pontuacao === null) {
-        this.formulario.organizacaoHabilitacao.nu_nova_pontuacao = this.formulario.pontuacao;
+      if ((this.formulario.organizacaoHabilitacao || {}).nu_nova_pontuacao === null) {
+        (this.formulario.organizacaoHabilitacao || {}).nu_nova_pontuacao = this.formulario.pontuacao;
         this.possuiNovaPontuacao = '0';
       }
     },
     modalConfirmacao(valor) {
-      this.formulario.organizacaoHabilitacao.st_revisao_final = null;
+      (this.formulario.organizacaoHabilitacao || {}).st_revisao_final = null;
     },
   },
   methods: {
@@ -689,8 +689,8 @@ export default {
       });
       this.possuiNovaPontuacao = null;
 
-      if (!!this.formulario.organizacaoHabilitacao
-        && !!this.formulario.organizacaoHabilitacao.co_organizacao_habilitacao
+      if (!!(this.formulario.organizacaoHabilitacao || {})
+        && !!(this.formulario.organizacaoHabilitacao || {}).co_organizacao_habilitacao
         && this.perfil.no_perfil === 'administrador') {
         this.resultadoItens.push({
           descricao: 'Habilitada e classificada',
