@@ -44,12 +44,10 @@
                 </div>
                 <div class="mt-4">
                   <v-textarea
-                    disabled
-                    :placeholder="((organizacao || {}).habilitacaoRecurso || {}).ds_recurso"
+                    v-model="((organizacao || {}).habilitacaoRecurso || {}).ds_recurso"
+                    readonly
                     rows="13"
                     row-height="28"
-                    box
-                    auto-grow
                   />
                 </div>
               </div>
@@ -90,7 +88,6 @@
                   <div class="mt-2">
                     <v-textarea
                       v-model="formulario.dsParecer.value"
-                      :disabled="formulario.readOnly"
                       :readonly="formulario.readOnly"
                       placeholder="*Parecer"
                       rows="13"
