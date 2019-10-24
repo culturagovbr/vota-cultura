@@ -134,6 +134,55 @@
             </v-layout>
 
           </v-card>
+
+            <v-card class="ma-3 mt-2" mt-2>
+              <v-card-text>
+                <div class="grey--text mt-2">
+                <span class="subheading black--text ">Resultado da avaliação do recurso</span>
+                  <div class='mt-4' md12>
+                    <v-select
+                      v-model="habilitacaoRecurso.resultadoHabilitacao"
+                      :disabled="true"
+                      :readonly="true"
+                      :items="itemsResultadoHabilitacao"
+                      label="*Resultado final da habilitação"
+                      append-icon="place"
+                      required
+                      box
+                      :rules="[rules.required]"
+                    />
+                  </div>
+
+                  <div class="mt-2">
+                    <v-textarea
+                      v-model="habilitacaoRecurso.dsParecer"
+                      :readonly="true"
+                      placeholder="*Parecer"
+                      rows="13"
+                      row-height="28"
+                      :counter="15000"
+                      box
+                      auto-grow
+                      :rules="[rules.required, rules.tamanhoMaximoCaracteres]"
+                    />
+                  </div>
+
+                  <v-flex class="mt-2" sm2>
+                    <v-text-field
+                      v-model="habilitacaoRecurso.pontuacaoFinal"
+                      :readonly="true"
+                      :disabled="true"
+                      type="number"
+                      min="0"
+                      max="99"
+                      step="1"
+                      mask="##"
+                      label="Pontuação final"
+                    />
+                  </v-flex>
+                </div>
+              </v-card-text>
+            </v-card>
         </v-form>
       </v-card-text>
       <v-layout
@@ -214,7 +263,16 @@ export default {
     habilitacaoRecurso: {
         ds_recurso: '',
         isLocked: false,
+        dsParecer: '',
+        resultadoHabilitacao: '',
+        pontuacaoFinal: 0
     },
+    itemsResultadoHabilitacao: [
+      { value: '', text: '' },
+      { value: '0', text: 'Inabilitada' },
+      { value: '1', text: 'Habilitada e desclassificada' },
+      { value: '2', text: 'Habilitada e classificada' }
+    ],
     rules: {
       required: value => !!value || 'Campo não preenchido',
       tamanhoMaximoCaracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
@@ -285,6 +343,12 @@ export default {
         if (typeof dadosOrganizacao.habilitacaoRecurso !== undefined) {
             const recurso = dadosOrganizacao.habilitacaoRecurso;
             self.habilitacaoRecurso.ds_recurso = recurso.ds_recurso;
+            self.habilitacaoRecurso.dsParecer = recurso.ds_parecer
+            self.habilitacaoRecurso.pontuacaoFinal = recurso.nu_pontuacao
+            self.habilitacaoRecurso.resultadoHabilitacao = recurso.st_parecer
+              //       dsParecer: '',
+              // resultadoHabilitacao: '',
+              // pontuacaoFinal: 0
         }
       }).finally(() => {
       self.habilitacaoRecurso.isLocked = true;
