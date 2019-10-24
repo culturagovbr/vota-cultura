@@ -244,6 +244,7 @@
                                 v-model="(formulario || {}).st_avaliacao"
                                 column
                                 :rules="[rules.required]"
+                                :disabled="(formulario || {}).st_revisao_final"
                               >
                                 <v-radio
                                   value="1"
@@ -273,6 +274,7 @@
                                 row-height="28"
                                 :counter="15000"
                                 box
+                                :readonly="(formulario || {}).st_revisao_final"
                                 :rules="[rules.required, rules.tamanhoMaximo15000Caracteres]"
                               />
                             </v-flex>
@@ -296,6 +298,7 @@
                       :disabled="!valid || loading"
                       color="primary"
                       @click="abrirDialogoConfirmacao"
+                      v-if="!(formulario || {}).st_revisao_final"
                     >
                       Avaliar
                       <v-icon right>
@@ -449,12 +452,14 @@ export default {
       this.obterMunicipios(coIBGE);
     },
     indicado(indicado) {
+      this.formulario.st_revisao_final = null;
       if ((indicado.conselho || {}).co_conselho) {
         this.obterDadosConselho(indicado.conselho.co_conselho);
       }
 
       if (indicado.avaliacaoHabilitacao) {
         this.formulario.ds_parecer = indicado.avaliacaoHabilitacao.ds_parecer;
+        this.formulario.st_revisao_final = indicado.avaliacaoHabilitacao.st_revisao_final;
         this.formulario.st_avaliacao = indicado.avaliacaoHabilitacao.st_avaliacao ? '1' : '0';
         this.formulario.co_conselho_indicacao_habilitacao = indicado
           .avaliacaoHabilitacao.co_conselho_indicacao_habilitacao;
@@ -468,6 +473,9 @@ export default {
       obterEstados: 'localidade/obterEstados',
       obterMunicipios: 'localidade/obterMunicipios',
       avaliarHabilitacaoIndicacao: 'conselho/avaliarHabilitacaoIndicacao',
+      notificarErro: 'app/setMensagemErro',
+      notificarSucesso: 'app/setMensagemSucesso',
+      obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
     }),
     obterDescricaoDocumento(tpArquivo) {
       const indiceDocumento = documentosIndicacao.findIndex(elemento => (elemento || {}).slug === tpArquivo);
@@ -484,7 +492,12 @@ export default {
     salvar() {
       this.formulario.co_indicado = this.indicado.co_conselho_indicacao;
       const payload = Object.assign({}, this.formulario);
-      this.avaliarHabilitacaoIndicacao(payload).finally(() => {
+      this.avaliarHabilitacaoIndicacao(payload).then(() => {
+        this.notificarSucesso('Habilitação salva com sucesso.');
+        this.obterListaIndicacaoConselho();
+      }).catch((error) => {
+        this.notificarErro(error.response.data.message);
+      }).finally(() => {
         this.fecharDialogoConfirmacao();
         this.fecharDialogo();
       });

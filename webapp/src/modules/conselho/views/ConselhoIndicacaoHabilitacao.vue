@@ -71,7 +71,8 @@
               small
               @click="editarItemModal(props.item)"
             >
-              <v-icon>gavel</v-icon>
+              <v-icon v-if="(props.item.avaliacaoHabilitacao || {}).st_revisao_final">remove_red_eye</v-icon>
+              <v-icon v-else>gavel</v-icon>
             </v-btn>
           </td>
         </template>
@@ -165,9 +166,9 @@ export default {
     },
   },
   mounted() {
-    this.loading = false;
+    this.loading = true;
     this.obterListaIndicacaoConselho().finally(() => {
-      // this.loading = false;
+      this.loading = false;
     });
   },
 };

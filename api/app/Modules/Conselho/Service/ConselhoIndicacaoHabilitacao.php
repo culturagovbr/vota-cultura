@@ -12,6 +12,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
+
 
 
 class ConselhoIndicacaoHabilitacao extends AbstractService
@@ -40,7 +42,7 @@ class ConselhoIndicacaoHabilitacao extends AbstractService
             $conselhoIndicacaoHabilitacaoModel->save();
             DB::commit();
             return $conselhoIndicacaoHabilitacaoModel;
-        } catch (\HttpException $queryException) {
+        } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
         }
@@ -49,40 +51,42 @@ class ConselhoIndicacaoHabilitacao extends AbstractService
     public function atualizar(Request $request, int $identificador) : ?array
     {
         try {
+            DB::beginTransaction();
+
             $conselhoIndicacaoHabilitacaoModel = $this->getModel()->find($identificador);
 
             if (!$conselhoIndicacaoHabilitacaoModel) {
-                throw new \HttpException(
+                throw new EParametrosInvalidos(
                     'Dados não encontrados.',
                     Response::HTTP_NOT_ACCEPTABLE
                 );
             }
 
-            DB::beginTransaction();
-
-            $historicoAvaliacao = $conselhoIndicacaoHabilitacaoModel;
+            $historicoAvaliacao = $conselhoIndicacaoHabilitacaoModel->toArray();
 
             $conselhoIndicacaoHabilitacaoModel->fill($request->only([
                 'ds_parecer',
                 'st_avaliacao'
             ]));
 
+            if($request->input('st_revisao_final')){
+                $conselhoIndicacaoHabilitacaoModel->st_revisao_final = $request->input('st_revisao_final');
+            }
+
+            if (!$conselhoIndicacaoHabilitacaoModel->isDirty()) {
+                return $conselhoIndicacaoHabilitacaoModel->toArray();
+            }
+
             $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
             $conselhoIndicacaoHabilitacaoModel->co_usuario_avaliador = $usuarioAutenticado['co_usuario'];
             $conselhoIndicacaoHabilitacaoModel->dh_avaliacao = Carbon::now()->format('Y-m-d H:i:s.u');
 
-            unset($conselhoIndicacaoHabilitacaoModel->co_conselho_indicacao_habilitacao);
-            unset($conselhoIndicacaoHabilitacaoModel->st_revisao_final);
-
-
-            $teste = new ConselhoIndicacaoHabilitacaoHistorico();
-
-            print_r($conselhoIndicacaoHabilitacaoModel->toArray());
-            die;
+            unset($historicoAvaliacao['co_conselho_indicacao_habilitacao']);
+            unset($historicoAvaliacao['st_revisao_final']);
+            (new ConselhoIndicacaoHabilitacaoHistorico($historicoAvaliacao))->save();
 
             $conselhoIndicacaoHabilitacaoModel->save();
-            DB::rollBack();
-//            DB::commit();
+            DB::commit();
             return $conselhoIndicacaoHabilitacaoModel->toArray();
         } catch (\HttpException $queryException) {
             DB::rollBack();

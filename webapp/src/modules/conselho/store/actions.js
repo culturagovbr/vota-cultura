@@ -166,41 +166,14 @@ export const concluirIndicacao = async ({ commit, dispatch }, conselhoId) => con
   throw new TypeError(error);
 });
 
-export const avaliarHabilitacaoIndicacao = async ({ commit, dispatch }, avaliacao) => {
+export const avaliarHabilitacaoIndicacao = async ({}, avaliacao) => {
   if ((avaliacao || {}).co_conselho_indicacao_habilitacao) {
-    const promiseHabilitacaoIndicacao = revisarHabilitacaoIndicacao(
+    return conselhoService.revisarHabilitacaoIndicacao(
       avaliacao,
       avaliacao.co_conselho_indicacao_habilitacao,
     );
-  } else {
-    const promiseHabilitacaoIndicacao = avaliarHabilitacaoIndicacao(
-      avaliacao,
-    );
   }
-
-  promiseHabilitacaoIndicacao.then((response) => {
-    console.log(response);
-  }).catch((error) => {
-    console.log(error);
-  });
-
-  // revisarHabilitacaoIndicacao
-  return;
-  conselhoService.avaliarHabilitacaoIndicacao(avaliacao).then((response) => {
-    const { data } = response.data;
-    commit(types.ENVIAR_AVALIACAO_HABILITACAO_INDICADO, data);
-    // dispatch(
-    //     'app/setMensagemSucesso',
-    //     'Indicação concluída com sucesso.',
-    //     { root: true },
-    // );
-    return response;
-  }).catch((error) => {
-    // dispatch(
-    //     'app/setMensagemErro',
-    //     error.response.data.message,
-    //     { root: true },
-    // );
-    throw new TypeError(error);
-  });
+  return conselhoService.avaliarHabilitacaoIndicacao(
+    avaliacao,
+  );
 };
