@@ -763,9 +763,6 @@ export default {
       definirMensagemSucesso: 'app/setMensagemSucesso',
       concluirIndicacao: 'conselho/concluirIndicacao',
     }),
-    testando(){
-      console.log('asdasdasd')
-    },
     handleDialogConfirmarConcluirIndicacao() {
         this.dialogConfirmarConcluirIndicacao = !this.dialogConfirmarConcluirIndicacao;
     },
