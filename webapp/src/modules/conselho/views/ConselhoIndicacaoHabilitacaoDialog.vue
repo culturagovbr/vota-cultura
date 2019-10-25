@@ -416,7 +416,6 @@ export default {
           'Bold',
           'Italic',
           'Alignment',
-          'Link',
           'NumberedList',
           'BulletedList',
           'List',
@@ -452,6 +451,7 @@ export default {
       this.dialog = valor;
     },
     dialog(valor) {
+      this.formulario = {};
       this.$refs.formulario.reset();
       this.$emit('input', valor);
     },
