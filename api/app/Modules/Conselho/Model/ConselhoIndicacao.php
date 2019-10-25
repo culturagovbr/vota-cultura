@@ -78,6 +78,15 @@ class ConselhoIndicacao extends Model
         );
     }
 
+    public function avaliacaoHabilitacao()
+    {
+        return $this->hasOne(
+            ConselhoIndicacaoHabilitacao::class,
+            'co_indicado',
+            'co_conselho_indicacao'
+        );
+    }
+
     public function quantidadeMaximaIndicadosExcedida(): bool
     {
         if (empty($this->co_conselho)) {

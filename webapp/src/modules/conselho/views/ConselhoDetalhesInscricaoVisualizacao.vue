@@ -93,7 +93,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.endereco.nu_cep"
+            v-model="(conselho.endereco || {}).nu_cep"
             label="CEP"
             append-icon="my_location"
             mask="#####-###"
@@ -105,7 +105,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.endereco.ds_logradouro"
+            v-model="(conselho.endereco || {}).ds_logradouro"
             label="Logradouro"
             append-icon="place"
             disabled
@@ -116,7 +116,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.endereco.ds_complemento"
+            v-model="(conselho.endereco || {}).ds_complemento"
             label="Complemento"
             disabled
           />
@@ -126,7 +126,7 @@
       <v-layout>
         <v-flex>
           <v-select
-            v-model="conselho.endereco.co_ibge"
+            v-model="(conselho.endereco || {}).co_ibge"
             :items="listaUF"
             label="Unidade da federação da sede"
             item-value="co_ibge"
@@ -140,7 +140,7 @@
       <v-layout>
         <v-flex>
           <v-select
-            v-model="conselho.endereco.co_municipio"
+            v-model="(conselho.endereco || {}).co_municipio"
             :items="listaMunicipios"
             label="Cidade"
             append-icon="place"
@@ -154,7 +154,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.representante.no_nome"
+            v-model="(conselho.representante || {}).no_nome"
             label="Nome do representante"
             append-icon="perm_identity"
             disabled
@@ -165,7 +165,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.representante.nu_telefone"
+            v-model="(conselho.representante || {}).nu_telefone"
             label="Celular do representante"
             append-icon="phone"
             mask="(##) #####-####"
@@ -177,7 +177,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.representante.nu_cpf"
+            v-model="(conselho.representante || {}).nu_cpf"
             label="CPF"
             append-icon="person"
             mask="###.###.###.##"
@@ -189,7 +189,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.representante.nu_rg"
+            v-model="(conselho.representante || {}).nu_rg"
             label="RG"
             append-icon="person"
             mask="##.###.###-#"
@@ -201,7 +201,7 @@
       <v-layout>
         <v-flex>
           <v-text-field
-            v-model="conselho.representante.ds_email"
+            v-model="(conselho.representante || {}).ds_email"
             label="E-mail do representante"
             append-icon="mail"
             disabled
