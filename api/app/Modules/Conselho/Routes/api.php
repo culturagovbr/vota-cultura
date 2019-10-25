@@ -5,9 +5,16 @@ Route::group([
 ], function () {
     Route::get('{co_conselho}', 'ConselhoApiResourceController@show')->where('co_conselho', '[0-9]+');
     Route::apiResource('/', 'ConselhoApiResourceController');
-    Route::apiResource('/indicacao', 'ConselhoIndicacaoApiResourceController');
-    Route::post('/indicacao/arquivo', 'ConselhoIndicacaoArquivoController@store');
     Route::patch('{co_conselho}', 'ConselhoApiResourceController@update')->where('co_conselho', '[0-9]+');
+
+    Route::group([
+        'prefix' => 'indicacao'
+    ], function () {
+        Route::apiResource('/', 'ConselhoIndicacaoApiResourceController');
+        Route::post('/arquivo', 'ConselhoIndicacaoArquivoController@store');
+        Route::apiResource('/habilitacao', 'ConselhoIndicacaoHabilitacaoApiResourceController');
+    });
+
     Route::group([
         'prefix' => 'habilitacao'
     ], function () {

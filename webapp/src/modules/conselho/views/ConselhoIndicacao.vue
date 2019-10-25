@@ -693,7 +693,7 @@ export default {
     },
     listaIndicados: [],
     usuarioLogado: {},
-    dialogConfirmarConcluirIndicacao : false
+    dialogConfirmarConcluirIndicacao: false,
   }),
   computed: {
     ...mapGetters({

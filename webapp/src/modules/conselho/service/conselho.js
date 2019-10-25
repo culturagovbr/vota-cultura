@@ -17,3 +17,7 @@ export const atualizarConselho = conselho => service.patchRequest(
   conselho.co_conselho,
   conselho,
 );
+export const avaliarHabilitacaoIndicacao = payload => service.postRequest('/conselho/indicacao/habilitacao', payload);
+export const revisarHabilitacaoIndicacao = (payload, coConselhoIndicacaoHabilitacao) => service.putRequest('/conselho/indicacao/habilitacao',
+  coConselhoIndicacaoHabilitacao,
+  payload);

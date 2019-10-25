@@ -3,10 +3,11 @@
 namespace App\Modules\Conselho\Service;
 
 use App\Core\Service\AbstractService;
-use App\Modules\Conselho\Model\ConselhoIndicacao as ConselhoIndicacaoModel;
-use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Conselho\Mail\Conselho\CadastroConselhoIndicacaoSucesso;
+use App\Modules\Conselho\Model\ConselhoIndicacao as ConselhoIndicacaoModel;
 use App\Modules\Conselho\Model\ConselhoIndicacaoArquivo;
+use App\Modules\Conta\Model\Perfil;
+use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Localidade\Service\Endereco;
 use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
@@ -14,7 +15,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,9 +28,22 @@ class ConselhoIndicacao extends AbstractService
         parent::__construct($model);
     }
 
-    public function obterTodos() : ?Collection
+    public function obterTodos(): ?Collection
     {
         $conselhoUsuarioLogado = $this->recuperarDadosConselhoUsuarioLogado();
+
+        $dadosUsuarioAutenticado = auth()->user()->dadosUsuarioAutenticado();
+
+        if (
+            empty($conselhoUsuarioLogado) &&
+            ($dadosUsuarioAutenticado['perfil']->co_perfil === Perfil::CODIGO_ADMINISTRADOR ||
+                $dadosUsuarioAutenticado['perfil']->co_perfil === Perfil::CODIGO_AVALIADOR)
+        ) {
+            return $this->getModel()->whereHas('conselho', function ($query) {
+                $query->where('tb_conselho.st_indicacao', 'f');
+            })->get();
+        }
+
         return $this->getModel()->where([
             'co_conselho' => $conselhoUsuarioLogado->co_conselho
         ])->get();
@@ -38,7 +51,7 @@ class ConselhoIndicacao extends AbstractService
 
     public function cadastrar(Collection $dados): ?Model
     {
-       $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
+        $this->validarIdadeMinimaIndicado($dados['dt_nascimento_indicado']);
 
         try {
             DB::beginTransaction();
@@ -64,9 +77,9 @@ class ConselhoIndicacao extends AbstractService
             $dados['co_endereco'] = $endereco->co_endereco;
 
             $modeloUpload = [
-                'no_arquivo'  => $dados['indicado_foto_rosto']->getClientOriginalName(),
-                'no_extensao'  => $dados['indicado_foto_rosto']->getClientOriginalExtension(),
-                'no_mime_type'  => $dados['indicado_foto_rosto']->getClientMimeType(),
+                'no_arquivo' => $dados['indicado_foto_rosto']->getClientOriginalName(),
+                'no_extensao' => $dados['indicado_foto_rosto']->getClientOriginalExtension(),
+                'no_mime_type' => $dados['indicado_foto_rosto']->getClientMimeType(),
             ];
 
             $modeloArquivo = app(Arquivo::class);
@@ -86,9 +99,9 @@ class ConselhoIndicacao extends AbstractService
 
 //            $this->enviarEmailConfirmacaoConselhoIndicacao($conselhoUsuarioLogado);
 
-             $dadosCadastrados = parent::cadastrar($dados);
-             DB::commit();
-             return $dadosCadastrados;
+            $dadosCadastrados = parent::cadastrar($dados);
+            DB::commit();
+            return $dadosCadastrados;
         } catch (EParametrosInvalidos $queryException) {
             DB::rollBack();
             throw $queryException;
@@ -176,13 +189,13 @@ class ConselhoIndicacao extends AbstractService
             throw $queryException;
         }
     }
-    
+
     private function removerArquivosIndicacao($identificador)
     {
         $conselhoIndicacaoArquivoModel = app(ConselhoIndicacaoArquivo::class);
         $arquivosIndicacao = $conselhoIndicacaoArquivoModel->where(['co_conselho_indicacao' => $identificador]);
         $arquivoModel = app(Arquivo::class);
-        foreach($arquivosIndicacao->get()->toArray() as $arquivoIndicacao) {
+        foreach ($arquivosIndicacao->get()->toArray() as $arquivoIndicacao) {
             $arquivo = $arquivoModel->find($arquivoIndicacao['co_arquivo']);
             Storage::delete($arquivo->toArray()['ds_localizacao']);
             $arquivo->delete();

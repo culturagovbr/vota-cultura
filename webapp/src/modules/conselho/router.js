@@ -66,7 +66,7 @@ export default [
           icon: 'dashboard',
           public: false,
         },
-        component: () => import(/* webpackChunkName: "eleitor" */ '@/modules/conselho/views/ConselhoListaHabilitacao.vue'),
+        component: () => import(/* webpackChunkName: "conselho-lista-habilitacao" */ '@/modules/conselho/views/ConselhoListaHabilitacao.vue'),
       },
       {
         path: '/conselho/indicacao',
@@ -78,6 +78,17 @@ export default [
           public: false,
         },
         component: () => import(/* webpackChunkName: "conselho-indicacao" */ '@/modules/conselho/views/ConselhoIndicacao.vue'),
+      },
+      {
+        path: '/conselho/indicacao-habilitacao',
+        name: 'ConselhoIndicacaoHabilitacaoRoute',
+        meta: {
+          title: 'Habilitação de indicados - Conselho de cultura',
+          group: 'apps',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "conselho-indicacao-habilitacao" */ '@/modules/conselho/views/ConselhoIndicacaoHabilitacao.vue'),
       },
     ],
   },

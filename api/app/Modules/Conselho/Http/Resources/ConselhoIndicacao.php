@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Modules\Conselho\Http\Resources;
+
 use \App\Modules\Localidade\Http\Resources\Endereco;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 class ConselhoIndicacao extends JsonResource
 {
@@ -21,8 +21,10 @@ class ConselhoIndicacao extends JsonResource
             'endereco' => (new Endereco($this->endereco)),
             'conselho' => (new Conselho($this->conselho)),
             'arquivos' => ConselhoIndicacaoArquivo::collection($this->arquivos),
-            'foto_indicado' => asset($this->fotoUsuario->ds_localizacao),
+            'foto_indicado' => !empty($this->fotoUsuario->ds_localizacao) ?
+                asset($this->fotoUsuario->ds_localizacao) : NULL,
             'cpf_indicado_formatado' => $this->cpf_indicado_formatado,
+            'avaliacaoHabilitacao' => (new ConselhoIndicacaoHabilitacao($this->avaliacaoHabilitacao)),
         ];
     }
 }
