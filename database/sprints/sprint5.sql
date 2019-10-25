@@ -124,7 +124,7 @@ COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_organizacao IS 'C
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_recurso IS 'Descrição do recurso';
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.dh_cadastro_recurso IS 'Data de cadastro do recurso';
 
--- Permissions
+--################## Avaliação do recurso das organizações
 
 ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD ds_parecer text NULL;
 COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.ds_parecer IS 'Parecer do recurso';
@@ -184,3 +184,7 @@ COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.ds_parecer 
 COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.dh_avaliacao IS 'data e hora da avaliação';
 COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_historico.co_usuario_avaliador IS 'Código do usuario avaliador do indicado';
 COMMENT ON TABLE public.tb_conselho_indicacao_habilitacao_historico IS 'registro sobre avaliação dos indicados de cada conselho';
+
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD co_arquivo integer NULL;
+COMMENT ON COLUMN public.tb_organizacao_habilitacao_recurso.co_arquivo IS 'Código do arquivo referente a tabela tb_arquivo.';
+ALTER TABLE public.tb_organizacao_habilitacao_recurso ADD CONSTRAINT fk_organizacao_habilitacao_recurso_arquivo FOREIGN KEY (co_arquivo) REFERENCES public.tb_arquivo(co_arquivo);
