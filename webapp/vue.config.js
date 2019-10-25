@@ -1,3 +1,5 @@
+const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
+
 module.exports = {
   devServer: {
     // proxy: {

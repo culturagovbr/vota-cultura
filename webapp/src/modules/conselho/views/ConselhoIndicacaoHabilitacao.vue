@@ -61,19 +61,25 @@
             </v-chip>
           </td>
           <td class="text-md-center">
-            <v-btn
-              depressed
-              outline
-              icon
-              fab
-              dark
-              color="primary"
-              small
-              @click="editarItemModal(props.item)"
-            >
-              <v-icon v-if="(props.item.avaliacaoHabilitacao || {}).st_revisao_final">remove_red_eye</v-icon>
-              <v-icon v-else>gavel</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  depressed
+                  outline
+                  icon
+                  fab
+                  dark
+                  color="primary"
+                  small
+                  @click="editarItemModal(props.item)"
+                >
+                  <v-icon v-if="(props.item.avaliacaoHabilitacao || {}).st_revisao_final">remove_red_eye</v-icon>
+                  <v-icon v-else>gavel</v-icon>
+                </v-btn>
+              </template>
+              <span v-if="(props.item.avaliacaoHabilitacao || {}).st_revisao_final">remove_red_eye</span>
+              <span v-else>gavel</span>
+            </v-tooltip>
           </td>
         </template>
       </v-data-table>
@@ -114,29 +120,30 @@ export default {
       },
       {
         text: 'CNPJ',
-        value: 'cnpj_formatado',
+        value: 'conselho.cnpj_formatado',
       },
       {
         text: 'Nome ',
-        value: 'no_organizacao',
+        value: 'no_indicado',
       },
       {
         text: 'Unidade da federação em que reside',
-        value: 'segmento.ds_detalhamento',
+        value: 'endereco.municipio.uf.no_uf',
       },
       {
         text: 'Nome do conselho',
-        value: 'pontuacao',
+        value: 'conselho.no_conselho',
         align: 'center',
       },
       {
         text: 'Resultado da habilitação',
-        value: 'pontuacao',
+        value: 'avaliacaoHabilitacao.st_revisao_final',
         align: 'center',
       },
       {
         text: 'Ações',
         align: 'center',
+        sortable: false,
       },
     ],
   }),
@@ -145,8 +152,6 @@ export default {
       if (!valor) {
         this.itemEditado = Object.assign({});
       }
-    },
-    listarIndicacaoConselhoGetter(val) {
     },
   },
   computed: {

@@ -96,13 +96,11 @@
 
                             <v-layout>
                               <v-flex md12>
-                                <v-select
-                                  v-model="(indicado.endereco || {}).co_ibge"
+                                <v-text-field
+                                  v-model="(((indicado.endereco || {}).municipio||{}).uf || {}).no_uf"
                                   :items="listaUF"
                                   label="Unidade da federação em que reside"
                                   append-icon="place"
-                                  item-value="co_ibge"
-                                  item-text="no_uf"
                                   disabled
                                   box
                                 />
@@ -114,14 +112,12 @@
                                 md12
                                 ma3
                               >
-                                <v-select
-                                  v-model="(indicado.endereco || {}).co_municipio"
-                                  :items="listaMunicipios"
-                                  label="Cidade em que reside"
+                                <v-text-field
+                                  v-model="((indicado.endereco || {}).municipio||{}).no_municipio"
                                   append-icon="place"
-                                  item-value="co_municipio"
-                                  item-text="no_municipio"
+                                  label="Cidade em que reside"
                                   box
+                                  type="text"
                                   disabled
                                 />
                               </v-flex>
@@ -267,16 +263,11 @@
                           </v-layout>
                           <v-layout>
                             <v-flex class="pa-3">
-                              <v-textarea
+                              <ckeditor
+                                :disabled="(formulario || {}).st_revisao_final"
+                                :editor="editor"
                                 v-model="(formulario || {}).ds_parecer"
-                                label="Parecer"
-                                rows="13"
-                                row-height="28"
-                                :counter="15000"
-                                box
-                                :readonly="(formulario || {}).st_revisao_final"
-                                :rules="[rules.required, rules.tamanhoMaximo15000Caracteres]"
-                              />
+                                :config="editorConfig"></ckeditor>
                             </v-flex>
                           </v-layout>
                         </v-container>
@@ -300,7 +291,8 @@
                       @click="abrirDialogoConfirmacao"
                       v-if="!(formulario || {}).st_revisao_final"
                     >
-                      Avaliar
+                      <span v-if="!!(indicado || {}).avaliacaoHabilitacao">Revisar</span>
+                      <span v-else>Avaliar</span>
                       <v-icon right>
                         send
                       </v-icon>
@@ -393,6 +385,12 @@
 import { mapGetters, mapActions } from 'vuex';
 import ConselhoDetalhesInscricaoVisualizacao from './ConselhoDetalhesInscricaoVisualizacao';
 import { documentosIndicacao } from '../api/documentosIndicacao';
+import Vue from 'vue';
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '@ckeditor/ckeditor5-build-classic/build/translations/pt-br';
+
+Vue.use(CKEditor);
 
 export default {
   name: 'ConselhoListaHabilitacaoDialog',
@@ -411,6 +409,23 @@ export default {
   },
   data() {
     return {
+      editor: ClassicEditor,
+      editorConfig: {
+        placeholder: 'Parecer',
+        toolbar: [
+          'Bold',
+          'Italic',
+          'Alignment',
+          'Link',
+          'NumberedList',
+          'BulletedList',
+          'List',
+          'BlockQuote',
+          'Undo',
+          'Redo',
+        ],
+        language: 'pt-br',
+      },
       listaUF: [],
       listaMunicipios: [],
       model: 'tab-1',
@@ -430,8 +445,6 @@ export default {
     ...mapGetters({
       perfis: 'conta/perfis',
       perfisInscricao: 'conta/perfisInscricao',
-      estadosGetter: 'localidade/estados',
-      municipiosGetter: 'localidade/municipios',
     }),
   },
   watch: {
@@ -447,9 +460,6 @@ export default {
     },
     municipiosGetter() {
       this.listaMunicipios = this.municipiosGetter;
-    },
-    'indicado.endereco.co_ibge': function (coIBGE) {
-      this.obterMunicipios(coIBGE);
     },
     indicado(indicado) {
       this.formulario.st_revisao_final = null;
@@ -470,8 +480,6 @@ export default {
     ...mapActions({
       obterDadosConselho: 'conselho/obterDadosConselho',
       downloadArquivo: 'shared/downloadArquivo',
-      obterEstados: 'localidade/obterEstados',
-      obterMunicipios: 'localidade/obterMunicipios',
       avaliarHabilitacaoIndicacao: 'conselho/avaliarHabilitacaoIndicacao',
       notificarErro: 'app/setMensagemErro',
       notificarSucesso: 'app/setMensagemSucesso',
@@ -506,6 +514,10 @@ export default {
       if (!this.$refs.formulario.validate()) {
         return;
       }
+      if (!(this.formulario.ds_parecer || '').length) {
+        this.notificarErro('Parecer obrigatório');
+        return;
+      }
       this.modalConfirmacao = true;
     },
     fecharDialogoConfirmacao() {
@@ -517,9 +529,6 @@ export default {
     fecharDialogo() {
       this.dialog = false;
     },
-  },
-  mounted() {
-    this.obterEstados();
   },
 };
 </script>
