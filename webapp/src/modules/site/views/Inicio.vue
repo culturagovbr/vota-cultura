@@ -85,7 +85,7 @@
                   </v-card-title>
                   <v-card-text>
                     <div class="text-xs-center mt-4">
-                      Consulte aqui a lista final da habilitação de Conselho de cultura e a parcial
+                      Consulte aqui a lista final da habilitação de Conselho de cultura e
                       de Organização ou entidade cultural
                     </div>
                   </v-card-text>
