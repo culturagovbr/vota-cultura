@@ -34,7 +34,7 @@
           slot-scope="props"
         >
           <td />
-          <td>{{ props.item.conselho.cnpj_formatado }}</td>
+          <td>{{ props.item.cpf_indicado_formatado }}</td>
           <td>{{ props.item.no_indicado }}</td>
           <td>
             <v-chip>
@@ -119,8 +119,8 @@ export default {
         sortable: false,
       },
       {
-        text: 'CNPJ',
-        value: 'conselho.cnpj_formatado',
+        text: 'CPF',
+        value: 'cpf_indicado_formatado',
       },
       {
         text: 'Nome ',
