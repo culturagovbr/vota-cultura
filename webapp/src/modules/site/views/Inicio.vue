@@ -1,6 +1,21 @@
 
 <template>
   <div>
+    <section
+      style="height: 120px; background-color: red;"
+      class="title"
+    >
+      <v-layout>
+        <v-flex
+          xs12
+          text-md-center
+          mt-5
+          white--text
+        >
+          Comunicamos que o resultado final da habilitação das organizações/entidades culturais foi adiado para o dia 29 de outubro (terça-feira).
+        </v-flex>
+      </v-layout>
+    </section>
     <section>
       <v-img
         :src="require('@/assets/banner.png')"
@@ -17,7 +32,10 @@
         align-center
       >
         <v-flex xs12>
-          <v-container grid-list-xl fluid>
+          <v-container
+            grid-list-xl
+            fluid
+          >
             <v-layout
               row
               align-center
@@ -26,8 +44,10 @@
                 xs12
                 md4
               >
-
-                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                <v-card
+                  class="elevation-15 transparent"
+                  style="width:300px;min-height: 340px"
+                >
                   <v-card-text class="text-xs-center">
                     <v-icon
                       x-large
@@ -65,8 +85,10 @@
                 xs12
                 md4
               >
-
-                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                <v-card
+                  class="elevation-15 transparent"
+                  style="width:300px;min-height: 340px"
+                >
                   <v-card-text class="text-xs-center">
                     <v-icon
                       x-large
@@ -85,7 +107,7 @@
                   </v-card-title>
                   <v-card-text>
                     <div class="text-xs-center mt-4">
-                      Consulte aqui a lista final da habilitação de Conselho de cultura e a parcial
+                      Consulte aqui a lista final da habilitação de Conselho de cultura e
                       de Organização ou entidade cultural
                     </div>
                   </v-card-text>
@@ -108,8 +130,10 @@
                 xs12
                 md4
               >
-
-                <v-card class="elevation-15 transparent" style="width:300px;min-height: 340px">
+                <v-card
+                  class="elevation-15 transparent"
+                  style="width:300px;min-height: 340px"
+                >
                   <v-card-text class="text-xs-center">
                     <v-icon
                       x-large
@@ -204,7 +228,6 @@
           wrap
           class="my-5"
           align-center
-
         >
           <v-flex
             xs12
@@ -312,7 +335,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   data: () => ({
-      isConselho : false
+    isConselho: false,
   }),
   computed: {
     ...mapGetters({
@@ -322,10 +345,10 @@ export default {
       usuario: 'conta/usuario',
     }),
   },
-    mounted() {
-        if (this.usuario.co_conselho) {
-            this.isConselho = true;
-        }
+  mounted() {
+    if (this.usuario.co_conselho) {
+      this.isConselho = true;
     }
+  },
 };
 </script>
