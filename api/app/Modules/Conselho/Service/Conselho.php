@@ -116,7 +116,8 @@ class Conselho extends AbstractService
 
         $usuarioAutenticado = Auth::user()->dadosUsuarioAutenticado();
         if ($conselho->co_conselho !== $usuarioAutenticado['co_conselho'] &&
-            $usuarioAutenticado['perfil']->no_perfil !== 'administrador') {
+            !($usuarioAutenticado['perfil']->no_perfil !== 'administrador' ||
+                $usuarioAutenticado['perfil']->no_perfil !== 'avaliador')) {
             throw new EParametrosInvalidos('O Conselho precisa ser o mesmo que o usuário logado.');
         }
 
@@ -128,7 +129,7 @@ class Conselho extends AbstractService
         return $this->getModel()->has('conselhoHabilitacao')->get();
     }
 
-    public function concluirIndicacao(Request $request, int $identificador) : ?array
+    public function concluirIndicacao(Request $request, int $identificador): ?array
     {
         try {
             $modelPesquisada = $this->getModel()->find($identificador);
