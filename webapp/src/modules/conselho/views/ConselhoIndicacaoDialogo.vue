@@ -217,7 +217,37 @@
 									</v-card-text>
 								</v-card>
 							</v-tab-item>
-							<v-tab-item value="resultado-habilitacao"> resultado</v-tab-item>
+							<v-tab-item value="resultado-habilitacao">
+								<v-flex class="pa-3 grey--text subheading">
+									<v-container>
+										<v-layout>
+											<v-flex class="font-weight-bold">
+												<span>Resultado da habilitaçao:</span>
+												<span :class="mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).color"> {{mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).text }}</span>
+											</v-flex>
+										</v-layout>
+										<v-layout class="mt-2">
+											<v-flex>
+												<span class="font-weight-bold">Parecer:</span>
+												<v-textarea
+													class="mt-2"
+													:value="(formulario.avaliacaoHabilitacao || {}).ds_parecer"
+													name="input-7-1"
+													solo
+													label="Descrição do parecer"
+													rows="13"
+													row-height="28"
+													box
+													disabled
+													auto-grow
+													:readonly="true"
+												/>
+											</v-flex>
+										</v-layout>
+									</v-container>
+
+								</v-flex>
+							</v-tab-item>
 							<v-tab-item value="recurso">recurso</v-tab-item>
 						</v-tabs-items>
 					</v-card>
@@ -307,6 +337,28 @@
             },
         },
         methods: {
+            mapCodeResultadoAvaliacaoToString(stParecer) {
+                let strParecer = {};
+                switch (stParecer) {
+                    case false:
+                        strParecer = {
+                            text: "Inabilitada",
+                            color: "red--text"
+                        };
+                        break;
+                    case true:
+                        strParecer = {
+                            text: "Habilitada",
+                            color: "green--text"
+                        };
+                        break;
+                    default:
+                        strParecer = { text: " - ", color: "" };
+                        break;
+                }
+
+                return strParecer;
+            },
             ...mapActions({
                 downloadArquivo: 'shared/downloadArquivo',
                 obterMunicipios: 'localidade/obterMunicipios',
