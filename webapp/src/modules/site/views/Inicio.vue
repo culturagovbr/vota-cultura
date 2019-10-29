@@ -1,21 +1,6 @@
 
 <template>
   <div>
-    <section
-      style="height: 120px; background-color: red;"
-      class="title"
-    >
-      <v-layout>
-        <v-flex
-          xs12
-          text-md-center
-          mt-5
-          white--text
-        >
-          Comunicamos que o resultado final da habilitação das organizações/entidades culturais foi adiado para o dia 29 de outubro (terça-feira).
-        </v-flex>
-      </v-layout>
-    </section>
     <section>
       <v-img
         :src="require('@/assets/banner.png')"
