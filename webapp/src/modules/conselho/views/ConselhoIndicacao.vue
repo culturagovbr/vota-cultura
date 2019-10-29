@@ -15,8 +15,7 @@
           >
             <div class="ma-12 text-justify subheading grey--text">
               <span class="font-weight-bold">Nome do conselho:</span>
-              <span
-                style="margin-left: 4px"
+              <span style="margin-left: 4px"
                 v-html="conselhoGetter.no_conselho"
               />
             </div>
@@ -148,6 +147,19 @@
                           @click="abrirDialogoVisualizacao(props.item)"
                         >
                           <v-icon>remove_red_eye</v-icon>
+                        </v-btn>
+
+                        <v-btn
+                          depressed
+                          outline
+                          icon
+                          fab
+                          dark
+                          color="primary"
+                          small
+                          @click="abrirDialogoVisualizacao(props.item)"
+                        >
+                          <v-icon>gavel</v-icon>
                         </v-btn>
                         <!--@click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"-->
 
