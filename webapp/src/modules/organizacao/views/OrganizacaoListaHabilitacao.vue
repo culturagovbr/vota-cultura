@@ -234,11 +234,9 @@ export default {
           return parseInt(item.habilitacaoRecurso.nu_pontuacao, 10);
       }
 
-      let novaPontuacao = parseInt(parseInt((item.organizacaoHabilitacao || {}).nu_nova_pontuacao) >= 0 ?
+     return parseInt(parseInt((item.organizacaoHabilitacao || {}).nu_nova_pontuacao) >= 0 ?
         (item.organizacaoHabilitacao || {}).nu_nova_pontuacao :
         item.pontuacao, 10);
-
-        return novaPontuacao === 0 ? ' - ' : novaPontuacao;
     },
     editarItemModal(item) {
       this.itemEditado = item;
