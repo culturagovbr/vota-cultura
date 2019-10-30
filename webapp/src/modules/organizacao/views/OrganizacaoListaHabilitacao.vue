@@ -215,7 +215,6 @@ export default {
             color: 'green--text'
           };
           break;
-          break;
         case 3:
           parecer = {
             text: 'Habilitada',
@@ -223,7 +222,7 @@ export default {
           };
           break;
         default:
-          parecer = { text: 0 , color: '' };
+          parecer = { text: ' - ' , color: '' };
           break;
       }
 
@@ -234,11 +233,9 @@ export default {
           return parseInt(item.habilitacaoRecurso.nu_pontuacao, 10);
       }
 
-      let novaPontuacao = parseInt(parseInt((item.organizacaoHabilitacao || {}).nu_nova_pontuacao) >= 0 ?
+     return parseInt(parseInt((item.organizacaoHabilitacao || {}).nu_nova_pontuacao) >= 0 ?
         (item.organizacaoHabilitacao || {}).nu_nova_pontuacao :
         item.pontuacao, 10);
-
-        return novaPontuacao === 0 ? ' - ' : novaPontuacao;
     },
     editarItemModal(item) {
       this.itemEditado = item;
