@@ -223,7 +223,7 @@ export default {
           };
           break;
         default:
-          parecer = { text: ' - ', color: '' };
+          parecer = { text: 0 , color: '' };
           break;
       }
 
