@@ -215,7 +215,6 @@ export default {
             color: 'green--text'
           };
           break;
-          break;
         case 3:
           parecer = {
             text: 'Habilitada',
@@ -223,7 +222,7 @@ export default {
           };
           break;
         default:
-          parecer = { text: 0 , color: '' };
+          parecer = { text: ' - ' , color: '' };
           break;
       }
 
