@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-container v-if="Object.keys((((formulario || {}).avaliacaoHabilitacao || {}).recurso || {})).length <= 0">
-			<span class="subheading grey--text">N�o existe recurso cadastrado</span>
+			<span class="subheading grey--text">Não existe recurso cadastrado</span>
 		</v-container>
 		<div v-else>
 			<v-container>
@@ -10,12 +10,12 @@
 					<v-card-text class="layout column subheading grey--text">
 						<v-layout>
 							<v-flex xs12 sm12>
-								Ilmo Sr. Secret�rio da Diversidade Cultural,
+								Ilmo Sr. Secretário da Diversidade Cultural,
 								<div class="mt-4">
-									Com base no item 6 desta CHAMADA P�BLIC PARA COMPOSIÇ�O DO CONSLHO NACIONAL DE POL�TICA
-									CULTURAL <br/> (CNPC) NO TRI�NIO 2019/2022, venho interpor recurso em face do resultado
+									Com base no item 6 desta CHAMADA PÚBLICA PARA COMPOSIÇÃO DO CONSELHO NACIONAL DE POLÍTICA
+									CULTURAL <br/> (CNPC) NO TRIÊNIO 2019/2022, venho interpor recurso em face do resultado
 									na
-									etapa de habilitaç�o do indicado, pelos motivos abaixo<br/> descritos:
+									etapa de habilitação do indicado, pelos motivos abaixo<br/> descritos:
 								</div>
 
 								<v-flex class="mt-2">
@@ -38,7 +38,7 @@
 										<v-card class="elevation-1 text-md-center">
 											<v-card-text>
 												<div class="grey--text">
-													Caso seja necess�rio o envio de documentos, encaminhar para o
+													Caso seja necessário o envio de documentos, encaminhar para o
 													e-mail votacultura@cidadania.gov.br informando no assunto: Recurso
 													de indicaço, o nome indicado e o nome do conselho.
 												</div>
@@ -51,7 +51,6 @@
 					</v-card-text>
 				</v-card>
 			</v-container>
-
 			<v-container>
 				<v-card class="elevation-1 pa-2">
 					<v-card-text class="layout column subheading grey--text">
@@ -59,7 +58,7 @@
 							<v-flex>
 								<v-toolbar dark color="primary">
 									<v-toolbar-title>
-										DADOS B�SICOS
+										DADOS BÁSICOS
 									</v-toolbar-title>
 									<v-spacer/>
 								</v-toolbar>
@@ -69,7 +68,7 @@
 						<v-layout>
 							<v-flex mt-4>
 								<v-alert :value="true" color="#FCF8E3" style="color: #B79F28;border: 0">
-									<strong>Atenç�o!</strong> Os dados b�sicos podem ser alterados, exceto o CPF e o nome.
+									<strong>Atenção!</strong> Os dados básicos podem ser alterados, exceto o CPF e o nome.
 								</v-alert>
 							</v-flex>
 						</v-layout>
@@ -86,7 +85,7 @@
 									</v-flex>
 
 									<v-flex mt-2>
-										<span class="font-weight-bold">Unidade da federaç�o em que reside:</span>
+										<span class="font-weight-bold">Unidade da federação em que reside:</span>
 										<v-select
 											v-model="formulario.endereco.co_ibge"
 											:items="listaUF"
@@ -152,7 +151,7 @@
 										name="input-7-1"
 										box
 										solo
-										label="Curr�culo resumido para a candidatura"
+										label="Currículo resumido para a candidatura"
 										auto-grow
 										:counter="1000"
 										:rules="[rules.required, rules.tamanhoMaximoCaracteres]"
@@ -163,22 +162,10 @@
 
 							<v-layout mt-2>
 								<v-flex md12 text-xs-center v-if="readonly">
-									Atenç�o, O texto do curr�culo resumido ficar� dispon�vel na plataforma de votaç�o e ser�
+									Atenção, O texto do currículo resumido ficará disponível na plataforma de votação e será
 									a defesa da candidatura do indicado.
 								</v-flex>
 							</v-layout>
-
-							<v-layout mt-4>
-								<v-flex md12 text-xs-center>
-									<v-btn
-										to="/inicio"
-										flat
-									>
-										Cancelar
-									</v-btn>
-								</v-flex>
-							</v-layout>
-
 						</v-container>
 					</v-card-text>
 				</v-card>
@@ -227,15 +214,6 @@
         data() {
             return {
                 formulario : {},
-                formularioInicial: {
-                    co_conselho_indicacao_habilitacao : null,
-                    co_conselho_indicacao_habilitacao_recurso : null,
-                    co_usuario_avaliador : null,
-                    dh_cadastro_recurso : null,
-                    ds_recurso : '',
-                    st_parecer : null,
-                    anexo: []
-                },
                 rules: {
                     required: value => !!value || 'Este campo é obrigatório',
                     minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',

@@ -12,7 +12,7 @@
 				</v-btn>
 
 				<v-toolbar-title>
-					Indicaç�o - Conselho de cultura
+					Indicação - Conselho de cultura
 				</v-toolbar-title>
 
 				<v-spacer/>
@@ -23,7 +23,7 @@
 					<v-card>
 						<v-tabs v-model="activeTab" centered :color="'grey darken-3'" dark slider-color="yellow">
 							<v-tab href='#dados-indicado'>DADOS DO INDICADO</v-tab>
-							<v-tab href='#resultado-habilitacao'>RESULTADO DA HABILITAC�O</v-tab>
+							<v-tab href='#resultado-habilitacao'>RESULTADO DA HABILITAÇÃO</v-tab>
 							<v-tab href='#recurso'>RECURSO</v-tab>
 						</v-tabs>
 						<v-tabs-items class="white elevation-1" v-model="activeTab">
@@ -260,12 +260,21 @@
 							</v-tab-item>
 						</v-tabs-items>
 					</v-card>
+
+					<v-layout mt-4>
+						<v-flex md12 text-xs-center>
+							<v-btn
+								@click="dialog = false"
+								flat
+							>
+								Voltar
+							</v-btn>
+						</v-flex>
+					</v-layout>
 				</v-container>
 			</v-card-text>
 
 		</v-card>
-
-
 	</v-dialog>
 </template>
 <script>
@@ -337,23 +346,12 @@
             },
             dialog(valor) {
                 this.$emit('input', valor);
-                if (!valor) {
-                    this.formulario = {
-                        ...this.formularioInicial
-                    };
-
-                }
             },
             conselho(valor) {
-                this.formulario.conselhoHabilitacao = valor || this.formularioInicial;
+                this.formulario = valor;
                 if (Object.keys(valor).length > 0) {
-                    this.formulario = valor || {};
+                    this.formulario = valor;
                 }
-
-                if (!valor) {
-                    this.formulario = this.formularioInicial;
-                }
-
             },
             listaUf(value) {
                 this.listaUF = value;
@@ -405,6 +403,5 @@
         mounted() {
             this.usuarioLogado = this.usuario;
         },
-
     };
 </script>

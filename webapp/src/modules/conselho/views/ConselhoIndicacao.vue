@@ -583,13 +583,19 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <conselho-indicacao-dialogo
-      v-model="dialogVisualizar"
-      :conselho="itemSelecionado"
-      :readonly="this.readonly"
-      :listaMunicipios="listaMunicipios"
-      :listaUF="listaUF"
-    />
+
+    <v-container>
+      <v-layout>
+        <conselho-indicacao-dialogo
+          v-model="dialogVisualizar"
+          :conselho="itemSelecionado"
+          :readonly="this.readonly"
+          :listaMunicipios="listaMunicipios"
+          :listaUF="listaUF"
+        />
+      </v-layout>
+
+    </v-container>
   </v-container>
 </template>
 
