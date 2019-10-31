@@ -21,7 +21,7 @@
     <v-card-text class="pa-0">
       <v-data-table
         :headers="headers"
-        :items="organizacoesGetter"
+        :items="organizacoes"
         :pagination.sync="pagination_organizacao"
         :total-items="totalItems"
         :loading="loading"
@@ -54,7 +54,7 @@
           </td>
           <td class="text-md-center">
             <v-chip>
-              {{ obterPontuacaoFinal(props.item) }}
+              {{props.item.pontuacao_final}}
             </v-chip>
           </td>
           <td class="text-md-center">
@@ -160,7 +160,7 @@ export default {
       },
       {
         text: 'Pontuação final',
-        value: 'habilitacaoRecurso.nu_pontuacao',
+        value: 'pontuacao_final',
         align: 'center',
       },
       {
@@ -182,6 +182,16 @@ export default {
       organizacoesGetter: 'organizacao/organizacoes',
       perfil: 'conta/perfil',
     }),
+    organizacoes() {
+      let organizacoes = [...this.organizacoesGetter];
+
+      organizacoes.map((organizacao) => {
+        organizacao.pontuacao_final = this.obterPontuacaoFinal(organizacao);
+        return organizacao;
+      });
+
+      return organizacoes;
+    },
   },
   methods: {
     ...mapActions({
