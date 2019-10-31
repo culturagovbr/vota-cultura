@@ -7,12 +7,12 @@
 	>
 		<v-card>
 			<v-toolbar dark color="primary">
-				<v-btn icon	dark @click="dialog = false">
+				<v-btn icon dark @click="dialog = false">
 					<v-icon>close</v-icon>
 				</v-btn>
 
 				<v-toolbar-title>
-					Visualizar indicado - Conselho de cultura
+					Indicaç�o - Conselho de cultura
 				</v-toolbar-title>
 
 				<v-spacer/>
@@ -23,7 +23,7 @@
 					<v-card>
 						<v-tabs v-model="activeTab" centered :color="'grey darken-3'" dark slider-color="yellow">
 							<v-tab href='#dados-indicado'>DADOS DO INDICADO</v-tab>
-							<v-tab href='#resultado-habilitacao'>RESULTADO DA HABILITACAO</v-tab>
+							<v-tab href='#resultado-habilitacao'>RESULTADO DA HABILITAC�O</v-tab>
 							<v-tab href='#recurso'>RECURSO</v-tab>
 						</v-tabs>
 						<v-tabs-items class="white elevation-1" v-model="activeTab">
@@ -36,7 +36,7 @@
 													<v-flex>
 														<v-card>
 															<v-toolbar color="white elevation-1">
-																<v-toolbar-title>Dados bsicos</v-toolbar-title>
+																<v-toolbar-title>Dados b�sicos</v-toolbar-title>
 															</v-toolbar>
 															<v-card-text>
 																<v-container
@@ -223,7 +223,8 @@
 										<v-layout>
 											<v-flex class="font-weight-bold">
 												<span>Resultado da habilitaçao:</span>
-												<span :class="mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).color"> {{mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).text }}</span>
+												<span
+													:class="mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).color"> {{mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).text }}</span>
 											</v-flex>
 										</v-layout>
 										<v-layout class="mt-2">
@@ -248,7 +249,15 @@
 
 								</v-flex>
 							</v-tab-item>
-							<v-tab-item value="recurso">recurso</v-tab-item>
+							<v-tab-item value="recurso">
+								<conselho-indicacao-habilitacao-recurso
+									:indicacao="formulario"
+									:readonly="readonly"
+									:listaUF="this.listaUF"
+									:listaMunicipios="this.listaMunicipios"
+
+								/>
+							</v-tab-item>
 						</v-tabs-items>
 					</v-card>
 				</v-container>
@@ -257,16 +266,16 @@
 		</v-card>
 
 
-
-
 	</v-dialog>
 </template>
 <script>
     import {mapGetters, mapActions} from 'vuex';
     import {documentosIndicacao} from '../api/documentosIndicacao';
+    import ConselhoIndicacaoHabilitacaoRecurso from "./components/ConselhoIndicacaoHabilitacaoRecurso";
 
     export default {
         name: 'ConselhoIndicacaoDialogo',
+        components: {ConselhoIndicacaoHabilitacaoRecurso},
         props: {
             value: {
                 type: Boolean,
@@ -277,14 +286,27 @@
                 default: () => {
                 },
             },
+            readonly: {
+                type: Boolean,
+                default: false,
+            },
+            listaMunicipios: {
+                type: Array,
+                default: [],
+            },
+            listaUF: {
+                type: Array,
+                default: [],
+            },
         },
         data() {
             return {
-                activeTab: 'dados-indicado',
+                activeTab: 'recurso',
                 dialog: false,
-                listaMunicipios: [],
-                listaUF: [],
                 formularioInicial: {
+                    ds_recurso : '',
+                    ds_curriculo: '',
+                    anexo: [],
                     conselhoHabilitacao: {
                         co_conselho_habilitacao: null,
                         co_conselho: null,
@@ -307,8 +329,6 @@
             ...mapGetters({
                 perfis: 'conta/perfis',
                 perfisInscricao: 'conta/perfisInscricao',
-                estadosGetter: 'localidade/estados',
-                municipiosGetter: 'localidade/municipios',
             }),
         },
         watch: {
@@ -317,17 +337,28 @@
             },
             dialog(valor) {
                 this.$emit('input', valor);
+                if (!valor) {
+                    this.formulario = {
+                        ...this.formularioInicial
+                    };
+
+                }
             },
             conselho(valor) {
                 this.formulario.conselhoHabilitacao = valor || this.formularioInicial;
                 if (Object.keys(valor).length > 0) {
                     this.formulario = valor || {};
                 }
+
+                if (!valor) {
+                    this.formulario = this.formularioInicial;
+                }
+
             },
-            estadosGetter(value) {
+            listaUf(value) {
                 this.listaUF = value;
             },
-            municipiosGetter(valor) {
+            listaMunicipios(valor) {
                 this.listaMunicipios = valor;
             },
             formulario(valor) {
@@ -353,7 +384,7 @@
                         };
                         break;
                     default:
-                        strParecer = { text: " - ", color: "" };
+                        strParecer = {text: " - ", color: ""};
                         break;
                 }
 

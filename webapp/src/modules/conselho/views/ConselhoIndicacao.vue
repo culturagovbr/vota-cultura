@@ -144,12 +144,14 @@
                           dark
                           color="primary"
                           small
-                          @click="abrirDialogoVisualizacao(props.item)"
+                          @click="abrirDialogoVisualizacao(props.item, true)"
                         >
                           <v-icon>remove_red_eye</v-icon>
                         </v-btn>
 
                         <v-btn
+                          title="Cadastrar recurso"
+                          v-if="!(props.item.avaliacaoHabilitacao || {}).recurso"
                           depressed
                           outline
                           icon
@@ -157,7 +159,7 @@
                           dark
                           color="primary"
                           small
-                          @click="abrirDialogoVisualizacao(props.item)"
+                          @click="abrirDialogoVisualizacao(props.item, false)"
                         >
                           <v-icon>gavel</v-icon>
                         </v-btn>
@@ -584,6 +586,9 @@
     <conselho-indicacao-dialogo
       v-model="dialogVisualizar"
       :conselho="itemSelecionado"
+      :readonly="this.readonly"
+      :listaMunicipios="listaMunicipios"
+      :listaUF="listaUF"
     />
   </v-container>
 </template>
@@ -630,6 +635,7 @@ export default {
         return true;
       },
     },
+    readonly : false,
     documentos: documentosIndicacao,
     dialogoConfirmacaoExclusao: false,
     formulario_valido: false,
@@ -880,9 +886,10 @@ export default {
 
       return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },
-    abrirDialogoVisualizacao(valor) {
+    abrirDialogoVisualizacao(valor, readonly) {
       this.itemSelecionado = valor;
       this.dialogVisualizar = true;
+      this.readonly = readonly;
     },
     abrirDialogoConfirmacaoExclusao(itemParaExclusao) {
       this.dialogoConfirmacaoExclusao = true;
