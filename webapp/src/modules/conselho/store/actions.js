@@ -106,6 +106,17 @@ export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselho
   throw new TypeError(error);
 });
 
+export const enviarIndicacaoConselhoRecurso = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselhoRecurso(payload).then((response) => {
+  return response;
+}).catch((error) => {
+  dispatch(
+    'app/setMensagemErro',
+    error.response.data.message,
+    { root: true },
+  );
+  throw new TypeError(error);
+});
+
 export const enviarIndicacaoConselhoArquivo = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselhoArquivo(payload)
   .then(response => response)
   .catch((error) => {

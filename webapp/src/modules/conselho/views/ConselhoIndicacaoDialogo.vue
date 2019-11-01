@@ -36,7 +36,7 @@
 													<v-flex>
 														<v-card>
 															<v-toolbar color="white elevation-1">
-																<v-toolbar-title>Dados b�sicos</v-toolbar-title>
+																<v-toolbar-title>Dados básicos</v-toolbar-title>
 															</v-toolbar>
 															<v-card-text>
 																<v-container
@@ -154,7 +154,7 @@
 														>
 															<div class="ma-4 text-justify">
 																<v-toolbar color="white darken-3 title">
-																	Documenta??o
+																	Documentação
 																</v-toolbar>
 																<v-card class="elevation-1">
 																	<v-container
@@ -204,14 +204,6 @@
 												height="auto"
 												color="white lighten-1 justify-center"
 											>
-												<v-btn
-													@click="dialog = false"
-												>
-													<v-icon left>
-														undo
-													</v-icon>
-													Voltar
-												</v-btn>
 											</v-footer>
 										</v-container>
 									</v-card-text>
@@ -265,8 +257,10 @@
 						<v-flex md12 text-xs-center>
 							<v-btn
 								@click="dialog = false"
-								flat
 							>
+								<v-icon left>
+									undo
+								</v-icon>
 								Voltar
 							</v-btn>
 						</v-flex>
@@ -313,7 +307,7 @@
                 activeTab: 'recurso',
                 dialog: false,
                 formularioInicial: {
-                    ds_recurso : '',
+                    ds_recurso: '',
                     ds_curriculo: '',
                     anexo: [],
                     conselhoHabilitacao: {
@@ -325,10 +319,10 @@
                 },
                 formulario: {},
                 rules: {
-                    required: value => !!value || 'Este campo ? obrigat?rio',
-                    minCaracter: value => value.length >= 8 || 'M?nimo 8 caracteres',
-                    tamanhoMaximo3000Caracteres: value => (!!value && value.length <= 3000) || 'M?ximo 3000 caracteres',
-                    tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'M?ximo 500 caracteres',
+                    required: value => !!value || 'Este campo é obrigatório',
+                    minCaracter: value => value.length >= 8 || 'Mínimo 8 caracteres',
+                    tamanhoMaximo3000Caracteres: value => (!!value && value.length <= 3000) || 'Máximo 3000 caracteres',
+                    tamanhoMaximo500Caracteres: value => (!!value && value.length <= 500) || 'Máximo 500 caracteres',
                 },
                 usuarioLogado: {},
                 fotoIndicado: {},
@@ -395,7 +389,7 @@
             obterDescricaoDocumento(tpArquivo) {
                 const indiceDocumento = documentosIndicacao.findIndex(elemento => (elemento || {}).slug === tpArquivo);
                 if (indiceDocumento === -1) {
-                    return 'Documento inv?lido';
+                    return 'Documento inválido';
                 }
                 return documentosIndicacao[indiceDocumento].descricao;
             },

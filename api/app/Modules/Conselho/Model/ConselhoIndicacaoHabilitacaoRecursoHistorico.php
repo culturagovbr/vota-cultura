@@ -4,11 +4,11 @@ namespace App\Modules\Conselho\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ConselhoIndicacaoHabilitacaoRecurso extends Model
+class ConselhoIndicacaoHabilitacaoRecursoHistorico extends Model
 {
-    protected $table = 'tb_conselho_indicacao_habilitacao_recurso';
+    protected $table = 'tb_conselho_indicacao_habilitacao_recurso_historico';
 
-    protected $primaryKey = 'co_conselho_indicacao_habilitacao_recurso';
+    protected $primaryKey = 'co_conselho_indicacao_habilitacao_recurso_historico';
 
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
@@ -17,6 +17,7 @@ class ConselhoIndicacaoHabilitacaoRecurso extends Model
     ];
 
     protected $fillable = [
+        'co_conselho_indicacao_habilitacao_recurso_historico',
         'co_conselho_indicacao_habilitacao_recurso',
         'co_conselho_indicacao_habilitacao',
         'ds_recurso',
@@ -25,5 +26,4 @@ class ConselhoIndicacaoHabilitacaoRecurso extends Model
     ];
 
     public $timestamps = FALSE;
-
 }
