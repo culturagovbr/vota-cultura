@@ -174,6 +174,12 @@ export default {
           icon: 'list',
           name: 'inscricao-lista-parcial-habilitacao-route',
         },
+        {
+          title: 'Votação',
+          group: 'apps',
+          icon: 'list',
+          name: 'votacao-route',
+        },
       ],
     };
   },
