@@ -177,3 +177,15 @@ export const avaliarHabilitacaoIndicacao = async ({}, avaliacao) => {
     avaliacao,
   );
 };
+
+export const obterListaParcialIndicados = async ({ commit, dispatch }) => conselhoService.obterListaParcialIndicados().then((response) => {
+  const { data } = response.data;
+  commit(types.OBTER_LISTA_PARCIAL_INDICADOS, data);
+}).catch((error) => {
+  dispatch(
+      'app/setMensagemErro',
+      error.response.data.message,
+      { root: true },
+  );
+  throw new TypeError(error);
+});

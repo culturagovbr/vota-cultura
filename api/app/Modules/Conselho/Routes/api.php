@@ -13,6 +13,7 @@ Route::group([
         Route::apiResource('/', 'ConselhoIndicacaoApiResourceController');
         Route::post('/arquivo', 'ConselhoIndicacaoArquivoController@store');
         Route::apiResource('/habilitacao', 'ConselhoIndicacaoHabilitacaoApiResourceController');
+        Route::get('/lista-parcial', 'ConselhoIndicacaoHabilitacaoApiResourceController@listaParcial');
     });
 
     Route::group([
