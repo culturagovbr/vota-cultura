@@ -12,6 +12,7 @@ class ConselhoIndicacaoHabilitacaoListaParcial extends JsonResource
             'co_conselho_indicacao_habilitacao' => $this->co_conselho_indicacao_habilitacao,
             'co_indicado' => $this->co_indicado,
             'st_avaliacao' => (bool) $this->st_avaliacao,
+            'st_avaliacao_descricao' => (bool) $this->st_avaliacao ? 'Habilitado ' : 'Inabilitado',
         ];
     }
 }

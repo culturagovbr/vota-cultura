@@ -70,7 +70,7 @@
                           dark
                           :color="((props.item.avaliacaoHabilitacao || {}).st_avaliacao) ? 'primary' : 'error'"
                         >
-                          {{((props.item.avaliacaoHabilitacao || {}).st_avaliacao) ? 'Habilitado' : 'Inabilitado' }}
+                          {{props.item.avaliacaoHabilitacao.st_avaliacao_descricao}}
                         </v-chip>
                       </td>
                     </template>
@@ -127,7 +127,7 @@ export default {
         },
         {
           text: 'Resultado parcial da habilitação',
-          value: 'avaliacaoHabilitacao.st_avaliacao',
+          value: 'avaliacaoHabilitacao.st_avaliacao_descricao',
         },
       ],
     };
