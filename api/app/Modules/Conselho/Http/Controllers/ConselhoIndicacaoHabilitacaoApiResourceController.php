@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conselho\Http\Controllers;
 
+use App\Modules\Conselho\Http\Resources\ConselhoIndicacaoListaParcial;
 use App\Modules\Conselho\Service\ConselhoIndicacaoHabilitacao as ConselhoIndicacaoHabilitacaoService;
 use App\Modules\Core\Exceptions\EMetodoIndisponivel;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
@@ -18,7 +19,7 @@ class ConselhoIndicacaoHabilitacaoApiResourceController extends AApiResourceCont
 
     public function __construct(ConselhoIndicacaoHabilitacaoService $service)
     {
-        $this->middleware('auth:api')->except(['store', 'index', 'update']);
+        $this->middleware('auth:api')->except(['store', 'index', 'update','listaParcial']);
         return parent::__construct($service);
     }
 
@@ -49,6 +50,15 @@ class ConselhoIndicacaoHabilitacaoApiResourceController extends AApiResourceCont
     {
         return $this->sendResponse(
             $this->service->atualizar($request, $identificador),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
+    }
+
+    public function listaParcial(): JsonResponse
+    {
+        return $this->sendResponse(
+            ConselhoIndicacaoListaParcial::collection($this->service->obterTodosParcialmenteHabilitados()),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );

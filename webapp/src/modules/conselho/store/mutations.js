@@ -29,4 +29,7 @@ export const mutations = {
   [types.CONCLUIR_INDICACAO](state) {
     state.conselho.st_indicacao = 'f';
   },
+  [types.OBTER_LISTA_PARCIAL_INDICADOS](state, indicados) {
+    state.listaParcialIndicados = indicados;
+  },
 };
