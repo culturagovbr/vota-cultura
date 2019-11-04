@@ -14,6 +14,7 @@ Route::group([
         Route::post('/arquivo', 'ConselhoIndicacaoArquivoController@store');
         Route::apiResource('/habilitacao', 'ConselhoIndicacaoHabilitacaoApiResourceController');
         Route::apiResource('/recurso', 'ConselhoHabilitacaoIndicacaoRecursoApiResourceController');
+        Route::get('/lista-parcial', 'ConselhoIndicacaoHabilitacaoApiResourceController@listaParcial');
     });
 
     Route::group([

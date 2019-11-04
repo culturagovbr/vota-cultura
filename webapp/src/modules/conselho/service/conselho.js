@@ -22,3 +22,5 @@ export const avaliarHabilitacaoIndicacao = payload => service.postRequest('/cons
 export const revisarHabilitacaoIndicacao = (payload, coConselhoIndicacaoHabilitacao) => service.putRequest('/conselho/indicacao/habilitacao',
   coConselhoIndicacaoHabilitacao,
   payload);
+
+export const obterListaParcialIndicados = () => service.getRequest('/conselho/indicacao/lista-parcial');
