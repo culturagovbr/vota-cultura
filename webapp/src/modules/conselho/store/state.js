@@ -5,4 +5,5 @@ export const state = {
   conselhos: [],
   modalVisualizacaoConselhoAdministrador: false,
   listarIndicacaoConselho: [],
+  listaParcialIndicados: [],
 };
