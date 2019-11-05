@@ -38,11 +38,17 @@ class Eleitor extends AbstractService
             }
 
             $eleitor = $this->getModel()->where(
-                $dados->only([
-                    'nu_cpf',
-                    'nu_rg',
-                    'ds_email',
-                ])->toArray()
+                'nu_cpf',
+                '=',
+                $dados['nu_cpf']
+            )->orWhere(
+                'ds_email',
+                '=',
+                $dados['ds_email']
+            )->orWhere(
+                'nu_rg',
+                '=',
+                $dados['nu_rg']
             )->first();
 
             if ($eleitor) {

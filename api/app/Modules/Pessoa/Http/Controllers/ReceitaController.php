@@ -31,7 +31,7 @@ class ReceitaController extends Controller
     public function consultarDadosPessoaFisica(string $identificador)
     {
         return $this->sendResponse(
-            $this->service->consultarDadosPessoaFisica($identificador),
+            $this->service->consultarDadosPessoaFisicaPublico($identificador),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );

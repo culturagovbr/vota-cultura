@@ -18,12 +18,16 @@ class Receita implements IService
         $this->modelo = $modelo;
     }
 
-    public function consultarDadosPessoaFisica(string $identificador)
+    public function consultarDadosPessoaFisicaPublico(string $identificador)
     {
-        return $this->buscarDados(
+        $dados = $this->buscarDados(
             ReceitaModel::SERVICO_PESSOA_FISICA,
             $identificador
         );
+        return [
+            'nmPessoaFisica' => $dados['nmPessoaFisica'],
+            'nrCpf' => $dados['nrCpf']
+        ];
     }
 
     public function consultarDadosPessoaJuridica(string $identificador)
