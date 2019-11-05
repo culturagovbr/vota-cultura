@@ -24,19 +24,10 @@
                 class="mx-auto"
                 max-width="600"
               >
+                <!--:src="indicado.foto_indicado"-->
                 <v-img
                   :aspect-ratio="5/4"
-                  :src="indicado.foto_indicado"
-                >
-                  <!--<v-expand-transition>-->
-                  <!--<div-->
-                  <!--class="d-flex transition-fast-in-fast-out primary darken-2 v-card&#45;&#45;reveal display-3 white&#45;&#45;text"-->
-                  <!--style="height: 100%;"-->
-                  <!--&gt;-->
-                  <!--Titular-->
-                  <!--</div>-->
-                  <!--</v-expand-transition>-->
-                </v-img>
+                />
                 <v-card-text
                   class="pt-4"
                   style="position: relative;"
@@ -57,15 +48,12 @@
                   <h3 class="font-weight-light primary--text mb-2">
                     {{ indicado.no_indicado }} - Goiás
                   </h3>
-                  <!--<div class="title mb-2">-->
-                  <!--Goiás-->
-                  <!--</div>-->
                   <v-layout>
                     <v-flex>
                       <a
                         href="https://twitter.com/share"
                         class="twitter-share-button"
-                        data-url="https://www.google.com.br"
+                        :data-url="`http://votacultura.cidadania.gov.br/votacao/${regiao}`"
                         data-lang="pt"
                         :data-text="`Vote em ${indicado.no_indicado} para compor o Conselho Nacional de Política Cultural (CNPC) no triênio 2019/2022`"
                         data-size="medium"
@@ -74,7 +62,7 @@
                     </v-flex>
                     <v-flex>
                       <a
-                        :href="`https://api.whatsapp.com/send?text=Vote em ${indicado.no_indicado} para compor o Conselho Nacional de Política Cultural (CNPC) no triênio 2019/2022`"
+                        :href="`https://api.whatsapp.com/send?text=Vote em ${indicado.no_indicado} para compor o Conselho Nacional de Política Cultural (CNPC) no triênio 2019/2022. http://votacultura.cidadania.gov.br/votacao/${regiao}`"
                         target="_blank"
                       >
                         <img
@@ -86,30 +74,20 @@
                     </v-flex>
                     <v-flex>
                       <div
-                        class="fb-share-button"
-                        data-href="https://www.kabum.com.br/produto/104087/processador-intel-core-i9-9900ks-coffee-lake-refresh-geracao-cache-16mb-4-0ghz-5-0ghz-max-turbo-lga-1151-bx80684i99900ks"
-                        data-layout="button"
-                        data-size="small"
+                        id="fb-share-button"
+                        @click="compartilharFacebook(indicado)"
                       >
-                        <a
-                          target="_blank"
-                          href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvotacultura.cidadania.gov.br%2Fvotacao%2Fcentro-oeste&amp;src=sdkpreparse"
-                          class="fb-xfbml-parse-ignore"
-                        >Compartilhar</a>
+                        <svg
+                          viewBox="0 0 12 12"
+                          preserveAspectRatio="xMidYMid meet"
+                        >
+                          <path
+                            class="svg-icon-path"
+                            d="M9.1,0.1V2H8C7.6,2,7.3,2.1,7.1,2.3C7,2.4,6.9,2.7,6.9,3v1.4H9L8.8,6.5H6.9V12H4.7V6.5H2.9V4.4h1.8V2.8 c0-0.9,0.3-1.6,0.7-2.1C6,0.2,6.6,0,7.5,0C8.2,0,8.7,0,9.1,0.1z"
+                          />
+                        </svg>
+                        <span>Compartilhar</span>
                       </div>
-
-                      <!--<div-->
-                      <!--class="fb-share-button"-->
-                      <!--data-href="http://votacultura.cidadania.gov.br"-->
-                      <!--data-layout="button"-->
-                      <!--data-size="small"-->
-                      <!--&gt;-->
-                      <!--<a-->
-                      <!--target="_blank"-->
-                      <!--href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"-->
-                      <!--class="fb-xfbml-parse-ignore"-->
-                      <!--&gt;Compartilhar</a>-->
-                      <!--</div>-->
                     </v-flex>
                   </v-layout>
                 </v-card-text>
@@ -156,7 +134,6 @@ export default {
     pagination: {
       rowsPerPage: 4,
     },
-
     regioes: [
       'sul',
       'sudeste',
@@ -167,19 +144,24 @@ export default {
   }),
   watch: {
     listarIndicacaoConselhoGetter() {
-      setTimeout(() => {
-        (function (d, s, id) {
-          let js; const
-            fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.0';
+      if ((typeof twttr === 'undefined')) {
+        window.twttr = (function (d, s, id) {
+          let js; const fjs = d.getElementsByTagName(s)[0];
+          const t = window.twttr || {};
+          if (d.getElementById(id)) return t;
+          js = d.createElement(s);
+          js.id = id;
+          js.src = 'https://platform.twitter.com/widgets.js';
           fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
 
+          t._e = [];
+          t.ready = function (f) {
+            t._e.push(f);
+          };
 
-        !(function (d, s, id) { let js; const fjs = d.getElementsByTagName(s)[0]; const p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = `${p}://platform.twitter.com/widgets.js`; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs'));
-      }, 200);
+          return t;
+        }(document, 'script', 'twitter-wjs'));
+      }
     },
   },
   computed: {
@@ -200,10 +182,17 @@ export default {
     ...mapActions({
       obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
     }),
+    compartilharFacebook(indicado) {
+      (FB || {}).ui(
+        {
+          method: 'share',
+          quote: `Vote em ${indicado.no_indicado} para compor o Conselho Nacional de Política Cultural (CNPC) no triênio 2019/2022. http://votacultura.cidadania.gov.br/votacao/${this.regiao}`,
+          href: `http://votacultura.cidadania.gov.br/${this.regiao}`,
+        },
+      );
+    },
   },
   mounted() {
-    console.log(this.regiao);
-    console.log(this.$route);
     this.loading = true;
     this.obterListaIndicacaoConselho().finally(() => {
       this.loading = false;
@@ -220,5 +209,35 @@ export default {
     opacity: .5;
     position: absolute;
     width: 100%;
+  }
+
+
+  #fb-share-button {
+    background: #3b5998;
+    border-radius: 3px;
+    display: inline-block;
+    position: static;
+  }
+
+  #fb-share-button:hover {
+    cursor: pointer;
+    background: #213A6F
+  }
+
+  #fb-share-button svg {
+    width: 14px;
+    fill: white;
+    vertical-align: middle;
+    border-radius: 3px;
+    margin-left: 4px;
+  }
+
+  #fb-share-button span {
+    vertical-align: middle;
+    color: white;
+    font-weight: initial;
+    font-size: 12px;
+    /*padding: 0 3px;*/
+    margin-right: 6px;
   }
 </style>

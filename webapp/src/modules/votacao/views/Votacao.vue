@@ -26,7 +26,7 @@ export default {
   watch: {
     regiao(valor) {
       if (!!valor) {
-        this.$router.push(`/votacao/${valor}`);
+        window.location.href = `/votacao/${valor}`;
       }
     },
   },
