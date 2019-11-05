@@ -1,21 +1,6 @@
 
 <template>
   <div>
-    <section
-      style="height: 120px; background-color: red;"
-      class="title"
-    >
-      <v-layout>
-        <v-flex
-          xs12
-          text-md-center
-          mt-5
-          white--text
-        >
-          Comunicamos que o resultado final da habilitação das organizações/entidades culturais foi adiado para o dia 29 de outubro (terça-feira).
-        </v-flex>
-      </v-layout>
-    </section>
     <section>
       <v-img
         :src="require('@/assets/banner.png')"
@@ -125,6 +110,49 @@
                   </div>
                 </v-card>
               </v-flex>
+              <v-flex
+                xs12
+                md4
+              >
+                <v-card
+                  class="elevation-15 transparent"
+                  style="width:300px;min-height: 340px"
+                >
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      gavel
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Recurso da indicação - Conselho de cultura
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    <div class="text-xs-center">
+                      Cadastre aqui o recurso referente à etapa de habilitação dos indicados.
+                    </div>
+                  </v-card-text>
+                  <div class="text-xs-center pb-2">
+                    <v-btn
+                      style="margin-top: 10px"
+                      color="green darken-4"
+                      to="/conselho/indicacao"
+                      dark
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
 
               <v-flex
                 xs12
@@ -160,7 +188,7 @@
                       color="green darken-4"
                       to="/eleitor/inscricao"
                       dark
-                      style="margin-top: 32px"
+                      style="margin-top: 34px"
                     >
                       <v-icon>
                         call_made
@@ -169,6 +197,49 @@
                   </div>
                 </v-card>
               </v-flex>
+
+              <v-flex
+                xs12
+                md4
+              >
+                <v-card
+                  class="elevation-15 transparent"
+                  style="width:300px;min-height: 340px"
+                >
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      list
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Lista parcial dos indicados dos conselhos de cultura
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    Consulte aqui a lista parcial dos indicados.
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
+                      color="green darken-4"
+                      to="/inscricao/lista-indicados"
+                      dark
+                      style="margin-top: 44px"
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+
             </v-layout>
           </v-container>
         </v-flex>

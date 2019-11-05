@@ -21,7 +21,7 @@
     <v-card-text class="pa-0">
       <v-data-table
         :headers="headers"
-        :items="organizacoesGetter"
+        :items="organizacoes"
         :pagination.sync="pagination_organizacao"
         :total-items="totalItems"
         :loading="loading"
@@ -45,19 +45,24 @@
             </v-chip>
           </td>
           <td class="text-md-center">
-            <v-chip v-if="!!props.item.organizacaoHabilitacao">
-              {{ (parseInt(props.item.organizacaoHabilitacao.nu_nova_pontuacao) >= 0) ? props.item.organizacaoHabilitacao.nu_nova_pontuacao : props.item.pontuacao }}
+            <v-chip v-if="!!(props.item || {}).organizacaoHabilitacao">
+              {{ (parseInt((props.item || {}).organizacaoHabilitacao.nu_nova_pontuacao) >= 0) ? ((props.item || {}).organizacaoHabilitacao || {}).nu_nova_pontuacao : props.item.pontuacao }}
             </v-chip>
-            <span v-else>
+            <v-chip v-else>
               -
-            </span>
+            </v-chip>
           </td>
           <td class="text-md-center">
-            <span
-              v-if="!!props.item.organizacaoHabilitacao && !!props.item.organizacaoHabilitacao.situacao_avaliacao"
+            <v-chip>
+              {{props.item.pontuacao_final}}
+            </v-chip>
+          </td>
+          <td class="text-md-center">
+            <!-- <span
+              v-if="!!(props.item || {}).organizacaoHabilitacao && !!((props.item || {}).organizacaoHabilitacao || {}).situacao_avaliacao"
               v-html="props.item.organizacaoHabilitacao.situacao_avaliacao"
-            />
-            <span v-else>-</span>
+            /> -->
+            <span>{{ obterSituacaoAvaliacao(props.item) }}</span>
           </td>
           <td v-if="exibirColunaAcoes">
             <v-tooltip bottom>
@@ -73,7 +78,7 @@
                   v-on="on"
                   @click="editarItemModal(props.item);"
                 >
-                  <v-icon v-if="props.item.organizacaoHabilitacao === null || (!!props.item.organizacaoHabilitacao.co_organizacao_habilitacao && perfil.no_perfil === 'administrador' && props.item.organizacaoHabilitacao.st_revisao_final !== true)">
+                  <v-icon v-if="(props.item || {}).organizacaoHabilitacao === null || ((!!props.item.organizacaoHabilitacao || {}).co_organizacao_habilitacao && perfil.no_perfil === 'administrador' && ((props.item || {}).organizacaoHabilitacao || {}).st_revisao_final !== true)">
                     gavel
                   </v-icon>
                   <v-icon v-else>
@@ -81,7 +86,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <span v-if="props.item.organizacaoHabilitacao === null">Avaliar</span>
+              <span v-if="(props.item || {}).organizacaoHabilitacao === null">Avaliar</span>
               <span v-else>Visualizar</span>
             </v-tooltip>
           </td>
@@ -154,7 +159,12 @@ export default {
         align: 'center',
       },
       {
-        text: 'Resultado da análise',
+        text: 'Pontuação final',
+        value: 'pontuacao_final',
+        align: 'center',
+      },
+      {
+        text: 'Resultado final',
         value: 'organizacaoHabilitacao.situacao_avaliacao',
         align: 'center',
       },
@@ -172,11 +182,71 @@ export default {
       organizacoesGetter: 'organizacao/organizacoes',
       perfil: 'conta/perfil',
     }),
+    organizacoes() {
+      let organizacoes = [...this.organizacoesGetter];
+
+      organizacoes.map((organizacao) => {
+        organizacao.pontuacao_final = this.obterPontuacaoFinal(organizacao);
+        return organizacao;
+      });
+
+      return organizacoes;
+    },
   },
   methods: {
     ...mapActions({
       obterOrganizacoesHabilitacao: 'organizacao/obterOrganizacoesHabilitacao',
     }),
+    obterSituacaoAvaliacao(item) {
+        if(Object.keys((item.habilitacaoRecurso || {})).length > 0) {
+          return this.mapCodeResultadoAvaliacaoToString(item.habilitacaoRecurso.st_parecer).text;
+        }
+
+        return this.mapCodeResultadoAvaliacaoToString(item.organizacaoHabilitacao.st_avaliacao).text;
+    },
+    mapCodeResultadoAvaliacaoToString(stParecer) {
+      let parecer = {};
+      switch (parseInt(stParecer)) {
+        case 0:
+          parecer = {
+            text: 'Inabilitada',
+            color: "red--text"
+          };
+          break;
+        case 1:
+          parecer = {
+            text: 'Habilitada e desclassificada',
+            color: 'orange--text'
+          };
+          break;
+        case 2:
+          parecer = {
+            text: 'Habilitada e classificada',
+            color: 'green--text'
+          };
+          break;
+        case 3:
+          parecer = {
+            text: 'Habilitada',
+            color: 'green--text'
+          };
+          break;
+        default:
+          parecer = { text: ' - ' , color: '' };
+          break;
+      }
+
+      return parecer;
+    },
+    obterPontuacaoFinal(item) {
+      if ((item.habilitacaoRecurso || {}).nu_pontuacao) {
+          return parseInt(item.habilitacaoRecurso.nu_pontuacao, 10);
+      }
+
+     return parseInt(parseInt((item.organizacaoHabilitacao || {}).nu_nova_pontuacao) >= 0 ?
+        (item.organizacaoHabilitacao || {}).nu_nova_pontuacao :
+        item.pontuacao, 10);
+    },
     editarItemModal(item) {
       this.itemEditado = item;
       this.mostrarModalEdicao = true;

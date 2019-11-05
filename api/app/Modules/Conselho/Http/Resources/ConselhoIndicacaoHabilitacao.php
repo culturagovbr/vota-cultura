@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conselho\Http\Resources;
 
+use App\Modules\Conselho\Model\ConselhoIndicacaoHabilitacaoRecurso;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ConselhoIndicacaoHabilitacao extends JsonResource
@@ -16,6 +17,7 @@ class ConselhoIndicacaoHabilitacao extends JsonResource
             'dh_avaliacao' => $this->dh_avaliacao->format('d/m/Y H:i:s'),
             'co_usuario_avaliador' => $this->co_usuario_avaliador,
             'st_revisao_final' => $this->st_revisao_final,
+            'recurso' => $this->recurso
         ];
     }
 }

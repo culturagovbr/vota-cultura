@@ -55,6 +55,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "site-administrador-lista-inscritos" */ '@/modules/site/views/administrador/AdministradorListaIncritos.vue'),
       },
+      {
+        path: '/inscricao/lista-indicados',
+        name: 'inscricao-lista-parcial-indicados-route',
+        meta: {
+          title: 'Lista parcial dos indicados',
+          group: 'apps',
+          icon: 'dashboard',
+          public: true,
+        },
+        component: () => import(/* webpackChunkName: "inscricao-lista-parcial-indicados" */ '@/modules/conselho/views/ConselhoIndicacaoLista.vue'),
+      },
     ],
   },
 ];

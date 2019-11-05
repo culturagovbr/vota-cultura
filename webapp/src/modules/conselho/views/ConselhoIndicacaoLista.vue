@@ -4,7 +4,7 @@
       <v-card-title>
         <div class="layout column align-center">
           <h2 class="flex my-2 primary--text">
-            Lista final dos habilitados
+            {{ $route.meta.title }}
           </h2>
         </div>
       </v-card-title>
@@ -20,10 +20,6 @@
             <v-tab href="#conselho">
               Conselho
               <v-icon>group</v-icon>
-            </v-tab>
-            <v-tab href="#organizacao">
-              Organização ou entidade
-              <v-icon>color_lens</v-icon>
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tp_inscricao">
@@ -43,7 +39,7 @@
                 <v-card-text class="pa-0">
                   <v-data-table
                     :headers="headers"
-                    :items="conselhosGetter"
+                    :items="listaParcialIndicados"
                     :pagination.sync="pagination_conselho"
                     :total-items="totalItems"
                     :loading="loading"
@@ -56,8 +52,8 @@
                       slot-scope="props"
                     >
                       <td />
-                      <td>{{ props.item.cnpj_formatado }}</td>
-                      <td>{{ props.item.no_conselho }}</td>
+                      <td>{{ props.item.cpf_indicado_formatado }}</td>
+                      <td>{{ props.item.no_indicado }}</td>
                       <td>
                         <v-chip
                           dark
@@ -67,25 +63,20 @@
                         </v-chip>
                       </td>
                       <td>
-                        <v-chip>
-                          {{ props.item.endereco.municipio.uf.regiao.no_regiao }}
-                        </v-chip>
+                        {{ props.item.conselho.no_conselho }}
                       </td>
                       <td>
                         <v-chip
                           dark
-                          :color="(props.item.conselhoHabilitacao.ds_avaliacao === 'Habilitado') ? 'primary' : 'error'"
+                          :color="((props.item.avaliacaoHabilitacao || {}).st_avaliacao) ? 'primary' : 'error'"
                         >
-                          {{ props.item.conselhoHabilitacao.ds_avaliacao }}
+                          {{props.item.avaliacaoHabilitacao.st_avaliacao_descricao}}
                         </v-chip>
                       </td>
                     </template>
                   </v-data-table>
                 </v-card-text>
               </v-card>
-            </v-tab-item>
-            <v-tab-item value="organizacao">
-              <organizacao-lista-habilitacao :exibirTitulo="false" :exibirColunaAcoes="false" />
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -96,11 +87,9 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import OrganizacaoListaHabilitacao from '../../../organizacao/views/OrganizacaoListaHabilitacao';
 
 export default {
   name: 'ListaParcialHabilitacao',
-  components: { OrganizacaoListaHabilitacao },
   data() {
     return {
       tp_inscricao: null,
@@ -121,45 +110,43 @@ export default {
           sortable: false,
         },
         {
-          text: 'CNPJ do órgão gestor do conselho',
-          value: 'cnpj_formatado',
+          text: 'CPF',
+          value: 'cpf_indicado_formatado',
         },
         {
-          text: 'Nome do conselho',
-          value: 'no_conselho',
+          text: 'Nome',
+          value: 'no_indicado',
         },
         {
-          text: 'UF',
+          text: 'Unidade da federação em que reside',
           value: 'endereco.municipio.uf.no_uf',
         },
         {
-          text: 'Região',
-          value: 'endereco.municipio.uf.regiao.no_regiao',
+          text: 'Nome do conselho',
+          value: 'conselho.no_conselho',
         },
         {
-          text: 'Resultado final da habilitação',
-          value: 'conselhoHabilitacao.ds_avaliacao',
+          text: 'Resultado parcial da habilitação',
+          value: 'avaliacaoHabilitacao.st_avaliacao_descricao',
         },
       ],
     };
   },
   computed: {
     ...mapGetters({
-      conselhosGetter: 'conselho/conselhos',
-      conselhosParcialmenteHabilitadosGetter: 'conselho/conselhosParcialmenteHabilitados',
+      listaParcialIndicados: 'conselho/listaParcialIndicados',
     }),
   },
   methods: {
     ...mapActions({
-      obterConselhos: 'conselho/obterConselhos',
-      obterConselhosParcialmenteHabilitados: 'conselho/obterConselhosParcialmenteHabilitados',
+      obterListaParcialIndicados: 'conselho/obterListaParcialIndicados',
     }),
   },
   mounted() {
     const self = this;
 
-    self.loading = true;
-    self.obterConselhosParcialmenteHabilitados().finally(() => {
+    self.loading = false;
+    self.obterListaParcialIndicados().finally(() => {
       self.loading = false;
     });
   },

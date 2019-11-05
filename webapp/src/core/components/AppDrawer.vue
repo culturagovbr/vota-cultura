@@ -180,6 +180,12 @@ export default {
           icon: 'list',
           name: 'votacao-route',
         },
+        {
+          title: 'Lista parcial dos indicados',
+          group: 'apps',
+          icon: 'list',
+          name: 'inscricao-lista-parcial-indicados-route',
+        },
       ],
     };
   },

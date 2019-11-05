@@ -93,4 +93,12 @@ class ConselhoIndicacaoHabilitacao extends AbstractService
             throw $queryException;
         }
     }
+
+    public function obterTodosParcialmenteHabilitados()
+    {
+        return (new \App\Modules\Conselho\Model\ConselhoIndicacao())->has('avaliacaoHabilitacao')->get();
+//        return (new \App\Modules\Conselho\Model\ConselhoIndicacao())->whereHas('avaliacaoHabilitacao' , function($q){
+//            $q->where('st_avaliacao', TRUE);
+//        })->get();
+    }
 }
