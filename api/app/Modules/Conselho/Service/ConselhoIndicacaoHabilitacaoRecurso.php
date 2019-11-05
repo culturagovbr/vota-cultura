@@ -14,6 +14,7 @@ use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\Conselho\Model\ConselhoIndicacaoHabilitacaoRecurso as ConselhoIndicacaoHabilitacaoRecursoModel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,28 +29,30 @@ class ConselhoIndicacaoHabilitacaoRecurso extends AbstractService
         parent::__construct($model);
     }
 
-    public function cadastrar(Collection $dados): ?Model
+    public function salvar($requestParams): ?Model
     {
         try {
             DB::beginTransaction();
 
-            $dadosRecurso = $dados->only([
+            $dadosRecurso = $requestParams->only([
                 'co_conselho_indicacao_habilitacao',
                 'ds_recurso'
-            ])->toArray();
+            ]);
 
-            $dadosIndicado = $dados->only([
+            $dadosIndicado = $requestParams->only([
                 'co_conselho_indicacao',
-                'dt_nascimento',
+                'dt_nascimento_indicado',
                 'endereco',
                 'municipio',
                 'uf',
                 'ds_curriculo',
-                'co_arquivo',
-                'anexo',
-            ])->toArray();
+            ]);
 
-            $conselhoIndicacao = $this->atualizarIndicado($dadosIndicado);
+            $dtNascimento = new \DateTime($dadosIndicado['dt_nascimento_indicado']);
+            $dadosIndicado['dt_nascimento_indicado'] = $dtNascimento->format('Y-d-m');
+
+//            dd($dadosIndicado);
+            $conselhoIndicacao = $this->atualizarIndicado($dadosIndicado, $requestParams->file('anexo'));
             $dadosRetorno = $this->cadastrarRecurso($dadosRecurso);
 
             $conselho = app(\App\Modules\Conselho\Model\Conselho::class)->find($conselhoIndicacao->co_conselho);
@@ -64,36 +67,16 @@ class ConselhoIndicacaoHabilitacaoRecurso extends AbstractService
         }
     }
 
-    private function enviarEmailIndicacaoHabilitacaoRecurso($dadosConselho, $dadosIndicado, $dadosRecurso)
-    {
-        $corpoEmail = [
-            'no_conselho' => $dadosConselho->no_conselho,
-            'nu_cnpj' => CNPJ::adicionarMascara($dadosConselho->nu_cnpj),
-            'no_indicado' => $dadosIndicado->no_indicado,
-            'nu_cpf_indicado' => CPF::adicionarMascara($dadosIndicado->nu_cpf_indicado),
-            'ds_recurso' => $dadosRecurso['ds_recurso'],
-            'no_orgao_gestor' => $dadosConselho->no_orgao_gestor
-        ];
-
-        Mail::to($dadosConselho->representante->ds_email)
-            ->bcc($dadosConselho->ds_email)
-            ->bcc(env('EMAIL_ACOMPANHAMENTO'))
-            ->send(
-                app()->make(CadastroIndicacaoHabilitacaoRecursoSucesso::class, $corpoEmail)
-            );
-    }
-
-    private function atualizarIndicado($dadosIndicado)
+    private function atualizarIndicado($dadosIndicado, $anexo)
     {
         $conselhoIndicacao = app(\App\Modules\Conselho\Model\ConselhoIndicacao::class)
             ->find($dadosIndicado['co_conselho_indicacao']);
 
-        if(isset($dadosIndicado['anexo'])) {
-            $dadosIndicado['co_arquivo'] = $this->atualizarFotoIndicado($conselhoIndicacao->co_arquivo, $dadosIndicado['anexo']);
+        if ($anexo) {
+            $dadosIndicado['co_arquivo'] = $this->atualizarFotoIndicado($anexo);
         }
 
         $conselhoIndicacao->fill($dadosIndicado);
-
         $this->atualizarEndereco($conselhoIndicacao->co_endereco, $dadosIndicado['endereco']);
         $conselhoIndicacao->save();
         return $conselhoIndicacao;
@@ -107,21 +90,15 @@ class ConselhoIndicacaoHabilitacaoRecurso extends AbstractService
         return $endereco;
     }
 
-    private function atualizarFotoIndicado($coArquivoAntigo, $arquivo)
+    private function atualizarFotoIndicado($arquivo)
     {
-        $arquivoAntigo = app(Arquivo::class)->find($coArquivoAntigo);
-
-        Storage::delete($arquivoAntigo->ds_localizacao);
-
-        $arquivoAntigo->delete();
+        $modeloArquivo = app(Arquivo::class);
 
         $modeloUpload = [
             'no_arquivo' => $arquivo->getClientOriginalName(),
             'no_extensao' => $arquivo->getClientOriginalExtension(),
             'no_mime_type' => $arquivo->getClientMimeType(),
         ];
-
-        $modeloArquivo = app(Arquivo::class);
 
         $modeloArquivo->fill($modeloUpload);
 
@@ -147,5 +124,24 @@ class ConselhoIndicacaoHabilitacaoRecurso extends AbstractService
             $historicoModel->fill($dadosRecurso);
             $historicoModel->save();
             return $conselhoIndicacaoHabilitacaoModel;
+    }
+
+    private function enviarEmailIndicacaoHabilitacaoRecurso($dadosConselho, $dadosIndicado, $dadosRecurso)
+    {
+        $corpoEmail = [
+            'no_conselho' => $dadosConselho->no_conselho,
+            'nu_cnpj' => CNPJ::adicionarMascara($dadosConselho->nu_cnpj),
+            'no_indicado' => $dadosIndicado->no_indicado,
+            'nu_cpf_indicado' => CPF::adicionarMascara($dadosIndicado->nu_cpf_indicado),
+            'ds_recurso' => $dadosRecurso['ds_recurso'],
+            'no_orgao_gestor' => $dadosConselho->no_orgao_gestor
+        ];
+
+        Mail::to($dadosConselho->representante->ds_email)
+            ->bcc($dadosConselho->ds_email)
+            ->bcc(env('EMAIL_ACOMPANHAMENTO'))
+            ->send(
+                app()->make(CadastroIndicacaoHabilitacaoRecursoSucesso::class, $corpoEmail)
+            );
     }
 }

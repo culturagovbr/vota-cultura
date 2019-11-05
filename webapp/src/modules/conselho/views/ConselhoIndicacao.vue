@@ -131,53 +131,61 @@
                         </v-chip>
                       </td>
                       <td>
-                        <v-chip>
-                          {{ props.item.data_indicacao_formatada }}
+                        <v-chip
+                            dark
+                            color="primary"
+                        >
+                          {{ props.item.avaliacaoHabilitacao.st_avaliacao ? 'Habilitado' : 'Inabilitado' }}
                         </v-chip>
                       </td>
                       <td class="text-md-center">
-                        <v-btn
-                          depressed
-                          outline
-                          icon
-                          fab
-                          dark
-                          color="primary"
-                          small
-                          @click="abrirDialogoVisualizacao(props.item, true)"
-                        >
-                          <v-icon>remove_red_eye</v-icon>
-                        </v-btn>
+                        <v-layout>
+                          <v-flex>
+                            <v-btn
+                                depressed
+                                outline
+                                icon
+                                fab
+                                dark
+                                color="primary"
+                                small
+                                @click="abrirDialogoVisualizacao(props.item, true)"
+                            >
+                              <v-icon>remove_red_eye</v-icon>
+                            </v-btn>
 
-                        <v-btn
-                          title="Cadastrar recurso"
-                          v-if="!(props.item.avaliacaoHabilitacao || {}).recurso"
-                          depressed
-                          outline
-                          icon
-                          fab
-                          dark
-                          color="primary"
-                          small
-                          @click="abrirDialogoVisualizacao(props.item, false)"
-                        >
-                          <v-icon>gavel</v-icon>
-                        </v-btn>
-                        <!--@click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"-->
+                            <v-btn
+                                title="Cadastrar recurso"
+                                v-if="!(props.item.avaliacaoHabilitacao || {}).recurso && (props.item.conselho || {}).st_indicacao === 'f'"
+                                depressed
+                                outline
+                                icon
+                                fab
+                                dark
+                                color="primary"
+                                small
+                                @click="abrirDialogoVisualizacao(props.item, false)"
+                            >
+                              <v-icon>gavel</v-icon>
+                            </v-btn>
+                            <!--@click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"-->
 
-                        <v-btn
-                          v-if="(conselhoGetter || {}).st_indicacao === 'a'"
-                          depressed
-                          outline
-                          icon
-                          fab
-                          dark
-                          color="error"
-                          small
-                          @click="abrirDialogoConfirmacaoExclusao(props.item.co_conselho_indicacao)"
-                        >
-                          <v-icon>delete</v-icon>
-                        </v-btn>
+                            <v-btn
+                                v-if="(conselhoGetter || {}).st_indicacao === 'a'"
+                                depressed
+                                outline
+                                icon
+                                fab
+                                dark
+                                color="error"
+                                small
+                                @click="abrirDialogoConfirmacaoExclusao(props.item.co_conselho_indicacao)"
+                            >
+                              <v-icon>delete</v-icon>
+                            </v-btn>
+                          </v-flex>
+                        </v-layout>
+
                       </td>
                     </template>
                   </v-data-table>
@@ -590,8 +598,6 @@
           v-model="dialogVisualizar"
           :conselho="itemSelecionado"
           :readonly="this.readonly"
-          :listaMunicipios="listaMunicipios"
-          :listaUF="listaUF"
         />
       </v-layout>
 
@@ -688,13 +694,13 @@ export default {
 
       },
       {
-        text: 'Data do cadastro',
-        value: 'endereco.municipio.uf.regiao.no_regiao',
+        text: 'Resultado da habilitação',
+        value: 'avaliacaoHabilitacao.st_avaliacao',
         sortable: false,
       },
       {
         text: 'Ações',
-        value: 'endereco.municipio.uf.regiao.no_regiao',
+        value: null,
         sortable: false,
         align: 'center',
       },
@@ -729,6 +735,11 @@ export default {
     }),
   },
   watch: {
+    dialogVisualizar(valor) {
+      if(!valor){
+        this.itemSelecionado = {};
+      }
+    },
     dialog(valor) {
       if (!valor) {
         this.$refs.form.reset();
@@ -744,10 +755,10 @@ export default {
       this.indicado.dt_nascimento_indicado = this.formatDate(this.date);
     },
     estadosGetter() {
-      this.listaUF = this.estadosGetter;
+      this.listaUF = [...this.estadosGetter];
     },
     municipiosGetter() {
-      this.listaMunicipios = this.municipiosGetter;
+      this.listaMunicipios = [...this.municipiosGetter];
     },
     'indicado.endereco.co_ibge': function (coIBGE) {
       this.obterMunicipios(coIBGE);
@@ -893,7 +904,7 @@ export default {
       return `${ano}-${(`0${mes}`).slice(-2)}-${(`0${dia}`).slice(-2)}`;
     },
     abrirDialogoVisualizacao(valor, readonly) {
-      this.itemSelecionado = valor;
+      this.itemSelecionado = {...valor};
       this.dialogVisualizar = true;
       this.readonly = readonly;
     },

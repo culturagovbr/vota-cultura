@@ -88,13 +88,10 @@
 
 																			<v-layout>
 																				<v-flex md12>
-																					<v-select
-																						v-model="(formulario.endereco || {}).co_ibge"
-																						:items="listaUF"
-																						label="*Unidade da federa??o em que reside"
+																					<v-text-field
+																						v-model="(((formulario.endereco || {}).municipio || {}).uf || {}).no_uf"
+																						label="Unidade da federação em que reside"
 																						append-icon="place"
-																						item-value="co_ibge"
-																						item-text="no_uf"
 																						disabled
 																						box
 																					/>
@@ -102,13 +99,10 @@
 																			</v-layout>
 																			<v-layout>
 																				<v-flex md12>
-																					<v-select
-																						v-model="(formulario.endereco || {} ).co_municipio"
-																						:items="listaMunicipios"
-																						label="*Cidade em que reside"
+																					<v-text-field
+																						v-model="((formulario.endereco || {} ).municipio || {}).no_municipio"
+																						label="Cidade em que reside"
 																						append-icon="place"
-																						item-value="co_municipio"
-																						item-text="no_municipio"
 																						box
 																						disabled
 																					/>
@@ -119,7 +113,7 @@
 																				<v-flex md12>
 																					<v-textarea
 																						v-model="formulario.ds_curriculo"
-																						label="* Curr?culo resumido para a candidatura"
+																						label="* Currículo resumido para a candidatura"
 																						rows="13"
 																						row-height="28"
 																						:counter="1000"
@@ -134,13 +128,11 @@
 																			md4
 																			class="text-md-center"
 																		>
-																			<v-content>
 																				<img
 																					width="260"
 																					style="border-radius:10px;"
 																					:src="(formulario || {}).foto_indicado"
 																				>
-																			</v-content>
 																		</v-flex>
 																	</v-layout>
 																</v-container>
@@ -214,7 +206,7 @@
 									<v-container>
 										<v-layout>
 											<v-flex class="font-weight-bold">
-												<span>Resultado da habilitaçao:</span>
+												<span>Resultado da habilitação:</span>
 												<span
 													:class="mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).color"> {{mapCodeResultadoAvaliacaoToString((formulario.avaliacaoHabilitacao || {}).st_avaliacao).text }}</span>
 											</v-flex>
@@ -222,19 +214,26 @@
 										<v-layout class="mt-2">
 											<v-flex>
 												<span class="font-weight-bold">Parecer:</span>
-												<v-textarea
-													class="mt-2"
-													:value="(formulario.avaliacaoHabilitacao || {}).ds_parecer"
-													name="input-7-1"
-													solo
-													label="Descrição do parecer"
-													rows="13"
-													row-height="28"
-													box
-													disabled
-													auto-grow
-													:readonly="true"
-												/>
+<!--												<v-textarea-->
+<!--													class="mt-2"-->
+<!--													v-html="(formulario.avaliacaoHabilitacao || {}).ds_parecer"-->
+<!--													name="input-7-1"-->
+<!--													solo-->
+<!--													label="Descrição do parecer"-->
+<!--													rows="13"-->
+<!--													row-height="28"-->
+<!--													box-->
+<!--													disabled-->
+<!--													auto-grow-->
+<!--													:readonly="true"-->
+<!--												/>-->
+												<ckeditor
+													:disabled="true"
+													:editor="editor"
+													v-model="(formulario.avaliacaoHabilitacao || {}).ds_parecer"
+													:config="editorConfig">
+
+												</ckeditor>
 											</v-flex>
 										</v-layout>
 									</v-container>
@@ -247,7 +246,6 @@
 									:readonly="readonly"
 									:listaUF="this.listaUF"
 									:listaMunicipios="this.listaMunicipios"
-
 								/>
 							</v-tab-item>
 						</v-tabs-items>
@@ -275,6 +273,12 @@
     import {mapGetters, mapActions} from 'vuex';
     import {documentosIndicacao} from '../api/documentosIndicacao';
     import ConselhoIndicacaoHabilitacaoRecurso from "./components/ConselhoIndicacaoHabilitacaoRecurso";
+    import Vue from 'vue';
+    import CKEditor from '@ckeditor/ckeditor5-vue';
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import '@ckeditor/ckeditor5-build-classic/build/translations/pt-br';
+
+    Vue.use(CKEditor);
 
     export default {
         name: 'ConselhoIndicacaoDialogo',
@@ -293,17 +297,17 @@
                 type: Boolean,
                 default: false,
             },
-            listaMunicipios: {
-                type: Array,
-                default: [],
-            },
-            listaUF: {
-                type: Array,
-                default: [],
-            },
         },
         data() {
             return {
+                listaUF: [],
+	            listaMunicipios: [],
+                editor: ClassicEditor,
+                editorConfig: {
+                    placeholder: 'Parecer',
+                    toolbar: [],
+                    language: 'pt-br',
+                },
                 activeTab: 'recurso',
                 dialog: false,
                 formularioInicial: {
@@ -332,31 +336,32 @@
             ...mapGetters({
                 perfis: 'conta/perfis',
                 perfisInscricao: 'conta/perfisInscricao',
+                estadosGetter: 'localidade/estados',
+                municipiosGetter: 'localidade/municipios',
             }),
         },
         watch: {
+            estadosGetter() {
+                this.listaUF = [
+                    ...this.estadosGetter
+                ]
+            },
+            municipiosGetter() {
+                this.listaMunicipios = [
+                    ...this.municipiosGetter
+                ];
+            },
             value(valor) {
                 this.dialog = valor;
+                if(!valor){
+                    this.formulario = {};
+                }
             },
             dialog(valor) {
                 this.$emit('input', valor);
             },
             conselho(valor) {
-                this.formulario = valor;
-                if (Object.keys(valor).length > 0) {
-                    this.formulario = valor;
-                }
-            },
-            listaUf(value) {
-                this.listaUF = value;
-            },
-            listaMunicipios(valor) {
-                this.listaMunicipios = valor;
-            },
-            formulario(valor) {
-                if (this.listaMunicipios.length < 1 && Object.keys(this.formulario.endereco).length > 0) {
-                    this.obterMunicipios(this.formulario.endereco.co_ibge);
-                }
+                this.formulario = {...valor};
             },
         },
         methods: {
@@ -365,13 +370,13 @@
                 switch (stParecer) {
                     case false:
                         strParecer = {
-                            text: "Inabilitada",
+                            text: "Inabilitado",
                             color: "red--text"
                         };
                         break;
                     case true:
                         strParecer = {
-                            text: "Habilitada",
+                            text: "Habilitado",
                             color: "green--text"
                         };
                         break;

@@ -14,6 +14,7 @@ class ConselhoIndicacaoHabilitacaoRecurso extends Model
 
     protected $dates = [
         'dh_cadastro_recurso',
+        'dt_nascimento_indicado',
     ];
 
     protected $fillable = [
@@ -22,6 +23,7 @@ class ConselhoIndicacaoHabilitacaoRecurso extends Model
         'ds_recurso',
         'st_parecer',
         'co_usuario_avaliador',
+        'dt_nascimento_indicado'
     ];
 
     public $timestamps = FALSE;

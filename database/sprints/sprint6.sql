@@ -22,14 +22,15 @@ COMMENT ON COLUMN public.tb_conselho_indicacao_habilitacao_recurso.dh_cadastro_r
 --##############
 
 CREATE TABLE public.tb_conselho_indicacao_habilitacao_recurso_historico (
-    co_conselho_indicacao_habilitacao_recurso_historico serial NOT NULL,
-    co_conselho_indicacao_habilitacao_recurso int NOT NULL,
-    ds_recurso text NULL,
-    st_parecer char(1) NULL,
-    co_usuario_avaliador int NULL,
-    dh_cadastro_recurso timestamp NULL DEFAULT now(),
+    co_conselho_indicacao_habilitacao_recurso_historico serial NOT NULL, -- Chave primária da tabela.
+    co_conselho_indicacao_habilitacao_recurso int4 NOT NULL, -- Chave estrangeira referente a tabela tb_conselho_indicacao_habilitacao_recurso
+    ds_recurso text NULL, -- Descrição do recurso.
+    st_parecer bpchar(1) NULL, -- Parecer da avaliação do recurso.
+    co_usuario_avaliador int4 NULL, -- Código do usuário que realizou a avaliação do recurso.
+    dh_cadastro_recurso timestamp NULL DEFAULT now(), -- Data de cadastro do recurso.
+    co_conselho_indicacao_habilitacao int4 NOT NULL,
     CONSTRAINT pk_conselho_indicacao_habilitacao_recurso_historico PRIMARY KEY (co_conselho_indicacao_habilitacao_recurso_historico),
-    CONSTRAINT tb_conselho_indicacao_habilitacao_recurso_historico_fk FOREIGN KEY (co_conselho_indicacao_habilitacao_recurso) REFERENCES public.tb_conselho_indicacao_habilitacao_recurso(co_conselho_indicacao_habilitacao_recurso)
+    CONSTRAINT tb_conselho_indicacao_habilitacao_recurso_historico_fk FOREIGN KEY (co_conselho_indicacao_habilitacao_recurso) REFERENCES tb_conselho_indicacao_habilitacao_recurso(co_conselho_indicacao_habilitacao_recurso)
 );
 
 -- Column comments

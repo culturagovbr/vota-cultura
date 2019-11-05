@@ -28,8 +28,7 @@ class ConselhoHabilitacaoIndicacaoRecursoApiResourceController extends AApiResou
     public function store(Request $request): JsonResponse
     {
         return $this->sendResponse(
-            $this->service->cadastrar(
-                collect($request->all())),
+            $this->service->salvar($request),
             "Operação realizada com sucesso",
             Response::HTTP_CREATED
         );
