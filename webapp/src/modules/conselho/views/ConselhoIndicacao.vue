@@ -168,7 +168,6 @@
                             >
                               <v-icon>gavel</v-icon>
                             </v-btn>
-                            <!--@click="deletarIndicacaoConselho(props.item.co_conselho_indicacao)"-->
 
                             <v-btn
                                 v-if="(conselhoGetter || {}).st_indicacao === 'a'"
