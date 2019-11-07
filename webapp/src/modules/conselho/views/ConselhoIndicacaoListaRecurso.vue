@@ -74,12 +74,9 @@
 															color="primary"
 															small
 															v-on="on"
-															@click="editarItemModal(props.item);"
+															@click="abrirDialogIndicacaoRecurso(props.item)"
 														>
-															<v-icon v-if="props.item.conselhoHabilitacao === null">
-																gavel
-															</v-icon>
-															<v-icon v-else>
+															<v-icon>
 																remove_red_eye
 															</v-icon>
 														</v-btn>
@@ -97,14 +94,27 @@
 				</v-tab-item>
 			</v-tabs-items>
 		</v-card>
+		<v-container>
+			<v-layout>
+				<conselho-indicacao-recurso-dialog
+					v-model="dialogConselhoIndicacaoRecurso"
+					:dados="itemEditado"
+					:readonly="true"
+				/>
+			</v-layout>
+		</v-container>
 	</v-container>
+
 </template>
 
 <script>
     import { mapActions, mapGetters } from 'vuex';
+    import ConselhoIndicacaoRecursoDialog from "./ConselhoIndicacaoRecursoDialog";
 	export default {
 	    name : 'ConselhoIndicacaoListaRecurso',
+		components : {ConselhoIndicacaoRecursoDialog},
 	    data: () => ({
+		    dialogConselhoIndicacaoRecurso : false,
 		    itemEditado : {},
             totalItems : null,
 		    loading : false,
@@ -148,6 +158,10 @@
             }),
         },
         methods: {
+            abrirDialogIndicacaoRecurso(item){
+                this.itemEditado = {...item};
+                this.dialogConselhoIndicacaoRecurso = true;
+            },
             ...mapActions({
                 obterRecursoIndicacao: 'conselho/obterRecursoIndicacao',
             }),
