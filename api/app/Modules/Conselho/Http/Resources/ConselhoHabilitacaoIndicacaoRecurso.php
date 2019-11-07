@@ -16,7 +16,7 @@ class ConselhoHabilitacaoIndicacaoRecurso extends JsonResource
             'st_parecer' => $this->st_parecer,
             'dh_cadastro_recurso' => $this->dh_cadastro_recurso->format('d/m/Y H:i:s'),
             'co_usuario_avaliador' => $this->co_usuario_avaliador,
-            'indicacaoHabilitacao' => ConselhoIndicacaoHabilitacao::collection($this->indicacaoHabilitacao)
+            'indicacaoHabilitacao' => ConselhoIndicacaoHabilitacao::collection($this->indicacaoHabilitacao),
         ];
     }
 }

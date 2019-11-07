@@ -78,6 +78,7 @@ class ConselhoIndicacao extends Model
         );
     }
 
+
     public function avaliacaoHabilitacao()
     {
         return $this->hasOne(

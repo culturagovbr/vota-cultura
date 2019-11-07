@@ -27,12 +27,12 @@
 								<v-card-text class="pa-0">
 									<v-data-table
 										:headers="headers"
-										:items="listarIndicacaoConselhoGetter"
+										:items="listarIndicacaoRecursoConselho"
 										:pagination.sync="pagination_conselho"
 										:total-items="totalItems"
 										:loading="loading"
 										:search="pesquisar"
-										item-key="co_usuario"
+										item-key="co_indicado"
 										class="elevation-1"
 									>
 										<template
@@ -40,27 +40,25 @@
 											slot-scope="props"
 										>
 											<td />
-											<td>{{ props.item.cpf_indicado_formatado }}</td>
-											<td>{{ props.item.no_indicado }}</td>
+											<td>{{ ((props.item.indicacaoHabilitacao[0] || {}).indicado || {}).nu_cpf_indicado }}</td>
+											<td>{{ ((props.item.indicacaoHabilitacao[0] || {}).indicado || {}).no_indicado }}</td>
 											<td>
 												<v-chip
 													dark
 													color="primary"
 												>
-													{{ props.item.endereco.municipio.uf.no_uf }}
+													{{ ((((props.item.indicacaoHabilitacao[0] || {}).endereco || {}).municipio || {}).uf || {}).sg_uf }}
 												</v-chip>
 											</td>
 											<td>
-												<v-chip>
-													{{ props.item.conselho.no_conselho }}
-												</v-chip>
+												{{ (((props.item.indicacaoHabilitacao[0] || {}).indicado || {}).conselho || {}).no_conselho }}
 											</td>
 											<td>
-												<v-chip v-if="!!(props.item || {}).avaliacaoHabilitacao"
+												<v-chip v-if="!!(props.item || {}).indicacaoHabilitacao"
 												        dark
-												        :color="props.item.avaliacaoHabilitacao.st_avaliacao ? 'primary' : 'error'"
+												        :color=" (props.item.indicacaoHabilitacao[0] || {}).st_avaliacao  ? 'primary' : 'error'"
 												>
-													{{ props.item.avaliacaoHabilitacao.st_avaliacao ? 'Habilitiado' : 'Inabilitado' }}
+													{{ (props.item.indicacaoHabilitacao[0] || {}).st_avaliacao ? 'Habilitado' : 'Inabilitado'}}
 												</v-chip>
 												<span v-else>-</span>
 											</td>
@@ -124,14 +122,14 @@
                 },
                 {
                     text: 'CPF',
-                    value: 'nu_cpf_indicado',
+                    value: 'ds_recurso',
                 },
                 {
                     text: 'Nome',
                     value: 'no_indicado',
                 },
                 {
-                    text: 'Unidade da federação em que reside',
+                    text: 'UF em que reside',
                     value: 'endereco.municipio.uf.no_uf',
                 },
                 {
@@ -146,12 +144,12 @@
 		}),
         computed: {
             ...mapGetters({
-                listarIndicacaoConselhoGetter: 'conselho/listarIndicacaoConselho',
+                listarIndicacaoRecursoConselho: 'conselho/listarIndicacaoRecursoConselho',
             }),
         },
         methods: {
             ...mapActions({
-                obterListaIndicacaoConselho: 'conselho/obterListaIndicacaoConselho',
+                obterRecursoIndicacao: 'conselho/obterRecursoIndicacao',
             }),
         },
 
@@ -162,7 +160,9 @@
                 sortable: false,
             });
 
-            this.obterListaIndicacaoConselho().finally(() => {
+            this.obterRecursoIndicacao().then(response => {
+                console.log(response);
+            }).finally(() => {
                 this.loading = false;
             });
         }

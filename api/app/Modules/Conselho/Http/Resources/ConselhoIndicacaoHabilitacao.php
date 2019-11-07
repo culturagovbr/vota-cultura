@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conselho\Http\Resources;
 
+use App\Modules\Localidade\Model\Endereco;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ConselhoIndicacaoHabilitacao extends JsonResource
@@ -17,7 +18,9 @@ class ConselhoIndicacaoHabilitacao extends JsonResource
             'co_usuario_avaliador' => $this->co_usuario_avaliador,
             'st_revisao_final' => $this->st_revisao_final,
             'recurso' => $this->recurso,
-            'indicado' => $this->indicado
+            'indicado' => $this->indicado,
+            'conselho' => $this->indicado->conselho,
+            'endereco' => new \App\Modules\Localidade\Http\Resources\Endereco($this->indicado->endereco)
         ];
     }
 }
