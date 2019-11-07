@@ -2,7 +2,6 @@
 
 namespace App\Modules\Conselho\Http\Resources;
 
-use App\Modules\Conselho\Model\ConselhoIndicacaoHabilitacaoRecurso;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ConselhoHabilitacaoIndicacaoRecurso extends JsonResource

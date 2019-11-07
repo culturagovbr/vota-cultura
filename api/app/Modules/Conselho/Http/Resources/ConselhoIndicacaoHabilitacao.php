@@ -19,6 +19,8 @@ class ConselhoIndicacaoHabilitacao extends JsonResource
             'st_revisao_final' => $this->st_revisao_final,
             'recurso' => $this->recurso,
             'indicado' => $this->indicado,
+            'foto_indicado' => !empty($this->indicado->fotoUsuario->ds_localizacao) ?
+                asset($this->indicado->fotoUsuario->ds_localizacao) : NULL,
             'conselho' => $this->indicado->conselho,
             'endereco' => new \App\Modules\Localidade\Http\Resources\Endereco($this->indicado->endereco)
         ];
