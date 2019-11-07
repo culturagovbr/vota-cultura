@@ -110,6 +110,7 @@
                   </div>
                 </v-card>
               </v-flex>
+
               <v-flex
                 xs12
                 md4
@@ -123,7 +124,7 @@
                       x-large
                       class="text--lighten-2"
                     >
-                      gavel
+                      list
                     </v-icon>
                   </v-card-text>
                   <v-card-title
@@ -131,20 +132,18 @@
                     class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Recurso da indicação - Conselho de cultura
+                      Lista parcial dos indicados dos conselhos de cultura
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    <div class="text-xs-center">
-                      Cadastre aqui o recurso referente à etapa de habilitação dos indicados.
-                    </div>
+                    Consulte aqui a lista parcial dos indicados.
                   </v-card-text>
-                  <div class="text-xs-center pb-2">
+                  <div class="text-xs-center pb-4">
                     <v-btn
-                      style="margin-top: 10px"
                       color="green darken-4"
-                      to="/conselho/indicacao"
+                      to="/inscricao/lista-indicados"
                       dark
+                      style="margin-top: 44px"
                     >
                       <v-icon>
                         call_made
@@ -189,48 +188,6 @@
                       to="/eleitor/inscricao"
                       dark
                       style="margin-top: 34px"
-                    >
-                      <v-icon>
-                        call_made
-                      </v-icon>
-                    </v-btn>
-                  </div>
-                </v-card>
-              </v-flex>
-
-              <v-flex
-                xs12
-                md4
-              >
-                <v-card
-                  class="elevation-15 transparent"
-                  style="width:300px;min-height: 340px"
-                >
-                  <v-card-text class="text-xs-center">
-                    <v-icon
-                      x-large
-                      class="text--lighten-2"
-                    >
-                      list
-                    </v-icon>
-                  </v-card-text>
-                  <v-card-title
-                    primary-title
-                    class="layout justify-center"
-                  >
-                    <div class="headline text-xs-center">
-                      Lista parcial dos indicados dos conselhos de cultura
-                    </div>
-                  </v-card-title>
-                  <v-card-text>
-                    Consulte aqui a lista parcial dos indicados.
-                  </v-card-text>
-                  <div class="text-xs-center pb-4">
-                    <v-btn
-                      color="green darken-4"
-                      to="/inscricao/lista-indicados"
-                      dark
-                      style="margin-top: 44px"
                     >
                       <v-icon>
                         call_made
