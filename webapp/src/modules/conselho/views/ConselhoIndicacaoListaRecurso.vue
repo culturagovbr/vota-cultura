@@ -34,7 +34,7 @@
 								<v-card-text class="pa-0">
 									<v-data-table
 										:headers="headers"
-										:items="listarIndicacaoRecursoConselho"
+										:items="listaIndicados"
 										:pagination.sync="pagination_conselho"
 										:total-items="totalItems"
 										:loading="loading"
@@ -47,25 +47,25 @@
 											slot-scope="props"
 										>
 											<td />
-											<td>{{ ((props.item.indicacaoHabilitacao[0] || {})).nu_cpf_formatado }}</td>
-											<td>{{ ((props.item.indicacaoHabilitacao[0] || {}).indicado || {}).no_indicado }}</td>
+											<td>{{ props.item.nu_cpf_formatado }}</td>
+											<td>{{ props.item.no_indicado }}</td>
 											<td>
 												<v-chip
 													dark
 													color="primary"
 												>
-													{{ ((((props.item.indicacaoHabilitacao[0] || {}).endereco || {}).municipio || {}).uf || {}).sg_uf }}
+													{{ props.item.no_uf }}
 												</v-chip>
 											</td>
 											<td>
-												{{ (((props.item.indicacaoHabilitacao[0] || {}).indicado || {}).conselho || {}).no_conselho }}
+												{{ props.item.no_conselho }}
 											</td>
 											<td>
-												<v-chip v-if="!!(props.item || {}).indicacaoHabilitacao"
+												<v-chip v-if="!!props.item.st_avaliacao"
 												        dark
-												        :color=" (props.item.indicacaoHabilitacao[0] || {}).st_avaliacao  ? 'primary' : 'error'"
+												        :color="props.item.st_avaliacao  ? 'primary' : 'error'"
 												>
-													{{ (props.item.indicacaoHabilitacao[0] || {}).st_avaliacao ? 'Habilitado' : 'Inabilitado'}}
+													{{ props.item.st_avaliacao ? 'Habilitado' : 'Inabilitado'}}
 												</v-chip>
 												<span v-else>-</span>
 											</td>
@@ -121,6 +121,7 @@
 	    name : 'ConselhoIndicacaoListaRecurso',
 		components : {ConselhoIndicacaoRecursoDialog},
 	    data: () => ({
+		    listaIndicados : [],
 		    dialogConselhoIndicacaoRecurso : false,
 		    itemEditado : {},
             totalItems : null,
@@ -147,15 +148,15 @@
                 },
                 {
                     text: 'UF em que reside',
-                    value: 'endereco.municipio.uf.no_uf',
+                    value: 'no_uf',
                 },
                 {
                     text: 'Nome do conselho',
-                    value: 'conselho.no_conselho',
+                    value: 'no_conselho',
                 },
                 {
                     text: 'Resultado da habilitação',
-                    value: 'avaliacaoHabilitacao.st_avaliacao',
+                    value: 'st_avaliacao',
                 },
             ],
 		}),
@@ -164,6 +165,25 @@
                 listarIndicacaoRecursoConselho: 'conselho/listarIndicacaoRecursoConselho',
             }),
         },
+		watch: {
+            listarIndicacaoRecursoConselho(valor) {
+                console.log(valor);
+                // let indicacaoHabilitacao = ((valor || {}).indicacaoHabilitacao || [])[0];
+
+                this.listaIndicados = valor.map(indicado => {
+                    console.log(indicado);
+                    return {
+                        nu_cpf_formatado : indicado.indicacaoHabilitacao[0].nu_cpf_formatado,
+                        no_indicado : indicado.indicacaoHabilitacao[0].indicado.no_indicado,
+                        no_uf : indicado.indicacaoHabilitacao[0].endereco.municipio.uf.no_uf,
+                        no_conselho : indicado.indicacaoHabilitacao[0].indicado.conselho.no_conselho,
+                        st_avaliacao : indicado.indicacaoHabilitacao[0].st_avaliacao,
+                    }
+                });
+
+                // console.log(this.listaIndicados);
+            }
+		},
         methods: {
             abrirDialogIndicacaoRecurso(item){
                 this.itemEditado = {...item};
