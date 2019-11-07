@@ -37,11 +37,7 @@ class ConselhoHabilitacaoIndicacaoRecursoApiResourceController extends AApiResou
      */
     public function store(Request $request): JsonResponse
     {
-        return $this->sendResponse(
-            $this->service->salvar($request),
-            "Operação realizada com sucesso",
-            Response::HTTP_CREATED
-        );
+        throw new EParametrosInvalidos('O prazo de recurso expirou!');
     }
 
     /**
