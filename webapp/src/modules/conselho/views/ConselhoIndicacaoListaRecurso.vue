@@ -167,11 +167,7 @@
         },
 		watch: {
             listarIndicacaoRecursoConselho(valor) {
-                console.log(valor);
-                // let indicacaoHabilitacao = ((valor || {}).indicacaoHabilitacao || [])[0];
-
                 this.listaIndicados = valor.map(indicado => {
-                    console.log(indicado);
                     return {
                         nu_cpf_formatado : indicado.indicacaoHabilitacao[0].nu_cpf_formatado,
                         no_indicado : indicado.indicacaoHabilitacao[0].indicado.no_indicado,
@@ -180,8 +176,6 @@
                         st_avaliacao : indicado.indicacaoHabilitacao[0].st_avaliacao,
                     }
                 });
-
-                // console.log(this.listaIndicados);
             }
 		},
         methods: {
