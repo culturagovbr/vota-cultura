@@ -1,6 +1,13 @@
 <template>
 	<v-container>
 		<v-card>
+			<v-card-title>
+				<div class="layout column align-center">
+					<h2 class="flex my-2 primary--text">
+					    Recurso da indicação
+					</h2>
+				</div>
+			</v-card-title>
 			<v-tabs	color="white" centered icons-and-text>
 				<v-tabs-slider />
 				<v-tab href="#conselho">
@@ -40,7 +47,7 @@
 											slot-scope="props"
 										>
 											<td />
-											<td>{{ ((props.item.indicacaoHabilitacao[0] || {}).indicado || {}).nu_cpf_indicado }}</td>
+											<td>{{ ((props.item.indicacaoHabilitacao[0] || {})).nu_cpf_formatado }}</td>
 											<td>{{ ((props.item.indicacaoHabilitacao[0] || {}).indicado || {}).no_indicado }}</td>
 											<td>
 												<v-chip
@@ -132,7 +139,7 @@
                 },
                 {
                     text: 'CPF',
-                    value: 'ds_recurso',
+                    value: 'nu_cpf_formatado',
                 },
                 {
                     text: 'Nome',
@@ -147,7 +154,7 @@
                     value: 'conselho.no_conselho',
                 },
                 {
-                    text: 'Resultado final da habilitação',
+                    text: 'Resultado da habilitação',
                     value: 'avaliacaoHabilitacao.st_avaliacao',
                 },
             ],
@@ -174,9 +181,7 @@
                 sortable: false,
             });
 
-            this.obterRecursoIndicacao().then(response => {
-                console.log(response);
-            }).finally(() => {
+            this.obterRecursoIndicacao().finally(() => {
                 this.loading = false;
             });
         }

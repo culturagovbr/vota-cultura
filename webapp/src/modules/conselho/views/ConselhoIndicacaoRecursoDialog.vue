@@ -22,8 +22,8 @@
 				<v-container>
 					<v-card>
 						<v-tabs v-model="activeTab" centered :color="'grey darken-3'" dark slider-color="yellow">
-							<v-tab href='#dados-conselho'>DADOS DO CONSELHO</v-tab>
 							<v-tab href='#recurso'>RECURSO</v-tab>
+							<v-tab href='#dados-conselho'>DADOS DO CONSELHO</v-tab>
 						</v-tabs>
 						<v-tabs-items class="white elevation-1" v-model="activeTab">
 							<v-tab-item value="dados-conselho">
@@ -166,7 +166,7 @@
                 this.formulario = {...valor};
                 this.formulario.recurso = {
                     ds_recurso : recurso.ds_recurso,
-                    cpf_indicado_formatado : indicado.nu_cpf_indicado,
+                    cpf_indicado_formatado : avaliacaoHabilitacao.nu_cpf_formatado,
                     no_indicado : indicado.no_indicado,
                     dt_nascimento_indicado : indicado.dt_nascimento_indicado.replace(' 00:00:00.000000', '').split('-').reverse().join('/'),
                     foto_indicado : avaliacaoHabilitacao.foto_indicado,
