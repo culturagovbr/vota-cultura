@@ -26,6 +26,15 @@ class ConselhoIndicacaoHabilitacaoRecurso extends Model
         'dt_nascimento_indicado'
     ];
 
+    public function indicacaoHabilitacao()
+    {
+        return $this->hasMany(
+            ConselhoIndicacaoHabilitacao::class,
+            'co_conselho_indicacao_habilitacao',
+            'co_conselho_indicacao_habilitacao'
+        );
+    }
+
     public $timestamps = FALSE;
 
 }

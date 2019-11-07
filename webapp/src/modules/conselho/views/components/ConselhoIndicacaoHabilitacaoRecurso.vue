@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-container
-			v-if="Object.keys((((formulario || {}).avaliacaoHabilitacao || {}).recurso || {})).length <= 0 && readonly">
+			v-if="Object.keys(formulario).length <= 0 && readonly">
 			<span class="subheading grey--text">Não existe recurso cadastrado</span>
 		</v-container>
 		<div v-else>
@@ -383,7 +383,7 @@
         },
         watch: {
             indicacao(valor) {
-                valor.ds_recurso =  (((valor || {}).avaliacaoHabilitacao || {}).recurso || {}).ds_recurso;
+                valor.ds_recurso =  (((valor || {}).avaliacaoHabilitacao || {}).recurso || {}).ds_recurso || valor.ds_recurso;
                 this.formulario = Object.assign({}, valor);
                 this.uf = (this.formulario.endereco || {}).co_ibge;
                 this.municipio = (this.formulario.endereco || {}).co_municipio;

@@ -90,6 +90,14 @@ export const obterConselhosParcialmenteHabilitados = async ({ commit }) => {
   });
 };
 
+export const obterRecursoIndicacao = async ({ commit }) => {
+  return conselhoService.obterRecursoIndicacao().then((response) => {
+    const { data } = response.data;
+    commit(types.LISTAR_RECURSO_INDICACAO, data);
+    return data;
+  });
+};
+
 export const enviarIndicacaoConselho = async ({ dispatch }, payload) => conselhoService.enviarIndicacaoConselho(payload).then((response) => {
   dispatch(
     'conselho/obterListaIndicacaoConselho',

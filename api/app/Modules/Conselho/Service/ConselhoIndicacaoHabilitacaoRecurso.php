@@ -3,9 +3,7 @@
 namespace App\Modules\Conselho\Service;
 
 use App\Core\Service\AbstractService;
-use App\Modules\Conselho\Mail\Conselho\CadastroHabilitacaoRecursoSucesso;
 use App\Modules\Conselho\Mail\Conselho\CadastroIndicacaoHabilitacaoRecursoSucesso;
-use App\Modules\Conselho\Model\ConselhoIndicacaoHabilitacaoHistorico;
 use App\Modules\Conselho\Model\ConselhoIndicacaoHabilitacaoRecursoHistorico;
 use App\Modules\Core\Helper\CNPJ;
 use App\Modules\Core\Helper\CPF;
@@ -14,13 +12,10 @@ use App\Modules\Upload\Model\Arquivo;
 use App\Modules\Upload\Service\Upload;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\Conselho\Model\ConselhoIndicacaoHabilitacaoRecurso as ConselhoIndicacaoHabilitacaoRecursoModel;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class ConselhoIndicacaoHabilitacaoRecurso extends AbstractService
 {
@@ -51,7 +46,6 @@ class ConselhoIndicacaoHabilitacaoRecurso extends AbstractService
             $dtNascimento = new \DateTime($dadosIndicado['dt_nascimento_indicado']);
             $dadosIndicado['dt_nascimento_indicado'] = $dtNascimento->format('Y-d-m');
 
-//            dd($dadosIndicado);
             $conselhoIndicacao = $this->atualizarIndicado($dadosIndicado, $requestParams->file('anexo'));
             $dadosRetorno = $this->cadastrarRecurso($dadosRecurso);
 

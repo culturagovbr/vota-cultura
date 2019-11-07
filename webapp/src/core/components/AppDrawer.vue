@@ -342,6 +342,13 @@ export default {
           name: 'AdministradorAvaliadorHabilitacaoRecursoRoute',
           icon: 'gavel',
         }, 'Recurso');
+
+        this.definirItemMenu({
+          title: 'Recurso da indicação',
+          group: 'apps',
+          name: 'ConselhoIndicacaoListaRecursoRoute',
+          icon: 'gavel',
+        }, 'Recurso');
       }
     },
     definirItemMenu(objetoMenu, nomeAgrupador) {
