@@ -303,6 +303,7 @@
 	    computed: {
             ...mapGetters({
                 usuario: 'conta/usuario',
+                perfil: 'conta/perfil',
                 estadosGetter: 'localidade/estados',
                 municipiosGetter: 'localidade/municipios',
             })
@@ -461,7 +462,7 @@
             }
         },
 	    mounted() {
-            if(!this.usuario.co_conselho) {
+            if(!this.usuario.co_conselho && (this.perfil.no_perfil !== 'administrador' && this.perfil.no_perfil !== 'avaliador')) {
                 this.definirMensagemErro('Acesso restrito aos conselhos de cultura');
                 this.$router.push('/');
             }
