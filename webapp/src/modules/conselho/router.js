@@ -90,6 +90,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "conselho-indicacao-habilitacao" */ '@/modules/conselho/views/ConselhoIndicacaoHabilitacao.vue'),
       },
+      {
+        path: '/conselho/indicacao-lista-recurso',
+        name: 'ConselhoIndicacaoListaRecursoRoute',
+        meta: {
+          title: 'Recurso da indicação',
+          group: 'apps',
+          icon: 'gavel',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "conselho-indicacao-lista-recurso" */ '@/modules/conselho/views/ConselhoIndicacaoListaRecurso.vue'),
+      },
     ],
   },
 ];

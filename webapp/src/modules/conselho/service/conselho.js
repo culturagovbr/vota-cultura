@@ -24,3 +24,4 @@ export const revisarHabilitacaoIndicacao = (payload, coConselhoIndicacaoHabilita
   payload);
 
 export const obterListaParcialIndicados = () => service.getRequest('/conselho/indicacao/lista-parcial');
+export const obterRecursoIndicacao = () => service.getRequest('/conselho/indicacao/recurso');

@@ -2,7 +2,6 @@
 
 namespace App\Modules\Conselho\Model;
 
-use App\Modules\Localidade\Model\Endereco;
 use Illuminate\Database\Eloquent\Model;
 
 class ConselhoIndicacaoHabilitacao extends Model
@@ -23,7 +22,7 @@ class ConselhoIndicacaoHabilitacao extends Model
         'st_avaliacao',
         'ds_parecer',
         'co_usuario_avaliador',
-        'st_revisao_final',
+        'st_revisao_final'
     ];
 
     public $timestamps = FALSE;
@@ -39,7 +38,7 @@ class ConselhoIndicacaoHabilitacao extends Model
 
     public function indicado()
     {
-        return $this->belongsTo(
+        return $this->hasOne(
             ConselhoIndicacao::class,
             'co_conselho_indicacao',
             'co_indicado'
