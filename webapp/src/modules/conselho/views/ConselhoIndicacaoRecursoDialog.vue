@@ -346,9 +346,10 @@
                 this.$emit('input', valor);
             },
             dados(valor) {
-                let recurso = valor.indicacaoHabilitacao[0].recurso;
-                let indicado = valor.indicacaoHabilitacao[0].indicado;
-                let endereco = valor.indicacaoHabilitacao[0].endereco;
+                let avaliacaoHabilitacao = valor.indicacaoHabilitacao[0];
+                let recurso = avaliacaoHabilitacao.recurso;
+                let indicado = avaliacaoHabilitacao.indicado;
+                let endereco = avaliacaoHabilitacao.endereco;
 
                 this.formulario = {...valor};
                 this.formulario.recurso = {
@@ -360,6 +361,11 @@
                     ds_curriculo : indicado.ds_curriculo,
 	                endereco :  endereco
                 };
+
+                this.formulario.avaliacaoHabilitacao = {
+                    st_avaliacao : avaliacaoHabilitacao.st_avaliacao,
+                    ds_parecer : avaliacaoHabilitacao.ds_parecer,
+                }
 
             },
         },
