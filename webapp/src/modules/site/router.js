@@ -59,7 +59,7 @@ export default [
         path: '/inscricao/lista-indicados',
         name: 'inscricao-lista-parcial-indicados-route',
         meta: {
-          title: 'Lista parcial dos indicados',
+          title: 'Lista final dos indicados',
           group: 'apps',
           icon: 'dashboard',
           public: true,
