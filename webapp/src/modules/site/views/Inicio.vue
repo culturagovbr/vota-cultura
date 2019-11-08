@@ -132,11 +132,11 @@
                     class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Lista parcial dos indicados dos conselhos de cultura
+                      Lista final dos indicados dos conselhos de cultura
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Consulte aqui a lista parcial dos indicados.
+                    Consulte aqui a lista final dos indicados.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
