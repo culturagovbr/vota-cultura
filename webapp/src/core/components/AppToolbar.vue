@@ -15,7 +15,8 @@
       </router-link>
     </div>
     <v-toolbar-title class="ml-0 pl-3 mt-2 hidden-sm-and-down">
-      <span class="flex headline font-weight-medium">{{ appTitle }}</span>
+      <span class="flex headline font-weight-medium">{{ appTitle }} <span class="red--text font-weight-bold">{{env}}</span> </span>
+
     </v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
@@ -81,6 +82,7 @@ export default {
 
   data() {
     return {
+      env : process.env.NODE_ENV === 'staging' ? ' - AMBIENTE DE HOMOLOGAÇÃO' : '',
       appTitle: process.env.VUE_APP_TITLE,
       items: [
         {
