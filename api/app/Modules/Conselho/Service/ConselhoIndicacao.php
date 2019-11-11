@@ -95,10 +95,6 @@ class ConselhoIndicacao extends AbstractService
 
             $dados['co_arquivo'] = $arquivoArmazenado->co_arquivo;
 
-//            $this->cadastrarArquivosIndicacao($dados->only('anexos'), $conselhoUsuarioLogado);
-
-//            $this->enviarEmailConfirmacaoConselhoIndicacao($conselhoUsuarioLogado);
-
             $dadosCadastrados = parent::cadastrar($dados);
             DB::commit();
             return $dadosCadastrados;
@@ -209,5 +205,95 @@ class ConselhoIndicacao extends AbstractService
         $fotoUsuario = $arquivoModel->find($coArquivoFotoUsuario);
         Storage::delete($fotoUsuario->toArray()['ds_localizacao']);
         $fotoUsuario->delete();
+    }
+
+    public function obterIndicadosPorRegiao(string $regiao)
+    {
+        $colunas = [
+            'tb_conselho_indicacao.co_conselho_indicacao',
+            'tb_conselho_indicacao.no_indicado',
+            'tb_conselho_indicacao.ds_curriculo',
+            'tb_uf.no_uf',
+            'tb_arquivo.ds_localizacao',
+            'tb_conselho_votacao.dh_voto',
+            'tb_conselho_indicacao.nu_cpf_indicado'
+        ];
+
+        $usuario = auth()->user();
+
+        if (!empty($usuario) && $usuario->dadosUsuarioAutenticado()['co_eleitor']) {
+            $usuario = $usuario->dadosUsuarioAutenticado()['co_eleitor'];
+
+            $colunas[] = DB::raw("(CASE WHEN tb_conselho_votacao.co_eleitor = $usuario THEN TRUE ELSE FALSE END) AS recebeu_meu_voto");
+        }
+
+        return $this->getModel()->select($colunas)
+            ->join(
+            'tb_endereco',
+            'tb_endereco.co_endereco',
+            '=',
+            'tb_conselho_indicacao.co_endereco')
+            ->join(
+                'tb_municipio',
+                'tb_municipio.co_municipio',
+                '=',
+                'tb_endereco.co_municipio')
+            ->join(
+                'tb_uf',
+                'tb_uf.co_ibge',
+                '=',
+                'tb_municipio.co_uf')
+            ->join(
+                'tb_regiao',
+                'tb_regiao.co_regiao',
+                '=',
+                'tb_uf.co_regiao')
+            ->join(
+                'tb_conselho_indicacao_habilitacao',
+                'tb_conselho_indicacao_habilitacao.co_indicado',
+                '=',
+                'tb_conselho_indicacao.co_conselho_indicacao')
+            ->join(
+                'tb_arquivo',
+                'tb_arquivo.co_arquivo',
+                '=',
+                'tb_conselho_indicacao.co_arquivo'
+            )
+
+            ->leftJoin(DB::raw('(SELECT
+                    max(tb_conselho_votacao.co_conselho_votacao) as co_votacao,
+                    tb_conselho_votacao.co_conselho_indicacao
+                FROM
+                    tb_conselho_votacao
+                GROUP BY
+		            tb_conselho_votacao.co_conselho_indicacao) AS ultima_votacao'), function($join) {
+                $join->on('ultima_votacao.co_conselho_indicacao', '=', 'tb_conselho_indicacao.co_conselho_indicacao');
+            })
+            ->leftJoin(
+                'tb_conselho_votacao',
+                'ultima_votacao.co_votacao',
+                '=',
+                'tb_conselho_votacao.co_conselho_votacao')
+            ->where('tb_regiao.no_regiao', 'ILIKE', $regiao)
+            ->where('tb_conselho_indicacao_habilitacao.st_avaliacao', '=', TRUE)
+            ->distinct('nu_cpf_indicado')
+            ->get();
+    }
+
+    public function possuiVoto()
+    {
+        $usuario = auth()->user();
+        if (empty($usuario)) {
+            return false;
+        }
+        $usuario = $usuario->dadosUsuarioAutenticado()['co_eleitor'];
+        return (new \App\Modules\Conselho\Model\ConselhoVotacao())
+            ->where('co_eleitor', '=', $usuario)
+            ->first([DB::raw('
+            CASE
+                WHEN count(*) > 0 THEN TRUE
+                ELSE FALSE
+            END AS voto
+            ')])->toArray()['voto'];
     }
 }

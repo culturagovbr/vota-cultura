@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conselho\Http\Controllers;
 
+use App\Modules\Conselho\Http\Resources\ConselhoVotacao;
 use App\Modules\Conselho\Service\ConselhoIndicacao;
 USE \App\Modules\Conselho\Http\Resources\ConselhoIndicacao as ConselhoIndicacaoResource;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
@@ -21,7 +22,7 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
     protected $service;
     public function __construct(ConselhoIndicacao $service)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except('indicadosPorRegiao');
         return parent::__construct($service);
     }
 
@@ -109,5 +110,14 @@ class ConselhoIndicacaoApiResourceController extends AApiResourceController
     {
         $this->service->remover($request, $id);
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function indicadosPorRegiao(String $regiao): JsonResponse
+    {
+        return response()->json([
+            'possuiVoto' => $this->service->possuiVoto(),
+            'message' => "Operação realizada com sucesso",
+            'data' => ConselhoVotacao::collection($this->service->obterIndicadosPorRegiao($regiao)),
+        ], Response::HTTP_OK);
     }
 }

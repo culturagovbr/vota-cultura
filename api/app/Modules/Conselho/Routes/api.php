@@ -15,6 +15,15 @@ Route::group([
         Route::apiResource('/habilitacao', 'ConselhoIndicacaoHabilitacaoApiResourceController');
         Route::apiResource('/recurso', 'ConselhoHabilitacaoIndicacaoRecursoApiResourceController');
         Route::get('/lista-parcial', 'ConselhoIndicacaoHabilitacaoApiResourceController@listaParcial');
+        Route::get('/regiao/{regiao}', 'ConselhoIndicacaoApiResourceController@indicadosPorRegiao')
+            ->where('regiao', '[a-z-]+');
+    });
+
+
+    Route::group([
+        'prefix' => 'votacao'
+    ], function () {
+        Route::apiResource('/', 'ConselhoVotacaoApiResourceController');
     });
 
     Route::group([
