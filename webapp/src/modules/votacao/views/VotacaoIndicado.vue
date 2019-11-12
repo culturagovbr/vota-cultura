@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container grid-list-xs fluid>
     <v-card class="elevation-1 pa-3 login-card">
       <v-card-text>
         <div class="layout column align-center">
@@ -16,18 +16,19 @@
         <v-layout
           wrap
           justify-center
-          class="my-5"
+          class="my-7"
+
         >
           <v-flex
-            v-for="indicado in listaIndicadosParaVotacaoGetter"
-            :key="indicado.co_conselho_indicacao"
-            xs3
-            class="ma-1 pa-2"
+
+              v-for="indicado in listaIndicadosParaVotacaoGetter"
+              :key="indicado.co_conselho_indicacao"
+              class="ma-4 pa-2"
           >
             <v-hover>
               <v-card
                 class="mx-auto"
-                max-width="600"
+                max-width="400"
               >
                 <v-img
                   :src="indicado.ds_localizacao"
@@ -93,6 +94,7 @@
                     </v-flex>
                     <v-flex>
                       <div
+                        style="width: 95px;"
                         id="fb-share-button"
                         @click="compartilharFacebook(indicado)"
                       >
