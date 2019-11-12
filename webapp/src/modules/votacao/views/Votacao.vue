@@ -6,7 +6,13 @@
           <h2 class="flex my-2 primary--text">
             {{ $route.meta.title }}
           </h2>
+          <h3 class="primary--text">
+            Candidatos dos conselhos de cultura
+          </h3>
         </div>
+        <h3 class="my-2">
+          Selecione a região do mapa:
+        </h3>
         <mapa v-model="regiao" />
       </v-card-text>
     </v-card>

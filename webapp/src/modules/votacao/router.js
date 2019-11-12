@@ -17,7 +17,7 @@ export default [
         path: '/votacao',
         name: 'votacao-route',
         meta: {
-          title: 'Região de votação',
+          title: 'Votação',
           group: 'apps',
           icon: 'dashboard',
           public: true,
@@ -28,7 +28,7 @@ export default [
         path: '/votacao/:regiao',
         name: 'votacao-indicado-route',
         meta: {
-          title: 'Indicados da votação',
+          title: 'Votação',
           icon: '',
           public: true,
         },
