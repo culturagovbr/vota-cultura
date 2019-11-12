@@ -181,7 +181,7 @@ export default {
           name: 'votacao-route',
         },
         {
-          title: 'Lista parcial dos indicados',
+          title: 'Lista final dos indicados',
           group: 'apps',
           icon: 'list',
           name: 'inscricao-lista-parcial-indicados-route',
@@ -346,6 +346,13 @@ export default {
           title: 'Recurso da Habilitação',
           group: 'apps',
           name: 'AdministradorAvaliadorHabilitacaoRecursoRoute',
+          icon: 'gavel',
+        }, 'Recurso');
+
+        this.definirItemMenu({
+          title: 'Recurso da indicação',
+          group: 'apps',
+          name: 'ConselhoIndicacaoListaRecursoRoute',
           icon: 'gavel',
         }, 'Recurso');
       }

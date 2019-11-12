@@ -2,6 +2,8 @@
 
 namespace App\Modules\Conselho\Http\Controllers;
 
+use App\Modules\Conselho\Http\Resources\Conselho;
+use App\Modules\Conselho\Http\Resources\ConselhoHabilitacaoIndicacaoRecurso;
 use App\Modules\Conselho\Service\ConselhoIndicacaoHabilitacaoRecurso as ConselhoIndicacaoHabilitacaoRecursoService;
 use App\Modules\Core\Exceptions\EParametrosInvalidos;
 use App\Modules\Core\Http\Controllers\AApiResourceController;
@@ -19,6 +21,14 @@ class ConselhoHabilitacaoIndicacaoRecursoApiResourceController extends AApiResou
         return parent::__construct($service);
     }
 
+    public function index(): JsonResponse
+    {
+        return $this->sendResponse(
+            ConselhoHabilitacaoIndicacaoRecurso::collection($this->service->obterTodos()),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -27,11 +37,7 @@ class ConselhoHabilitacaoIndicacaoRecursoApiResourceController extends AApiResou
      */
     public function store(Request $request): JsonResponse
     {
-        return $this->sendResponse(
-            $this->service->salvar($request),
-            "Operação realizada com sucesso",
-            Response::HTTP_CREATED
-        );
+        throw new EParametrosInvalidos('O prazo de recurso expirou!');
     }
 
     /**

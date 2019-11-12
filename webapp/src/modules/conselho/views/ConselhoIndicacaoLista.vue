@@ -126,7 +126,7 @@ export default {
           value: 'conselho.no_conselho',
         },
         {
-          text: 'Resultado parcial da habilitação',
+          text: 'Resultado final da habilitação',
           value: 'avaliacaoHabilitacao.st_avaliacao_descricao',
         },
       ],

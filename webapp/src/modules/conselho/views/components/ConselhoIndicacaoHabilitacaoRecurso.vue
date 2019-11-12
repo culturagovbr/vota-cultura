@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-container
-			v-if="Object.keys((((formulario || {}).avaliacaoHabilitacao || {}).recurso || {})).length <= 0 && readonly">
+			v-if="Object.keys(formulario).length <= 0 && readonly">
 			<span class="subheading grey--text">Não existe recurso cadastrado</span>
 		</v-container>
 		<div v-else>
@@ -303,6 +303,7 @@
 	    computed: {
             ...mapGetters({
                 usuario: 'conta/usuario',
+                perfil: 'conta/perfil',
                 estadosGetter: 'localidade/estados',
                 municipiosGetter: 'localidade/municipios',
             })
@@ -383,7 +384,7 @@
         },
         watch: {
             indicacao(valor) {
-                valor.ds_recurso =  (((valor || {}).avaliacaoHabilitacao || {}).recurso || {}).ds_recurso;
+                valor.ds_recurso =  (((valor || {}).avaliacaoHabilitacao || {}).recurso || {}).ds_recurso || valor.ds_recurso;
                 this.formulario = Object.assign({}, valor);
                 this.uf = (this.formulario.endereco || {}).co_ibge;
                 this.municipio = (this.formulario.endereco || {}).co_municipio;
@@ -461,7 +462,7 @@
             }
         },
 	    mounted() {
-            if(!this.usuario.co_conselho) {
+            if(!this.usuario.co_conselho && (this.perfil.no_perfil !== 'administrador' && this.perfil.no_perfil !== 'avaliador')) {
                 this.definirMensagemErro('Acesso restrito aos conselhos de cultura');
                 this.$router.push('/');
             }
