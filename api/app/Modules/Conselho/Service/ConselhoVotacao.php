@@ -6,6 +6,7 @@ use App\Core\Service\AbstractService;
 use App\Modules\Conselho\Model\ConselhoVotacao as ConselhoVotacaoModel;
 use App\Modules\Core\Exceptions\EValidacaoCampo;
 use App\Modules\Eleitor\Model\Eleitor;
+use App\Modules\Pessoa\Service\Receita;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -26,6 +27,7 @@ class ConselhoVotacao extends AbstractService
             DB::beginTransaction();
 
             $this->verificarSeEleitorPodeVotar();
+            $this->verificarNomeMaeReceita($dados['nomeMae']);
             $eleitorCriado = parent::cadastrar(collect([
                 'co_conselho_indicacao' => (int) $dados['co_conselho_indicacao'],
                 'co_eleitor' => $this->usuario['co_eleitor']
@@ -36,6 +38,17 @@ class ConselhoVotacao extends AbstractService
         } catch (\HttpException $queryException) {
             DB::rollBack();
             throw $queryException;
+        }
+    }
+
+    private function verificarNomeMaeReceita(string $nomeMae)
+    {
+        $nomeMae = strtoupper($nomeMae);
+        $receitaService = app(Receita::class);
+        $dadosReceita = $receitaService->consultarDadosPessoaFisica($this->usuario['nu_cpf']);
+        $nomeMaeReceita = iconv('UTF-8','ASCII//TRANSLIT', $dadosReceita['nmMae']);
+        if ($nomeMaeReceita !== $nomeMae) {
+            throw new EValidacaoCampo('O nome da mãe não confere, tente novamente!');
         }
     }
 

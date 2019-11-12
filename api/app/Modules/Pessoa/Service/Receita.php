@@ -30,6 +30,14 @@ class Receita implements IService
         ];
     }
 
+    public function consultarDadosPessoaFisica(string $identificador)
+    {
+        return $this->buscarDados(
+            ReceitaModel::SERVICO_PESSOA_FISICA,
+            $identificador
+        );
+    }
+
     public function consultarDadosPessoaJuridica(string $identificador)
     {
         return $this->buscarDados(

@@ -137,11 +137,12 @@
 
           <v-card-text>
             <v-layout>
-              Candidato:&nbsp;<b>{{ candidato.no_indicado }}</b>
+              Candidato(a):&nbsp;<b>{{ candidato.no_indicado }}</b>
             </v-layout>
             <br>
             Para <b>verificarmos a sua identificação</b>, informe abaixo o <b>nome da sua mãe</b> de acordo com o cadastro na Receita Federal Brasileira:
             <v-text-field
+              v-model="nomeMae"
               placeholder="Digite aqui"
               solo
               hint="Não é necessário acentos."
@@ -170,6 +171,7 @@
               color="green darken-1"
               text
               flat
+              :disabled="!nomeMae.length"
               @click="salvar"
             >
               Sim
@@ -187,6 +189,7 @@ export default {
   name: 'VotacaoIndicado',
   data: () => ({
     candidato: {},
+    nomeMae: '',
     usuario_ja_votou: false,
     dialog: false,
     loading: false,
@@ -230,6 +233,13 @@ export default {
         }(document, 'script', 'twitter-wjs'));
       }
     },
+    dialog(valor) {
+      if (!valor) {
+        console.log('fechou');
+        this.nomeMae = '';
+        this.candidato = {};
+      }
+    },
   },
   computed: {
     ...mapGetters({
@@ -263,7 +273,6 @@ export default {
       );
     },
     fecharDialogo() {
-      this.candidato = {};
       this.dialog = false;
     },
     abrirDialogo() {
@@ -272,6 +281,7 @@ export default {
     salvar() {
       this.votar({
         co_conselho_indicacao: this.candidato.co_conselho_indicacao,
+        nomeMae: this.nomeMae,
       }).then(() => {
         this.obterListaIndicadosVotacao(this.regiao);
       });
