@@ -151,7 +151,6 @@
               v-model="nomeMae"
               placeholder="Digite aqui"
               solo
-              hint="Não é necessário acentos."
               persistent-hint
             />
 
@@ -276,6 +275,7 @@ export default {
     ...mapActions({
       obterListaIndicadosVotacao: 'votacao/obterListaIndicadosVotacao',
       votar: 'votacao/votar',
+      notificarSucesso: 'app/setMensagemSucesso',
     }),
     compartilharFacebook(indicado) {
       (FB || {}).ui(
@@ -298,6 +298,7 @@ export default {
         nomeMae: this.nomeMae,
       }).then(() => {
         this.obterListaIndicadosVotacao(this.regiao);
+        this.notificarSucesso('Voto registrado com sucesso!');
       });
       this.fecharDialogo();
     },
