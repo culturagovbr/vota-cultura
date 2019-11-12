@@ -222,7 +222,7 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Conheça aqui os candidatos dos conselho de cultura e vote.
+                    Conheça aqui os candidatos dos conselhos de cultura e vote.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
