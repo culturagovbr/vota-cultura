@@ -6,7 +6,13 @@
           <h2 class="flex my-2 primary--text">
             {{ $route.meta.title }}
           </h2>
+          <h3 class="flex primary--text">
+            Candidatos dos conselhos de cultura
+          </h3>
         </div>
+        <h3 class="my-5">
+          Região {{ regiaoCapitalizado }}
+        </h3>
         <v-layout
           wrap
           justify-center
@@ -145,7 +151,6 @@
               v-model="nomeMae"
               placeholder="Digite aqui"
               solo
-              hint="Não é necessário acentos."
               persistent-hint
             />
 
@@ -257,11 +262,20 @@ export default {
       }
       return this.$route.params.regiao;
     },
+    regiaoCapitalizado() {
+      if (this.regiao.includes('-')) {
+        let regiao = this.regiao.split('-');
+        return this.capitalizar(regiao[0]) + '-' + this.capitalizar(regiao[1]);
+      }
+
+      return this.capitalizar(this.regiao);
+    },
   },
   methods: {
     ...mapActions({
       obterListaIndicadosVotacao: 'votacao/obterListaIndicadosVotacao',
       votar: 'votacao/votar',
+      notificarSucesso: 'app/setMensagemSucesso',
     }),
     compartilharFacebook(indicado) {
       (FB || {}).ui(
@@ -284,12 +298,16 @@ export default {
         nomeMae: this.nomeMae,
       }).then(() => {
         this.obterListaIndicadosVotacao(this.regiao);
+        this.notificarSucesso('Voto registrado com sucesso!');
       });
       this.fecharDialogo();
     },
     confirmarVoto(candidato) {
       this.candidato = candidato;
       this.abrirDialogo();
+    },
+    capitalizar(valor) {
+      return valor.replace(/(?:^|\s)\S/g, regiao => regiao.toUpperCase());
     },
   },
   mounted() {
