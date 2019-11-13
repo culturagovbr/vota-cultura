@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs>
+  <v-container grid-list-xs fluid>
     <v-card class="elevation-1 pa-3 login-card">
       <v-card-text>
         <div class="layout column align-center">
@@ -16,18 +16,19 @@
         <v-layout
           wrap
           justify-center
-          class="my-5"
+          class="my-7"
+
         >
           <v-flex
-            v-for="indicado in listaIndicadosParaVotacaoGetter"
-            :key="indicado.co_conselho_indicacao"
-            xs3
-            class="ma-1 pa-2"
+
+              v-for="indicado in listaIndicadosParaVotacaoGetter"
+              :key="indicado.co_conselho_indicacao"
+              class="ma-4 pa-2"
           >
             <v-hover>
               <v-card
                 class="mx-auto"
-                max-width="600"
+                max-width="400"
               >
                 <v-img
                   :src="indicado.ds_localizacao"
@@ -49,7 +50,7 @@
                     top
                     @click="confirmarVoto(indicado)"
                   >
-                    <v-icon>thumb_up</v-icon>
+                    Vote
                   </v-btn>
                   <v-btn
                     v-if="indicado.recebeu_meu_voto"
@@ -93,6 +94,7 @@
                     </v-flex>
                     <v-flex>
                       <div
+                        style="width: 95px;"
                         id="fb-share-button"
                         @click="compartilharFacebook(indicado)"
                       >
@@ -129,6 +131,17 @@
             </v-hover>
           </v-flex>
         </v-layout>
+        <v-layout>
+          <v-flex text-xs-center>
+            <v-btn
+                color="primary darken-1"
+                text
+                href="/votacao"
+            >
+              Voltar
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-card-text>
     </v-card>
     <v-layout justify-center>
@@ -146,7 +159,7 @@
               Candidato(a):&nbsp;<b>{{ candidato.no_indicado }}</b>
             </v-layout>
             <br>
-            Para <b>verificarmos a sua identificação</b>, informe abaixo o <b>nome da sua mãe</b> de acordo com o cadastro na Receita Federal Brasileira:
+            Para <b>verificarmos a sua identificação</b>, informe abaixo o <b>nome completo da sua mãe</b> de acordo com o cadastro na Receita Federal Brasileira:
             <v-text-field
               v-model="nomeMae"
               placeholder="Digite aqui"
@@ -157,12 +170,11 @@
             <br>
             Atenção!
             <br>
-            Ao confirmar, o voto será computado e depois não será possível votar novamente.
+            Ao confirmar, o voto será computado e depois não será possível alterar ou votar novamente.
           </v-card-text>
 
           <v-card-actions>
             <v-spacer />
-
             <v-btn
               color="red darken-1"
               text
