@@ -11,7 +11,7 @@
           </h3>
         </div>
         <h3 class="my-2">
-          Selecione a região do mapa:
+          Selecione a região no mapa e conheça os candidatos:
         </h3>
         <mapa v-model="regiao" />
       </v-card-text>

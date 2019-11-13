@@ -20,7 +20,7 @@
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>Selecione sua região</title>
+              <title>Selecione a região</title>
               <desc />
               <defs />
 
@@ -471,6 +471,11 @@
             </svg>
           </div>
         </v-flex>
+        <v-layout text-xs-center>
+          <v-flex xs12>
+            <a href="/eleitor/inscricao"><h3 class="primary--text">Para votar se inscreva como eleitor e faça seu login.</h3></a>
+          </v-flex>
+        </v-layout>
       </v-layout>
     </v-container>
   </div>

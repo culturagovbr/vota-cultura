@@ -50,7 +50,7 @@
                     top
                     @click="confirmarVoto(indicado)"
                   >
-                    <v-icon>thumb_up</v-icon>
+                    Vote
                   </v-btn>
                   <v-btn
                     v-if="indicado.recebeu_meu_voto"
@@ -131,6 +131,17 @@
             </v-hover>
           </v-flex>
         </v-layout>
+        <v-layout>
+          <v-flex text-xs-center>
+            <v-btn
+                color="primary darken-1"
+                text
+                href="/votacao"
+            >
+              Voltar
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-card-text>
     </v-card>
     <v-layout justify-center>
@@ -148,7 +159,7 @@
               Candidato(a):&nbsp;<b>{{ candidato.no_indicado }}</b>
             </v-layout>
             <br>
-            Para <b>verificarmos a sua identificação</b>, informe abaixo o <b>nome da sua mãe</b> de acordo com o cadastro na Receita Federal Brasileira:
+            Para <b>verificarmos a sua identificação</b>, informe abaixo o <b>nome completo da sua mãe</b> de acordo com o cadastro na Receita Federal Brasileira:
             <v-text-field
               v-model="nomeMae"
               placeholder="Digite aqui"
@@ -159,12 +170,11 @@
             <br>
             Atenção!
             <br>
-            Ao confirmar, o voto será computado e depois não será possível votar novamente.
+            Ao confirmar, o voto será computado e depois não será possível alterar ou votar novamente.
           </v-card-text>
 
           <v-card-actions>
             <v-spacer />
-
             <v-btn
               color="red darken-1"
               text
