@@ -223,7 +223,7 @@
                   </v-card-title>
                   <v-card-text>
                     Conheça aqui os candidatos dos conselhos de cultura.
-                    Para votar, se inscreva como eleitor e faça seu login.
+                    Para votar, inscreva-se como eleitor e faça seu login.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
