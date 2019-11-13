@@ -10,9 +10,12 @@ use App\Modules\Pessoa\Service\Receita;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class ConselhoVotacao extends AbstractService
 {
+
     public function __construct(ConselhoVotacaoModel $model)
     {
         if (!empty(auth()->user())) {
@@ -46,8 +49,8 @@ class ConselhoVotacao extends AbstractService
         $nomeMae = strtoupper($nomeMae);
         $receitaService = app(Receita::class);
         $dadosReceita = $receitaService->consultarDadosPessoaFisica($this->usuario['nu_cpf']);
-        $nomeMaeReceita = iconv('UTF-8','ASCII//TRANSLIT', $dadosReceita['nmMae']);
-        if ($nomeMaeReceita !== $nomeMae) {
+
+        if ($dadosReceita['nmMae'] !== strtoupper(Str::ascii($nomeMae))) {
             throw new EValidacaoCampo('O nome da mãe não confere, tente novamente!');
         }
     }
