@@ -19,18 +19,14 @@
         <v-flex xs12>
           <v-container
             grid-list-xl
-            text-xs-center
+            fluid
           >
-            <v-layout>
-              <v-flex
-                  xs6
-                  md2
 
-              ></v-flex>
+            <v-layout text-xs-center>
+              <v-flex xs6 md2></v-flex>
               <v-flex
                   xs12
                   md4
-
               >
                 <v-card
                     class="elevation-15 transparent"
@@ -49,9 +45,7 @@
                       class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Inscrição
-                      do
-                      eleitor
+                      Inscrição do eleitor
                     </div>
                   </v-card-title>
                   <v-card-text>
@@ -97,7 +91,8 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Conheça aqui os candidatos dos conselhos de cultura e vote.
+                    Conheça aqui os candidatos dos conselhos de cultura.
+                    Para votar, inscreva-se como eleitor e faça seu login.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
@@ -211,7 +206,7 @@
               >
                 <v-card
                   class="elevation-15 transparent"
-                  style="width:300px;"
+                  style="width:300px;min-height: 340px"
                 >
                   <v-card-text class="text-xs-center">
                     <v-icon
@@ -230,14 +225,14 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Conheça aqui os candidatos dos conselhos de cultura.
-                    Para votar, inscreva-se como eleitor e faça seu login.
+                    Consulte aqui a lista final dos indicados.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
                       color="green darken-4"
                       to="/inscricao/lista-indicados"
                       dark
+                      style="margin-top: 44px"
                     >
                       <v-icon>
                         call_made
