@@ -473,7 +473,7 @@
         </v-flex>
         <v-layout text-xs-center>
           <v-flex xs12>
-            <a href="/eleitor/inscricao"><h3 class="primary--text">Para votar se inscreva como eleitor e faça seu login.</h3></a>
+            <a href="/eleitor/inscricao"><h3 class="primary--text">Para votar inscreva-se como eleitor e faça seu login.</h3></a>
           </v-flex>
         </v-layout>
       </v-layout>

@@ -252,7 +252,6 @@ export default {
     },
     dialog(valor) {
       if (!valor) {
-        console.log('fechou');
         this.nomeMae = '';
         this.candidato = {};
       }
@@ -276,8 +275,8 @@ export default {
     },
     regiaoCapitalizado() {
       if (this.regiao.includes('-')) {
-        let regiao = this.regiao.split('-');
-        return this.capitalizar(regiao[0]) + '-' + this.capitalizar(regiao[1]);
+        const regiao = this.regiao.split('-');
+        return `${this.capitalizar(regiao[0])}-${this.capitalizar(regiao[1])}`;
       }
 
       return this.capitalizar(this.regiao);

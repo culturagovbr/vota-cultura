@@ -276,7 +276,7 @@ class ConselhoIndicacao extends AbstractService
                 'tb_conselho_votacao.co_conselho_votacao')
             ->where('tb_regiao.no_regiao', 'ILIKE', $regiao)
             ->where('tb_conselho_indicacao_habilitacao.st_avaliacao', '=', TRUE)
-            ->distinct('nu_cpf_indicado')
+            ->orderBy('tb_uf.sg_uf')
             ->get();
     }
 
