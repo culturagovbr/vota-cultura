@@ -175,6 +175,12 @@ export default {
           name: 'inscricao-lista-parcial-habilitacao-route',
         },
         {
+          title: 'Votação',
+          group: 'apps',
+          icon: 'list',
+          name: 'votacao-route',
+        },
+        {
           title: 'Lista final dos indicados',
           group: 'apps',
           icon: 'list',
