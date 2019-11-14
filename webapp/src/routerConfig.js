@@ -5,6 +5,7 @@ import RoutersConselho from '@/modules/conselho/router';
 import RoutersEleitor from '@/modules/eleitor/router';
 import RoutersRecurso from '@/modules/recurso/router';
 import RoutersShared from '@/modules/shared/router';
+import RoutersVotacao from '@/modules/votacao/router';
 
 export default [
   ...RoutersSite,
@@ -14,4 +15,5 @@ export default [
   ...RoutersEleitor,
   ...RoutersRecurso,
   ...RoutersShared,
+  ...RoutersVotacao,
 ];

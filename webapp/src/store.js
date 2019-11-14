@@ -11,6 +11,7 @@ import fase from '@/modules/fase/store/';
 import pessoa from '@/modules/pessoa/store/';
 import recurso from '@/modules/recurso/store/';
 import shared from '@/modules/shared/store/';
+import votacao from '@/modules/votacao/store/';
 
 Vue.use(Vuex);
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     pessoa,
     recurso,
     shared,
+    votacao,
   },
   strict: process.env.NODE_ENV !== 'production',
 });
