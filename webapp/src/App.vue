@@ -17,16 +17,6 @@
       <v-icon>settings</v-icon>
     </v-btn>
     <!-- setting drawer -->
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      class="setting-drawer"
-      temporary
-      right
-      hide-overlay
-      fixed
-    >
-      <theme-settings />
-    </v-navigation-drawer>
 
     <!-- global snackbar -->
     <v-snackbar
@@ -70,6 +60,7 @@ export default {
   },
   created() {
     const self = this;
+    this.$vuetify.theme.primary = '#3f51b5';
     eventHub.$on('eventoErro', (payload) => {
       self.notificarErro(payload);
     });
