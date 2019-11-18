@@ -2,7 +2,7 @@ import colors from 'vuetify/es5/util/colors';
 
 const state = {
   mode: 'light',
-  themeColor: process.env.VUE_APP_THEME_DEFAULT,
+  themeColor: 'primary',
   snackbar: {
     show: false,
     text: '',

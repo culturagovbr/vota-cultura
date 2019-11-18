@@ -1,7 +1,10 @@
 <template>
   <v-card class="elevation-1 pa-4 login-card">
     <v-window v-model="step">
-      <v-window-item :value="1">
+      <v-window-item
+        v-if="!sucesso"
+        :value="1"
+      >
         <v-card-title>
           <div class="layout column align-center">
             <h2 class="flex my-2 primary--text">
@@ -127,7 +130,7 @@
           </v-btn>
         </div>
       </v-window-item>
-      <v-window-item :value="2">
+      <v-window-item v-if="sucesso">
         <v-card-text>
           <div class="text-xs-center">
             <v-icon
@@ -165,6 +168,7 @@ import Validate from '@/modules/shared/util/validate';
 export default {
   name: 'PrimeiroAcesso',
   data: () => ({
+    sucesso: false,
     loading: false,
     formularioValido: true,
     step: 1,
@@ -189,11 +193,12 @@ export default {
 
       this.solicitarPrimeiroAcesso(this.dadosPrimeiroAcesso)
         .then(() => {
-          this.step = 2;
+          this.sucesso = true;
         })
         .catch((error) => {
-          this.loading = false;
           this.mensagemErro(error.response.data.message);
+        }).finally(() => {
+          this.loading = false;
         });
     },
   },
