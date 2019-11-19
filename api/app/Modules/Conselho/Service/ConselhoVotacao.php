@@ -24,6 +24,41 @@ class ConselhoVotacao extends AbstractService
         parent::__construct($model);
     }
 
+    public function obterResultadoParcial(): ?Collection
+    {
+        return collect(DB::select(DB::raw("
+      WITH cte AS(
+        SELECT
+            tb_regiao.no_regiao,
+            indicacao.no_indicado,
+            indicacao.co_conselho_indicacao ,
+            count(indicacao.co_conselho_indicacao) AS numero_votos,
+            rank () over (
+                PARTITION BY tb_regiao.no_regiao
+                ORDER BY
+                    count(indicacao.co_conselho_indicacao) desc ) AS ranking_empatado
+        FROM
+            tb_conselho_votacao
+        INNER JOIN tb_conselho_indicacao indicacao ON
+            indicacao.co_conselho_indicacao = tb_conselho_votacao.co_conselho_indicacao
+        INNER JOIN tb_endereco ON
+            tb_endereco.co_endereco = indicacao.co_endereco
+        INNER JOIN tb_municipio ON
+            tb_municipio.co_municipio = tb_endereco.co_municipio
+        INNER JOIN tb_uf ON
+            tb_uf.co_ibge = tb_municipio.co_uf
+        INNER JOIN tb_regiao ON
+            tb_regiao.co_regiao = tb_uf.co_regiao
+        GROUP BY
+            indicacao.co_conselho_indicacao, tb_regiao.no_regiao
+        HAVING
+            count(indicacao.co_conselho_indicacao) >= :numero_min_votacoes)
+        SELECT * FROM cte;
+      "), [
+            'numero_min_votacoes' => 0,
+        ]));
+    }
+
     public function registrarVoto(Collection $dados): ?Model
     {
         try {
@@ -32,7 +67,7 @@ class ConselhoVotacao extends AbstractService
             $this->verificarSeEleitorPodeVotar();
             $this->verificarNomeMaeReceita($dados['nomeMae']);
             $eleitorCriado = parent::cadastrar(collect([
-                'co_conselho_indicacao' => (int) $dados['co_conselho_indicacao'],
+                'co_conselho_indicacao' => (int)$dados['co_conselho_indicacao'],
                 'co_eleitor' => $this->usuario['co_eleitor']
             ]));
 

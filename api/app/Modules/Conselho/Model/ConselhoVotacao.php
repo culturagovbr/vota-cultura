@@ -11,18 +11,11 @@ class ConselhoVotacao extends Model
 
     protected $table = 'tb_conselho_votacao';
     protected $primaryKey = 'co_conselho_votacao';
-    protected $dateFormat = 'Y-m-d H:i:s.u';
-
-    protected $dates = [
-        'dh_voto',
-    ];
 
     protected $fillable = [
         'co_conselho_indicacao',
         'co_eleitor',
-        'dh_voto',
     ];
-
 
     public function indicado()
     {

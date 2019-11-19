@@ -11,7 +11,6 @@ export default [
       public: true,
     },
     name: 'Votacao',
-    redirect: '/votacao',
     children: [
       {
         path: '/votacao',
@@ -23,6 +22,16 @@ export default [
           public: true,
         },
         component: () => import(/* webpackChunkName: "votacao-route" */ '@/modules/votacao/views/Votacao.vue'),
+      },
+      {
+        path: '/votacao/ranking-parcial',
+        name: 'administrador-ranking-indicados-route',
+        meta: {
+          title: 'Ranking',
+          icon: '',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "administrador-ranking-indicados-route" */ '@/modules/votacao/views/VotacaoListaParcial.vue'),
       },
       {
         path: '/votacao/:regiao',

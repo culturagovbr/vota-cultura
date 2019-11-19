@@ -315,6 +315,13 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
+
+        this.definirItemMenu({
+          title: 'Ranking parcial dos indicados',
+          group: 'apps',
+          name: 'administrador-ranking-indicados-route',
+          icon: 'list',
+        }, 'Administração');
       }
     },
     carregarMenuHabilitacao() {

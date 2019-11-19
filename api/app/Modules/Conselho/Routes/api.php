@@ -24,6 +24,7 @@ Route::group([
         'prefix' => 'votacao'
     ], function () {
         Route::apiResource('/', 'ConselhoVotacaoApiResourceController');
+        Route::apiResource('/desempate', 'ConselhoVotacaoDesempateApiResourceController');
     });
 
     Route::group([

@@ -26,3 +26,15 @@ export const votar = async ({ commit, dispatch }, regiao) => service.votar(regia
   );
   throw new TypeError(error);
 });
+
+export const obterListaParcialRanking = async ({ commit, dispatch }) => service.obterListaParcialRanking().then((response) => {
+  const { data } = response.data;
+  commit(types.LISTA_PARCIAL_RANKING, data);
+}).catch((error) => {
+  dispatch(
+      'app/setMensagemErro',
+      error.response.data.message,
+      { root: true },
+  );
+  throw new TypeError(error);
+});
