@@ -58,6 +58,27 @@ export const obterOrganizacoes = async ({ commit }) => {
   });
 };
 
+export const obterOrganizacoesHabilitadasEClassificadas = async ({ commit, dispatch }) => {
+    return organizacaoService.obterOrganizacoes()
+        .then((response) => {
+          const { data } = response.data;
+          if (!data) {
+            const error = 'Não foi possível obter os dados do organizacao.';
+            throw error;
+          }
+          commit(types.OBTER_ORGANIZACOES_HABILITADAS_E_CLASSIFICADAS, data);
+          return data;
+        })
+        .catch((error) => {
+          dispatch(
+              'app/setMensagemErro',
+              error,
+              { root: true },
+          );
+          throw new TypeError(error, 'obterOrganizacoes', 10);
+        });
+};
+
 export const enviarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.enviarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
 export const alterarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.alterarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
 

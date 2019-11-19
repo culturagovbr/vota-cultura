@@ -90,6 +90,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "administrador-avaliador-recurso-habilitacao" */ '@/modules/organizacao/views/OrganizacaoListaHabilitacaoRecurso.vue'),
       },
+      {
+        path: '/organizacao/indicacao',
+        name: 'OrganizacaoIndicacaoRoute',
+        meta: {
+          title: 'Indicados das organizações/entidades culturais',
+          group: 'apps',
+          icon: 'person_pin',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "organizacao-indicado" */ '@/modules/organizacao/views/OrganizacaoIndicado.vue'),
+      },
     ],
   },
 ];
