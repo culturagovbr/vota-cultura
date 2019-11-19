@@ -80,6 +80,9 @@ export const obterOrganizacoesHabilitadasEClassificadas = async ({ commit, dispa
 };
 
 export const enviarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.enviarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
+
+export const salvarOrganizacaoIndicacao = async ({ commit }, organizacaoIndicacao) => organizacaoService.salvarOrganizacaoIndicacao(organizacaoIndicacao);
+
 export const alterarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.alterarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
 
 export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {

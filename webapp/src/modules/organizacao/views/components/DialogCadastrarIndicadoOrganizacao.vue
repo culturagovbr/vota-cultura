@@ -197,6 +197,44 @@
 											</v-btn>
 										</v-flex>
 									</v-layout>
+
+									<v-dialog
+										v-model="dialogSalvarIndicado"
+										max-width="360"
+									>
+										<v-card>
+											<v-card-title class="headline">
+												Deseja realmente enviar?
+											</v-card-title>
+
+											<v-card-text>
+												Os dados excluídos não poderão ser alterados posteriormente.
+											</v-card-text>
+
+											<v-card-actions>
+												<v-spacer />
+
+												<v-btn
+													color="red darken-1"
+													text
+													flat
+													@click="dialogSalvarIndicado = false"
+												>
+													Não
+												</v-btn>
+
+												<v-btn
+													color="green darken-1"
+													text
+													flat
+													@click="salvarIndicado"
+												>
+													Sim
+												</v-btn>
+											</v-card-actions>
+										</v-card>
+									</v-dialog>
+
 								</v-card-text>
 							</v-flex>
 						</v-layout>
@@ -213,6 +251,7 @@
     export default {
         name: 'DialogCadastrarIndicadoOrganizacao',
         data: () => ({
+            dialogSalvarIndicado: false,
 	        valid : false,
             menu: false,
             date: '',
@@ -240,7 +279,7 @@
             },
             rules: {
                 required: v => !!v || "Campo não preenchido",
-                tamanhoMaximoCaracteres: value => (!!value && value.length <= 1000) || "Máximo 15000 caracteres",
+                tamanhoMaximoCaracteres: value => (!!value && value.length <= 1000) || "Máximo 1000 caracteres",
                 dataAniversario: (value) => {
                     if (value.length === 0 || !value.trim()) {
                         return false;
@@ -273,6 +312,18 @@
             }
         }),
         methods: {
+            salvarIndicado() {
+                let postData =  this.formulario.indicado;
+                    postData.co_organizacao = this.formulario.organizacao.co_organizacao;
+
+                    this.salvarOrganizacaoIndicacao(postData)
+	                    .then(response => {
+                            this.definirMensagemSucesso(response.data.message);
+                            window.location.reload();
+                            // this.$router.push('/');
+	                    });
+
+            },
             preencherDadosOrganizacao(coOrganizacao) {
                 // console.log(a, this.organizacaoGetter);
                 let organizacoes = this.organizacoesGetter;
@@ -350,14 +401,15 @@
             },
             validate() {
                 if (this.$refs.form.validate()) {
-                    // this.confirmarEleitor(this.eleitor).then(() => {
-                    //     this.$router.push('/eleitor/revisao-eleitor');
-                    // });
+					this.dialogSalvarIndicado = true;
                 }
             },
             ...mapActions({
+                definirMensagemSucesso: 'app/setMensagemSucesso',
+                definirMensagemErro: 'app/setMensagemErro',
                 consultarCPF: 'pessoa/consultarCPF',
                 obterOrganizacoesHabilitacao: 'organizacao/obterOrganizacoesHabilitadasEClassificadas',
+	            salvarOrganizacaoIndicacao: 'organizacao/salvarOrganizacaoIndicacao'
             }),
         },
 

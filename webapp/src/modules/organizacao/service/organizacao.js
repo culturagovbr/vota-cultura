@@ -21,3 +21,4 @@ export const alterarDadosOrganizacaoHabilitacaoRecurso = dadosRecurso => service
   '/organizacao/habilitacao-recurso',
   service.buildData(dadosRecurso),
 );
+export const salvarOrganizacaoIndicacao = organizacaoIndicacao => service.postRequest('/organizacao/indicacao', organizacaoIndicacao);
