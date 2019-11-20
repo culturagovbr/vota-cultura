@@ -28,6 +28,10 @@ export const mutations = {
   [types.MOSTRAR_MODAL_VISUALIZACAO](state, dados) {
     state.modalVisualizacaoOrganizacaoAdministrador = dados;
   },
+  [types.OBTER_INDICACAO_ORGANIZACAO](state, dados) {
+    console.log(dados);
+    state.organizacaoIndicacao = dados;
+  },
   [types.OBTER_ORGANIZACOES_HABILITADAS_E_CLASSIFICADAS](state, dados) {
     state.organizacoesHabilitadasEClassificadas = dados.filter(organizacao => {
       if(Object.keys(((organizacao || {}).habilitacaoRecurso || {})).length > 0) {

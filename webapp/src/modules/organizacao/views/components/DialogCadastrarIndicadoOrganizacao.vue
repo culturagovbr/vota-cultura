@@ -338,8 +338,9 @@
 
                     this.salvarOrganizacaoIndicacao(postData)
 	                    .then(response => {
+                            self.obterOrganizacoesHabilitacao();
                             this.definirMensagemSucesso(response.data.message);
-                            this.dialogSalvarIndicado = false;
+                            this.dialog = false;
                             // window.location.reload();
                             // this.$router.push('/');
 	                    });

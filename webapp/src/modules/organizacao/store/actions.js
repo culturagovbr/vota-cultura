@@ -83,6 +83,13 @@ export const enviarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dados
 
 export const salvarOrganizacaoIndicacao = async ({ commit }, organizacaoIndicacao) => organizacaoService.salvarOrganizacaoIndicacao(organizacaoIndicacao);
 
+export const obterDadosOrganizacaoIndicacao = async ({ commit }) =>  organizacaoService.obterDadosOrganizacaoIndicacao().then(response => {
+  const { data } = response.data;
+  commit(types.OBTER_INDICACAO_ORGANIZACAO, data);
+});
+
+
+
 export const alterarDadosOrganizacaoHabilitacaoRecurso = async ({ commit }, dadosRecurso) => organizacaoService.alterarDadosOrganizacaoHabilitacaoRecurso(dadosRecurso);
 
 export const enviarDocumentacaoComprobatoria = async ({ commit }, payload) => {

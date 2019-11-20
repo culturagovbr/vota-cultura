@@ -3,6 +3,7 @@
 namespace App\Modules\Organizacao\Model;
 
 use App\Modules\Core\Helper\CPF;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class OrganizacaoIndicacao extends Model
@@ -15,11 +16,9 @@ class OrganizacaoIndicacao extends Model
         'nu_cpf_indicado',
         'no_indicado',
         'tp_indicado',
-        'dt_nascimento_indicado',
-        'ds_curriculo'
+        'ds_curriculo',
+        'dt_nascimento_indicado'
     ];
-
-    public $timestamps = false;
 
     public function organizacao()
     {
@@ -30,8 +29,16 @@ class OrganizacaoIndicacao extends Model
         );
     }
 
-    public function getCpfFormatadoAttribute()
+    public $timestamps = false;
+
+    public function getNuCpfIndicadoFormatadoAttribute()
     {
         return CPF::adicionarMascara($this->nu_cpf_indicado);
+    }
+
+    public function getDtNascimentoIndicadoFormatadoAttribute()
+    {
+        $carbon = new Carbon($this->dt_nascimento_indicado);
+        return $carbon->format('d/m/Y');
     }
 }
