@@ -78,7 +78,7 @@
 									</v-layout>
 
 									<v-layout xs12 mt-2>
-										<v-radio-group v-model="formulario.indicado.tp_candidato" row>
+										<v-radio-group v-model="formulario.indicado.tp_indicado" row>
 											<v-radio
 												label="Titular"
 												value="t"
@@ -93,7 +93,7 @@
 									<v-layout xs12 mt-2>
 										<v-flex xs4 md6 sm6>
 											<v-text-field
-												v-model="formulario.indicado.nu_cpf"
+												v-model="formulario.indicado.nu_cpf_indicado"
 												label="*CPF"
 												append-icon="person"
 												placeholder="999.999.999.99"
@@ -117,7 +117,7 @@
 												>
 													<template v-slot:activator="{ on }">
 														<v-text-field
-															v-model="formulario.indicado.dt_nascimento"
+															v-model="formulario.indicado.dt_nascimento_indicado"
 															label="*Data de nascimento"
 															append-icon="event"
 															placeholder="ex: 01/12/2019"
@@ -158,7 +158,7 @@
 									<v-layout mt-2 xs12>
 										<v-flex>
 											<v-text-field
-												v-model="formulario.indicado.no_nome"
+												v-model="formulario.indicado.no_indicado"
 												:disabled="true"
 												label="*Nome completo"
 												append-icon="perm_identity"
@@ -255,9 +255,9 @@
 	        valid : false,
             menu: false,
             date: '',
-            dialog: true,
+            dialog: false,
             listaOrganizacoes: [],
-            formulario: {
+	        formulario : {
                 organizacao: {
                     avaliacao: {
                         text: '',
@@ -270,10 +270,30 @@
                     ds_segmento: ' - ',
                 },
                 indicado: {
-                    tp_candidato: 't',
-                    nu_cpf: null,
-                    dt_nascimento: '',
-                    no_nome: '',
+                    tp_indicado: 't',
+                    nu_cpf_indicado: '',
+                    dt_nascimento_indicado: '',
+                    no_indicado: '',
+                    ds_curriculo: ''
+                }
+            },
+            formularioInicial: {
+                organizacao: {
+                    avaliacao: {
+                        text: '',
+                        class: ''
+                    },
+                    co_organizacao: null,
+                    nu_pontuacao_final: ' - ',
+                    st_avaliacao: ' - ',
+                    nu_cnpj_formatado: ' - ',
+                    ds_segmento: ' - ',
+                },
+                indicado: {
+                    tp_indicado: 't',
+                    nu_cpf_indicado: '',
+                    dt_nascimento_indicado: '',
+                    no_indicado: '',
                     ds_curriculo: ''
                 }
             },
@@ -319,7 +339,8 @@
                     this.salvarOrganizacaoIndicacao(postData)
 	                    .then(response => {
                             this.definirMensagemSucesso(response.data.message);
-                            window.location.reload();
+                            this.dialogSalvarIndicado = false;
+                            // window.location.reload();
                             // this.$router.push('/');
 	                    });
 
@@ -396,7 +417,7 @@
                 const self = this;
                 this.consultarCPF(valor).then((response) => {
                     const {data} = response.data;
-                    self.formulario.indicado.no_nome = data.nmPessoaFisica;
+                    self.formulario.indicado.no_indicado = data.nmPessoaFisica;
                 });
             },
             validate() {
@@ -414,15 +435,16 @@
         },
 
         watch: {
+            dialog(valor) {
+                this.$emit('input', valor);
+                if(!valor) {
+			        this.formulario = {...this.formularioInicial};
+                }
+            },
             value(valor) {
                 this.dialog = valor;
-                // if (!valor) {
-                //     this.formulario.organizacaoHabilitacao = Object.assign({}, this.formularioInicial.organizacaoHabilitacao);
-                //     this.inicializarValoresComponente();
-                //     this.$refs.form_recurso.reset();
-                // }
             },
-            'formulario.indicado.nu_cpf': function (valor) {
+            'formulario.indicado.nu_cpf_indicado': function (valor) {
                 if (valor.length === 11) {
                     this.carregarCPF(valor);
                 }
@@ -453,7 +475,6 @@
             const self = this;
             self.loading = true;
             self.obterOrganizacoesHabilitacao().then((d) => {
-                console.log(this.organizacoesGetter);
                 self.loading = false;
             });
         },

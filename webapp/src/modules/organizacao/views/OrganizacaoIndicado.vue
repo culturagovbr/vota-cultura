@@ -12,7 +12,7 @@
 
 		<v-layout>
 			<v-flex text-xs-right>
-				<v-btn round outline color="primary" dark @click="dialogCadastrarIndicado = !dialogCadastrarIndicado">
+				<v-btn round outline color="primary" dark @click="dialogCadastrarIndicado = true">
 					+ Indicar
 				</v-btn>
 			</v-flex>
@@ -61,7 +61,7 @@
 	    components: {DialogCadastrarIndicadoOrganizacao},
         data () {
             return {
-                dialogCadastrarIndicado : true,
+                dialogCadastrarIndicado : false,
                 expand: true,
                 headers: [
                     {
