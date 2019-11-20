@@ -38,7 +38,20 @@
 							<td>{{ props.item.tp_indicado }}</td>
 							<td>{{ props.item.organizacao.no_organizacao }}</td>
 							<td>{{ props.item.segmento.ds_detalhamento }}</td>
-							<td>&nbsp;</td>
+							<td>
+								<v-btn
+									depressed
+									outline
+									icon
+									fab
+									dark
+									color="error"
+									small
+									@click="abrirDialogoConfirmacaoExclusao(props.item.co_organizacao_indicacao)"
+								>
+									<v-icon>delete</v-icon>
+								</v-btn>
+							</td>
 						</tr>
 					</template>
 					<template v-slot:expand="props">
@@ -57,6 +70,43 @@
 
 		<dialog-cadastrar-indicado-organizacao v-model="dialogCadastrarIndicado" />
 
+		<v-dialog
+			v-model="dialogoConfirmacaoExclusao"
+			max-width="360"
+		>
+			<v-card>
+				<v-card-title class="headline">
+					Deseja realmente excluir o indicado?
+				</v-card-title>
+
+				<v-card-text>
+					Ao excluir não será possível recuperar os dados posteriormente.
+				</v-card-text>
+
+				<v-card-actions>
+					<v-spacer />
+
+					<v-btn
+						color="red darken-1"
+						text
+						flat
+						@click="dialogoConfirmacaoExclusao = false"
+					>
+						Não
+					</v-btn>
+
+					<v-btn
+						color="green darken-1"
+						text
+						flat
+						@click="deletarIndicado"
+					>
+						Sim
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+
 	</v-container>
 </template>
 
@@ -67,6 +117,8 @@
 	    components: {DialogCadastrarIndicadoOrganizacao},
         data () {
             return {
+                dialogoConfirmacaoExclusao : false,
+                itemParaExclusao : {},
                 loading : true,
                 dialogCadastrarIndicado : false,
                 expand: true,
@@ -81,6 +133,13 @@
                 ]
             }
         },
+		watch: {
+            dialogCadastrarIndicado(value) {
+                if(!value) {
+                    this.obterDadosOrganizacaoIndicacao();
+                }
+            }
+		},
         computed: {
             ...mapGetters({
                 usuario: "conta/usuario",
@@ -88,9 +147,21 @@
             })
         },
         methods: {
+            deletarIndicado() {
+				this.deletarOrganizacaoIndicacao(this.itemParaExclusao).then(() => {
+				    this.dialogoConfirmacaoExclusao = false;
+				    this.definirMensagemSucesso('Indicado removido com sucesso.');
+	            }).finally(() => {
+                    this.obterDadosOrganizacaoIndicacao();
+				})
+            },
+            abrirDialogoConfirmacaoExclusao(itemParaExclusao) {
+                this.dialogoConfirmacaoExclusao = true;
+                this.itemParaExclusao = itemParaExclusao;
+            },
             ...mapActions({
-                obterDadosOrganizacaoIndicacao:
-                    "organizacao/obterDadosOrganizacaoIndicacao",
+                obterDadosOrganizacaoIndicacao: "organizacao/obterDadosOrganizacaoIndicacao",
+                deletarOrganizacaoIndicacao: "organizacao/deletarOrganizacaoIndicacao",
                 definirMensagemSucesso: "app/setMensagemSucesso",
                 definirMensagemErro: "app/setMensagemErro",
             }),

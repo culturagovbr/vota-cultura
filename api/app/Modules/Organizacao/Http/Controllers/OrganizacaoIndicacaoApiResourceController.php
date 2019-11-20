@@ -2,18 +2,17 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
+use App\Modules\Core\Http\Controllers\AApiResourceController;
+use App\Modules\Core\Http\Controllers\Traits\TApiResourceDestroy;
 use App\Modules\Organizacao\Http\Resources\OrganizacaoIndicacao as OrganizacaoIndicacaoResource;
-use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
-use App\Modules\Organizacao\Service\OrganizacaoHabilitacaoRecurso;
 use App\Modules\Organizacao\Service\OrganizacaoIndicacao as OrganizacaoIndicacaoService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 
-class OrganizacaoIndicacaoApiResourceController extends Controller
+class OrganizacaoIndicacaoApiResourceController extends AApiResourceController
 {
-
+    use TApiResourceDestroy;
     /**
      * @var OrganizacaoIndicacao
      */
@@ -29,7 +28,7 @@ class OrganizacaoIndicacaoApiResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $organizacaoService = app(OrganizacaoIndicacaoService::class, request()->all());
         return $this->sendResponse(
@@ -55,7 +54,7 @@ class OrganizacaoIndicacaoApiResourceController extends Controller
      * @throws \App\Modules\Core\Exceptions\EParametrosInvalidos
      * @throws \HttpException
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         return $this->sendResponse(
             $this->service->cadastrar(collect($request->all())),
@@ -99,13 +98,14 @@ class OrganizacaoIndicacaoApiResourceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     * @throws \HttpException
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $this->service->remover($request, $id);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

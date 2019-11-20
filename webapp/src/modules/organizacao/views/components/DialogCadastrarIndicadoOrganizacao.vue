@@ -338,16 +338,13 @@
 
                     this.salvarOrganizacaoIndicacao(postData)
 	                    .then(response => {
-                            self.obterOrganizacoesHabilitacao();
                             this.definirMensagemSucesso(response.data.message);
+                            this.$parent.obterDadosOrganizacaoIndicacao();
                             this.dialog = false;
-                            // window.location.reload();
-                            // this.$router.push('/');
 	                    });
 
             },
             preencherDadosOrganizacao(coOrganizacao) {
-                // console.log(a, this.organizacaoGetter);
                 let organizacoes = this.organizacoesGetter;
                 for (let x in organizacoes) {
                     let organizacao = organizacoes[x];
@@ -365,7 +362,6 @@
             },
             obterSituacaoAvaliacao(item) {
                 if (Object.keys((item.habilitacaoRecurso || {})).length > 0) {
-                    console.log(item.habilitacaoRecurso.length);
                     return this.mapCodeResultadoAvaliacaoToString(item.habilitacaoRecurso.st_parecer);
                 }
 
