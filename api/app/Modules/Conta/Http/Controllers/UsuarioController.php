@@ -58,9 +58,7 @@ class UsuarioController extends Controller
     public function update(Request $request, $co_usuario)
     {
         return $this->sendResponse(
-            new UsuarioResource(
-                $this->usuarioService->atualizar($request, $co_usuario)
-            ),
+            $this->usuarioService->atualizar($request, $co_usuario),
             "Operação realizada com sucesso",
             Response::HTTP_OK
         );
