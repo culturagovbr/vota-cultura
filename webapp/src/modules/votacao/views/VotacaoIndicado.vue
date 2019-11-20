@@ -158,14 +158,6 @@
             <v-layout>
               Candidato(a):&nbsp;<b>{{ candidato.no_indicado }}</b>
             </v-layout>
-            <br>
-            Para <b>verificarmos a sua identificação</b>, informe abaixo o <b>nome completo da sua mãe</b> de acordo com o cadastro na Receita Federal Brasileira:
-            <v-text-field
-              v-model="nomeMae"
-              placeholder="Digite aqui"
-              solo
-              persistent-hint
-            />
 
             <br>
             Atenção!
@@ -188,7 +180,6 @@
               color="green darken-1"
               text
               flat
-              :disabled="!nomeMae.length"
               @click="salvar"
             >
               Sim

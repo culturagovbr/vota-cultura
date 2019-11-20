@@ -2,8 +2,10 @@
 
 namespace App\Modules\Organizacao\Http\Controllers;
 
+use App\Modules\Organizacao\Http\Resources\OrganizacaoIndicacao as OrganizacaoIndicacaoResource;
+use App\Modules\Organizacao\Service\Organizacao as OrganizacaoService;
 use App\Modules\Organizacao\Service\OrganizacaoHabilitacaoRecurso;
-use App\Modules\Organizacao\Service\OrganizacaoIndicacao;
+use App\Modules\Organizacao\Service\OrganizacaoIndicacao as OrganizacaoIndicacaoService;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -17,7 +19,7 @@ class OrganizacaoIndicacaoApiResourceController extends Controller
      */
     protected $service;
 
-    public function __construct(OrganizacaoIndicacao $service)
+    public function __construct(OrganizacaoIndicacaoService $service)
     {
         $this->service = $service;
         $this->middleware('auth:api');
@@ -29,7 +31,12 @@ class OrganizacaoIndicacaoApiResourceController extends Controller
      */
     public function index()
     {
-        //
+        $organizacaoService = app(OrganizacaoIndicacaoService::class, request()->all());
+        return $this->sendResponse(
+            OrganizacaoIndicacaoResource::collection($organizacaoService->obterTodos()),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
     /**

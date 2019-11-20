@@ -21,6 +21,15 @@ class OrganizacaoIndicacao extends Model
 
     public $timestamps = false;
 
+    public function organizacao()
+    {
+        return $this->hasOne(
+            Organizacao::class,
+            'co_organizacao',
+            'co_organizacao'
+        );
+    }
+
     public function getCpfFormatadoAttribute()
     {
         return CPF::adicionarMascara($this->nu_cpf_indicado);

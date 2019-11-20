@@ -30,7 +30,6 @@ class ConselhoVotacao extends AbstractService
             DB::beginTransaction();
 
             $this->verificarSeEleitorPodeVotar();
-            $this->verificarNomeMaeReceita($dados['nomeMae']);
             $eleitorCriado = parent::cadastrar(collect([
                 'co_conselho_indicacao' => (int) $dados['co_conselho_indicacao'],
                 'co_eleitor' => $this->usuario['co_eleitor']
@@ -41,17 +40,6 @@ class ConselhoVotacao extends AbstractService
         } catch (\HttpException $queryException) {
             DB::rollBack();
             throw $queryException;
-        }
-    }
-
-    private function verificarNomeMaeReceita(string $nomeMae)
-    {
-        $nomeMae = strtoupper($nomeMae);
-        $receitaService = app(Receita::class);
-        $dadosReceita = $receitaService->consultarDadosPessoaFisica($this->usuario['nu_cpf']);
-
-        if ($dadosReceita['nmMae'] !== strtoupper(Str::ascii($nomeMae))) {
-            throw new EValidacaoCampo('O nome da mãe não confere, tente novamente!');
         }
     }
 
