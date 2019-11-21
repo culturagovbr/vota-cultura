@@ -23,6 +23,9 @@ export const mutations = {
             case 'abertura_inscricoes_eleitor':
               state.ativarInscricaoEleitor = (dataAtual >= dataInicio && dataAtual <= dataFim);
               break;
+            case 'abertura_inscricoes_indicados_organizacao':
+              state.ativarOrganizacaoIndicacao = (dataAtual >= dataInicio && dataAtual <= dataFim);
+              break;
             default:
               break;
           }
