@@ -12,12 +12,7 @@ export default {
     return {
     };
   },
-  watch: {
-    /* eslint-disable func-names */
-    '$route.path': function (val) {
-        console.log(val)
-    },
-  },
+  watch: {},
   created() {
   },
   methods: {
