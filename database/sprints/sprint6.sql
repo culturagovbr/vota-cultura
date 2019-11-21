@@ -23,7 +23,7 @@ COMMENT ON COLUMN public.tb_organizacao_indicacao.dt_nascimento_indicado IS 'Dat
 
 insert into tb_fase
     (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento)
-values (4,
+values (6,
         'abertura_inscricoes_indicados_organizacao',
         '2019-11-22 18:00:00',
         '2666-12-30 18:00:00',
