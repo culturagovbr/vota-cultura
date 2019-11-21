@@ -177,6 +177,9 @@
                 if(!value) {
                     this.obterDadosOrganizacaoIndicacao();
                 }
+            },
+            fases(value) {
+                this.validarConclusaoIndicacao(value);
             }
 		},
         computed: {
@@ -218,8 +221,8 @@
                 definirMensagemErro: "app/setMensagemErro",
 	            concluirOrganizacaoIndicacao: "fase/concluirOrganizacaoIndicacao"
             }),
-			validarConclusaoIndicacao() {
-                this.fases.forEach(fase => {
+			validarConclusaoIndicacao(value) {
+                value.forEach(fase => {
                     if(fase.tp_fase === 'abertura_inscricoes_indicados_organizacao') {
                         this.co_fase = fase.co_fase;
                         this.showConcluirIndicacao = true;
@@ -236,7 +239,6 @@
             self.obterDadosOrganizacaoIndicacao()
                 .finally(() => {
                     self.loading = false;
-	                this.validarConclusaoIndicacao();
                 });
         }
 
