@@ -315,11 +315,16 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
-
         this.definirItemMenu({
           title: 'Ranking parcial dos indicados',
           group: 'apps',
           name: 'administrador-ranking-indicados-route',
+          icon: 'list',
+        }, 'Administração');
+        this.definirItemMenu({
+          title: 'Ranking final',
+          group: 'apps',
+          name: 'administrador-gerar-resultado-final-route',
           icon: 'list',
         }, 'Administração');
       }

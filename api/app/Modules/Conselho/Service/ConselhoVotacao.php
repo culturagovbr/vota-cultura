@@ -53,9 +53,11 @@ class ConselhoVotacao extends AbstractService
             indicacao.co_conselho_indicacao, tb_regiao.no_regiao
         HAVING
             count(indicacao.co_conselho_indicacao) >= :numero_min_votacoes)
-        SELECT * FROM cte;
+
+        SELECT * FROM cte where ranking_empatado < :numero_max_colocacoes;
       "), [
             'numero_min_votacoes' => 0,
+            'numero_max_colocacoes' => 5,
         ]));
     }
 

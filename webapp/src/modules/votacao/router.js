@@ -24,6 +24,16 @@ export default [
         component: () => import(/* webpackChunkName: "votacao-route" */ '@/modules/votacao/views/Votacao.vue'),
       },
       {
+        path: '/votacao/gerar-resultado-final',
+        name: 'administrador-gerar-resultado-final-route',
+        meta: {
+          title: 'Resultado final',
+          icon: '',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "administrador-gerar-resultado-final-route'" */ '@/modules/votacao/views/VotacaoGerarResultadoFinal.vue'),
+      },
+      {
         path: '/votacao/ranking-parcial',
         name: 'administrador-ranking-indicados-route',
         meta: {
