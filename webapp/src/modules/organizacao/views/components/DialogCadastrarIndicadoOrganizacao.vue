@@ -440,6 +440,7 @@
                 this.$emit('input', valor);
                 if(!valor) {
 			        this.formulario = {...this.formularioInicial};
+                    this.$refs.form.reset();
                 }
             },
             value(valor) {
