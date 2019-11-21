@@ -11,7 +11,7 @@
 		</v-layout>
 
 		<v-layout>
-			<v-flex text-xs-right>
+			<v-flex text-xs-right v-if="showConcluirIndicacao">
 				<v-btn round outline color="primary" dark @click="dialogCadastrarIndicado = true">
 					+ Indicar
 				</v-btn>
@@ -40,6 +40,7 @@
 							<td>{{ props.item.segmento.ds_detalhamento }}</td>
 							<td>
 								<v-btn
+									v-if="showConcluirIndicacao"
 									depressed
 									outline
 									icon
@@ -64,7 +65,7 @@
 		</v-layout>
 		<v-layout text-xs-center>
 			<v-flex>
-				<v-btn small color="primary">CONCLUIR</v-btn>
+				<v-btn small color="primary" @click="dialogConcluirIndicacao" v-if="showConcluirIndicacao">CONCLUIR</v-btn>
 			</v-flex>
 		</v-layout>
 
@@ -107,6 +108,42 @@
 			</v-card>
 		</v-dialog>
 
+		<v-dialog
+			v-model="dialogConfirmarConclusao"
+			max-width="360"
+		>
+			<v-card>
+				<v-card-title class="headline">
+					Deseja realmente concluir a indicação?
+				</v-card-title>
+
+				<v-card-text>
+					Atenção! <br />
+					Ao concluir não será possível recuperar os dados posteriormente.
+				</v-card-text>
+
+				<v-card-actions>
+					<v-spacer />
+					<v-btn
+						color="red darken-1"
+						text
+						flat
+						@click="dialogConfirmarConclusao = false"
+					>
+						Não
+					</v-btn>
+
+					<v-btn
+						color="green darken-1"
+						text
+						flat
+						@click="concluirIndicacao"
+					>
+						Sim
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
 	</v-container>
 </template>
 
@@ -117,6 +154,9 @@
 	    components: {DialogCadastrarIndicadoOrganizacao},
         data () {
             return {
+                co_fase : null,
+                dialogConfirmarConclusao : false,
+                showConcluirIndicacao : false,
                 dialogoConfirmacaoExclusao : false,
                 itemParaExclusao : {},
                 loading : true,
@@ -128,8 +168,7 @@
                     { text: 'Data de nascimento', value: 'dt_nascimento_indicado' },
                     { text: 'Posição', value: 'tp_indicado' },
                     { text: 'Organização/entidade', value: 'organizacao.no_organizacao' },
-                    { text: 'Segmento', value: 'organizacao.segmento.ds_detalhamento' },
-                    { text: 'Ações', sortable:  false},
+                    { text: 'Segmento', value: 'organizacao.segmento.ds_detalhamento' }
                 ]
             }
         },
@@ -143,10 +182,23 @@
         computed: {
             ...mapGetters({
                 usuario: "conta/usuario",
-                organizacaoGetter: "organizacao/organizacaoIndicacao"
+                organizacaoGetter: "organizacao/organizacaoIndicacao",
+                fases : 'fase/fases'
             })
         },
         methods: {
+            dialogConcluirIndicacao() {
+				this.dialogConfirmarConclusao = true;
+	        },
+	        concluirIndicacao() {
+				this.concluirOrganizacaoIndicacao(this.co_fase)
+					.then(() => {
+				        this.definirMensagemSucesso("Indicação concluída com sucesso");
+					})
+					.finally(() => {
+                        this.$router.go(0);
+				})
+	        },
             deletarIndicado() {
 				this.deletarOrganizacaoIndicacao(this.itemParaExclusao).then(() => {
 				    this.dialogoConfirmacaoExclusao = false;
@@ -164,15 +216,27 @@
                 deletarOrganizacaoIndicacao: "organizacao/deletarOrganizacaoIndicacao",
                 definirMensagemSucesso: "app/setMensagemSucesso",
                 definirMensagemErro: "app/setMensagemErro",
+	            concluirOrganizacaoIndicacao: "fase/concluirOrganizacaoIndicacao"
             }),
+			validarConclusaoIndicacao() {
+                this.fases.forEach(fase => {
+                    if(fase.tp_fase === 'abertura_inscricoes_indicados_organizacao') {
+                        this.co_fase = fase.co_fase;
+                        this.showConcluirIndicacao = true;
+                        this.headers.push({
+                            text: 'Ações', sortable:  false
+                        })
+	                }
+	            })
+			},
         },
         mounted() {
             const self = this;
             self.loading = true;
-            self
-                .obterDadosOrganizacaoIndicacao()
+            self.obterDadosOrganizacaoIndicacao()
                 .finally(() => {
                     self.loading = false;
+	                this.validarConclusaoIndicacao();
                 });
         }
 

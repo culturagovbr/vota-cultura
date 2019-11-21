@@ -341,7 +341,11 @@
                             this.definirMensagemSucesso(response.data.message);
                             this.$parent.obterDadosOrganizacaoIndicacao();
                             this.dialog = false;
-	                    });
+                            this.dialogSalvarIndicado = false;
+	                    }).catch(error => {
+                            this.definirMensagemErro(error.response.data.message);
+                            this.dialogSalvarIndicado = false;
+                        });
 
             },
             preencherDadosOrganizacao(coOrganizacao) {
@@ -471,7 +475,7 @@
         mounted() {
             const self = this;
             self.loading = true;
-            self.obterOrganizacoesHabilitacao().then((d) => {
+            self.obterOrganizacoesHabilitacao().then(() => {
                 self.loading = false;
             });
         },

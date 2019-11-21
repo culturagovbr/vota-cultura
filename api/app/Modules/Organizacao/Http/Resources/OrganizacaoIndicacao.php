@@ -11,7 +11,7 @@ class OrganizacaoIndicacao extends JsonResource
     {
         $situacaoAvaliacao = 'Titular';
 
-        if($this->tp_candidato === 's') {
+        if($this->tp_indicado === 's') {
             $situacaoAvaliacao = 'Suplente';
         }
 

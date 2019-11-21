@@ -29,7 +29,6 @@ export const mutations = {
     state.modalVisualizacaoOrganizacaoAdministrador = dados;
   },
   [types.OBTER_INDICACAO_ORGANIZACAO](state, dados) {
-    console.log(dados);
     state.organizacaoIndicacao = dados;
   },
   [types.OBTER_ORGANIZACOES_HABILITADAS_E_CLASSIFICADAS](state, dados) {
