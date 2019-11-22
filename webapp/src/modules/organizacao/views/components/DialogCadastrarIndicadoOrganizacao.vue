@@ -406,6 +406,7 @@
                     this.$refs.form.reset();
                 }
             },
+            },
             value(valor) {
                 this.dialog = valor;
             },

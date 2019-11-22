@@ -119,7 +119,7 @@
 
 				<v-card-text>
 					Atenção! <br />
-					Ao concluir não será possível recuperar os dados posteriormente.
+					Ao concluir não será possível alterar os dados ou cadastrar novo indicado.
 				</v-card-text>
 
 				<v-card-actions>
