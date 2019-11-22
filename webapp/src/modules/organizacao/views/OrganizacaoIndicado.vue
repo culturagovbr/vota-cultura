@@ -152,6 +152,7 @@
     import { mapActions, mapGetters } from "vuex";
 	import DialogCadastrarIndicadoOrganizacao from './components/DialogCadastrarIndicadoOrganizacao';
 	export default {
+	    name: 'OrganizacaoIndicacao',
 	    components: {DialogCadastrarIndicadoOrganizacao},
         data () {
             return {

@@ -21,13 +21,8 @@ class Fase extends AbstractService
 
     public function concluirOrganizacaoIndicacao($identificador)
     {
-        $updateData = [
-            'dh_fim' => new \DateTime()
-        ];
-
         $model =  $this->getModel()->find($identificador);
-        $model->fill($updateData);
-        return $model->save();
+        return $model->delete();
     }
 
     public function obterDisponiveis(): ?Collection
