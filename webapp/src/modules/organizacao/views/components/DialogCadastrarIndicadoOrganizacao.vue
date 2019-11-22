@@ -78,7 +78,7 @@
 									</v-layout>
 
 									<v-layout xs12 mt-2>
-										<v-radio-group v-model="formulario.indicado.tp_indicado" row>
+										<v-radio-group v-model="formulario.indicado.tp_indicado" row :rules="[rules.required]">
 											<v-radio
 												label="Titular"
 												value="t"
@@ -104,55 +104,17 @@
 										</v-flex>
 										<v-flex xs2 md3 sm3></v-flex>
 										<v-flex xs4 md6 sm6>
-											<template activator="{ on }">
-												<v-menu
-													ref="menu"
-													v-model="menu"
-													lazy
-													transition="scale-transition"
-													:close-on-content-click="false"
-													offset-y
-													full-width
-													min-width="290px"
-												>
-													<template v-slot:activator="{ on }">
-														<v-text-field
-															v-model="formulario.indicado.dt_nascimento_indicado"
-															label="*Data de nascimento"
-															append-icon="event"
-															placeholder="ex: 01/12/2019"
-															return-masked-value
-															mask="##/##/####"
-															required
-															:rules="[rules.required, rules.dataAniversario]"
-															v-on="on"
-														/>
-													</template>
-													<v-date-picker
-														v-model="date"
-														locale="pt-BR"
-														scrollable
-													>
-														<v-spacer/>
-														<v-btn
-															flat
-															color="primary"
-															@click="menu = false"
-														>
-															Cancel
-														</v-btn>
-														<v-btn
-															flat
-															color="primary"
-															@click="$refs.menu.save(date)"
-														>
-															OK
-														</v-btn>
-													</v-date-picker>
-												</v-menu>
-											</template>
+											<v-text-field
+												v-model="formulario.indicado.dt_nascimento_indicado"
+												label="*Data de nascimento"
+												append-icon="event"
+												placeholder="ex: 01/12/2019"
+												return-masked-value
+												mask="##/##/####"
+												required
+												:rules="[rules.required, rules.dataAniversario]"
+											/>
 										</v-flex>
-
 									</v-layout>
 
 									<v-layout mt-2 xs12>
@@ -187,8 +149,6 @@
 											<v-btn @click="dialog = false">
 												Cancelar
 											</v-btn>
-
-
 											<v-btn
 												color="primary"
 												@click="validate"
@@ -222,7 +182,6 @@
 												>
 													Não
 												</v-btn>
-
 												<v-btn
 													color="green darken-1"
 													text
@@ -247,14 +206,13 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
-
+	import moment from 'moment';
     export default {
         name: 'DialogCadastrarIndicadoOrganizacao',
         data: () => ({
             dialogSalvarIndicado: false,
 	        valid : false,
             menu: false,
-            date: '',
             dialog: false,
             listaOrganizacoes: [],
 	        formulario : {
@@ -333,10 +291,9 @@
         }),
         methods: {
             salvarIndicado() {
-                let postData =  this.formulario.indicado;
-                    postData.co_organizacao = this.formulario.organizacao.co_organizacao;
-
-                    this.salvarOrganizacaoIndicacao(postData)
+                let postData = this.formulario.indicado;
+                postData.co_organizacao = this.formulario.organizacao.co_organizacao;
+                this.salvarOrganizacaoIndicacao(postData)
 	                    .then(response => {
                             this.definirMensagemSucesso(response.data.message);
                             this.$parent.obterDadosOrganizacaoIndicacao();
@@ -347,6 +304,13 @@
                             this.dialogSalvarIndicado = false;
                         });
 
+            },
+            formatDate(data) {
+                if (data.length === 0 || !data.trim()) {
+                    return false;
+                }
+                const [dia, mes, ano] = data.split('/');
+                return `${ano}-${mes}-${dia}`;
             },
             preencherDadosOrganizacao(coOrganizacao) {
                 let organizacoes = this.organizacoesGetter;

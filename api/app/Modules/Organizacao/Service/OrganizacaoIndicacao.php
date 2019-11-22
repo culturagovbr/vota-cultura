@@ -19,6 +19,8 @@ class OrganizacaoIndicacao extends AbstractService
     public function cadastrar(Collection $dados): ?Model
     {
         try {
+            $dataNascimento = new \DateTime($dados['dt_nascimento_indicado']);
+            $dados['dt_nascimento_indicado'] = $dataNascimento->format('Y-d-m');
             $this->validarCpfCadastrado($dados->only('nu_cpf_indicado')->toArray());
             $this->validarTipoCandidatoCadastrado($dados->only('tp_indicado', 'co_organizacao')->toArray());
             $modelPesquisada = $this->getModel()->fill($dados->toArray());
