@@ -1,17 +1,31 @@
-
--- Tabela de votação dos indicados
-CREATE TABLE public.tb_conselho_votacao
+CREATE TABLE public.tb_organizacao_indicacao
 (
-    co_conselho_votacao serial PRIMARY KEY NOT NULL,
-    dh_voto timestamp DEFAULT now() NOT NULL,
-    co_eleitor int NOT NULL,
-    co_conselho_indicacao int NOT NULL,
-    CONSTRAINT fk_conselho_votacao_indicacao FOREIGN KEY (co_conselho_indicacao) REFERENCES public.tb_conselho_indicacao (co_conselho_indicacao),
-    CONSTRAINT tb_conselho_votacao_eleitor FOREIGN KEY (co_eleitor) REFERENCES public.tb_eleitor (co_eleitor)
+    co_organizacao_indicacao serial        NOT NULL,
+    co_organizacao           int           NOT NULL,
+    nu_cpf_indicado          varchar(11)   NOT NULL,
+    no_indicado              text          NOT NULL,
+    tp_indicado              char(1)       NOT NULL,
+    dt_nascimento_indicado   date          NOT NULL,
+    ds_curriculo             varchar(1000) NOT NULL,
+    CONSTRAINT tb_organizacao_indicacao_pk PRIMARY KEY (co_organizacao_indicacao),
+    CONSTRAINT organizacao_indicacao_cpf_uk UNIQUE (nu_cpf_indicado),
+    CONSTRAINT organizacao_indicacao_organizacao_fk FOREIGN KEY (co_organizacao) REFERENCES public.tb_organizacao (co_organizacao)
 );
-CREATE UNIQUE INDEX tb_conselho_votacao_co_conselho_votacao_uindex ON public.tb_conselho_votacao (co_conselho_votacao);
-CREATE UNIQUE INDEX tb_conselho_votacao_co_eleitor_uindex ON public.tb_conselho_votacao (co_eleitor);
-COMMENT ON COLUMN public.tb_conselho_votacao.co_conselho_votacao IS 'chave primária da tabela';
-COMMENT ON COLUMN public.tb_conselho_votacao.co_eleitor IS 'eleitor do voto';
-COMMENT ON COLUMN public.tb_conselho_votacao.co_conselho_indicacao IS 'indicado que recebeu o voto';
-COMMENT ON TABLE public.tb_conselho_votacao IS 'tabela de registro de votos dos indicados';
+
+-- Column comments
+
+COMMENT ON COLUMN public.tb_organizacao_indicacao.co_organizacao_indicacao IS 'Identificador da indicação. Chave primária da tabela.';
+COMMENT ON COLUMN public.tb_organizacao_indicacao.co_organizacao IS 'Código da organização.';
+COMMENT ON COLUMN public.tb_organizacao_indicacao.nu_cpf_indicado IS 'CPF do indicado pela organização.';
+COMMENT ON COLUMN public.tb_organizacao_indicacao.no_indicado IS 'Nome do indicado pela organização.';
+COMMENT ON COLUMN public.tb_organizacao_indicacao.tp_indicado IS 'Tipo do indicado. t = Titular, s = Suplente';
+COMMENT ON COLUMN public.tb_organizacao_indicacao.dt_nascimento_indicado IS 'Data de nascimento do indicado.';
+
+insert into tb_fase
+    (co_fase, tp_fase, dh_inicio, dh_fim, ds_detalhamento)
+values (6,
+        'abertura_inscricoes_indicados_organizacao',
+        '2019-11-20 18:00:00',
+        '2066-12-30 18:00:00',
+        'Pelos poderes de Felix, Garfield e Tom...');
+

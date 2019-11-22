@@ -315,6 +315,13 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
+
+        this.definirItemMenu({
+          title: 'Indicados das organizações',
+          group: 'apps',
+          name: 'OrganizacaoIndicacaoRoute',
+          icon: 'person_pin',
+        }, 'Administração');
       }
     },
     carregarMenuHabilitacao() {
