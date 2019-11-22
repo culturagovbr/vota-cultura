@@ -168,7 +168,7 @@
 											</v-card-title>
 
 											<v-card-text>
-												Os dados excluídos não poderão ser alterados posteriormente.
+												Os dados enviados não poderão ser alterados posteriormente.
 											</v-card-text>
 
 											<v-card-actions>
