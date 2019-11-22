@@ -209,8 +209,11 @@
 						this.headers = this.headers.filter(header => {
                             return header.text !== 'Ações' ? header : null;
 						});
-					    this.obterFases();
-					});
+					})
+					.finally(() => {
+                        this.obterFases();
+					})
+				;
 	        },
             deletarIndicado() {
 				this.deletarOrganizacaoIndicacao(this.itemParaExclusao).then(() => {
