@@ -203,13 +203,13 @@
 	        concluirIndicacao() {
 				this.concluirOrganizacaoIndicacao(this.co_fase)
 					.then(() => {
-					    this.obterFases();
 				        this.definirMensagemSucesso("Indicação concluída com sucesso");
 				        this.showConcluirIndicacao = false;
                         this.dialogConfirmarConclusao = false;
 						this.headers = this.headers.filter(header => {
                             return header.text !== 'Ações' ? header : null;
-						})
+						});
+					    this.obterFases();
 					});
 	        },
             deletarIndicado() {
