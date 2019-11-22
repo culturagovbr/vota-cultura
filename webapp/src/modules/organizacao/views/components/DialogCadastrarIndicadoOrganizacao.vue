@@ -173,7 +173,6 @@
 
 											<v-card-actions>
 												<v-spacer />
-
 												<v-btn
 													color="red darken-1"
 													text

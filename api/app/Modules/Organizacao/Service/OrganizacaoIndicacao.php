@@ -6,6 +6,7 @@ use App\Core\Service\AbstractService;
 
 use App\Modules\Core\Exceptions\EValidacaoCampo;
 use App\Modules\Organizacao\Model\OrganizacaoIndicacao as OrganizacaoIndicacaoModel;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -19,8 +20,9 @@ class OrganizacaoIndicacao extends AbstractService
     public function cadastrar(Collection $dados): ?Model
     {
         try {
-            $dataNascimento = new \DateTime($dados['dt_nascimento_indicado']);
-            $dados['dt_nascimento_indicado'] = $dataNascimento->format('Y-d-m');
+
+            $dataNascimento = implode('-', array_reverse(explode('/',$dados['dt_nascimento_indicado'])));
+            $dados['dt_nascimento_indicado'] = $dataNascimento;
             $this->validarCpfCadastrado($dados->only('nu_cpf_indicado')->toArray());
             $this->validarTipoCandidatoCadastrado($dados->only('tp_indicado', 'co_organizacao')->toArray());
             $modelPesquisada = $this->getModel()->fill($dados->toArray());
