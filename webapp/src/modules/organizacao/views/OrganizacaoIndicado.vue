@@ -197,10 +197,13 @@
 				this.concluirOrganizacaoIndicacao(this.co_fase)
 					.then(() => {
 				        this.definirMensagemSucesso("Indicação concluída com sucesso");
-					})
-					.finally(() => {
-                        this.$router.go(0);
-				})
+				        this.showConcluirIndicacao = false;
+                        this.dialogConfirmarConclusao = false;
+						this.headers = this.headers.filter(header => {
+                            console.log(header);
+                            return header.text !== 'Ações' ? header : null;
+						})
+					});
 	        },
             deletarIndicado() {
 				this.deletarOrganizacaoIndicacao(this.itemParaExclusao).then(() => {
