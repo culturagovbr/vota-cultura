@@ -243,6 +243,8 @@
                 .finally(() => {
                     self.loading = false;
                 });
+
+            this.validarConclusaoIndicacao(this.fases);
         }
 	}
 </script>
