@@ -19,6 +19,12 @@ class Fase extends AbstractService
         return $this->model->where('tp_fase', '=', $tipoFase)->first();
     }
 
+    public function concluirOrganizacaoIndicacao($identificador)
+    {
+        $model =  $this->getModel()->find($identificador);
+        return $model->delete();
+    }
+
     public function obterDisponiveis(): ?Collection
     {
         $horarioAtual = Carbon::now();

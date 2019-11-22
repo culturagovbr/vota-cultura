@@ -8,4 +8,6 @@ export const state = {
   criterios: [],
   documentacaoComprobatoria: [],
   modalVisualizacaoOrganizacaoAdministrador: false,
+  organizacoesHabilitadasEClassificadas : [],
+  organizacaoIndicacao : []
 };
