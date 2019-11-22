@@ -203,11 +203,11 @@
 	        concluirIndicacao() {
 				this.concluirOrganizacaoIndicacao(this.co_fase)
 					.then(() => {
+					    this.obterFases();
 				        this.definirMensagemSucesso("Indicação concluída com sucesso");
 				        this.showConcluirIndicacao = false;
                         this.dialogConfirmarConclusao = false;
 						this.headers = this.headers.filter(header => {
-                            console.log(header);
                             return header.text !== 'Ações' ? header : null;
 						})
 					});
@@ -229,7 +229,8 @@
                 deletarOrganizacaoIndicacao: "organizacao/deletarOrganizacaoIndicacao",
                 definirMensagemSucesso: "app/setMensagemSucesso",
                 definirMensagemErro: "app/setMensagemErro",
-	            concluirOrganizacaoIndicacao: "fase/concluirOrganizacaoIndicacao"
+	            concluirOrganizacaoIndicacao: "fase/concluirOrganizacaoIndicacao",
+                obterFases: 'fase/obterFases',
             }),
 			validarConclusaoIndicacao(value) {
                 value.forEach(fase => {
@@ -250,8 +251,8 @@
                 .finally(() => {
                     self.loading = false;
                 });
+                this.validarConclusaoIndicacao(this.fases);
 
-            this.validarConclusaoIndicacao(this.fases);
         }
 	}
 </script>
