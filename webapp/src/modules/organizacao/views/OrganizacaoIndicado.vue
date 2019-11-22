@@ -241,6 +241,5 @@
                     self.loading = false;
                 });
         }
-
 	}
 </script>
