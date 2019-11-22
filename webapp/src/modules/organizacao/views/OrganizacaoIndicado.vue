@@ -21,6 +21,7 @@
 		<v-layout mt-4>
 			<v-flex>
 				<v-data-table
+					:pagination.sync="pagination_conselho"
 					:headers="headers"
 					:items="organizacaoGetter"
 					:expand="expand"
@@ -154,6 +155,12 @@
 	    components: {DialogCadastrarIndicadoOrganizacao},
         data () {
             return {
+                pagination_conselho: {
+                    page: 1,
+                    rowsPerPage: 25,
+                    sortBy: 'organizacao.no_organizacao',
+                    descending: false,
+                },
                 co_fase : null,
                 dialogConfirmarConclusao : false,
                 showConcluirIndicacao : false,

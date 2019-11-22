@@ -45,7 +45,6 @@
 												:rules="[rules.required]"
 												@change="preencherDadosOrganizacao"
 											>
-
 											</v-select>
 										</v-flex>
 									</v-layout>
@@ -405,7 +404,6 @@
 			        this.formulario = {...this.formularioInicial};
                     this.$refs.form.reset();
                 }
-            },
             },
             value(valor) {
                 this.dialog = valor;
