@@ -186,6 +186,12 @@ export default {
           icon: 'list',
           name: 'inscricao-lista-parcial-indicados-route',
         },
+        {
+          title: 'Resultado final - organizações',
+          group: 'apps',
+          icon: 'list',
+          name: 'OrganizacaoResultadoFinalIndicadosRoute',
+        },
       ],
     };
   },
