@@ -13,7 +13,7 @@ class ConselhoVotacaoDesempateApiResourceController extends AApiResourceControll
 {
     public function __construct(ConselhoVotacaoDesempate $service)
     {
-        $this->middleware('auth:api')->except(['index']);
+        $this->middleware('auth:api')->except(['index', 'listaFinal']);
         return parent::__construct($service);
     }
 
@@ -33,12 +33,25 @@ class ConselhoVotacaoDesempateApiResourceController extends AApiResourceControll
 
     public function store(Request $request): JsonResponse
     {
-        throw new EMetodoIndisponivel("Método indisponível.");
+        return $this->sendResponse(
+            $this->service->publicarResultadoDaVotacao(collect($request->all())),
+            "Operação realizada com sucesso",
+            Response::HTTP_CREATED
+        );
     }
 
     public function update(): \Illuminate\Http\JsonResponse
     {
         throw new EMetodoIndisponivel("Método indisponível.");
+    }
+
+    public function listaFinal (): \Illuminate\Http\JsonResponse
+    {
+        return $this->sendResponse(
+            $this->service->obterListaFinal(),
+            "Operação realizada com sucesso",
+            Response::HTTP_OK
+        );
     }
 
 }

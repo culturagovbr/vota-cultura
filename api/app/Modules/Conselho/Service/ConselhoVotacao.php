@@ -31,6 +31,7 @@ class ConselhoVotacao extends AbstractService
         SELECT
             tb_regiao.no_regiao,
             indicacao.no_indicado,
+            tb_regiao.co_regiao,
             indicacao.co_conselho_indicacao ,
             count(indicacao.co_conselho_indicacao) AS numero_votos,
             rank () over (
@@ -50,7 +51,7 @@ class ConselhoVotacao extends AbstractService
         INNER JOIN tb_regiao ON
             tb_regiao.co_regiao = tb_uf.co_regiao
         GROUP BY
-            indicacao.co_conselho_indicacao, tb_regiao.no_regiao
+            indicacao.co_conselho_indicacao, tb_regiao.no_regiao, tb_regiao.co_regiao
         HAVING
             count(indicacao.co_conselho_indicacao) >= :numero_min_votacoes)
 

@@ -6,14 +6,13 @@ export default [
     component: DefaultLayout,
     meta: {
       title: 'Votação',
-      group: 'apps',
-      icon: '',
       public: true,
     },
     name: 'Votacao',
+    redirect: '/votacao/mapa',
     children: [
       {
-        path: '/votacao',
+        path: '/votacao/mapa',
         name: 'votacao-route',
         meta: {
           title: 'Votação',
@@ -24,11 +23,19 @@ export default [
         component: () => import(/* webpackChunkName: "votacao-route" */ '@/modules/votacao/views/Votacao.vue'),
       },
       {
+        path: '/votacao/resultado',
+        name: 'resultado-votacao-route',
+        meta: {
+          title: 'Resultado da votação',
+          public: true,
+        },
+        component: () => import(/* webpackChunkName: "resultado-votacao-route" */ '@/modules/votacao/views/VotacaoResultado.vue'),
+      },
+      {
         path: '/votacao/gerar-resultado-final',
         name: 'administrador-gerar-resultado-final-route',
         meta: {
           title: 'Resultado final',
-          icon: '',
           public: false,
         },
         component: () => import(/* webpackChunkName: "administrador-gerar-resultado-final-route'" */ '@/modules/votacao/views/VotacaoGerarResultadoFinal.vue'),
@@ -38,7 +45,6 @@ export default [
         name: 'administrador-ranking-indicados-route',
         meta: {
           title: 'Ranking',
-          icon: '',
           public: false,
         },
         component: () => import(/* webpackChunkName: "administrador-ranking-indicados-route" */ '@/modules/votacao/views/VotacaoListaParcial.vue'),
@@ -48,7 +54,6 @@ export default [
         name: 'votacao-indicado-route',
         meta: {
           title: 'Votação',
-          icon: '',
           public: true,
         },
         component: () => import(/* webpackChunkName: "votacao-indicado-route" */ '@/modules/votacao/views/VotacaoIndicado.vue'),

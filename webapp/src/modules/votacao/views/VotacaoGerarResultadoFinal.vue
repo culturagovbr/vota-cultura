@@ -36,7 +36,7 @@
 
             <v-tabs-items>
               <v-tab-item
-                v-for="regiao, indexRegiao) in Object.keys(this.indicadosPorRegiao)"
+                v-for="(regiao, indexRegiao) in Object.keys(this.indicadosPorRegiao)"
                 :key="indexRegiao"
                 :value="'tab-' + indexRegiao"
               >
@@ -86,9 +86,6 @@
                     style="max-width: 800px;"
                   >
                     <v-layout>
-                      <!--<pre>-->
-                      <!--{{ indicadosParaDesempate }}-->
-                      <!--</pre>-->
                       <v-timeline dense>
                         <v-timeline-item
                           v-for="(indicado, index) in indicadosParaDesempate[regiao]"
@@ -148,6 +145,31 @@
         </v-card>
       </v-card-text>
     </v-card>
+
+    <v-tooltip
+      v-model="tooltipBotaoPublicacao"
+      left
+      v-if="!jaPublicado"
+    >
+      <template v-slot:activator="{ on }">
+        <v-fab-transition>
+          <v-btn
+            :disabled="loading"
+            color="green"
+            dark
+            fab
+            fixed
+            bottom
+            right
+            @click="publicarResultado"
+            v-on="on"
+          >
+            <v-icon>publish</v-icon>
+          </v-btn>
+        </v-fab-transition>
+      </template>
+      <span>Publicar resultado</span>
+    </v-tooltip>
   </v-container>
 </template>
 <script>
@@ -157,44 +179,26 @@ export default {
   name: 'VotacaoGerarResultadoFinal',
   data: () => ({
     aba: 'tab-0',
+    tooltipBotaoPublicacao: true,
     rankingIndicados: {},
     indicadosPorRegiao: [],
     indicadosParaDesempate: {},
     empates: {},
     candidato: {},
-    usuario_ja_votou: false,
-    dialog: false,
     loading: false,
-    show: false,
-    pesquisar: '',
-    pagination: {
-      rowsPerPage: 10,
-      sortBy: 'ranking_empatado',
-      descending: false,
-    },
-    totalItems: 0,
-    headers: [
-      {
-        text: '',
-        sortable: false,
-      },
-      {
-        text: 'Nome do indicado',
-        value: 'no_indicado',
-      },
-      {
-        text: 'Número de votos',
-        value: 'numero_votos',
-      },
-      {
-        text: 'Colocação',
-        value: 'ranking_empatado',
-      },
-    ],
+    jaPublicado: true,
   }),
   watch: {
+    listaFinalRankingGetter(ranking) {
+      if (!ranking.length) {
+        this.jaPublicado = false;
+      }
+
+      if (Object.keys(ranking).length) {
+        this.$router.push('/votacao/resultado');
+      }
+    },
     listaParcialRankingGetter(indicados) {
-      // remover do backend o trem de limitar pelo 4 lugar
       this.indicadosPorRegiao = _.groupBy(
         indicados, indicado => _.snakeCase(indicado.no_regiao),
       );
@@ -233,30 +237,49 @@ export default {
   computed: {
     ...mapGetters({
       listaParcialRankingGetter: 'votacao/listaParcialRanking',
+      listaFinalRankingGetter: 'votacao/listaFinalRanking',
     }),
   },
   methods: {
     ...mapActions({
       obterListaParcialRanking: 'votacao/obterListaParcialRanking',
+      publicarResultadoDaVotacao: 'votacao/publicarResultadoDaVotacao',
       notificarSucesso: 'app/setMensagemSucesso',
+      obterListaFinalRanking: 'votacao/obterListaFinalRanking',
     }),
     toKebabCase(string) {
       return _.kebabCase(string);
     },
     alterarColocacao(regiao, key, direcao) {
-      let offset = direcao === 'descer' ? 1 : -1;
-      let swappedItem = this.indicadosParaDesempate[regiao][key + offset];
+      const offset = direcao === 'descer' ? 1 : -1;
+      const swappedItem = this.indicadosParaDesempate[regiao][key + offset];
       this.indicadosParaDesempate[regiao][key + offset] = this.indicadosParaDesempate[regiao][key];
       this.indicadosParaDesempate[regiao][key] = swappedItem;
       const copiaIndicados = this.indicadosParaDesempate;
       this.indicadosParaDesempate = {};
       this.indicadosParaDesempate = copiaIndicados;
     },
+    publicarResultado() {
+      this.loading = true;
+      this.indicadosPorRegiao = { ...this.indicadosPorRegiao, ...this.indicadosParaDesempate };
+
+      this.publicarResultadoDaVotacao(this.indicadosPorRegiao);
+      this.obterListaParcialRanking().finally(() => {
+        window.location.href = '/votacao/resultado';
+      });
+    },
   },
   mounted() {
+    if (Object.keys(this.listaFinalRankingGetter).length) {
+      this.$router.push('/votacao/resultado');
+    }
+
     this.loading = true;
-    this.obterListaParcialRanking().finally(() => {
-      this.loading = false;
+
+    this.obterListaFinalRanking().finally(() => {
+      this.obterListaParcialRanking().finally(() => {
+        this.loading = false;
+      });
     });
   },
 };

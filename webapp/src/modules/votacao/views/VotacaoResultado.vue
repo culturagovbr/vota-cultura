@@ -10,17 +10,17 @@
             {{ $route.meta.title }}
           </h2>
           <h3 class="flex primary--text">
-            Resultado parcial das votações
+            Conselho de cultura
           </h3>
         </div>
         <h3 class="my-5" />
 
-        <v-card>
+        <v-card v-if="!!Object.keys(indicadosPorRegiao).length">
           <v-tabs
+            v-model="aba"
             dark
             color="primary"
             centered
-            v-model="aba"
           >
             <v-tabs-slider
               centered
@@ -56,18 +56,20 @@
                         slot="items"
                         slot-scope="props"
                       >
-                        <td></td>
+                        <td />
                         <td>{{ props.item.no_indicado }}</td>
-                        <td>{{ props.item.numero_votos }}</td>
-                        <td>{{ props.item.ranking_empatado }}</td>
+                        <td>{{ props.item.nu_votos }}</td>
+                        <td>{{ props.item.nu_ranking}}</td>
                       </template>
                     </v-data-table>
-
                   </v-card-text>
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
           </v-tabs>
+        </v-card>
+        <v-card v-else>
+          não publicado
         </v-card>
       </v-card-text>
     </v-card>
@@ -77,23 +79,8 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'VotacaoListaParcial',
+  name: 'VotacaoResultado',
   data: () => ({
-    aba: 'tab-0',
-    indicadosPorRegiao: [],
-    candidato: {},
-    nomeMae: '',
-    usuario_ja_votou: false,
-    dialog: false,
-    loading: false,
-    show: false,
-    pesquisar: '',
-    pagination: {
-      rowsPerPage: 10,
-      sortBy: 'ranking_empatado',
-      descending: false,
-    },
-    totalItems: 0,
     headers: [
       {
         text: '',
@@ -105,32 +92,38 @@ export default {
       },
       {
         text: 'Número de votos',
-        value: 'numero_votos',
+        value: 'nu_votos',
       },
       {
         text: 'Colocação',
-        value: 'ranking_empatado',
+        value: 'nu_ranking',
       },
     ],
+    loading: false,
+    show: false,
+    rowsPerPageItems: [4, 8, 12],
+    pagination: {
+      rowsPerPage: 10,
+      descending: false,
+      sortBy: 'nu_ranking',
+    },
+    indicadosPorRegiao: [],
   }),
   watch: {
-    listaParcialRankingGetter(indicados) {
+    listaFinalRankingGetter(indicados) {
       this.indicadosPorRegiao = _.groupBy(
         indicados, indicado => _.snakeCase(indicado.no_regiao),
       );
     },
-    aba() {
-      this.pagination.page = 1;
-    },
   },
   computed: {
     ...mapGetters({
-      listaParcialRankingGetter: 'votacao/listaParcialRanking',
+      listaFinalRankingGetter: 'votacao/listaFinalRanking',
     }),
   },
   methods: {
     ...mapActions({
-      obterListaParcialRanking: 'votacao/obterListaParcialRanking',
+      obterListaFinalRanking: 'votacao/obterListaFinalRanking',
       notificarSucesso: 'app/setMensagemSucesso',
     }),
     toKebabCase(string) {
@@ -139,7 +132,7 @@ export default {
   },
   mounted() {
     this.loading = true;
-    this.obterListaParcialRanking().finally(() => {
+    this.obterListaFinalRanking().finally(() => {
       this.loading = false;
     });
   },

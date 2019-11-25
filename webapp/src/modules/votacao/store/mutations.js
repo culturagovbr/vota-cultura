@@ -10,4 +10,7 @@ export const mutations = {
   [types.LISTA_PARCIAL_RANKING](state, indicados) {
     state.listaParcialRanking = indicados;
   },
+  [types.LISTA_FINAL_RANKING](state, indicados) {
+    state.listaFinalRanking = indicados;
+  },
 };
