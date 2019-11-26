@@ -59,7 +59,6 @@ class ConselhoVotacao extends AbstractService
             DB::beginTransaction();
 
             $this->verificarSeEleitorPodeVotar();
-            $this->verificarNomeMaeReceita($dados['nomeMae']);
             $eleitorCriado = parent::cadastrar(collect([
                 'co_conselho_indicacao' => (int)$dados['co_conselho_indicacao'],
                 'co_eleitor' => $this->usuario['co_eleitor']
@@ -70,17 +69,6 @@ class ConselhoVotacao extends AbstractService
         } catch (\HttpException $queryException) {
             DB::rollBack();
             throw $queryException;
-        }
-    }
-
-    private function verificarNomeMaeReceita(string $nomeMae)
-    {
-        $nomeMae = strtoupper($nomeMae);
-        $receitaService = app(Receita::class);
-        $dadosReceita = $receitaService->consultarDadosPessoaFisica($this->usuario['nu_cpf']);
-
-        if ($dadosReceita['nmMae'] !== strtoupper(Str::ascii($nomeMae)) && !empty($dadosReceita['nmMae'])) {
-            throw new EValidacaoCampo('O nome da mãe não confere, tente novamente!');
         }
     }
 
@@ -97,7 +85,6 @@ class ConselhoVotacao extends AbstractService
         if ($eleitor->first()->dt_nascimento->age < 18) {
             throw new EValidacaoCampo('O eleitor não possui a idade mínima permitida!');
         }
-
 
         if ($eleitor->first()->st_estrangeiro === TRUE) {
             throw new EValidacaoCampo('O usuario logado é estrangeiro!');

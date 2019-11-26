@@ -344,6 +344,12 @@ export default {
           name: 'administrador-ranking-indicados-route',
           icon: 'list',
         }, 'Administração');
+        this.definirItemMenu({
+          title: 'Indicados das organizações',
+          group: 'apps',
+          name: 'OrganizacaoIndicacaoRoute',
+          icon: 'person_pin',
+        }, 'Administração');
       }
     },
     carregarMenuHabilitacao() {

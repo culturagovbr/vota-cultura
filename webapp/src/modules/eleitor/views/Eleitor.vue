@@ -197,6 +197,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { eventHub } from '@/event';
 import Validate from '../../shared/util/validate';
 
 export default {
@@ -296,6 +297,9 @@ export default {
     },
   },
   mounted() {
+    eventHub.$emit('eventoErro', 'Período de inscrição encerrado!');
+    this.$router.push('/');
+
     if (Object.keys(this.eleitorGetter).length > 0) {
       this.eleitor = this.eleitorGetter;
     }

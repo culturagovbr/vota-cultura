@@ -33,11 +33,7 @@ class ConselhoVotacaoApiResourceController extends AApiResourceController
 
     public function store(Request $request): JsonResponse
     {
-        return $this->sendResponse(
-            $this->service->registrarVoto(collect($request->all())),
-            "Operação realizada com sucesso",
-            Response::HTTP_CREATED
-        );
+        throw new EMetodoIndisponivel("Período de votação encerrado.");
     }
 
     public function update(): \Illuminate\Http\JsonResponse

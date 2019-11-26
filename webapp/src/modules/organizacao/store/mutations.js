@@ -28,4 +28,21 @@ export const mutations = {
   [types.MOSTRAR_MODAL_VISUALIZACAO](state, dados) {
     state.modalVisualizacaoOrganizacaoAdministrador = dados;
   },
+  [types.OBTER_INDICACAO_ORGANIZACAO](state, dados) {
+    state.organizacaoIndicacao = dados;
+  },
+  [types.OBTER_ORGANIZACOES_HABILITADAS_E_CLASSIFICADAS](state, dados) {
+    state.organizacoesHabilitadasEClassificadas = dados.filter(organizacao => {
+      if(Object.keys(((organizacao || {}).habilitacaoRecurso || {})).length > 0) {
+          if (parseInt(organizacao.habilitacaoRecurso.st_parecer) === 2) {
+              return organizacao;
+          }
+      }
+
+      if(parseInt(organizacao.organizacaoHabilitacao.st_avaliacao) === 2) {
+        return organizacao;
+      }
+    });
+  },
+
 };

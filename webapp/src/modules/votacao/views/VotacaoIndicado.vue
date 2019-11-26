@@ -39,20 +39,6 @@
                   style="position: relative;"
                 >
                   <v-btn
-                    v-if="usuario.co_eleitor > 0 && !possuiVoto"
-                    style="z-index:0"
-                    absolute
-                    color="primary"
-                    class="white--text"
-                    fab
-                    medium
-                    right
-                    top
-                    @click="confirmarVoto(indicado)"
-                  >
-                    Vote
-                  </v-btn>
-                  <v-btn
                     v-if="indicado.recebeu_meu_voto"
                     style="z-index:0"
                     absolute
@@ -144,59 +130,6 @@
         </v-layout>
       </v-card-text>
     </v-card>
-    <v-layout justify-center>
-      <v-dialog
-        v-model="dialog"
-        max-width="550"
-      >
-        <v-card>
-          <v-card-title class="headline">
-            Deseja realmente votar nesse candidato?
-          </v-card-title>
-
-          <v-card-text>
-            <v-layout>
-              Candidato(a):&nbsp;<b>{{ candidato.no_indicado }}</b>
-            </v-layout>
-            <br>
-            Para <b>verificarmos a sua identificação</b>, informe abaixo o <b>nome completo da sua mãe</b> de acordo com o cadastro na Receita Federal Brasileira:
-            <v-text-field
-              v-model="nomeMae"
-              placeholder="Digite aqui"
-              solo
-              persistent-hint
-            />
-
-            <br>
-            Atenção!
-            <br>
-            Ao confirmar, o voto será computado e depois não será possível alterar ou votar novamente.
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              color="red darken-1"
-              text
-              flat
-              @click="fecharDialogo"
-            >
-              Não
-            </v-btn>
-
-            <v-btn
-              color="green darken-1"
-              text
-              flat
-              :disabled="!nomeMae.length"
-              @click="salvar"
-            >
-              Sim
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-layout>
   </v-container>
 </template>
 <script>
@@ -296,26 +229,6 @@ export default {
           href: `http://votacultura.cidadania.gov.br/${this.regiao}`,
         },
       );
-    },
-    fecharDialogo() {
-      this.dialog = false;
-    },
-    abrirDialogo() {
-      this.dialog = true;
-    },
-    salvar() {
-      this.votar({
-        co_conselho_indicacao: this.candidato.co_conselho_indicacao,
-        nomeMae: this.nomeMae,
-      }).then(() => {
-        this.obterListaIndicadosVotacao(this.regiao);
-        this.notificarSucesso('Voto registrado com sucesso!');
-      });
-      this.fecharDialogo();
-    },
-    confirmarVoto(candidato) {
-      this.candidato = candidato;
-      this.abrirDialogo();
     },
     capitalizar(valor) {
       return valor.replace(/(?:^|\s)\S/g, regiao => regiao.toUpperCase());
