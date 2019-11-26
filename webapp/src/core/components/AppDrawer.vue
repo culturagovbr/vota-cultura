@@ -221,7 +221,7 @@ export default {
         opcaoMenu => opcaoMenu.name === 'administrador-gerar-resultado-final-route',
       );
 
-      if (!Object.keys(listaFinal).length && !jaExisteMenuPublicacaoResultadoFinal) {
+      if (!Object.keys(listaFinal).length && !jaExisteMenuPublicacaoResultadoFinal && this.perfil.no_perfil === 'administrador') {
         this.definirItemMenu({
           title: 'Publicar ranking final',
           group: 'apps',
