@@ -39,6 +39,18 @@ export const obterListaParcialRanking = async ({ commit, dispatch }) => service.
   throw new TypeError(error);
 });
 
+export const obterListaParcialGerarRanking = async ({ commit, dispatch }) => service.obterListaParcialGerarRanking().then((response) => {
+  const { data } = response.data;
+  commit(types.LISTA_PARCIAL_GERAR_RANKING, data);
+}).catch((error) => {
+  dispatch(
+      'app/setMensagemErro',
+      error.response.data.message,
+      { root: true },
+  );
+  throw new TypeError(error);
+});
+
 export const publicarResultadoDaVotacao = async ({ commit, dispatch }, resultado) => service.publicarResultadoDaVotacao(resultado).then((response) => {
   return response;
 }).catch((error) => {

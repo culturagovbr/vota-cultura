@@ -58,7 +58,7 @@
                       >
                         <td></td>
                         <td>{{ props.item.no_indicado }}</td>
-                        <td>{{ props.item.numero_votos }}</td>
+                        <td>{{ props.item.nu_votos }}</td>
                         <td>{{ props.item.ranking_empatado }}</td>
                       </template>
                     </v-data-table>
@@ -105,7 +105,7 @@ export default {
       },
       {
         text: 'Número de votos',
-        value: 'numero_votos',
+        value: 'nu_votos',
       },
       {
         text: 'Colocação',

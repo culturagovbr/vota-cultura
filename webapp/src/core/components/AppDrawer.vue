@@ -226,7 +226,7 @@ export default {
           title: 'Publicar ranking final',
           group: 'apps',
           name: 'administrador-gerar-resultado-final-route',
-          icon: 'list',
+          icon: 'publish',
         }, 'Administração');
       }
     },

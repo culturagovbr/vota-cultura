@@ -4,5 +4,6 @@ export const state = {
   listaIndicadosParaVotacao: [],
   possuiVoto: true,
   listaParcialRanking: [],
+  listaParcialGerarRanking: [],
   listaFinalRanking: [],
 };

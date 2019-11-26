@@ -147,9 +147,9 @@
     </v-card>
 
     <v-tooltip
+      v-if="!jaPublicado"
       v-model="tooltipBotaoPublicacao"
       left
-      v-if="!jaPublicado"
     >
       <template v-slot:activator="{ on }">
         <v-fab-transition>
@@ -198,7 +198,7 @@ export default {
         this.$router.push('/votacao/resultado');
       }
     },
-    listaParcialRankingGetter(indicados) {
+    listaParcialGerarRankingGetter(indicados) {
       this.indicadosPorRegiao = _.groupBy(
         indicados, indicado => _.snakeCase(indicado.no_regiao),
       );
@@ -236,13 +236,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      listaParcialRankingGetter: 'votacao/listaParcialRanking',
+      listaParcialGerarRankingGetter: 'votacao/listaParcialGerarRanking',
       listaFinalRankingGetter: 'votacao/listaFinalRanking',
     }),
   },
   methods: {
     ...mapActions({
-      obterListaParcialRanking: 'votacao/obterListaParcialRanking',
+      obterListaParcialGerarRanking: 'votacao/obterListaParcialGerarRanking',
       publicarResultadoDaVotacao: 'votacao/publicarResultadoDaVotacao',
       notificarSucesso: 'app/setMensagemSucesso',
       obterListaFinalRanking: 'votacao/obterListaFinalRanking',
@@ -264,7 +264,7 @@ export default {
       this.indicadosPorRegiao = { ...this.indicadosPorRegiao, ...this.indicadosParaDesempate };
 
       this.publicarResultadoDaVotacao(this.indicadosPorRegiao);
-      this.obterListaParcialRanking().finally(() => {
+      this.obterListaParcialGerarRanking().finally(() => {
         window.location.href = '/votacao/resultado';
       });
     },
@@ -277,7 +277,7 @@ export default {
     this.loading = true;
 
     this.obterListaFinalRanking().finally(() => {
-      this.obterListaParcialRanking().finally(() => {
+      this.obterListaParcialGerarRanking().finally(() => {
         this.loading = false;
       });
     });

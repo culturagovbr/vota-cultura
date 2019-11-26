@@ -15,8 +15,13 @@
         </div>
         <h3 class="my-5" />
 
-        <v-card v-if="!!Object.keys(indicadosPorRegiao).length">
+        <v-card>
+          <v-progress-linear
+            v-if="loading"
+            indeterminate
+          />
           <v-tabs
+            v-if="!!Object.keys(indicadosPorRegiao).length"
             v-model="aba"
             dark
             color="primary"
@@ -41,6 +46,18 @@
                 :value="'tab-' + indexRegiao"
               >
                 <v-card flat>
+                  <v-card-title>
+                    <v-spacer />
+                    <v-text-field
+                      v-model="pesquisar"
+                      append-icon="search"
+                      label="Pesquisar"
+                      single-line
+                      hide-details
+                    />
+                    <v-spacer />
+                  </v-card-title>
+
                   <v-card-text>
                     <v-data-table
                       :headers="headers"
@@ -59,7 +76,7 @@
                         <td />
                         <td>{{ props.item.no_indicado }}</td>
                         <td>{{ props.item.nu_votos }}</td>
-                        <td>{{ props.item.nu_ranking}}</td>
+                        <td>{{ props.item.nu_ranking }}</td>
                       </template>
                     </v-data-table>
                   </v-card-text>
@@ -68,8 +85,15 @@
             </v-tabs-items>
           </v-tabs>
         </v-card>
-        <v-card v-else>
-          não publicado
+        <v-card v-if="!loading && !Object.keys(indicadosPorRegiao).length">
+          <v-alert
+            :value="true"
+            icon="warning"
+            color="yellow lighten-3"
+            class="black--text"
+          >
+            Atenção! O resultado da votação será publicado no dia 27/11/2019.
+          </v-alert>
         </v-card>
       </v-card-text>
     </v-card>
@@ -81,6 +105,7 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'VotacaoResultado',
   data: () => ({
+    aba: 'tab-0',
     headers: [
       {
         text: '',
@@ -99,6 +124,8 @@ export default {
         value: 'nu_ranking',
       },
     ],
+    totalItems: 0,
+    pesquisar: '',
     loading: false,
     show: false,
     rowsPerPageItems: [4, 8, 12],
