@@ -77,6 +77,7 @@
                         <td>{{ props.item.no_indicado }}</td>
                         <td>{{ props.item.nu_votos }}</td>
                         <td>{{ props.item.nu_ranking }}</td>
+                        <td>{{ obterRankingResultadoFinal(props.item.nu_ranking) }}</td>
                       </template>
                     </v-data-table>
                   </v-card-text>
@@ -123,6 +124,10 @@ export default {
         text: 'Colocação',
         value: 'nu_ranking',
       },
+      {
+        text: 'Resultado final',
+        sortable: false,
+      },
     ],
     totalItems: 0,
     pesquisar: '',
@@ -155,6 +160,17 @@ export default {
     }),
     toKebabCase(string) {
       return _.kebabCase(string);
+    },
+    obterRankingResultadoFinal(colocacao) {
+      if ([1, 2].includes(colocacao)) {
+        return `Eleito - ${colocacao}º Titular`;
+      }
+
+      if ([3, 4].includes(colocacao)) {
+        return `Eleito - ${colocacao}º Suplente`;
+      }
+
+      return 'Não eleito';
     },
   },
   mounted() {
