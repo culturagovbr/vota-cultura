@@ -101,39 +101,32 @@ class ConselhoVotacaoDesempate extends AbstractService
             return collect([]);
         }
 
-        $naoDesempatados = DB::select(DB::raw("
-          WITH cte AS(
-            SELECT
-                tb_regiao.no_regiao,
-                indicacao.no_indicado,
-                tb_regiao.co_regiao,
-                indicacao.co_conselho_indicacao ,
-                count( indicacao.co_conselho_indicacao ) AS nu_votos,
-                rank () over ( partition by tb_regiao.no_regiao
-            ORDER BY
-                count( indicacao.co_conselho_indicacao ) DESC ) AS nu_ranking
-            FROM
-                tb_conselho_votacao
-            INNER JOIN tb_conselho_indicacao indicacao ON
-                indicacao.co_conselho_indicacao = tb_conselho_votacao.co_conselho_indicacao
-            INNER JOIN tb_endereco ON
-                tb_endereco.co_endereco = indicacao.co_endereco
-            INNER JOIN tb_municipio ON
-                tb_municipio.co_municipio = tb_endereco.co_municipio
-            INNER JOIN tb_uf ON
-                tb_uf.co_ibge = tb_municipio.co_uf
-            INNER JOIN tb_regiao ON
-                tb_regiao.co_regiao = tb_uf.co_regiao
-            GROUP BY
-                indicacao.co_conselho_indicacao,
-                tb_regiao.no_regiao,
-                tb_regiao.co_regiao
-            HAVING
-                count( indicacao.co_conselho_indicacao ) >= 0 )
-            SELECT * FROM cte WHERE co_conselho_indicacao NOT IN
-                (select co_conselho_indicacao from tb_conselho_ranking) ORDER BY no_regiao, nu_ranking ASC;
-          "));
-
-        return collect(array_merge($desempatados, $naoDesempatados));
+        return  collect(DB::select(DB::raw("
+          select tb_regiao.no_regiao, tb_conselho_indicacao.no_indicado,
+            tb_conselho_indicacao.co_conselho_indicacao,
+            count(tb_conselho_votacao.*) AS nu_votos,
+            rank () over (
+                partition by tb_regiao.no_regiao
+                order by
+                count( tb_conselho_votacao.* ) desc ) as nu_ranking
+        from
+            tb_conselho_indicacao
+        left join tb_conselho_votacao on
+            tb_conselho_votacao.co_conselho_indicacao = tb_conselho_indicacao.co_conselho_indicacao
+        inner join tb_endereco on
+            tb_endereco.co_endereco = tb_conselho_indicacao.co_endereco
+        inner join tb_municipio on
+            tb_municipio.co_municipio = tb_endereco.co_municipio
+        inner join tb_uf on
+            tb_uf.co_ibge = tb_municipio.co_uf
+        inner join tb_regiao on
+            tb_regiao.co_regiao = tb_uf.co_regiao
+        inner join tb_conselho_indicacao_habilitacao on
+        	tb_conselho_indicacao_habilitacao.co_indicado = tb_conselho_indicacao.co_conselho_indicacao
+        where tb_conselho_indicacao_habilitacao.st_avaliacao = '1'
+        group by
+            tb_conselho_indicacao.co_conselho_indicacao, tb_regiao.co_regiao, tb_conselho_indicacao.no_indicado, tb_regiao.no_regiao
+        order by tb_regiao.no_regiao, nu_ranking
+          ")));
     }
 }
