@@ -46,6 +46,9 @@ class ConselhoVotacao extends AbstractService
             tb_uf.co_ibge = tb_municipio.co_uf
         inner join tb_regiao on
             tb_regiao.co_regiao = tb_uf.co_regiao
+        inner join tb_conselho_indicacao_habilitacao on
+        	tb_conselho_indicacao_habilitacao.co_indicado = tb_conselho_indicacao.co_conselho_indicacao
+        where tb_conselho_indicacao_habilitacao.st_avaliacao = '1'
         group by
             tb_conselho_indicacao.co_conselho_indicacao, tb_regiao.co_regiao, tb_conselho_indicacao.no_indicado, tb_regiao.no_regiao
         order by tb_regiao.no_regiao, ranking_empatado
