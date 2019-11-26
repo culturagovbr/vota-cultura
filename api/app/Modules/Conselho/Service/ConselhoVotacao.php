@@ -79,7 +79,7 @@ class ConselhoVotacao extends AbstractService
         $receitaService = app(Receita::class);
         $dadosReceita = $receitaService->consultarDadosPessoaFisica($this->usuario['nu_cpf']);
 
-        if ($dadosReceita['nmMae'] !== strtoupper(Str::ascii($nomeMae))) {
+        if ($dadosReceita['nmMae'] !== strtoupper(Str::ascii($nomeMae)) && !empty($dadosReceita['nmMae'])) {
             throw new EValidacaoCampo('O nome da mãe não confere, tente novamente!');
         }
     }

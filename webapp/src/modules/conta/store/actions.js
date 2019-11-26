@@ -119,7 +119,7 @@ export const alterarSenha = async ({ commit }, { codigoAlteracao, usuario }) => 
 
 export const solicitarPrimeiroAcesso = async ({ commit }, payload) => {
   commit(types.SOLICITAR_PRIMEIRO_ACESSO, payload);
-  usuarioService.solicitarPrimeiroAcesso(payload);
+  return usuarioService.solicitarPrimeiroAcesso(payload);
 };
 
 export const buscarUsuariosPerfis = async ({ commit }) => {
