@@ -54,8 +54,7 @@
 						<h3><span class="font-weight-bold font">Parecer</span></h3>
 					</v-toolbar>
 
-					<v-card-text>
-						{{ dsParecer }}
+					<v-card-text v-html="dsParecer">
 					</v-card-text>
 
 					<v-card-actions>
