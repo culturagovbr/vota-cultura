@@ -186,11 +186,24 @@ export default {
           icon: 'list',
           name: 'inscricao-lista-parcial-indicados-route',
         },
+        {
+          title: 'Resultado da votação',
+          group: 'apps',
+          icon: 'list',
+          name: 'resultado-votacao-route',
+        },
+        {
+            title: 'Resultado final - organizações',
+            group: 'apps',
+            icon: 'list',
+            name: 'OrganizacaoResultadoFinalIndicadosRoute',
+        },
       ],
     };
   },
   computed: {
     ...mapGetters({
+      listaFinalRankingGetter: 'votacao/listaFinalRanking',
       ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
       ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
       ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
@@ -209,13 +222,29 @@ export default {
       this.menus = this.menuAPI;
       this.carregarMenusUsuarioLogado();
     },
+    listaFinalRankingGetter(listaFinal) {
+      const jaExisteMenuPublicacaoResultadoFinal = this.menuAPI.find(
+        opcaoMenu => opcaoMenu.name === 'administrador-gerar-resultado-final-route',
+      );
+
+      if (!Object.keys(listaFinal).length && !jaExisteMenuPublicacaoResultadoFinal && this.perfil.no_perfil === 'administrador') {
+        this.definirItemMenu({
+          title: 'Publicar ranking final',
+          group: 'apps',
+          name: 'administrador-gerar-resultado-final-route',
+          icon: 'publish',
+        }, 'Administração');
+      }
+    },
   },
   mounted() {
     this.obterFases();
     this.usuarioLogado = this.usuario;
+    this.obterListaFinalRanking();
   },
   methods: {
     ...mapActions({
+      obterListaFinalRanking: 'votacao/obterListaFinalRanking',
       obterFases: 'fase/obterFases',
     }),
 
@@ -286,10 +315,10 @@ export default {
         }, 'Organizacao');
 
         this.definirItemMenu({
-            title: 'Recurso da habilitação',
-            group: 'apps',
-            name: 'OrganizacaoHabilitacaoRecursoRoute',
-            icon: 'gavel',
+          title: 'Recurso da habilitação',
+          group: 'apps',
+          name: 'OrganizacaoHabilitacaoRecursoRoute',
+          icon: 'gavel',
         }, 'Organizacao');
       }
     },
@@ -315,7 +344,12 @@ export default {
           name: 'administrador-lista-inscritos-route',
           icon: 'list',
         }, 'Administração');
-
+        this.definirItemMenu({
+          title: 'Ranking parcial dos indicados',
+          group: 'apps',
+          name: 'administrador-ranking-indicados-route',
+          icon: 'list',
+        }, 'Administração');
         this.definirItemMenu({
           title: 'Indicados das organizações',
           group: 'apps',
