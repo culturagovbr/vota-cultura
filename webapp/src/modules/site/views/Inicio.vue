@@ -21,85 +21,45 @@
             grid-list-xl
             fluid
           >
-
-            <v-layout text-xs-center>
-              <v-flex xs6 md2></v-flex>
+            <v-layout
+              row
+              align-center
+              column
+            >
               <v-flex
-                  xs12
-                  md4
+                xs12
+                md4
               >
                 <v-card
-                    class="elevation-15 transparent"
-                    style="width:300px;min-height: 340px"
+                  class="elevation-15 transparent"
+                  style="width:300px;min-height: 340px"
                 >
                   <v-card-text class="text-xs-center">
                     <v-icon
-                        x-large
-                        class="text--lighten-2"
+                      x-large
+                      class="text--lighten-2"
                     >
-                      thumbs_up_down
+                      list
                     </v-icon>
                   </v-card-text>
                   <v-card-title
-                      primary-title
-                      class="layout justify-center"
+                    primary-title
+                    class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Inscrição do eleitor
+                      Resultado final</br>
+                      Conselhos de cultura
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Para eleger os representantes indicados pelos conselhos de cultura na etapa de votação
+                    Consulte aqui o resultado final da votação dos indicados dos conselhos de cultura.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
-                        color="green darken-4"
-                        to="/eleitor/inscricao"
-                        dark
-                        style="margin-top: 34px"
-                    >
-                      <v-icon>
-                        call_made
-                      </v-icon>
-                    </v-btn>
-                  </div>
-                </v-card>
-              </v-flex>
-
-              <v-flex
-                  xs12
-                  md4
-              >
-                <v-card
-                    class="elevation-15 transparent"
-                    style="width:300px;min-height: 340px"
-                >
-                  <v-card-text class="text-xs-center">
-                    <v-icon
-                        x-large
-                        class="text--lighten-2"
-                    >
-                      person_pin
-                    </v-icon>
-                  </v-card-text>
-                  <v-card-title
-                      primary-title
-                      class="layout justify-center"
-                  >
-                    <div class="headline text-xs-center">
-                      Votação
-                    </div>
-                  </v-card-title>
-                  <v-card-text>
-                    Conheça aqui os candidatos dos conselhos de cultura.
-                    Para votar, inscreva-se como eleitor e faça seu login.
-                  </v-card-text>
-                  <div class="text-xs-center pb-4">
-                    <v-btn
-                        color="green darken-4"
-                        to="/votacao"
-                        dark
-                        style="margin-top: 34px"
+                      color="green darken-4"
+                      to="/votacao/resultado"
+                      dark
+                      style="margin-top: 23px"
                     >
                       <v-icon>
                         call_made
@@ -109,7 +69,6 @@
                 </v-card>
               </v-flex>
             </v-layout>
-
             <v-layout
               row
               align-center
@@ -139,7 +98,7 @@
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Consulte aqui a lista final de inscritos
+                    Consulte aqui a lista final de inscritos.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
@@ -182,7 +141,7 @@
                   <v-card-text>
                     <div class="text-xs-center mt-4">
                       Consulte aqui a lista final da habilitação de Conselho de cultura e
-                      de Organização ou entidade cultural
+                      de Organização ou entidade cultural.
                     </div>
                   </v-card-text>
                   <div class="text-xs-center pb-4">
@@ -241,7 +200,9 @@
                   </div>
                 </v-card>
               </v-flex>
+
             </v-layout>
+
           </v-container>
         </v-flex>
       </v-layout>
