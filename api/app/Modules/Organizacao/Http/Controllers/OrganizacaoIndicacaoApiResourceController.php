@@ -21,7 +21,7 @@ class OrganizacaoIndicacaoApiResourceController extends AApiResourceController
     public function __construct(OrganizacaoIndicacaoService $service)
     {
         $this->service = $service;
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except('index');
     }
     /**
      * Display a listing of the resource.
