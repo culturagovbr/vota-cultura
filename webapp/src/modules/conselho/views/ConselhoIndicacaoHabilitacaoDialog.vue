@@ -43,6 +43,9 @@
                 >
                   Dados do conselho
                 </v-tab>
+                <v-tab href="#tab-3">
+                  Histórico
+                </v-tab>
               </v-tabs>
               <v-tabs-items
                 v-model="model"
@@ -307,6 +310,10 @@
                     <conselho-detalhes-inscricao-visualizacao />
                   </v-card>
                 </v-tab-item>
+
+                <v-tab-item value="tab-3">
+                  <conselho-indicacao-historico-alteracao :historico="indicado.historico" />
+                </v-tab-item>
               </v-tabs-items>
             </v-card-text>
           </v-card>
@@ -384,6 +391,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import ConselhoDetalhesInscricaoVisualizacao from './ConselhoDetalhesInscricaoVisualizacao';
+import ConselhoIndicacaoHistoricoAlteracao from './components/ConselhoIndicadoHistoricoAlteracao';
 import { documentosIndicacao } from '../api/documentosIndicacao';
 import Vue from 'vue';
 import CKEditor from '@ckeditor/ckeditor5-vue';
@@ -396,6 +404,7 @@ export default {
   name: 'ConselhoListaHabilitacaoDialog',
   components: {
     ConselhoDetalhesInscricaoVisualizacao,
+    ConselhoIndicacaoHistoricoAlteracao
   },
   props: {
     value: {

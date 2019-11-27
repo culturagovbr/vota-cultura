@@ -79,6 +79,16 @@ class ConselhoIndicacao extends Model
     }
 
 
+    public function historico()
+    {
+        return $this->hasMany(
+            ConselhoIndicacaoHabilitacaoHistorico::class,
+            'co_indicado',
+            'co_conselho_indicacao'
+        );
+    }
+
+
     public function avaliacaoHabilitacao()
     {
         return $this->hasOne(
