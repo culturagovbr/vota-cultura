@@ -24,6 +24,54 @@
             <v-layout
               row
               align-center
+              column
+            >
+              <v-flex
+                xs12
+                md4
+              >
+                <v-card
+                  class="elevation-15 transparent"
+                  style="width:300px;min-height: 340px"
+                >
+                  <v-card-text class="text-xs-center">
+                    <v-icon
+                      x-large
+                      class="text--lighten-2"
+                    >
+                      list
+                    </v-icon>
+                  </v-card-text>
+                  <v-card-title
+                    primary-title
+                    class="layout justify-center"
+                  >
+                    <div class="headline text-xs-center">
+                      Resultado final</br>
+                      Conselhos de cultura
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    Consulte aqui o resultado final da votação dos indicados dos conselhos de cultura.
+                  </v-card-text>
+                  <div class="text-xs-center pb-4">
+                    <v-btn
+                      color="green darken-4"
+                      to="/votacao/resultado"
+                      dark
+                      style="margin-top: 23px"
+                    >
+                      <v-icon>
+                        call_made
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-flex>
+            </v-layout>
+            <v-layout
+              row
+              align-center
             >
               <v-flex
                 xs12
@@ -111,49 +159,50 @@
                 </v-card>
               </v-flex>
 
-
-
-              <v-flex
-                xs12
-                md4
-              >
-                <v-card
-                  class="elevation-15 transparent"
-                  style="width:300px;min-height: 340px"
-                >
-                  <v-card-text class="text-xs-center">
-                    <v-icon
-                      x-large
-                      class="text--lighten-2"
-                    >
-                      list
-                    </v-icon>
-                  </v-card-text>
-                  <v-card-title
-                    primary-title
-                    class="layout justify-center"
-                  >
-                    <div class="headline text-xs-center">
-                      Lista final dos indicados dos conselhos de cultura
-                    </div>
-                  </v-card-title>
-                  <v-card-text>
-                    Consulte aqui a lista final dos indicados.
-                  </v-card-text>
-                  <div class="text-xs-center pb-4">
-                    <v-btn
-                      color="green darken-4"
-                      to="/inscricao/lista-indicados"
-                      dark
-                      style="margin-top: 44px"
-                    >
-                      <v-icon>
-                        call_made
-                      </v-icon>
-                    </v-btn>
-                  </div>
-                </v-card>
-              </v-flex>
+	            <v-flex
+		            xs12
+		            md4
+	            >
+		            <v-card
+			            class="elevation-15 transparent"
+			            style="width:300px;min-height: 340px"
+		            >
+			            <v-card-text class="text-xs-center">
+				            <v-icon
+					            x-large
+					            class="text--lighten-2"
+				            >
+					            list
+				            </v-icon>
+			            </v-card-text>
+			            <v-card-title
+				            primary-title
+				            class="layout justify-center"
+			            >
+				            <div class="headline text-xs-center">
+					            Lista de habilitação
+				            </div>
+			            </v-card-title>
+			            <v-card-text>
+				            <div class="text-xs-center mt-4">
+					            Consulte aqui a lista final da habilitação de Conselho de cultura e
+					            de Organização ou entidade cultural.
+				            </div>
+			            </v-card-text>
+			            <div class="text-xs-center pb-4">
+				            <v-btn
+					            style="margin-top: 10px"
+					            color="green darken-4"
+					            to="/inscricao/lista-final-habilitados"
+					            dark
+				            >
+					            <v-icon>
+						            call_made
+					            </v-icon>
+				            </v-btn>
+			            </div>
+		            </v-card>
+	            </v-flex>
 
 	            <v-flex
 		            xs12
@@ -228,19 +277,18 @@
                     class="layout justify-center"
                   >
                     <div class="headline text-xs-center">
-                      Resultado final</br>
-                      Conselhos de cultura
+                      Lista final dos indicados dos conselhos de cultura
                     </div>
                   </v-card-title>
                   <v-card-text>
-                    Consulte aqui o resultado final da votação dos indicados dos conselhos de cultura.
+                    Consulte aqui a lista final dos indicados.
                   </v-card-text>
                   <div class="text-xs-center pb-4">
                     <v-btn
                       color="green darken-4"
-                      to="/votacao/resultado"
+                      to="/inscricao/lista-indicados"
                       dark
-                      style="margin-top: 23px"
+                      style="margin-top: 44px"
                     >
                       <v-icon>
                         call_made
@@ -249,7 +297,9 @@
                   </div>
                 </v-card>
               </v-flex>
+
             </v-layout>
+
           </v-container>
         </v-flex>
       </v-layout>
