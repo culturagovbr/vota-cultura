@@ -113,7 +113,6 @@
                         parecer = { text: ' - ' , color: '' };
                         break;
                 }
-
                 return parecer;
             },
 	    },
