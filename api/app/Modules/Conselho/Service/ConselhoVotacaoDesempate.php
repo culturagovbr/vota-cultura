@@ -104,6 +104,7 @@ class ConselhoVotacaoDesempate extends AbstractService
         return  collect(DB::select(DB::raw("
           select tb_regiao.no_regiao, tb_conselho_indicacao.no_indicado,
             tb_conselho_indicacao.co_conselho_indicacao,
+            tb_uf.no_uf,
             count(tb_conselho_votacao.*) AS nu_votos,
             rank () over (
                 partition by tb_regiao.no_regiao
@@ -125,7 +126,11 @@ class ConselhoVotacaoDesempate extends AbstractService
         	tb_conselho_indicacao_habilitacao.co_indicado = tb_conselho_indicacao.co_conselho_indicacao
         where tb_conselho_indicacao_habilitacao.st_avaliacao = '1'
         group by
-            tb_conselho_indicacao.co_conselho_indicacao, tb_regiao.co_regiao, tb_conselho_indicacao.no_indicado, tb_regiao.no_regiao
+            tb_conselho_indicacao.co_conselho_indicacao,
+            tb_regiao.co_regiao,
+            tb_conselho_indicacao.no_indicado,
+            tb_regiao.no_regiao,
+            tb_uf.no_uf
         order by tb_regiao.no_regiao, nu_ranking
           ")));
     }
