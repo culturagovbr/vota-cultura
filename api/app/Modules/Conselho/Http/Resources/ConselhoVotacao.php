@@ -16,6 +16,8 @@ class ConselhoVotacao extends JsonResource
             'ds_localizacao' => asset($this->ds_localizacao),
             'dh_voto' => $this->dh_voto,
             'recebeu_meu_voto' => $this->recebeu_meu_voto,
+            'nu_ranking' => $this->nu_ranking,
+            'nu_votos' => $this->nu_votos,
         );
     }
 }

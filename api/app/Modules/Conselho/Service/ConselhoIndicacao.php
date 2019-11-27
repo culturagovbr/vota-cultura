@@ -210,6 +210,8 @@ class ConselhoIndicacao extends AbstractService
     public function obterIndicadosPorRegiao(string $regiao)
     {
         $colunas = [
+            DB::raw("(CASE WHEN tb_conselho_ranking.nu_ranking <= 4 THEN tb_conselho_ranking.nu_ranking ELSE NULL END) as nu_ranking"),
+            DB::raw("(select count(*) from tb_conselho_votacao votacao_sub where votacao_sub.co_conselho_indicacao = tb_conselho_indicacao.co_conselho_indicacao) AS nu_votos"),
             'tb_conselho_indicacao.co_conselho_indicacao',
             'tb_conselho_indicacao.no_indicado',
             'tb_conselho_indicacao.ds_curriculo',
@@ -229,10 +231,10 @@ class ConselhoIndicacao extends AbstractService
 
         return $this->getModel()->select($colunas)
             ->join(
-            'tb_endereco',
-            'tb_endereco.co_endereco',
-            '=',
-            'tb_conselho_indicacao.co_endereco')
+                'tb_endereco',
+                'tb_endereco.co_endereco',
+                '=',
+                'tb_conselho_indicacao.co_endereco')
             ->join(
                 'tb_municipio',
                 'tb_municipio.co_municipio',
@@ -259,7 +261,12 @@ class ConselhoIndicacao extends AbstractService
                 '=',
                 'tb_conselho_indicacao.co_arquivo'
             )
-
+            ->leftJoin(
+                'tb_conselho_ranking',
+                'tb_conselho_ranking.co_conselho_indicacao',
+                '=',
+                'tb_conselho_indicacao.co_conselho_indicacao'
+            )
             ->leftJoin(DB::raw('(SELECT
                     max(tb_conselho_votacao.co_conselho_votacao) as co_votacao,
                     tb_conselho_votacao.co_conselho_indicacao
@@ -276,7 +283,7 @@ class ConselhoIndicacao extends AbstractService
                 'tb_conselho_votacao.co_conselho_votacao')
             ->where('tb_regiao.no_regiao', 'ILIKE', $regiao)
             ->where('tb_conselho_indicacao_habilitacao.st_avaliacao', '=', TRUE)
-            ->orderBy('tb_uf.sg_uf')
+            ->orderBy('tb_conselho_ranking.nu_ranking')
             ->get();
     }
 
