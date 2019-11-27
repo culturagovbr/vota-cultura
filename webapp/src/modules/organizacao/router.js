@@ -101,6 +101,17 @@ export default [
         },
         component: () => import(/* webpackChunkName: "organizacao-indicado" */ '@/modules/organizacao/views/OrganizacaoIndicado.vue'),
       },
+      {
+        path: '/organizacao/resultado-final-indicados',
+        name: 'OrganizacaoResultadoFinalIndicadosRoute',
+        meta: {
+          title: 'Resultado final',
+          group: 'dashboard',
+          icon: 'dashboard',
+          public: false,
+        },
+        component: () => import(/* webpackChunkName: "organizacao-indicado" */ '@/modules/organizacao/views/OrganizacaoResultadoFinalIndicado.vue'),
+      },
     ],
   },
 ];

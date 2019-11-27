@@ -192,6 +192,12 @@ export default {
           icon: 'list',
           name: 'resultado-votacao-route',
         },
+	      {
+	          title: 'Resultado final - organizações',
+	          group: 'apps',
+	          icon: 'list',
+	          name: 'OrganizacaoResultadoFinalIndicadosRoute',
+	      },
       ],
     };
   },
