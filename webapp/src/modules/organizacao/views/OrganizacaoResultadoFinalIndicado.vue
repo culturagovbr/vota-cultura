@@ -34,9 +34,10 @@
 								color="yellow lighten-3"
 								class="black--text"
 							>
-								Informamos que não houve organização ou entidade habilitada no segmento das culturas
-								dos povos indígenas, devendo ser aplicado, nessa hipótese o item 4.1.6 do edital nº
-								01, de 07 de agosto de 2019.
+								Não houve entidade habilitada para o segmento de culturas dos povos indígenas.
+								Nesse sentido, a designação do representante da sociedade civil se dará por meio de
+								lista tríplice elaborada pela área técnica correspondente na  Secretaria Especial de
+								Cultura, conforme item 4.1.6 do edital.
 							</v-alert>
 
 						</v-flex>
@@ -78,7 +79,6 @@
 									<tr @click="props.expanded = !props.expanded">
 										<td>{{ props.item.nu_cpf_indicado }}</td>
 										<td>{{ props.item.no_indicado }}</td>
-										<td>{{ props.item.dt_nascimento_indicado }}</td>
 										<td>{{ props.item.tp_indicado }}</td>
 										<td>{{ props.item.organizacao.no_organizacao }}</td>
 										<td>{{ props.item.segmento.ds_detalhamento }}</td>
@@ -141,7 +141,6 @@
                 headers: [
                     {text: 'CPF', value: 'nu_cpf_indicado'},
                     {text: 'Nome', value: 'no_indicado'},
-                    {text: 'Data de nascimento', value: 'dt_nascimento_indicado'},
                     {text: 'Posição', value: 'tp_indicado'},
                     {text: 'Organização/entidade', value: 'organizacao.no_organizacao'},
                     {text: 'Segmento', value: 'organizacao.segmento.ds_detalhamento'},
