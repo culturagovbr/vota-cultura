@@ -75,6 +75,7 @@
                       >
                         <td />
                         <td>{{ props.item.no_indicado }}</td>
+                        <td>{{ props.item.no_uf }}</td>
                         <td>{{ props.item.nu_votos }}</td>
                         <td>{{ props.item.nu_ranking }}</td>
                         <td>{{ obterRankingResultadoFinal(props.item.nu_ranking) }}</td>
@@ -115,6 +116,10 @@ export default {
       {
         text: 'Nome do indicado',
         value: 'no_indicado',
+      },
+      {
+        text: 'Estado do indicado',
+        value: 'no_uf',
       },
       {
         text: 'Número de votos',
