@@ -83,7 +83,22 @@
                 type: Array,
                 default: () => [],
             },
+            habilitacao: {
+                type: Object,
+                default: () => {},
+            },
         },
+
+	    watch: {
+            habilitacao(value) {
+                this.historico.push({
+	                dh_avaliacao : value.dh_avaliacao,
+                    usuario_avaliador : { no_nome : value.usuario_avaliador.no_nome},
+                    st_avaliacao : value.st_avaliacao ? 1 : 0,
+                    ds_parecer : value.ds_parecer,
+                });
+            }
+	    },
 	    methods : {
             showDialogParecer(text) {
                 this.dialogParecer = true;

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Conselho\Model;
 
+use App\Modules\Conta\Model\Usuario;
 use Illuminate\Database\Eloquent\Model;
 
 class ConselhoIndicacaoHabilitacao extends Model
@@ -42,6 +43,15 @@ class ConselhoIndicacaoHabilitacao extends Model
             ConselhoIndicacao::class,
             'co_conselho_indicacao',
             'co_indicado'
+        );
+    }
+
+    public function usuarioAvaliador()
+    {
+        return $this->hasOne(
+            Usuario::class,
+            'co_usuario',
+            'co_usuario_avaliador'
         );
     }
 }

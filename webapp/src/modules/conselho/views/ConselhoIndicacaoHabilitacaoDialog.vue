@@ -312,7 +312,7 @@
                 </v-tab-item>
 
                 <v-tab-item value="tab-3">
-                  <conselho-indicacao-historico-alteracao :historico="indicado.historico" />
+                  <conselho-indicacao-historico-alteracao :historico="indicado.historico" :habilitacao="indicado.avaliacaoHabilitacao" />
                 </v-tab-item>
               </v-tabs-items>
             </v-card-text>
