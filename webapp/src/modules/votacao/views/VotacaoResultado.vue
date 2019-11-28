@@ -172,7 +172,7 @@ export default {
       }
 
       if ([3, 4].includes(colocacao)) {
-        return `Eleito - ${colocacao}º Suplente`;
+        return `Eleito - ${colocacao-2}º Suplente`;
       }
 
       return 'Não eleito';

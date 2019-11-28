@@ -108,7 +108,7 @@ export default [
           title: 'Resultado final',
           group: 'dashboard',
           icon: 'dashboard',
-          public: false,
+          public: true,
         },
         component: () => import(/* webpackChunkName: "organizacao-indicado" */ '@/modules/organizacao/views/OrganizacaoResultadoFinalIndicado.vue'),
       },
