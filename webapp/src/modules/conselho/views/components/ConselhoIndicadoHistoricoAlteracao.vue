@@ -99,7 +99,6 @@
             habilitacao(value) {
                 if (!this.listaHistorico.find(x => x.dh_avaliacao === value.dh_avaliacao)) {
                     this.listaHistorico.push({
-                        co_conselho_indicacao: value.co_conselho_indicacao_habilitacao,
                         dh_avaliacao: value.dh_avaliacao,
                         usuario_avaliador: {no_nome: value.usuario_avaliador.no_nome},
                         st_avaliacao: value.st_avaliacao ? 1 : 0,
