@@ -156,7 +156,7 @@
 
                             <v-btn
                                 title="Cadastrar recurso"
-                                v-if="!(props.item.avaliacaoHabilitacao || {}).recurso && (props.item.conselho || {}).st_indicacao === 'f'"
+                                v-if="!(props.item.avaliacaoHabilitacao || {}).recurso && (props.item.conselho || {}).st_indicacao !== 'f'"
                                 depressed
                                 outline
                                 icon
