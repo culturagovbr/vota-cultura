@@ -30,6 +30,26 @@
                 class="mx-auto"
                 max-width="400"
               >
+                <v-toolbar
+                  color="primary"
+                  dark
+                >
+                  <v-icon
+                    v-if="indicado.nu_ranking && [1, 2, 3, 4].includes(indicado.nu_ranking)"
+                    left
+                  >
+                    star
+                  </v-icon>
+
+                    <v-toolbar-title
+                      v-if="indicado.nu_ranking && [1, 2].includes(indicado.nu_ranking)"
+                    >Eleito - {{indicado.nu_ranking}}º Titular</v-toolbar-title>
+                    <v-toolbar-title
+                      v-if="indicado.nu_ranking && [3, 4].includes(indicado.nu_ranking)"
+                    >Eleito - {{indicado.nu_ranking-2}}º Suplente</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-title>{{indicado.nu_votos}} votos</v-toolbar-title>
+                </v-toolbar>
                 <v-img
                   :src="indicado.ds_localizacao"
                   :aspect-ratio="1"
