@@ -174,12 +174,13 @@
                         no_uf : indicado.indicacaoHabilitacao[0].endereco.municipio.uf.no_uf,
                         no_conselho : indicado.indicacaoHabilitacao[0].indicado.conselho.no_conselho,
                         st_avaliacao : indicado.indicacaoHabilitacao[0].st_avaliacao,
+	                    indicacaoHabilitacao : indicado.indicacaoHabilitacao
                     }
                 });
             }
 		},
         methods: {
-            abrirDialogIndicacaoRecurso(item){
+            abrirDialogIndicacaoRecurso(item) {
                 this.itemEditado = {...item};
                 this.dialogConselhoIndicacaoRecurso = true;
             },
