@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-container
-			v-if="Object.keys(formulario).length <= 0 && readonly">
+			v-if="!formulario.ds_recurso && readonly">
 			<span class="subheading grey--text">Não existe recurso cadastrado</span>
 		</v-container>
 		<div v-else>
@@ -23,7 +23,6 @@
 									</div>
 
 									<v-flex class="mt-2">
-
 										<v-textarea
 											:readonly="readonly"
 											v-model="formulario.ds_recurso"
@@ -377,15 +376,13 @@
                 if (!this.$refs.formConselhoIndicacaoHabilitacao.validate()) {
                     return false;
                 }
-
-
                 this.dialogEnviar = true;
             }
         },
         watch: {
             indicacao(valor) {
                 valor.ds_recurso =  (((valor || {}).avaliacaoHabilitacao || {}).recurso || {}).ds_recurso || valor.ds_recurso;
-                this.formulario = Object.assign({}, valor);
+                this.formulario = {...valor};
                 this.uf = (this.formulario.endereco || {}).co_ibge;
                 this.municipio = (this.formulario.endereco || {}).co_municipio;
             },
